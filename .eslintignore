@@ -1,0 +1,16 @@
+/node_modules/
+/.storybook/
+/public/
+/webpack/
+/server/
+/build/
+/dist/
+/reports
+.scannerwork
+service-worker.js
+babel.config.js
+stylelint.config.js
+svgo.config.js
+postcss.config.js
+fronton-config.js
+.eslintrc.js
