@@ -65,6 +65,15 @@ module.exports = ({ htmlPluginMinify, mode, devServer, minimizer, output }) => {
           use: [
             { loader: modeLoader, options: { esModule: true } },
             {
+              loader: 'css-loader',
+              options: {
+                sourceMap: isDev,
+                modules: {
+                  localIdentName: isDev ? `[local]_[hash:base64:10]` : `[hash:base64:10]`,
+                },
+              },
+            },
+            {
               loader: 'postcss-loader',
               options: {
                 postcssOptions: {
