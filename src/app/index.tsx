@@ -1,3 +1,5 @@
+import { ThemeProvider } from '@emotion/react';
+import { theme } from 'global/theme';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -17,12 +19,14 @@ interface Props {
 
 export const ConnectedApp = ({ Component }: Props): JSX.Element => (
   <ErrorBoundary>
+    {/* <ThemeProvider theme={theme}> */}
     <Provider store={store}>
       <BrowserRouter>
         <Component />
         <ToastContainer />
       </BrowserRouter>
     </Provider>
+    {/* </ThemeProvider> */}
   </ErrorBoundary>
 );
 
