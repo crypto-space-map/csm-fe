@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { configureAppStore } from '../store/configureStore';
-import App from './app';
+import { App } from './app';
 import { ErrorBoundary } from './components';
 
 const MOUNTED_NODE = document.getElementById('root') as HTMLElement;
@@ -15,7 +15,7 @@ interface Props {
   Component: typeof App;
 }
 
-export const ConnectedApp = ({ Component }: Props): JSX.Element => (
+const ConnectedApp = ({ Component }: Props): JSX.Element => (
   <ErrorBoundary>
     <Provider store={store}>
       <BrowserRouter>
