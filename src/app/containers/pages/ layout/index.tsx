@@ -19,7 +19,7 @@ const Ico = () => (
     width={15}
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    fill="#ffffff"
+    fill="#ff0000"
     version="1.1"
     id="Capa_1"
     x="0px"
@@ -49,7 +49,17 @@ export const Layout = memo(() => {
       <IconButton>
         <Ico />
       </IconButton>
-      <Input value={val} onChange={handleChange} />
+      <Input value={val} onChange={handleChange} placeholder="Placeholder" label="Label" />
+      <Input value={val} onChange={handleChange} placeholder="Disabled" label="Disabled" disabled />
+      <Input
+        value={val}
+        onChange={handleChange}
+        placeholder="With icon"
+        label="With icon"
+        InputProps={{
+          endAdornment: <Ico />,
+        }}
+      />
     </Container>
   );
 });

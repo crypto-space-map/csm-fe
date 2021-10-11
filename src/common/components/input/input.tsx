@@ -1,107 +1,37 @@
-import React, { FC, useRef, useState, useCallback, useEffect } from 'react';
+import React from 'react';
 
 import styled from '@emotion/styled';
+import { TextField, TextFieldProps } from '@mui/material';
 
-import { InputButton } from './entry/input-button';
+type InputProps = TextFieldProps;
 
-type adornmentPosType = 'start' | 'end';
-type ContainerInputProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
-  adornmentPosition?: adornmentPosType;
-  fullWidth?: boolean;
-  error?: boolean;
-};
-export type InputProps = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
-> &
-  ContainerInputProps & {
-    adornment?: React.ReactElement;
-    focus?: boolean;
-    btnIcon?: React.ReactNode;
-  };
-
-const InputContainer = styled.div<ContainerInputProps>`
-  display: grid;
-  grid-template-columns: ${({ adornmentPosition }) =>
-    adornmentPosition === 'end' ? '4px 1fr auto auto 4px' : '4px  auto  1fr auto 4px'};
-  grid-template-rows: 4px 1fr 4px;
-  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
-  font-family: inherit;
-  background-color: #ffffff;
+const StyledInput = styled(TextField)`
+  background-color: ${({ disabled }) => (disabled ? '#BDBDBD' : '#ffffff')};
+  color: #4f4f4f;
   border-radius: 4px;
-  ${({ error }) => error && 'border:  1px solid rgb(255 17 0) !important'};
+  padding: 4px 8px;
 `;
 
-const CustomInput = styled.input<InputProps>`
-  grid-area: ${({ adornmentPosition }) => (adornmentPosition === 'end' ? '1 / 1 / 4/ 3' : '1 / 3 / 4/ 4')};
-  width: inherit;
-  height: inherit;
-  padding: ${({ adornmentPosition }) =>
-    adornmentPosition === 'end' ? ' 13px 1em 13px 1em' : '13px 1em 13px 1em'};
-  font-size: 16px;
-  font-family: inherit;
-  line-height: 22px;
-  border: none;
-  border-radius: inherit;
-  outline: none;
+const InputContainer = styled.div`
+  display: grid;
+  grid-gap: 2px 0;
 `;
 
-const AdornmentStyle = styled.div<InputProps & ContainerInputProps>`
-  display: flex;
-  grid-area: ${({ adornmentPosition }) => (adornmentPosition === 'end' ? ' 2 / 4 / 3/ 5' : '2 / 2 / 3/ 3')};
-  height: 100%;
-  justify-self: ${({ adornmentPosition }) => adornmentPosition || 'end'};
+const Label = styled.span`
+  color: #828282;
+  font-size: 14px;
+  line-height: 16px;
 `;
 
-export const Input: FC<InputProps> = React.memo(
-  ({ className, adornment, fullWidth, focus, adornmentPosition, error, btnIcon, ...restProps }) => {
-    const containerRef = useRef<HTMLInputElement>(null);
-    const [empty, setEmpty] = useState(true);
-
-    useEffect(() => (restProps.value ? setEmpty(false) : setEmpty(true)), [restProps.value]);
-
-    useEffect(() => {
-      if (focus && containerRef.current) {
-        containerRef.current.focus();
-      }
-    }, [focus]);
-
-    const onClearInput = useCallback(e => {
-      if (containerRef.current) {
-        e.stopPropagation();
-        Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set?.call(
-          containerRef.current,
-          ''
-        );
-        containerRef.current.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-        containerRef.current.focus();
-      }
-    }, []);
-
-    return (
-      <InputContainer
-        className={className}
-        fullWidth={fullWidth}
-        adornmentPosition={adornmentPosition || 'end'}
-        error={error}>
-        <CustomInput
-          {...restProps}
-          adornmentPosition={adornmentPosition || 'end'}
-          ref={containerRef}
-          tabIndex={focus ? 0 : undefined}
-        />
-        {adornment && (
-          <AdornmentStyle adornmentPosition={adornmentPosition || 'end'}>{adornment}</AdornmentStyle>
-        )}
-        {!empty && (
-          <InputButton
-            adornmentPosition={adornmentPosition || 'end'}
-            onClick={onClearInput}
-            type="button"
-            btnIcon={btnIcon}
-          />
-        )}
-      </InputContainer>
-    );
-  }
+export const Input = (props: InputProps) => (
+  <InputContainer>
+    <Label>{props.label}</Label>
+    <StyledInput
+      {...props}
+      variant="standard"
+      label=""
+      InputProps={{ ...props.InputProps, disableUnderline: true }}
+      InputLabelProps={{ ...props.InputLabelProps, shrink: false }}
+    />
+  </InputContainer>
 );

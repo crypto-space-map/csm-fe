@@ -1,20 +1,21 @@
 import { css } from '@emotion/react';
 
-export const pallette = {
-  // use like css vars(--mainBlue etc...)
-  mainGreen: css`
-    @property --mainGreen {
-      syntax: '<color>';
-      initial-value: #a8f8a0;
-      inherits: false;
-    }
-    @property --mainBlue {
-      syntax: '<color>';
-      initial-value: #83d9f5;
-      inherits: false;
-    }
-  `,
-};
+export const pallette = css`
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
+  * {
+    font-family: 'Roboto', sans-serif;
+  }
+  @property --mainGreen {
+    syntax: '<color>';
+    initial-value: #a8f8a0;
+    inherits: false;
+  }
+  @property --mainBlue {
+    syntax: '<color>';
+    initial-value: #83d9f5;
+    inherits: false;
+  }
+`;
 
 export const gradientText = css`
   background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
