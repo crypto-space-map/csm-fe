@@ -31,13 +31,29 @@ const getStatusVariant = (variant: StatusProps['variant']) => {
   }
 };
 
+const getStatusSize = (size: StatusProps['size']) => {
+  switch (size) {
+    default:
+    case 'm':
+      return css`
+        padding: 4px 8px;
+      `;
+    case 'l':
+      return css`
+        padding: 8px 16px;
+        font-size: 16px;
+        line-height: 22px;
+      `;
+  }
+};
+
 const StyledStatus = styled.div<StatusProps>`
   position: relative;
   color: #1d1c1c;
   border-radius: 20px;
-  padding: 4px 8px;
   text-align: center;
   ${({ variant }) => getStatusVariant(variant)}
+  ${({ size }) => getStatusSize(size)}
 `;
 
 export const Status = (props: StatusProps) => <StyledStatus {...props}>{props.text}</StyledStatus>;

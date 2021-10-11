@@ -64,6 +64,9 @@ export const Layout = memo(() => {
       <Status text="Some text" />
       <Status text="Some text" variant="outlined" />
       <Status text="Some text" variant="text" />
+      <Status text="Some text" size="l" />
+      <Status text="Some text" variant="outlined" size="l" />
+      <Status text="Some text" variant="text" size="l" />
     </Container>
   );
 });
