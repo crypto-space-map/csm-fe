@@ -6,7 +6,7 @@ import { PageLayout } from 'common';
 
 import { Login } from './containers/pages/login';
 
-const App = () => (
+export const App = () => (
   <PageLayout>
     <Switch>
       <Route exact path="/login" component={Login} />
@@ -14,4 +14,3 @@ const App = () => (
     </Switch>
   </PageLayout>
 );
-export default App;
