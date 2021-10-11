@@ -7,7 +7,7 @@ const WebpackBar = require('webpackbar');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+// const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ESLintPlugin = require('eslint-webpack-plugin');
 const StylelintPlugin = require('stylelint-webpack-plugin');
@@ -22,7 +22,8 @@ const makePlugins = (isDev, minify) => {
     new WebpackBar(),
     new CaseSensitivePathsPlugin(),
     new DuplicatePackageCheckerPlugin(),
-    new WatchMissingNodeModulesPlugin(path.resolve('node_modules')),
+    // commented because of mac development problem
+    // new WatchMissingNodeModulesPlugin(path.resolve('node_modules')),
     new CleanWebpackPlugin(),
   ];
   const commonPlugins = [
