@@ -35,9 +35,9 @@ const Ico = () => (
 
 export const Layout = memo(() => (
   <Container>
-    <Button>FFFF</Button>
-    <Button variant="outlined">FFFF</Button>
-    <Button variant="text">FFFF</Button>
+    <Button>Contained</Button>
+    <Button variant="outlined">outlined</Button>
+    <Button variant="text">text</Button>
     <IconButton>
       <Ico />
     </IconButton>
