@@ -37,6 +37,7 @@ export const Layout = memo(() => (
   <Container>
     <Button>Contained</Button>
     <Button variant="outlined">outlined</Button>
+    <Button disabled>disabled</Button>
     <Button variant="text">text</Button>
     <IconButton>
       <Ico />

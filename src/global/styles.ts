@@ -8,8 +8,6 @@ export const pallette = {
       initial-value: #a8f8a0;
       inherits: false;
     }
-  `,
-  mainBlue: css`
     @property --mainBlue {
       syntax: '<color>';
       initial-value: #83d9f5;

@@ -1,4 +1,5 @@
-import { ThemeProvider } from '@emotion/react';
+import { Global, ThemeProvider } from '@emotion/react';
+import { pallette } from 'global/styles';
 import { theme } from 'global/theme';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -22,6 +23,7 @@ export const ConnectedApp = ({ Component }: Props): JSX.Element => (
     {/* <ThemeProvider theme={theme}> */}
     <Provider store={store}>
       <BrowserRouter>
+        <Global styles={pallette} />
         <Component />
         <ToastContainer />
       </BrowserRouter>

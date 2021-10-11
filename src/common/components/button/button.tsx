@@ -3,7 +3,6 @@ import React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button as MuiButton, ButtonProps } from '@mui/material';
-import { pallette } from 'global/styles';
 
 import { btnGradientText, btnGradientBorder } from './constants';
 
@@ -39,9 +38,6 @@ const getButtonVariant = (variant: ButtonProps['variant']) => {
         &:hover {
           --mainGreen: #83d9f5;
         }
-
-        ${pallette.mainBlue}
-        ${pallette.mainGreen}
       `;
   }
 };
@@ -52,8 +48,16 @@ const StyledButton = styled(MuiButton)<ButtonProps>`
   mask-composite: exclude;
   transition: all 0.2s ease-out;
   ${({ variant }) => getButtonVariant(variant)}
+  &:disabled {
+    background: #bdbdbd;
+    &:before {
+      background-image: none;
+    }
+  }
 `;
 
 export const Button: React.FunctionComponent<ButtonProps> = ({ children, ...restProps }) => (
-  <StyledButton {...restProps}>{children}</StyledButton>
+  <StyledButton {...restProps} disableRipple>
+    {children}
+  </StyledButton>
 );
