@@ -3,25 +3,24 @@ import React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button as MuiButton, ButtonProps } from '@mui/material';
-
-import { btnGradientText, btnGradientBorder } from './constants';
+import { gradientBorder, gradientText } from 'global/styles';
 
 const getButtonVariant = (variant: ButtonProps['variant']) => {
   switch (variant) {
     case 'outlined':
       return css`
         background: inherit;
-        ${btnGradientText}
-        ${btnGradientBorder}
+        ${gradientText}
+        ${gradientBorder}
         &:hover {
-          ${btnGradientBorder}
+          ${gradientBorder}
         }
       `;
     case 'text':
       return css`
         background-color: none;
         border: none;
-        ${btnGradientText}
+        ${gradientText}
       `;
     case 'contained':
     default:
@@ -46,7 +45,8 @@ const StyledButton = styled(MuiButton)<ButtonProps>`
   border-radius: 4px;
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
-  transition: all 0.2s ease-out;
+  transition: all 0.2s linear;
+  text-transform: none;
   ${({ variant }) => getButtonVariant(variant)}
   &:disabled {
     background: #bdbdbd;

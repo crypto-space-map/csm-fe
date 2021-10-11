@@ -1,17 +1,17 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 
 import styled from '@emotion/styled';
 
 import { Button, IconButton } from 'common/components/button';
+import { Input } from 'common/components/input/input';
 
 const Container = styled.div`
-  display: grid;
-  grid-gap: 2em;
-  grid-template-columns: repeat(10, min-content);
-  grid-template-rows: repeat(10, min-content);
-  width: 100%;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   background-color: #242424;
+  height: 100%;
+  padding: 1em;
 `;
 
 const Ico = () => (
@@ -33,14 +33,23 @@ const Ico = () => (
   </svg>
 );
 
-export const Layout = memo(() => (
-  <Container>
-    <Button>Contained</Button>
-    <Button variant="outlined">outlined</Button>
-    <Button disabled>disabled</Button>
-    <Button variant="text">text</Button>
-    <IconButton>
-      <Ico />
-    </IconButton>
-  </Container>
-));
+export const Layout = memo(() => {
+  const [val, setVal] = useState('');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { target } = event;
+    return setVal(target.value);
+  };
+  return (
+    <Container>
+      <Button>Contained</Button>
+      <Button variant="outlined">outlined</Button>
+      <Button disabled>disabled</Button>
+      <Button variant="text">text</Button>
+      <IconButton>
+        <Ico />
+      </IconButton>
+      <Input value={val} onChange={handleChange} />
+    </Container>
+  );
+});
