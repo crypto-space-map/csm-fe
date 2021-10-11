@@ -19,7 +19,7 @@ interface Props {
   Component: typeof App;
 }
 
-const YA_METRIC_COUNTER = [88753201];
+const YA_METRIC_COUNTER = [88753201]; // need to move to secure place
 
 const ConnectedApp = ({ Component }: Props): JSX.Element => (
   <ErrorBoundary>
