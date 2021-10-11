@@ -3,7 +3,8 @@ import React, { memo, useState } from 'react';
 import styled from '@emotion/styled';
 
 import { Button, IconButton } from 'common/components/button';
-import { Input } from 'common/components/input/input';
+import { Input } from 'common/components/input';
+import { Status } from 'common/components/status';
 
 const Container = styled.div`
   display: flex;
@@ -43,9 +44,9 @@ export const Layout = memo(() => {
   return (
     <Container>
       <Button>Contained</Button>
-      <Button variant="outlined">outlined</Button>
-      <Button disabled>disabled</Button>
-      <Button variant="text">text</Button>
+      <Button variant="outlined">Outlined</Button>
+      <Button disabled>Disabled</Button>
+      <Button variant="text">Text</Button>
       <IconButton>
         <Ico />
       </IconButton>
@@ -60,6 +61,9 @@ export const Layout = memo(() => {
           endAdornment: <Ico />,
         }}
       />
+      <Status text="Some text" />
+      <Status text="Some text" variant="outlined" />
+      <Status text="Some text" variant="text" />
     </Container>
   );
 });

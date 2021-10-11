@@ -11,9 +11,9 @@ const getButtonVariant = (variant: ButtonProps['variant']) => {
       return css`
         background: inherit;
         ${gradientText}
-        ${gradientBorder}
+        ${gradientBorder({ borderRadius: 4 })}
         &:hover {
-          ${gradientBorder}
+          ${gradientBorder({ borderRadius: 4 })}
         }
       `;
     case 'text':

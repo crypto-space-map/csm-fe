@@ -5,7 +5,7 @@ import { IconButton as MuiIconButton, IconButtonProps } from '@mui/material';
 import { gradientBorder } from 'global/styles';
 
 const StyledButton = styled(MuiIconButton)<IconButtonProps>`
-  ${gradientBorder}
+  ${gradientBorder({ borderRadius: 4 })}
   width: max-content;
   height: max-content;
   border-radius: 4px;

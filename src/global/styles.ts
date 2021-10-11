@@ -24,8 +24,7 @@ export const gradientText = css`
   background-clip: text;
 `;
 
-export const gradientBorder = css`
-  border: none;
+export const gradientBorder = ({ borderRadius }: { borderRadius: number }) => css`
   &:before {
     content: '';
     position: absolute;
@@ -33,7 +32,7 @@ export const gradientBorder = css`
     left: 0;
     right: 0;
     bottom: 0;
-    border-radius: 4px;
+    border-radius: ${borderRadius}px;
     padding: 2px;
     background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
