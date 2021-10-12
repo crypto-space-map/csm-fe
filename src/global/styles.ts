@@ -40,3 +40,8 @@ export const gradientBorder = ({ borderRadius }: { borderRadius: number }) => cs
     mask-composite: exclude;
   }
 `;
+
+export const gradientBackground = css`
+  background-size: 100%;
+  background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
+`;

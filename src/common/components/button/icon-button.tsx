@@ -1,11 +1,36 @@
 import React from 'react';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { IconButton as MuiIconButton, IconButtonProps } from '@mui/material';
-import { gradientBorder } from 'global/styles';
+import { IconButton as MuiIconButton, IconButtonProps as MuiIconButtonProps } from '@mui/material';
+import { gradientBackground, gradientBorder } from 'global/styles';
+
+type IconButtonProps = MuiIconButtonProps & {
+  variant?: 'outlined' | 'contained' | 'text';
+};
+
+const getIconButtonVariant = (variant: IconButtonProps['variant']) => {
+  switch (variant) {
+    case 'outlined':
+      return css`
+        background: none;
+        ${gradientBorder({ borderRadius: 4 })}
+      `;
+    case 'text':
+      return css`
+        background: none;
+        color: #ffffff;
+      `;
+    case 'contained':
+    default:
+      return css`
+        ${gradientBackground}
+      `;
+  }
+};
 
 const StyledButton = styled(MuiIconButton)<IconButtonProps>`
-  ${gradientBorder({ borderRadius: 4 })}
+  ${({ variant }) => getIconButtonVariant(variant)}
   width: max-content;
   height: max-content;
   border-radius: 4px;
@@ -16,3 +41,7 @@ const StyledButton = styled(MuiIconButton)<IconButtonProps>`
 export const IconButton: React.FunctionComponent<IconButtonProps> = ({ children, ...restProps }) => (
   <StyledButton {...restProps}>{children}</StyledButton>
 );
+
+IconButton.defaultProps = {
+  variant: 'contained',
+};

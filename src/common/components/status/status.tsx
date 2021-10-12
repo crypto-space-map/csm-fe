@@ -2,7 +2,7 @@ import React from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { gradientBorder } from 'global/styles';
+import { gradientBackground, gradientBorder } from 'global/styles';
 
 type StatusProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
   size?: 's' | 'm' | 'l';
@@ -25,8 +25,7 @@ const getStatusVariant = (variant: StatusProps['variant']) => {
     case 'contained':
     default:
       return css`
-        background-size: 100%;
-        background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
+        ${gradientBackground}
       `;
   }
 };
@@ -37,6 +36,7 @@ const getStatusSize = (size: StatusProps['size']) => {
     case 'm':
       return css`
         padding: 4px 8px;
+        font-size: 12px;
       `;
     case 'l':
       return css`
@@ -49,6 +49,9 @@ const getStatusSize = (size: StatusProps['size']) => {
 
 const StyledStatus = styled.div<StatusProps>`
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #1d1c1c;
   border-radius: 20px;
   text-align: center;

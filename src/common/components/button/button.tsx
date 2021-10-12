@@ -3,7 +3,7 @@ import React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button as MuiButton, ButtonProps } from '@mui/material';
-import { gradientBorder, gradientText } from 'global/styles';
+import { gradientBackground, gradientBorder, gradientText } from 'global/styles';
 
 const getButtonVariant = (variant: ButtonProps['variant']) => {
   switch (variant) {
@@ -25,8 +25,7 @@ const getButtonVariant = (variant: ButtonProps['variant']) => {
     case 'contained':
     default:
       return css`
-        background-size: 100%;
-        background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
+        ${gradientBackground}
         color: #333;
         transition: --mainGreen 0.2s, --mainBlue 0.2s;
         &:active {
@@ -42,7 +41,9 @@ const getButtonVariant = (variant: ButtonProps['variant']) => {
 };
 
 const StyledButton = styled(MuiButton)<ButtonProps>`
+  padding: 8px 14px;
   border-radius: 4px;
+  border: none;
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
   transition: all 0.2s linear;

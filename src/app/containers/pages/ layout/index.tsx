@@ -7,9 +7,10 @@ import { Input } from 'common/components/input';
 import { Status } from 'common/components/status';
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2em;
+  align-items: center;
   background-color: #242424;
   height: 100%;
   padding: 1em;
@@ -48,6 +49,12 @@ export const Layout = memo(() => {
       <Button disabled>Disabled</Button>
       <Button variant="text">Text</Button>
       <IconButton>
+        <Ico />
+      </IconButton>
+      <IconButton variant="outlined">
+        <Ico />
+      </IconButton>
+      <IconButton variant="text">
         <Ico />
       </IconButton>
       <Input value={val} onChange={handleChange} placeholder="Placeholder" label="Label" />
