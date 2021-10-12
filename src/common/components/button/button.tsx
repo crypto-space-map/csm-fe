@@ -13,6 +13,7 @@ const getButtonVariant = (variant: ButtonProps['variant']) => {
         ${gradientText}
         ${gradientBorder({ borderRadius: 4 })}
         &:hover {
+          border: none;
           ${gradientBorder({ borderRadius: 4 })}
         }
       `;

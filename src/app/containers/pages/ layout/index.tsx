@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { Button, IconButton } from 'common/components/button';
 import { Input } from 'common/components/input';
 import { Status } from 'common/components/status';
+import { ReferralArc } from 'common/components/referral/referral-arc/arc';
 
 const Container = styled.div`
   display: grid;
@@ -74,6 +75,7 @@ export const Layout = memo(() => {
       <Status text="Some text" size="l" />
       <Status text="Some text" variant="outlined" size="l" />
       <Status text="Some text" variant="text" size="l" />
+      <ReferralArc percents={100} />
     </Container>
   );
 });
