@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-type ReferralArcProps = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
+type RefferalArcProps = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
   percents: number;
   radius?: number;
 };
 
-export const ReferralArc = ({ percents, radius = 70, ...rest }: ReferralArcProps) => {
+export const RefferalArc = ({ percents, radius = 70, ...rest }: RefferalArcProps) => {
   const ref = useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null | undefined>(null);
 
@@ -34,6 +34,6 @@ export const ReferralArc = ({ percents, radius = 70, ...rest }: ReferralArcProps
   return <canvas {...canvas} ref={ref} {...rest} />;
 };
 
-ReferralArc.defaultProps = {
+RefferalArc.defaultProps = {
   radius: 70,
 };
