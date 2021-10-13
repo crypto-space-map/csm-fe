@@ -75,7 +75,7 @@ export const Layout = memo(() => {
       <Status text="Some text" size="l" />
       <Status text="Some text" variant="outlined" size="l" />
       <Status text="Some text" variant="text" size="l" />
-      <ReferralArc percents={100} />
+      <ReferralArc percents={80} />
     </Container>
   );
 });
