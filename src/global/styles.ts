@@ -19,9 +19,8 @@ export const pallette = css`
 
 export const gradientText = css`
   background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
-  color: transparent;
-  -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
 
 export const gradientBorder = ({ borderRadius }: { borderRadius: number }) => css`
@@ -35,7 +34,7 @@ export const gradientBorder = ({ borderRadius }: { borderRadius: number }) => cs
     border-radius: ${borderRadius}px;
     padding: 2px;
     background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
   }
