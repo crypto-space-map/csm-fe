@@ -2,7 +2,13 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 
-import { RefferalArc } from './refferal-arc/arc';
+import { RefferalArc } from './refferal-arc';
+
+type RefferalProps = {
+  percent: number;
+  radius?: number;
+  text: string;
+};
 
 const Counter = styled.span`
   font-weight: bold;
@@ -35,12 +41,16 @@ const Arc = styled(RefferalArc)`
   grid-area: 1/1/2/2;
 `;
 
-export const Refferal = () => (
+export const Refferal = ({ percent, text, radius }: RefferalProps) => (
   <Container>
     <Wrapper>
-      <Counter>65</Counter>
-      <Text>Refferals</Text>
+      <Counter>{percent}</Counter>
+      <Text>{text}</Text>
     </Wrapper>
-    <Arc percents={70} />
+    <Arc percents={percent} radius={radius} />
   </Container>
 );
+
+Refferal.defaultProps = {
+  radius: 70,
+};

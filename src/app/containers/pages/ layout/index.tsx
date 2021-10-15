@@ -3,10 +3,10 @@ import React, { memo, useState } from 'react';
 import styled from '@emotion/styled';
 
 import { Button, IconButton } from 'common/components/button';
+import { CheckBox } from 'common/components/checkbox/checkbox';
 import { Input } from 'common/components/input';
+import { Refferal } from 'common/components/refferal';
 import { Status } from 'common/components/status';
-import { RefferalArc } from 'common/components/refferal/refferal-arc/arc';
-import { Refferal } from 'common/components/refferal/refferal';
 
 const Container = styled.div`
   display: grid;
@@ -39,11 +39,13 @@ const Ico = () => (
 
 export const Layout = memo(() => {
   const [val, setVal] = useState('');
+  const [checked, setChecked] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
     return setVal(target.value);
   };
+  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => setChecked(event.target.checked);
   return (
     <Container>
       <Button>Contained</Button>
@@ -76,7 +78,12 @@ export const Layout = memo(() => {
       <Status text="Some text" size="l" />
       <Status text="Some text" variant="outlined" size="l" />
       <Status text="Some text" variant="text" size="l" />
-      <Refferal />
+      <Refferal percent={50} text="Test" />
+      <Refferal percent={55} text="Test1" />
+      <Refferal percent={10} text="Test2" />
+      <Refferal percent={100} text="Test3" />
+      <CheckBox onChange={handleCheck} checked={checked} label="Hello it's me" />
+      <CheckBox onChange={handleCheck} checked={checked} label="disabled" disabled />
     </Container>
   );
 });
