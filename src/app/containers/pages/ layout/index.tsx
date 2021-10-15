@@ -40,7 +40,7 @@ const Ico = () => (
 export const Layout = memo(() => {
   const [val, setVal] = useState('');
   const [checked, setChecked] = useState(false);
-
+  const [error, setError] = useState(false);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
     return setVal(target.value);
@@ -62,6 +62,15 @@ export const Layout = memo(() => {
         <Ico />
       </IconButton>
       <Input value={val} onChange={handleChange} placeholder="Placeholder" label="Label" />
+      <Input
+        value={val}
+        onChange={handleChange}
+        placeholder="Click me!"
+        label="Error"
+        error={error}
+        errorMessage="THIS IS ERROR"
+        onClick={() => setError(!error)}
+      />
       <Input value={val} onChange={handleChange} placeholder="Disabled" label="Disabled" disabled />
       <Input
         value={val}
