@@ -5,6 +5,11 @@ import { gradientBackground, gradientBorder, gradientText } from 'global/styles'
 
 export const StyledChildren = styled.span`
   grid-area: 1/1/2/2;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-auto-flow: column;
+  grid-gap: 1em;
   width: 100%;
   height: 100%;
   z-index: 1;

@@ -3,8 +3,10 @@ import React, { memo, useState } from 'react';
 import styled from '@emotion/styled';
 
 import { Button, IconButton } from 'common/components/button';
-import { CheckBox } from 'common/components/checkbox/checkbox';
+import { CheckBox } from 'common/components/checkbox';
+import { Counter } from 'common/components/counter';
 import { Input } from 'common/components/input';
+import { Radio } from 'common/components/radio';
 import { Refferal } from 'common/components/refferal';
 import { Status } from 'common/components/status';
 
@@ -52,6 +54,24 @@ export const Layout = memo(() => {
       <Button variant="outlined">Outlined</Button>
       <Button disabled>Disabled</Button>
       <Button variant="text">Text</Button>
+      <Button>
+        <Ico /> WithIcon <Ico />
+      </Button>
+      <Button variant="outlined">
+        <Ico />
+        Outlined Icon
+        <Ico />
+      </Button>
+      <Button disabled>
+        <Ico />
+        Disabled Icon
+        <Ico />
+      </Button>
+      <Button variant="text">
+        <Ico />
+        Text Icon
+        <Ico />
+      </Button>
       <IconButton>
         <Ico />
       </IconButton>
@@ -93,6 +113,10 @@ export const Layout = memo(() => {
       <Refferal percent={100} text="Test3" />
       <CheckBox onChange={handleCheck} checked={checked} label="Hello it's me" />
       <CheckBox onChange={handleCheck} checked={checked} label="disabled" disabled />
+      <Radio onChange={handleCheck} checked={checked} label="Hello it's Radio" />
+      <Counter>123</Counter>
+      <Counter>1</Counter>
+      <Counter>10000</Counter>
     </Container>
   );
 });

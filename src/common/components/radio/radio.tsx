@@ -1,13 +1,20 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { FormControlLabel, Radio as MuiRadio, FormControlLabelProps } from '@mui/material';
+import { FormControlLabel, Radio as MuiRadio, RadioProps } from '@mui/material';
 import { gradientText } from 'global/styles';
 
-const StyledRadio = styled(MuiRadio)`
+import { RadioIcon, RadioIconChecked } from './icons';
+
+const StyledFCL = styled(FormControlLabel)`
   ${gradientText}
 `;
-// TODO необходимо понять нужен ли он (в макетах нет)
-export const Radio = ({ ...props }: Omit<FormControlLabelProps, 'control'>) => (
-  <FormControlLabel control={<StyledRadio />} {...props} />
+
+type FCLRadio = RadioProps & { label: string };
+
+export const Radio = (props: FCLRadio) => (
+  <StyledFCL
+    control={<MuiRadio checkedIcon={<RadioIconChecked />} icon={<RadioIcon />} {...props} />}
+    label={props.label}
+  />
 );
