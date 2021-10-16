@@ -27,10 +27,10 @@ export const gradientBorder = ({ borderRadius }: { borderRadius: number }) => cs
   &:before {
     content: '';
     position: absolute;
-    top: 0;
+    top: -1px;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: -1px;
     border-radius: ${borderRadius}px;
     padding: 2px;
     background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
