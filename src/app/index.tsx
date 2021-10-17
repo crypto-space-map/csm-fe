@@ -5,6 +5,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+
+import { SvgGradient } from 'common/components/svg-gradient';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 import { configureAppStore } from '../store/configureStore';
@@ -23,6 +26,7 @@ export const ConnectedApp = ({ Component }: Props): JSX.Element => (
     {/* <ThemeProvider theme={theme}> */}
     <Provider store={store}>
       <BrowserRouter>
+        <SvgGradient />
         <Global styles={pallette} />
         <Component />
         <ToastContainer />

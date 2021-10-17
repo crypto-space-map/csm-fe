@@ -14,7 +14,7 @@ const getIconButtonVariant = (variant: IconButtonProps['variant']) => {
     case 'outlined':
       return css`
         background: none;
-        ${gradientBorder({ borderRadius: 4 })}
+        ${gradientBorder({})}
       `;
     case 'text':
       return css`

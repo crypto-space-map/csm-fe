@@ -39,7 +39,7 @@ export const getButtonVariant = (variant: ButtonProps['variant']) => {
   switch (variant) {
     case 'outlined':
       return css`
-        ${gradientBorder({ borderRadius: 4 })}
+        ${gradientBorder({})}
         ${notContainedButtonsActions}
       `;
     case 'text':
