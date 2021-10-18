@@ -6,10 +6,11 @@ import { Button, IconButton } from 'common/components/button';
 import { CheckBox } from 'common/components/checkbox';
 import { Counter } from 'common/components/counter';
 import { Input } from 'common/components/input';
+import { MenuItem } from 'common/components/menu-item';
 import { Radio } from 'common/components/radio';
 import { Refferal } from 'common/components/refferal';
 import { Status } from 'common/components/status';
-import { MenuItem } from 'common/components/menu-item';
+import { Tab, Tabs } from 'common/components/tabs';
 
 const Container = styled.div`
   display: grid;
@@ -47,6 +48,13 @@ export const Layout = memo(() => {
   const [val, setVal] = useState('');
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState(false);
+
+  const [value, setValue] = React.useState('one');
+
+  const handleChangeTab = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { target } = event;
     return setVal(target.value);
@@ -133,6 +141,12 @@ export const Layout = memo(() => {
           </MenuItem>
         ))}
       </div>
+
+      <Tabs value={value} onChange={handleChangeTab} aria-label="secondary tabs example">
+        <Tab value="one" label="Item One" />
+        <Tab value="two" label="Item Two" />
+        <Tab value="three" label="Item Three" />
+      </Tabs>
     </Container>
   );
 });

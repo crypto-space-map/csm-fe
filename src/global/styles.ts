@@ -31,7 +31,7 @@ export const gradientText = css`
  *
  * Border: [default: 2px]
  *
- * - border using like padding. F.Ex = '1 1' or '2' or '0 0 2 0'
+ * - border using like padding. F.Ex = '1px 1px' or '2px' or '0 0 2px 0'
  *
  * BorderRadius: [default: 4px]
  *
