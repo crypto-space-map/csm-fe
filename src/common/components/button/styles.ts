@@ -35,6 +35,18 @@ export const notContainedButtonsActions = css`
   }
 `;
 
+export const containedAnimation = css`
+  transition: --mainGreen 0.2s, --mainBlue 0.2s; //transition for gradient
+  &:active {
+    --mainGreen: #41aacc;
+    --mainBlue: #41aacc;
+  }
+
+  &:hover {
+    --mainGreen: #83d9f5;
+  }
+`;
+
 export const getButtonVariant = (variant: ButtonProps['variant']) => {
   switch (variant) {
     case 'outlined':
@@ -53,15 +65,7 @@ export const getButtonVariant = (variant: ButtonProps['variant']) => {
       return css`
         ${gradientBackground}
         color: #333;
-        transition: --mainGreen 0.2s, --mainBlue 0.2s; //transition for gradient
-        &:active {
-          --mainGreen: #41aacc;
-          --mainBlue: #41aacc;
-        }
-
-        &:hover {
-          --mainGreen: #83d9f5;
-        }
+        ${containedAnimation}
       `;
   }
 };

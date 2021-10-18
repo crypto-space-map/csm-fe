@@ -125,10 +125,11 @@ export const Layout = memo(() => {
       <Counter>1</Counter>
       <Counter>10000</Counter>
       <div>
-        {items.map(item => (
+        {items.map((item, i) => (
           <MenuItem key={item}>
             <Ico />
             {item}
+            <Counter>{i}</Counter>
           </MenuItem>
         ))}
       </div>

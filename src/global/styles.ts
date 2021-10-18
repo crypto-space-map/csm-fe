@@ -17,8 +17,10 @@ export const pallette = css`
   }
 `;
 
+export const mainGradient = 'linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%)';
+
 export const gradientText = css`
-  background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
+  background-image: ${mainGradient};
   background-clip: text;
   -webkit-text-fill-color: transparent;
 `;
@@ -45,7 +47,7 @@ export const gradientBorder = ({ borderRadius, border }: { borderRadius?: number
     bottom: -1px;
     border-radius: ${typeof borderRadius !== 'undefined' ? borderRadius : 4}px;
     padding: ${typeof border !== 'undefined' ? border : '2px'};
-    background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
+    background-image: ${mainGradient};
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
@@ -54,5 +56,5 @@ export const gradientBorder = ({ borderRadius, border }: { borderRadius?: number
 
 export const gradientBackground = css`
   background-size: 100%;
-  background-image: linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%);
+  background-image: ${mainGradient};
 `;

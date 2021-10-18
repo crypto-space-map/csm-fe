@@ -15,7 +15,7 @@ const StyledMenuItem = styled(MuiMenuItem)`
   &:hover {
     ${gradientText}
     ${gradientBorder({ borderRadius: 0 })}
-    &::before {
+    &:before {
       padding: 0 0 0 4px;
     }
     & svg {

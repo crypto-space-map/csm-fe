@@ -15,6 +15,7 @@ const StyledCounter = styled.span`
   color: #1d1c1c;
   width: fit-content;
   border-radius: 20px;
+  -webkit-text-fill-color: #1d1c1c;
   ${gradientBackground}
 `;
 
