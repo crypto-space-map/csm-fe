@@ -1,42 +1,42 @@
 //@ts-nocheck
 import { memo } from 'react';
 
+import LinkIcon from '@mui/icons-material/Link';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import moment from 'moment';
 
 import { Grid } from 'app/components/grid';
-import LinkSvg from 'assets/link.svg';
 
 import { fieldNames, headerNames, products } from './constants';
 import { StyledLink, AnnLink, InvestorsLinkWrapper } from './styles';
 import { InvestorsProps } from './types';
 
 const decorateAmount = (params: GridRenderCellParams) => {
-  const value = params.getValue(params.id, 'amount');
+  const value = params.getValue(params.id, fieldNames.amount);
   if (!value) return null;
   return `$ ${value.toLocaleString()}`;
 };
 
 const decorateDate = (params: GridRenderCellParams) => {
-  const value = params.getValue(params.id, 'ann') as unknown as string;
+  const value = params.getValue(params.id, fieldNames.date) as unknown as string;
   if (!value) return null;
   return moment(value).format('DD MMMM YYYY');
 };
 
 const decorateAnn = (params: GridRenderCellParams) => {
-  const value = params.getValue(params.id, 'ann') as unknown as string;
+  const value = params.getValue(params.id, fieldNames.ann) as unknown as string;
   if (!value) return null;
   return (
     <>
       <AnnLink target="_blank" href={value}>
-        <LinkSvg /> <span>Link</span>
+        <LinkIcon /> <span>Link</span>
       </AnnLink>
     </>
   );
 };
 
 const decorateInvestors = (params: GridRenderCellParams) => {
-  const value = params.getValue(params.id, 'investors') as unknown as InvestorsProps[];
+  const value = params.getValue(params.id, fieldNames.investors) as unknown as InvestorsProps[];
   if (!value) return null;
 
   return (
@@ -57,7 +57,7 @@ const columns: GridColDef[] = [
   {
     field: fieldNames.fundrasingRound,
     headerName: headerNames.fundrasingRound,
-    width: 130,
+    width: 115,
     disableColumnMenu: true,
   },
   {
@@ -70,7 +70,7 @@ const columns: GridColDef[] = [
   {
     field: fieldNames.amount,
     headerName: headerNames.amount,
-    minWidth: 110,
+    width: 110,
     type: 'number',
     valueFormatter: decorateAmount,
   },

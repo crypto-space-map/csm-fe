@@ -23,6 +23,11 @@ export const AnnLink = styled(StyledLink)`
   & > span {
     margin-left: 5px;
   }
+
+  & > svg {
+    color: #000;
+    opacity: 0.54;
+  }
 `;
 
 export const InvestorsLinkWrapper = styled.div`
