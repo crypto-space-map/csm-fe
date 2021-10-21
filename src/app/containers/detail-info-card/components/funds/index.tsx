@@ -91,8 +91,4 @@ const columns: GridColDef[] = [
   },
 ];
 
-export const Funds = memo(() => (
-  <div style={{ height: 400, width: '100%' }}>
-    <Grid columns={columns} rows={products} />
-  </div>
-));
+export const Funds = memo(() => <Grid columns={columns} rows={products} />);
