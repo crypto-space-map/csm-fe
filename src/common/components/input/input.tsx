@@ -3,7 +3,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { TextField, TextFieldProps } from '@mui/material';
 
-type InputProps = TextFieldProps & {
+export type InputProps = TextFieldProps & {
   errorMessage?: string;
 };
 

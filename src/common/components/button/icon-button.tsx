@@ -5,7 +5,7 @@ import { IconButton as MuiIconButton, IconButtonProps as MuiIconButtonProps } fr
 
 import { getButtonVariant, StyledChildren } from './styles';
 
-type IconButtonProps = MuiIconButtonProps & {
+export type IconButtonProps = MuiIconButtonProps & {
   variant?: 'outlined' | 'contained' | 'text';
 };
 
@@ -23,7 +23,3 @@ export const IconButton: React.FunctionComponent<IconButtonProps> = ({ children,
     <StyledChildren>{children}</StyledChildren>
   </StyledButton>
 );
-
-IconButton.defaultProps = {
-  variant: 'contained',
-};

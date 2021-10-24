@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-type RefferalArcProps = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
+export type RefferalArcProps = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
   percents: number;
   radius?: number;
 };
@@ -32,8 +32,4 @@ export const RefferalArc = ({ percents, radius = 70, ...rest }: RefferalArcProps
   }, [ctx]);
 
   return <canvas {...canvas} ref={ref} {...rest} />;
-};
-
-RefferalArc.defaultProps = {
-  radius: 70,
 };

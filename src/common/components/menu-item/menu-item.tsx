@@ -1,10 +1,10 @@
 import React from 'react';
 
 import styled from '@emotion/styled';
-import { MenuItem as MuiMenuItem, MenuItemProps } from '@mui/material';
+import { MenuItem as MuiMenuItem, MenuItemProps as MuiProps } from '@mui/material';
 import { gradientBorder, gradientText } from 'global/styles';
 
-type ItemProps = MenuItemProps & { children: React.ReactNode };
+export type MenuItemProps = MuiProps & { children: React.ReactNode };
 
 const StyledMenuItem = styled(MuiMenuItem)`
   display: grid;
@@ -24,7 +24,7 @@ const StyledMenuItem = styled(MuiMenuItem)`
   }
 `;
 
-export const MenuItem = (props: ItemProps) => (
+export const MenuItem = (props: MenuItemProps) => (
   <StyledMenuItem {...props} disableRipple>
     {props.children}
   </StyledMenuItem>

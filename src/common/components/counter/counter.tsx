@@ -3,7 +3,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { gradientBackground } from 'global/styles';
 
-type CounterProps = React.HtmlHTMLAttributes<HTMLSpanElement> & { children: React.ReactNode };
+export type CounterProps = React.HtmlHTMLAttributes<HTMLSpanElement> & { children: React.ReactNode };
 
 const StyledCounter = styled.span`
   display: flex;

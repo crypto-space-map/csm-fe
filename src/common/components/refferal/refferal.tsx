@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import { RefferalArc } from './refferal-arc';
 
-type RefferalProps = {
+export type RefferalProps = {
   percent: number;
   radius?: number;
   text: string;

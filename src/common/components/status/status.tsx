@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { gradientBackground, gradientBorder } from 'global/styles';
 
-type StatusProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
+export type StatusProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
   size?: 's' | 'm' | 'l';
   variant?: 'text' | 'outlined' | 'contained';
   text: string;
@@ -60,8 +60,3 @@ const StyledStatus = styled.div<StatusProps>`
 `;
 
 export const Status = (props: StatusProps) => <StyledStatus {...props}>{props.text}</StyledStatus>;
-
-Status.defaultProps = {
-  variant: 'contained',
-  size: 'm',
-};
