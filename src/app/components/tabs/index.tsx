@@ -6,13 +6,13 @@ import Tabs from '@mui/material/Tabs';
 
 const useStyles = makeStyles({
   root: {
-    '&.MuiTabs-root': {
-      fontSize: '16px',
-      textTransform: 'none',
-    },
     '&.MuiTabs-root .MuiTab-root': {
       color: '#fff',
       backgroundColor: '#000',
+      fontSize: '16px',
+      textTransform: 'capitalize',
+      padding: '12px 16px',
+      lineHeight: '22px',
     },
 
     '&.MuiTabs-root .Mui-selected': {

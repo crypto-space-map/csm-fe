@@ -7,13 +7,15 @@ import moment from 'moment';
 import { Grid } from 'app/components/grid';
 
 import { fieldNames, headerNames, products } from './constants';
+import { cutLink } from './utils';
 import { StyledLink, AnnLink, InvestorsLinkWrapper } from './styles';
 import { InvestorsProps } from './types';
 
-const decorateAmount = (params: GridValueFormatterParams) => {
-  const value = params.getValue(params.id, fieldNames.amount);
-  if (!value) return null;
-  return `$ ${value.toLocaleString()}`;
+const decorateMcap = (params: GridValueFormatterParams) => {
+  const mcap = params.getValue(params.id, fieldNames.mcap);
+  const mcapInit = params.getValue(params.id, fieldNames.mcapInit);
+  if (!mcap) return null;
+  return `${mcap} ${mcapInit}`;
 };
 
 const decorateDate = (params: GridValueFormatterParams) => {
@@ -28,49 +30,30 @@ const decorateAnn = (params: GridRenderCellParams) => {
   return (
     <>
       <AnnLink target="_blank" href={value}>
-        <LinkIcon /> <span>Link</span>
+        <LinkIcon /> <span>{cutLink(value)}</span>
       </AnnLink>
-    </>
-  );
-};
-
-const decorateInvestors = (params: GridRenderCellParams) => {
-  const value = params.getValue(params.id, fieldNames.investors) as unknown as InvestorsProps[];
-  if (!value) return null;
-
-  return (
-    <>
-      {value.map((item, i, array) => (
-        <InvestorsLinkWrapper>
-          <StyledLink target="_blank" href={item.link}>
-            {item.title}
-          </StyledLink>
-          {array.length - 1 !== i ? <span>,</span> : null}
-        </InvestorsLinkWrapper>
-      ))}
     </>
   );
 };
 
 const columns: GridColDef[] = [
   {
-    field: fieldNames.fundrasingRound,
-    headerName: headerNames.fundrasingRound,
-    width: 105,
-  },
-  {
-    field: fieldNames.investors,
-    headerName: headerNames.investors,
-    width: 243,
+    field: fieldNames.id,
+    headerName: headerNames.id,
+    width: 50,
     sortable: false,
-    renderCell: decorateInvestors,
   },
   {
-    field: fieldNames.amount,
-    headerName: headerNames.amount,
+    field: fieldNames.partner,
+    headerName: headerNames.partner,
+    width: 150,
+    // renderCell: decorateInvestors,
+  },
+  {
+    field: fieldNames.mcap,
+    headerName: headerNames.mcap,
     width: 110,
-    type: 'number',
-    valueFormatter: decorateAmount,
+    valueFormatter: decorateMcap,
   },
   {
     field: fieldNames.date,
@@ -83,10 +66,15 @@ const columns: GridColDef[] = [
     field: fieldNames.ann,
     headerName: headerNames.ann,
     sortable: false,
-    width: 70,
+    /* width: 70, */
     renderCell: decorateAnn,
-    headerAlign: 'right',
   },
 ];
 
-export const Funds = memo(() => <Grid columns={columns} rows={products} />);
+export const Partners = memo(() => <Grid columns={columns} rows={products} />);
+
+/* TODO
+- сортировка mcap
+- многоточие у ссылок
+- авто 
+*/
