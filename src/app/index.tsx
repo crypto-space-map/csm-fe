@@ -1,6 +1,5 @@
-import { Global, ThemeProvider } from '@emotion/react';
+import { Global } from '@emotion/react';
 import { pallette } from 'global/styles';
-import { theme } from 'global/theme';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -23,7 +22,6 @@ interface Props {
 
 export const ConnectedApp = ({ Component }: Props): JSX.Element => (
   <ErrorBoundary>
-    {/* <ThemeProvider theme={theme}> */}
     <Provider store={store}>
       <BrowserRouter>
         <SvgGradient />
@@ -32,7 +30,6 @@ export const ConnectedApp = ({ Component }: Props): JSX.Element => (
         <ToastContainer />
       </BrowserRouter>
     </Provider>
-    {/* </ThemeProvider> */}
   </ErrorBoundary>
 );
 
