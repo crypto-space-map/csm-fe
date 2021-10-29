@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { PageLayout } from 'common';
 
-import { Layout } from './containers/pages/ layout';
+import { Layout } from './containers/pages/layout';
 import { Login } from './containers/pages/login';
 
 const App = () => (
