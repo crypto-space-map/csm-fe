@@ -1,20 +1,23 @@
-import { IconButton, IconButtonProps } from '@mui/material';
+import { IconButtonProps } from '@mui/material';
 
 import FilterIcon from 'assets/icons/filter.svg';
+import SearchIcon from 'assets/icons/search.svg';
 
-import { HeaderInputContainer } from './styled';
+import { HeaderInputContainer, StyledIconButton, StyledInput } from './styled';
 
 const FilterButton = (props: IconButtonProps) => (
-  <IconButton {...props}>
+  <StyledIconButton {...props}>
     <FilterIcon />
-  </IconButton>
+  </StyledIconButton>
 );
 
 export const HeaderInput = () => {
   const disableLineErr = 'arrow-body-style';
+  console.log(disableLineErr);
 
   return (
     <HeaderInputContainer>
+      <StyledInput disableUnderline fullWidth startAdornment={<SearchIcon />} />
       <FilterButton />
     </HeaderInputContainer>
   );

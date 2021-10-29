@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-gap: 40px;
+  justify-content: end;
 `;
 
 const Notifications = (props: IconButtonProps) => (

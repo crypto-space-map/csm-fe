@@ -6,6 +6,7 @@ import Logo from '../../../../../assets/images/csm-logo.svg';
 
 const CSMLogoContainer = styled.div`
   cursor: pointer;
+  justify-content: start;
 `;
 
 export const MainLogo = (props: React.HtmlHTMLAttributes<HTMLDivElement>) => (
