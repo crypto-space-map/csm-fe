@@ -1,7 +1,8 @@
-import React from 'react';
-
 import styled from '@emotion/styled';
 import { TextField, TextFieldProps } from '@mui/material';
+import { COLOR_PALLETTE } from 'global/pallette';
+
+const { ERROR_COLOR, MAIN_WHITE } = COLOR_PALLETTE;
 
 export type InputProps = TextFieldProps & {
   errorMessage?: string;
@@ -11,10 +12,10 @@ type LabelProps = {
   error?: boolean;
 };
 
-const isError = (error?: boolean) => (error ? '#FF8484' : '#828282');
+const isError = (error?: boolean) => (error ? ERROR_COLOR : '#828282');
 
 const StyledInput = styled(TextField)`
-  background-color: ${({ disabled }) => (disabled ? '#BDBDBD' : '#ffffff')};
+  background-color: ${({ disabled }) => (disabled ? '#BDBDBD' : MAIN_WHITE)};
   color: #4f4f4f;
   border-radius: 4px;
   padding: 4px 8px;
@@ -32,19 +33,22 @@ const Label = styled.span<LabelProps>`
   line-height: 16px;
 `;
 
-export const Input = (props: InputProps) => (
-  <InputContainer>
-    <Label error={props.error}>{props.label}</Label>
-    <StyledInput
-      {...props}
-      variant="standard"
-      label=""
-      InputProps={{ ...props.InputProps, disableUnderline: true }}
-      InputLabelProps={{ ...props.InputLabelProps, shrink: false }}
-    />
-    {props.error && props.errorMessage && <Label error={props.error}>{props.errorMessage}</Label>}
-  </InputContainer>
-);
+export const Input = (props: InputProps) => {
+  const { error, label, errorMessage } = props;
+  return (
+    <InputContainer>
+      <Label error={error}>{label}</Label>
+      <StyledInput
+        {...props}
+        variant="standard"
+        label=""
+        InputProps={{ ...props.InputProps, disableUnderline: true }}
+        InputLabelProps={{ ...props.InputLabelProps, shrink: false }}
+      />
+      {error && errorMessage && <Label error={error}>{errorMessage}</Label>}
+    </InputContainer>
+  );
+};
 
 Input.defaultProps = {
   errorMessage: null,

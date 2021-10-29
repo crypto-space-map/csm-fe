@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { ButtonProps } from '@mui/material';
+import { COLOR_PALLETTE } from 'global/pallette';
 import { gradientBackground, gradientBorder, gradientText } from 'global/styles';
 
 export const StyledChildren = styled.span`
@@ -36,14 +37,15 @@ export const notContainedButtonsActions = css`
 `;
 
 export const containedAnimation = css`
-  transition: --mainGreen 0.2s, --mainBlue 0.2s; //transition for gradient
+  /* transition for gradient */
+  transition: --mainGreen 0.2s, --mainBlue 0.2s;
   &:active {
     --mainGreen: #41aacc;
     --mainBlue: #41aacc;
   }
 
   &:hover {
-    --mainGreen: #83d9f5;
+    --mainGreen: ${COLOR_PALLETTE.MAIN_BLUE};
   }
 `;
 
@@ -51,7 +53,7 @@ export const getButtonVariant = (variant: ButtonProps['variant']) => {
   switch (variant) {
     case 'outlined':
       return css`
-        ${gradientBorder({})}
+        ${gradientBorder()}
         ${notContainedButtonsActions}
       `;
     case 'text':

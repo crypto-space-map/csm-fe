@@ -1,9 +1,7 @@
-import React from 'react';
-
 import styled from '@emotion/styled';
 import { Button as MuiButton, ButtonProps } from '@mui/material';
 
-import { getButtonVariant, StyledChildren } from './styles';
+import { getButtonVariant, StyledChildren } from './styled';
 
 const StyledButton = styled(MuiButton)<ButtonProps>`
   display: grid;
@@ -24,7 +22,7 @@ const StyledButton = styled(MuiButton)<ButtonProps>`
   }
 `;
 
-export const Button: React.FunctionComponent<ButtonProps> = ({ children, ...restProps }) => (
+export const Button = ({ children, ...restProps }: ButtonProps) => (
   <StyledButton {...restProps} disableRipple>
     <StyledChildren>{children}</StyledChildren>
   </StyledButton>

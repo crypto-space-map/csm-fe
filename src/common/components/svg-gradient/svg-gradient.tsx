@@ -1,6 +1,7 @@
-import React from 'react';
-
 import styled from '@emotion/styled';
+import { COLOR_PALLETTE } from 'global/pallette';
+
+const { MAIN_BLUE, MAIN_GREEN } = COLOR_PALLETTE;
 
 const Svg = styled.svg`
   position: fixed;
@@ -23,8 +24,8 @@ export const SvgGradient = () => (
         x2="-2.75068"
         y2="13.891"
         gradientUnits="userSpaceOnUse">
-        <stop stopColor="#A8F8A0" />
-        <stop offset="1" stopColor="#83D9F5" />
+        <stop stopColor={MAIN_GREEN} />
+        <stop offset="1" stopColor={MAIN_BLUE} />
       </linearGradient>
     </defs>
   </Svg>

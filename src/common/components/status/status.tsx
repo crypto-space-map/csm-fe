@@ -1,7 +1,6 @@
-import React from 'react';
-
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { COLOR_PALLETTE } from 'global/pallette';
 import { gradientBackground, gradientBorder } from 'global/styles';
 
 export type StatusProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
@@ -14,13 +13,13 @@ const getStatusVariant = (variant: StatusProps['variant']) => {
   switch (variant) {
     case 'outlined':
       return css`
-        background: #ffffff;
+        background: ${COLOR_PALLETTE.MAIN_WHITE};
         ${gradientBorder({ borderRadius: 20 })}
       `;
     case 'text':
       return css`
         background: none;
-        color: #ffffff;
+        color: ${COLOR_PALLETTE.MAIN_WHITE};
       `;
     case 'contained':
     default:

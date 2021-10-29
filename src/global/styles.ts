@@ -1,5 +1,10 @@
 import { css } from '@emotion/react';
 
+import { COLOR_PALLETTE } from './pallette';
+import { GradientBorderProps } from './styles-types';
+
+const { MAIN_BLUE, MAIN_GREEN } = COLOR_PALLETTE;
+
 export const pallette = css`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
   * {
@@ -7,12 +12,12 @@ export const pallette = css`
   }
   @property --mainGreen {
     syntax: '<color>';
-    initial-value: #a8f8a0;
+    initial-value: ${MAIN_GREEN};
     inherits: false;
   }
   @property --mainBlue {
     syntax: '<color>';
-    initial-value: #83d9f5;
+    initial-value: ${MAIN_BLUE};
     inherits: false;
   }
 `;
@@ -37,7 +42,8 @@ export const gradientText = css`
  *
  * - border-radius using like number. F.Ex = ({ borderRadius: 2 })
  */
-export const gradientBorder = ({ borderRadius, border }: { borderRadius?: number; border?: string }) => css`
+
+export const gradientBorder = ({ borderRadius = 4, border = '2px' }: GradientBorderProps = {}) => css`
   &:before {
     content: '';
     position: absolute;
@@ -45,8 +51,8 @@ export const gradientBorder = ({ borderRadius, border }: { borderRadius?: number
     left: 0;
     right: 0;
     bottom: -1px;
-    border-radius: ${typeof borderRadius !== 'undefined' ? borderRadius : 4}px;
-    padding: ${typeof border !== 'undefined' ? border : '2px'};
+    border-radius: ${borderRadius}px;
+    padding: ${border};
     background-image: ${mainGradient};
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;

@@ -1,17 +1,18 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 import styled from '@emotion/styled';
 import { MenuItem as MuiMenuItem, MenuItemProps as MuiProps } from '@mui/material';
+import { COLOR_PALLETTE } from 'global/pallette';
 import { gradientBorder, gradientText } from 'global/styles';
 
-export type MenuItemProps = MuiProps & { children: React.ReactNode };
+export type MenuItemProps = MuiProps & { children: ReactNode };
 
 const StyledMenuItem = styled(MuiMenuItem)`
   display: grid;
   grid-auto-flow: column;
   grid-gap: 1em;
   transition: 0.2s linear;
-  color: #ffffff;
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
   &:hover {
     ${gradientText}
     ${gradientBorder({ borderRadius: 0 })}

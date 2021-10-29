@@ -1,6 +1,5 @@
-import React from 'react';
-
 import styled from '@emotion/styled';
+import { COLOR_PALLETTE } from 'global/pallette';
 
 import { RefferalArc } from './refferal-arc';
 
@@ -19,13 +18,14 @@ const Counter = styled.span`
 const Text = styled.span`
   font-size: 16px;
   line-height: 22px;
+  z-index: 1;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  color: #ffffff;
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
 `;
 
 const Container = styled.div`

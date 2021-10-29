@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { SVGProps } from '@global/types';
 
 export const RadioIcon = (props: SVGProps) => (

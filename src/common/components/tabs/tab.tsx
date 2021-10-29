@@ -1,13 +1,12 @@
-import React from 'react';
-
 import styled from '@emotion/styled';
 import { Tab as MuiTab, TabProps } from '@mui/material';
+import { COLOR_PALLETTE } from 'global/pallette';
 import { gradientBorder } from 'global/styles';
 
 const StyledTab = styled(MuiTab)`
-  color: #ffffff;
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
   &.Mui-selected {
-    color: #ffffff;
+    color: ${COLOR_PALLETTE.MAIN_WHITE};
     ${gradientBorder({ border: '0 0 4px 0' })};
   }
 `;

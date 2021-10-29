@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styled from '@emotion/styled';
 import { Tabs as MuiTabs, TabsProps } from '@mui/material';
 import { gradientBorder } from 'global/styles';

@@ -1,10 +1,9 @@
-import React from 'react';
-
 import styled from '@emotion/styled';
 import { FormControlLabel, Radio as MuiRadio, RadioProps } from '@mui/material';
 import { gradientText } from 'global/styles';
 
-import { RadioIcon, RadioIconChecked } from './icons';
+import RadioIconChecked from './icons/radio-checked.svg';
+import RadioIcon from './icons/radio.svg';
 
 const StyledFCL = styled(FormControlLabel)`
   ${gradientText}
