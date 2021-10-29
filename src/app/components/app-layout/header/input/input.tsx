@@ -12,12 +12,12 @@ const FilterButton = (props: IconButtonProps) => (
 );
 
 export const HeaderInput = () => {
-  const disableLineErr = 'arrow-body-style';
+  const disableLineErr = 'arrow-body-style at HeaderInput';
   console.log(disableLineErr);
 
   return (
     <HeaderInputContainer>
-      <StyledInput disableUnderline fullWidth startAdornment={<SearchIcon />} />
+      <StyledInput placeholder="Search" disableUnderline fullWidth startAdornment={<SearchIcon />} />
       <FilterButton />
     </HeaderInputContainer>
   );
