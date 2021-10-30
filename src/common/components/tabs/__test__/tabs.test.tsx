@@ -5,7 +5,7 @@ import { Tab, Tabs } from '..';
 describe('<Tabs /> ans <Tab />', () => {
   it('should match snapshot', () => {
     const { container } = render(
-      <Tabs>
+      <Tabs value="snapshot">
         <Tab value="snapshot" label="ISnapshot" />
       </Tabs>
     );
@@ -13,7 +13,7 @@ describe('<Tabs /> ans <Tab />', () => {
   });
   it('should be defined', () => {
     const { container } = render(
-      <Tabs>
+      <Tabs value="defined">
         <Tab value="defined" label="IDefined" />
       </Tabs>
     );

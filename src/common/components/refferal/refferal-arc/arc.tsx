@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { CanvasHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
 
-export type RefferalArcProps = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
+export type RefferalArcProps = CanvasHTMLAttributes<HTMLCanvasElement> & {
   percents: number;
   radius?: number;
 };
