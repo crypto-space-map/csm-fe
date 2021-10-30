@@ -9,6 +9,9 @@ const presets = [
       },
     },
   ],
+  // [
+  //   { autoLabel: 'dev-only', labelFormat: '[local]', useBuiltIns: false, throwIfNamespace: true },
+  // ],
   '@babel/preset-typescript',
   ['@babel/preset-react', { useSpread: true, runtime: 'automatic' }],
 ];
