@@ -14,10 +14,10 @@ exports[`<Tabs /> ans <Tab /> should match snapshot 1`] = `
         role="tablist"
       >
         <button
-          aria-selected="false"
-          class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-4dz997-MuiButtonBase-root-MuiTab-root"
+          aria-selected="true"
+          class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-4dz997-MuiButtonBase-root-MuiTab-root"
           role="tab"
-          tabindex="-1"
+          tabindex="0"
           type="button"
         >
           ISnapshot

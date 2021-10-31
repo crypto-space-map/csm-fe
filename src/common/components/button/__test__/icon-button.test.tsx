@@ -1,7 +1,7 @@
 import { ButtonProps } from '@mui/material';
 import { render } from '@testing-library/react';
 
-import { IconButton } from '..';
+import { IconButton } from '../icon-button';
 
 const props: ButtonProps[] = [
   {
