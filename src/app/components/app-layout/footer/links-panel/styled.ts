@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Link as RRDLink } from '@mui/material';
+import { Link as MuiLink } from '@mui/material';
 
 export const StyledLinksPanel = styled.div`
   display: grid;
@@ -8,7 +8,7 @@ export const StyledLinksPanel = styled.div`
   justify-content: start;
 `;
 
-export const Link = styled(RRDLink)`
+export const Link = styled(MuiLink)`
   font-size: 16px;
   line-height: 22px;
   color: #ffffff;
