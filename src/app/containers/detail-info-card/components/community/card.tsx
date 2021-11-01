@@ -59,14 +59,14 @@ const getIcon = (name: string) => {
 
 export const Card = ({ statCount = 0, socialNetwork, link }: CardProps) => {
   const handleClick = () => {
-    console.log(link);
+    window.open(link, '_blank');
   };
 
   return (
-    <CardWrapper>
+    <CardWrapper onClick={handleClick}>
       <CardContent>
         <IconWrapper>{getIcon(socialNetwork)}</IconWrapper>
-        <span>{statCount}</span>
+        <span>{statCount.toLocaleString()}</span>
         <span>{unitList[socialNetwork]}</span>
       </CardContent>
     </CardWrapper>

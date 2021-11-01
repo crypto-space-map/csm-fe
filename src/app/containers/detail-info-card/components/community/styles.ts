@@ -38,7 +38,8 @@ export const CardWrapper = styled.div`
   height: 117px;
   border: 1px solid black;
   border-radius: 10px;
-  margin: 0 14px 14px;
+  margin: 0 0 14px 14px;
+  cursor: pointer;
 `;
 
 export const CardContent = styled.div`
