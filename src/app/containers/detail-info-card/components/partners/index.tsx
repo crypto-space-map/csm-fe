@@ -4,12 +4,11 @@ import LinkIcon from '@mui/icons-material/Link';
 import { GridColDef, GridRenderCellParams, GridValueFormatterParams } from '@mui/x-data-grid';
 import moment from 'moment';
 
-import { Grid } from 'app/components/grid';
+import { Grid, CryptoLogo } from 'app/components';
 
 import { fieldNames, headerNames, products } from './constants';
+import { AnnLink, PartnerWrapper } from './styles';
 import { cutLink } from './utils';
-import { StyledLink, AnnLink, InvestorsLinkWrapper } from './styles';
-import { InvestorsProps } from './types';
 
 const decorateMcap = (params: GridValueFormatterParams) => {
   const mcap = params.getValue(params.id, fieldNames.mcap);
@@ -36,6 +35,18 @@ const decorateAnn = (params: GridRenderCellParams) => {
   );
 };
 
+const decoratePartner = (params: GridRenderCellParams) => {
+  const partnerName = params.getValue(params.id, fieldNames.partner) as unknown as string;
+  const imgSrc = params.getValue(params.id, fieldNames.imgSrc) as unknown as string;
+  if (!partnerName) return null;
+  return (
+    <PartnerWrapper>
+      <CryptoLogo path={imgSrc} />
+      <span>{cutLink(partnerName)}</span>
+    </PartnerWrapper>
+  );
+};
+
 const columns: GridColDef[] = [
   {
     field: fieldNames.id,
@@ -47,7 +58,7 @@ const columns: GridColDef[] = [
     field: fieldNames.partner,
     headerName: headerNames.partner,
     width: 150,
-    // renderCell: decorateInvestors,
+    renderCell: decoratePartner,
   },
   {
     field: fieldNames.mcap,
@@ -66,7 +77,7 @@ const columns: GridColDef[] = [
     field: fieldNames.ann,
     headerName: headerNames.ann,
     sortable: false,
-    /* width: 70, */
+    width: 184,
     renderCell: decorateAnn,
   },
 ];

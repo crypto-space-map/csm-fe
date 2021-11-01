@@ -9,4 +9,5 @@ export interface PartnersProps {
   mcapInit: string;
   date: string;
   ann: string;
+  imgSrc: string;
 }

@@ -33,16 +33,8 @@ export const AnnLink = styled(StyledLink)`
   }
 `;
 
-export const InvestorsLinkWrapper = styled.div`
-  margin-right: 5px;
-  display: flex;
-`;
-
-export const PartnerWrapper = styled.div`
-  display: flex;
-  align-items: center;
-
-  & > span {
-    margin-left: 4px;
-  }
+export const ExchangeWrapper = styled.span`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;

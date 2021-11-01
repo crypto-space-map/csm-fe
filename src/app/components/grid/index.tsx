@@ -7,9 +7,9 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import { addIdToRow, enrichColumns } from './utils';
 
-interface GridProps {
-  columns: GridColDef[];
-  rows: { [key: string]: unknown }[];
+interface GridProps<T extends GridColDef, R> {
+  columns: T[];
+  rows: R[];
 }
 
 const useStyles = makeStyles({
@@ -61,6 +61,7 @@ const useStyles = makeStyles({
       overflow: 'unset !important',
       whiteSpace: 'unset !important',
       lineHeight: '16px !important',
+      textTransform: 'capitalize',
     },
 
     '&.MuiDataGrid-root .MuiDataGrid-columnsContainer': {
