@@ -1,0 +1,36 @@
+module.exports = {
+  coverageDirectory: '<rootDir>/coverage',
+  preset: 'ts-jest/presets/js-with-babel',
+  rootDir: './',
+  verbose: true,
+  testEnvironment: 'jsdom',
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx,js,jsx}',
+    '!src/test/**/*',
+    '!src/**/types.ts',
+    '!src/**/*.test.ts',
+    '!src/**/*.test.tsx',
+    '!src/**/__mocks__/**/*',
+    '!src/**/__test__/**/*',
+    '!src/**/mixins/**/*',
+    '!src/**/index.ts',
+    '!src/**/index.tsx',
+    '!src/**/styles.ts',
+    '!src/**/*.stories.*',
+    '!**/node_modules/**',
+  ],
+  globals: {
+    'ts-jest': {
+      babelConfig: 'babel.config.js',
+    },
+    __IS_SERVER__: false,
+    __NAME__: require('./package.json').name,
+  },
+  moduleNameMapper: {
+    '.+\\.(css|scss|png|jpg|jpeg|svg|ttf|woff|woff2|svg)$': 'jest-transform-stub',
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  testRegex: '(/__test__/.*|(\\.|/)(test|spec))\\.tsx?$',
+  moduleDirectories: ['node_modules', 'src'],
+  transformIgnorePatterns: [],
+};

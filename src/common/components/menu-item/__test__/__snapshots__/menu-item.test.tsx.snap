@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MenuItem /> should match snapshot 1`] = `
+<div>
+  <li
+    class="MuiMenuItem-root MuiMenuItem-gutters MuiButtonBase-root css-15u9oow-MuiButtonBase-root-MuiMenuItem-root"
+    role="menuitem"
+    tabindex="-1"
+    value="snapshot"
+  >
+    snapshot
+  </li>
+</div>
+`;

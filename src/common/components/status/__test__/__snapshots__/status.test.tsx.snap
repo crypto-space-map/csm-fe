@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Status /> should match snapshot 1`] = `
+<div>
+  <div
+    class="css-focol9"
+  >
+    contained
+  </div>
+  <div
+    class="css-qs09xa"
+  >
+    outlined
+  </div>
+  <div
+    class="css-q5ymd1"
+  >
+    text
+  </div>
+</div>
+`;
