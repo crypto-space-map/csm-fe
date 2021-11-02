@@ -1,5 +1,4 @@
 import { Card } from './card';
-
 import { TabContentWrapper } from './styles';
 
 /* bitcoin: 'bitcoin',
