@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RefferalArc /> should match snapshot 1`] = `
+<div>
+  <canvas
+    height="94"
+    width="164"
+  />
+</div>
+`;

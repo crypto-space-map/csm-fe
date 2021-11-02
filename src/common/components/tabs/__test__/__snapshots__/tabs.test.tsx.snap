@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tabs /> ans <Tab /> should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+  >
+    <div
+      class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
+      style="overflow: hidden; margin-bottom: 0px;"
+    >
+      <div
+        class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+        role="tablist"
+      >
+        <button
+          aria-selected="true"
+          class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-4dz997-MuiButtonBase-root-MuiTab-root"
+          role="tab"
+          tabindex="0"
+          type="button"
+        >
+          ISnapshot
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+      <span
+        class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+        style="left: 0px; width: 0px;"
+      >
+        <span
+          class="css-10hb3jh"
+        />
+      </span>
+    </div>
+  </div>
+</div>
+`;
