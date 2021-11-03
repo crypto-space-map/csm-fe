@@ -3,10 +3,12 @@ import { memo, useState } from 'react';
 import { CustomTabs } from 'app/components';
 
 import { Community } from '../community';
+import { Events } from '../events';
 import { Exchanges } from '../exchanges';
 import { Funds } from '../funds';
 import { Partners } from '../partners';
-import { TabContentWrapper, TabContent } from './styles';
+import { Social } from '../social';
+import { TabContentWrapper, TabContent, TabSectionWrapper } from './styles';
 
 const detailInfoTabs = {
   overview: 'overview',
@@ -25,10 +27,10 @@ const options = Object.keys(detailInfoTabs).map(item => ({
 }));
 
 export const TabsSection = memo(() => {
-  const [activeTab, setActiveTab] = useState(detailInfoTabs.community);
+  const [activeTab, setActiveTab] = useState(detailInfoTabs.events);
 
   return (
-    <>
+    <TabSectionWrapper>
       <CustomTabs value={activeTab} options={options} onChangeTabValue={setActiveTab} />
       <TabContentWrapper>
         <TabContent>
@@ -36,8 +38,10 @@ export const TabsSection = memo(() => {
           {activeTab === detailInfoTabs.partners && <Partners />}
           {activeTab === detailInfoTabs.exchanges && <Exchanges />}
           {activeTab === detailInfoTabs.community && <Community />}
+          {activeTab === detailInfoTabs.social && <Social />}
+          {activeTab === detailInfoTabs.events && <Events />}
         </TabContent>
       </TabContentWrapper>
-    </>
+    </TabSectionWrapper>
   );
 });

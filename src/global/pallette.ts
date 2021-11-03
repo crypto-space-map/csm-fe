@@ -3,4 +3,5 @@ export const COLOR_PALLETTE = {
   MAIN_BLUE: '#83d9f5',
   MAIN_WHITE: '#ffffff',
   ERROR_COLOR: '#FF8484',
+  LINK_COLOR: '#41aacc',
 };

@@ -1,22 +1,11 @@
 import styled from '@emotion/styled';
+import { link } from 'global/styles';
 
 export const StyledLink = styled.a`
   display: flex;
-
   text-decoration: none;
   width: -webkit-fill-available;
-  &:link {
-    color: #41aacc;
-  }
-  &:visited {
-    color: #41aacc;
-  }
-  &:hover {
-    color: #41aacc;
-  }
-  &:active {
-    color: #41aacc;
-  }
+  ${link}
 `;
 
 export const AnnLink = styled(StyledLink)`

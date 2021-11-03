@@ -1,5 +1,10 @@
 import styled from '@emotion/styled';
 
+export const TabSectionWrapper = styled.div`
+  background-color: white;
+  height: 100%;
+`;
+
 export const TabContentWrapper = styled.div`
   margin-top: 24px;
   height: 100%;

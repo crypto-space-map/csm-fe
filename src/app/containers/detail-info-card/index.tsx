@@ -1,12 +1,17 @@
 import { memo } from 'react';
 
+import { HeaderSection } from './components/header-section';
+import { StatisticsSection } from './components/statistics-section';
 import { TabsSection } from './components/tabs-section';
+import { DetailWrapper, TopSection } from './styles';
 
-export const DetailInfoCard = memo(() => {
-  const hanle = () => {};
-  return (
-    <div style={{ height: 400, width: 701 }}>
-      <TabsSection />
-    </div>
-  );
-});
+export const DetailInfoCard = memo(() => (
+  <DetailWrapper>
+    <TopSection>
+      <HeaderSection />
+      <StatisticsSection />
+    </TopSection>
+
+    <TabsSection />
+  </DetailWrapper>
+));
