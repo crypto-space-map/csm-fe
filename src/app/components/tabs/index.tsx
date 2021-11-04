@@ -1,27 +1,26 @@
-import { makeStyles } from '@material-ui/core/styles';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
+import styled from '@emotion/styled';
+import { Tab as MuiTab, Tabs as MuiTabs } from '@mui/material';
+import { COLOR_PALLETTE } from 'global/pallette';
 
-const useStyles = makeStyles({
-  root: {
-    '&.MuiTabs-root .MuiTab-root': {
-      color: '#fff',
-      backgroundColor: '#000',
-      fontSize: '16px',
-      textTransform: 'capitalize',
-      padding: '12px 16px',
-      lineHeight: '22px',
-    },
+const StyledTab = styled(MuiTab)`
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
+  background-color: ${COLOR_PALLETTE.MAIN_BLACK};
+  font-size: 16px;
+  text-transform: capitalize;
+  padding: 12px 16px;
+  line-height: 22px;
 
-    '&.MuiTabs-root .Mui-selected': {
-      color: '#000',
-      backgroundColor: '#fff',
-    },
-    '&.MuiTabs-root .MuiTabs-indicator': {
-      backgroundColor: 'transparent',
-    },
-  },
-});
+  &.Mui-selected {
+    color: ${COLOR_PALLETTE.MAIN_BLACK};
+    background-color: ${COLOR_PALLETTE.MAIN_WHITE};
+  }
+`;
+
+const StyledTabs = styled(MuiTabs)`
+  & .MuiTabs-indicator {
+    display: none;
+  }
+`;
 
 interface CustomTabsProps {
   options: { value: string; label: string }[];
@@ -30,16 +29,15 @@ interface CustomTabsProps {
 }
 
 export const CustomTabs = ({ value, options, onChangeTabValue }: CustomTabsProps) => {
-  const classes = useStyles();
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     onChangeTabValue(newValue);
   };
 
   return (
-    <Tabs className={classes.root} value={value} onChange={handleChange}>
+    <StyledTabs value={value} onChange={handleChange}>
       {options.map(item => (
-        <Tab {...item} key={item.value} />
+        <StyledTab {...item} key={item.value} />
       ))}
-    </Tabs>
+    </StyledTabs>
   );
 };
