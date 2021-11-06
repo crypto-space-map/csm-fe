@@ -11,6 +11,7 @@ import { Radio } from 'common/components/radio';
 import { Refferal } from 'common/components/refferal';
 import { Status } from 'common/components/status';
 import { Tab, Tabs } from 'common/components/tabs';
+import { Loader } from 'common/components/loader';
 
 const Container = styled.div`
   display: grid;
@@ -147,6 +148,7 @@ export const Layout = memo(() => {
         <Tab value="two" label="Item Two" />
         <Tab value="three" label="Item Three" />
       </Tabs>
+      <Loader />
     </Container>
   );
 });
