@@ -16,29 +16,33 @@ export const TestCsm = () => {
       const root = pack({ data, width, height });
       let focus = root;
       let view;
+
+      let xScale = d3.scaleLinear().domain([0, 1]).range([0, 600]);
+
       const svg = d3
         .select('.csm-map')
         .attr('viewBox', `-${width / 2} -${height / 2} ${width} ${height}`)
         .style('display', 'block')
-        .style('margin', '0 -14px')
         .style('background', 'transparent')
         .style('cursor', 'pointer')
         .on('click', event => console.log(event));
 
       const node = svg
         .append('g')
+        .join('rect')
         .selectAll('circle')
         .data(root.descendants().slice(1))
         .join('circle')
         .attr('fill', d => (d.children ? 'transparent' : 'white'))
         .attr('stroke', 'white')
         .attr('stroke-dasharray', '10,10')
+        .attr('stroke-dasharray', '10,10')
         .attr('pointer-events', d => (!d.children ? 'none' : null))
         .on('mouseover', function () {
-          d3.select(this).attr('stroke', 'white');
+          d3.select(this).attr('stroke', 'red');
         })
         .on('mouseout', function () {
-          d3.select(this).attr('stroke', 'red');
+          d3.select(this).attr('stroke', 'white');
         })
         .on('click', (event, d) => focus !== d && console.log({ event, d }));
 
@@ -54,11 +58,9 @@ export const TestCsm = () => {
         .style('display', d => (d.parent === root ? 'inline' : 'none'))
         .text(d => d.data.name);
 
-      console.log(root.x, root.y, root.r);
-
       zoomTo([root.x, root.y, height * 1.5]);
 
-      function zoomTo(v) {
+      function zoomTo(v: number[]) {
         const k = width / v[2];
 
         view = v;
@@ -68,10 +70,7 @@ export const TestCsm = () => {
         node.attr('r', d => d.r * k);
       }
     }
-    return () => {
-      svg.node();
-    };
-  }, [wrapperRef]);
+  }, [wrapperRef.current?.offsetWidth]);
 
   return (
     <ChartWrapper ref={wrapperRef}>

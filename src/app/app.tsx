@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { AppLayout } from './containers/pages/app-layout';
 import { TestCsm } from './containers/pages/chart-test';
 import { Login } from './containers/pages/login';
+import { TestCsm as Aaa } from './containers/pages/chart-test/aa';
 
 export const App = () => (
   <AppLayout>
