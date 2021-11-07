@@ -1,204 +1,91 @@
-/* eslint-disable max-lines */
-import { memo } from 'react';
+import { useState, useMemo, useCallback, /* useEffect */ memo } from 'react';
 
-import styled from '@emotion/styled';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { CellItem } from './cell-item';
+import { HeaderItem } from './header-item';
+import {
+  GridWrapper,
+  StyledGridContent,
+  StyledGridHeader,
+  StyledGridContentRow,
+  StyledGridRowWrapper,
+} from './styles';
+import { ColumnProps } from './types';
+import { SortingValues } from './utils';
 
-import { addIdToRow, enrichColumns } from './utils';
+export const Grid = memo(
+  <R extends Record<string, any>>({ columns, rows }: { columns: ColumnProps[]; rows: R[] }) => {
+    const [sortedField, setSortedField] = useState(columns[0].field);
 
-interface GridProps<T extends GridColDef, R> {
-  columns: T[];
-  rows: R[];
-}
+    const [sortDirection, setSortDirection] = useState(SortingValues.Asc);
+    // const [sortedRows, setSortedRows] = useState<any>([]);
 
-const StyledDataGrid = styled(DataGrid)`
-  /*   border: none;
+    const columnWidths = useMemo(() => columns.map(item => `${item.width}px`).join(' '), [columns]);
 
-  & .MuiDataGrid-renderingZone {
-    max-height: none !important;
-    min-height: 0px !important;
-  }
-
-  & .MuiDataGrid-row {
-    max-height: none !important;
-    min-height: 0px !important;
-  }
-
-  & .MuiDataGrid-cell {
-    flex-wrap: wrap;
-    line-height: unset !important;
-    max-height: none !important;
-    min-height: 0px !important;
-    white-space: normal;
-    padding: 10px;
-  }
-
-  & .MuiDataGrid-cell:focus {
-    outline: none;
-  }
-
-  & .MuiDataGrid-columnHeader:focus-within .MuiDataGrid-cell:focus-within {
-    outline: none;
-  }
-
-  & .MuiDataGrid-columnHeaderTitleContainer {
-    padding: 0px;
-    line-height: unset !important;
-    overflow: unset !important;
-    white-space: unset !important;
-    align-items: baseline;
-  }
-
-  & .MuiDataGrid-columnHeaderWrapper {
-    align-items: baseline;
-  }
-
-  & .MuiDataGrid-columnHeaderTitle {
-    overflow: unset !important;
-    white-space: unset !important;
-    line-height: 16px !important;
-    text-transform: capitalize;
-  }
-
-  & .MuiDataGrid-columnsContainer {
-    line-height: unset !important;
-    max-height: none !important;
-    min-height: 0px !important;
-    padding-bottom: 16px;
-  }
-
-  & .MuiDataGrid-columnHeader:focus {
-    outline: none;
-  }
-
-  & .MuiDataGrid-columnSeparator {
-    visibility: hidden;
-  }
-  & .MuiDataGrid-cell--withRenderer {
-    align-items: unset;
-  }
-  & .MuiDataGrid-columnHeader .MuiDataGrid-iconButtonContainer {
-    visibility: visible;
-    width: 13px;
-    height: 13px;
-  }
-
-   & .MuiIconButton-root MuiIconButton-sizeSmall {
-    width: 13px;
-    height: 13px;
-  }
-
-  & .MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted) .MuiDataGrid-sortIcon {
-    opacity: 0.5;
-    transition: unset;
-  } */
-`;
-
-/* const useStyles = makeStyles({
-  root: {
-    '&.MuiDataGrid-root ': {
-      border: 'none',
-    },
-
-    '& .MuiDataGrid-renderingZone': {
-      maxHeight: 'none !important',
-      minHeight: '0px !important',
-    },
-    '& .MuiDataGrid-row': {
-      maxHeight: 'none !important',
-      minHeight: '0px !important',
-    },
-
-    '&.MuiDataGrid-root .MuiDataGrid-cell': {
-      flexWrap: 'wrap',
-      lineHeight: 'unset !important',
-      maxHeight: 'none !important',
-      minHeight: '0px !important',
-      whiteSpace: 'normal',
-      padding: '10px',
-    },
-
-    '&.MuiDataGrid-root .MuiDataGrid-cell:focus': {
-      outline: 'none',
-    },
-
-    '&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus-within, .MuiDataGrid-root .MuiDataGrid-cell:focus-within':
-      {
-        outline: 'none',
+    const handleChangeSort = useCallback(
+      (fieldName: string) => {
+        if (sortedField === fieldName) {
+          setSortDirection(sortDirection === SortingValues.Asc ? SortingValues.Desc : SortingValues.Asc);
+        }
+        if (sortedField !== fieldName) {
+          setSortDirection(SortingValues.Asc);
+          setSortedField(fieldName);
+        }
       },
+      [setSortDirection, setSortedField, sortDirection, sortedField]
+    );
 
-    '&.MuiDataGrid-root .MuiDataGrid-columnHeaderTitleContainer': {
-      padding: '0px',
-      lineHeight: 'unset !important',
-      overflow: 'unset !important',
-      whiteSpace: 'unset !important',
-      alignItems: 'baseline',
-    },
+    /*  useEffect(() => {
+    const newRowsArr = rows.slice();
+    const fieldOptions = columns.find(item => item.field === sortedField);
 
-    '&.MuiDataGrid-root .MuiDataGrid-columnHeaderWrapper': {
-      alignItems: 'baseline',
-    },
+    if (fieldOptions?.customSortRules && typeof fieldOptions?.customSortRules === 'function') {
+      setSortedRows(
+        newRowsArr.sort((...args) =>
+          fieldOptions.customSortRules({ ...args, fieldName: sortedField, sortDirection })
+        )
+      );
+      return;
+    }
+    if (fieldOptions?.customSortRules) {
+      setSortedRows(
+        newRowsArr.sort((...args) => dateSortFunc({ ...args, fieldName: sortedField, sortDirection }))
+      );
+      return;
+    }
 
-    '&.MuiDataGrid-root .MuiDataGrid-columnHeaderTitle': {
-      overflow: 'unset !important',
-      whiteSpace: 'unset !important',
-      lineHeight: '16px !important',
-      textTransform: 'capitalize',
-    },
+    setSortedRows(newRowsArr.sort());
+  }, [products, sortedField, sortDirection]); */
 
-    '&.MuiDataGrid-root .MuiDataGrid-columnsContainer': {
-      lineHeight: 'unset !important',
-      maxHeight: 'none !important',
-      minHeight: '0px !important',
-      paddingBottom: '16px',
-    },
-
-    '&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus': {
-      outline: 'none',
-    },
-
-    '&.MuiDataGrid-root .MuiDataGrid-columnSeparator': {
-      visibility: 'hidden',
-    },
-    '&.MuiDataGrid-root .MuiDataGrid-cell--withRenderer': {
-      alignItems: 'unset',
-    },
-
-    '&.MuiDataGrid-root .MuiDataGrid-columnHeader .MuiDataGrid-iconButtonContainer': {
-      visibility: 'visible',
-      width: '13px',
-      height: '13px',
-    },
-
-    '&.MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall': {
-      width: '13px',
-      height: '13px',
-    },
-
-    '&.MuiDataGrid-root .MuiDataGrid-columnHeader:not(.MuiDataGrid-columnHeader--sorted) .MuiDataGrid-sortIcon':
-      {
-        opacity: '0.5',
-        transition: 'unset',
-      },
-  },
-});
- */
-
-export const Grid = memo(({ columns, rows }: GridProps) => {
-  return (
-    <StyledDataGrid
-      rows={addIdToRow(rows)}
-      columns={enrichColumns(columns)}
-      hideFooter
-      disableSelectionOnClick
-      disableColumnSelector
-      components={{
-        ColumnUnsortedIcon: ArrowDropDownIcon,
-        ColumnSortedAscendingIcon: ArrowDropDownIcon,
-        ColumnSortedDescendingIcon: ArrowDropUpIcon,
-      }}
-    />
-  );
-});
+    return (
+      <GridWrapper>
+        <StyledGridHeader columnWidths={columnWidths}>
+          {columns.map(item => (
+            <HeaderItem
+              {...item}
+              key={item.field}
+              onChangeSortField={handleChangeSort}
+              selected={sortedField === item.field}
+              sortDirection={sortDirection}
+            />
+          ))}
+        </StyledGridHeader>
+        <StyledGridContent>
+          {rows.map(item => (
+            <StyledGridRowWrapper>
+              <StyledGridContentRow columnWidths={columnWidths}>
+                {Object.keys(item).map(name => (
+                  <CellItem
+                    key={`${name} ${item.id}`}
+                    row={item}
+                    fieldName={name}
+                    headerCellOptions={columns.find(column => column.field === name)}
+                  />
+                ))}
+              </StyledGridContentRow>
+            </StyledGridRowWrapper>
+          ))}
+        </StyledGridContent>
+      </GridWrapper>
+    );
+  }
+);

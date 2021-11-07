@@ -1,9 +1,11 @@
-import { GridColDef, GridAlignment } from '@mui/x-data-grid';
+import moment from 'moment';
 
-const alignLeft: GridAlignment = 'left';
+export enum SortingValues {
+  Asc = 'ASC',
+  Desc = 'DESC',
+}
 
-export const addIdToRow = (rows: { [key: string]: unknown }[]) =>
-  rows.map((item, index) => ({ id: index + 1, ...item }));
-
-export const enrichColumns = (columns: GridColDef[]) =>
-  columns.map(item => ({ disableColumnMenu: true, headerAlign: alignLeft, ...item }));
+export const dateSortFunc = ({ a, b, fieldName, sortDirection }) =>
+  sortDirection === SortingValues.Desc
+    ? moment(a[fieldName]).valueOf() - moment(b[fieldName]).valueOf()
+    : moment(b[fieldName]).valueOf() - moment(a[fieldName]).valueOf();

@@ -6,6 +6,7 @@ import { Community } from '../community';
 import { Events } from '../events';
 import { Exchanges } from '../exchanges';
 import { Funds } from '../funds';
+import { Overview } from '../overview';
 import { Partners } from '../partners';
 import { Social } from '../social';
 import { TabContentWrapper, TabContent, TabSectionWrapper } from './styles';
@@ -27,13 +28,14 @@ const options = Object.keys(detailInfoTabs).map(item => ({
 }));
 
 export const TabsSection = memo(() => {
-  const [activeTab, setActiveTab] = useState(detailInfoTabs.events);
+  const [activeTab, setActiveTab] = useState(detailInfoTabs.overview);
 
   return (
     <TabSectionWrapper>
       <CustomTabs value={activeTab} options={options} onChangeTabValue={setActiveTab} />
       <TabContentWrapper>
         <TabContent>
+          {activeTab === detailInfoTabs.overview && <Overview />}
           {activeTab === detailInfoTabs.funds && <Funds />}
           {activeTab === detailInfoTabs.partners && <Partners />}
           {activeTab === detailInfoTabs.exchanges && <Exchanges />}
