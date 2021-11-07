@@ -19,6 +19,8 @@ export const TestCsm = () => {
 
       let xScale = d3.scaleLinear().domain([0, 1]).range([0, 600]);
 
+      console.log(root)
+
       const svg = d3
         .select('.csm-map')
         .attr('viewBox', `-${width / 2} -${height / 2} ${width} ${height}`)
@@ -31,6 +33,7 @@ export const TestCsm = () => {
         .append('g')
         .join('rect')
         .selectAll('circle')
+        .attr("cy", 90)
         .data(root.descendants().slice(1))
         .join('circle')
         .attr('fill', d => (d.children ? 'transparent' : 'white'))
@@ -70,7 +73,7 @@ export const TestCsm = () => {
         node.attr('r', d => d.r * k);
       }
     }
-  }, [wrapperRef.current?.offsetWidth]);
+  }, [wrapperRef.current?.offsetWidth, wrapperRef.current?.getAttribute('class')]);
 
   return (
     <ChartWrapper ref={wrapperRef}>
