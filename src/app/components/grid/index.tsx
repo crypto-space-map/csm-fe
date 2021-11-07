@@ -20,6 +20,7 @@ export const Grid = memo(
     // const [sortedRows, setSortedRows] = useState<any>([]);
 
     const columnWidths = useMemo(() => columns.map(item => `${item.width}px`).join(' '), [columns]);
+    const columnFieldNames = useMemo(() => columns.map(item => item.field), [columns]);
 
     const handleChangeSort = useCallback(
       (fieldName: string) => {
@@ -73,7 +74,7 @@ export const Grid = memo(
           {rows.map(item => (
             <StyledGridRowWrapper>
               <StyledGridContentRow columnWidths={columnWidths}>
-                {Object.keys(item).map(name => (
+                {columnFieldNames.map(name => (
                   <CellItem
                     key={`${name} ${item.id}`}
                     row={item}
