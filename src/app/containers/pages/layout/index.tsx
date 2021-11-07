@@ -6,12 +6,12 @@ import { Button, IconButton } from 'common/components/button';
 import { CheckBox } from 'common/components/checkbox';
 import { Counter } from 'common/components/counter';
 import { Input } from 'common/components/input';
+import { Loader } from 'common/components/loader';
 import { MenuItem } from 'common/components/menu-item';
 import { Radio } from 'common/components/radio';
 import { Refferal } from 'common/components/refferal';
 import { Status } from 'common/components/status';
 import { Tab, Tabs } from 'common/components/tabs';
-import { Loader } from 'common/components/loader';
 
 const Container = styled.div`
   display: grid;
@@ -20,7 +20,6 @@ const Container = styled.div`
   align-items: center;
   background-color: #242424;
   height: 100%;
-  padding: 1em;
 `;
 
 const Ico = (props: any) => (
@@ -148,6 +147,8 @@ export const Layout = memo(() => {
         <Tab value="two" label="Item Two" />
         <Tab value="three" label="Item Three" />
       </Tabs>
+      <Loader />
+      <Loader />
       <Loader />
     </Container>
   );
