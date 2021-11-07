@@ -1,18 +1,23 @@
-export interface ColumnProps {
+export interface ColumnProps<T, K extends keyof T> {
   field: string;
   headerName: string;
   width: number;
   sortable?: boolean;
   type?: string;
-  renderCell?: <T extends Record<string, any>>(row: T) => JSX.Element | null;
-  valueFormatter?: (row: any) => string | null;
-  customSortRules?: (arg0: any) => number;
+  renderCell?: (row: T) => JSX.Element | null;
+  valueFormatter?: (row: T) => string | null;
+  customSortRules?: (arg0: T) => number;
 }
 
-export interface HeaderItemProps extends ColumnProps {
+export interface HeaderItemProps<T, K extends keyof T> extends ColumnProps<T, K> {
   onChangeSortField: (arg0: string) => void;
   selected: boolean;
   sortDirection: string;
+}
+
+export interface GridProps<T, K extends keyof T> {
+  columns: Array<ColumnProps<T, K>>;
+  rows: Array<T>;
 }
 
 /*  

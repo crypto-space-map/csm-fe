@@ -52,7 +52,7 @@ const decorateAnn = (row: FundsProps) => {
   );
 };
 
-const columns: ColumnProps[] = [
+const columns: ColumnProps<FundsProps, keyof FundsProps>[] = [
   {
     field: fieldNames.fundrasingRound,
     headerName: headerNames.fundrasingRound,
