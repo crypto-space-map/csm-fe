@@ -7,16 +7,16 @@ const CIRCLE_RADIUS = {
 };
 
 enum circlePosition {
-  FIRST = 1,
-  SECOND = 2,
-  THIRD = 3,
+  BOTTOM_LEFT = 1,
+  TOP = 2,
+  BOTTOM_RIGHT = 3,
 }
 
 const animation = '0.9s linear infinite';
 
 const zooming = (position: circlePosition) => {
   switch (position) {
-    case (position = circlePosition.FIRST):
+    case (position = circlePosition.BOTTOM_LEFT):
       return keyframes`
         0%{
             r: ${CIRCLE_RADIUS.MIN}; 
@@ -31,7 +31,7 @@ const zooming = (position: circlePosition) => {
             r: ${CIRCLE_RADIUS.MIN}; 
         }
       `;
-    case (position = circlePosition.SECOND):
+    case (position = circlePosition.TOP):
       return keyframes`
         0%{
             r: ${CIRCLE_RADIUS.MIN}; 
@@ -49,7 +49,7 @@ const zooming = (position: circlePosition) => {
             r: ${CIRCLE_RADIUS.MIN}; 
         }
     `;
-    case (position = circlePosition.THIRD):
+    case (position = circlePosition.BOTTOM_RIGHT):
       return keyframes`
         0%{
             r: ${CIRCLE_RADIUS.MIN}; 
@@ -73,12 +73,12 @@ export const StyledLoader = styled.svg`
   overflow: visible;
   /* special arrangement of circles in svg */
   & :nth-of-type(2) {
-    animation: ${zooming(circlePosition.FIRST)} ${animation};
+    animation: ${zooming(circlePosition.BOTTOM_LEFT)} ${animation};
   }
   & :nth-of-type(1) {
-    animation: ${zooming(circlePosition.SECOND)} ${animation};
+    animation: ${zooming(circlePosition.TOP)} ${animation};
   }
   & :nth-of-type(3) {
-    animation: ${zooming(circlePosition.THIRD)} ${animation};
+    animation: ${zooming(circlePosition.BOTTOM_RIGHT)} ${animation};
   }
 `;
