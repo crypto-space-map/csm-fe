@@ -7,7 +7,10 @@ export const pack = ({ data, width, height }: PackType) => {
     .pack()
     .size([width * 2, height])
     .padding(26);
-  const parsedData = d3.hierarchy(data).sum(d => d.value);
+  const parsedData = d3
+    .hierarchy(data)
+    .sum(d => d.value)
+    .sort((a, b) => b.value - a.value);
 
   return partition(parsedData);
 };

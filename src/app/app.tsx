@@ -5,7 +5,6 @@ import { AppLayout } from './containers/pages/app-layout';
 import { TestCsm } from './containers/pages/chart-test';
 import { Layout } from './containers/pages/layout';
 import { Login } from './containers/pages/login';
-import { TestCsm as Aaa } from './containers/pages/chart-test/aa';
 
 export const App = () => (
   <AppLayout>
