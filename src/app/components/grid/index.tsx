@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 
 import { CellItem } from './cell-item';
 import { HeaderItem } from './header-item';
@@ -9,20 +9,20 @@ import {
   StyledGridContentRow,
   StyledGridRowWrapper,
 } from './styles';
-import { GridProps } from './types';
-import { SortingValues } from './utils';
+import { GridProps, SortingValues } from './types';
+import { getCompareFunc } from './utils';
 
-export const Grid = <T, K extends keyof T>({ columns, rows }: GridProps<T, K>) => {
+export const Grid = <R extends { id: string }>({ columns, rows }: GridProps<R>) => {
   const [sortedField, setSortedField] = useState(columns[0].field);
 
   const [sortDirection, setSortDirection] = useState(SortingValues.Asc);
-  // const [sortedRows, setSortedRows] = useState<any>([]);
+  const [sortedRows, setSortedRows] = useState<R[]>([]);
 
   const columnWidths = useMemo(() => columns.map(item => `${item.width}px`).join(' '), [columns]);
   const columnFieldNames = useMemo(() => columns.map(item => item.field), [columns]);
 
   const handleChangeSort = useCallback(
-    (fieldName: string) => {
+    (fieldName: keyof R) => {
       if (sortedField === fieldName) {
         setSortDirection(sortDirection === SortingValues.Asc ? SortingValues.Desc : SortingValues.Asc);
       }
@@ -34,27 +34,26 @@ export const Grid = <T, K extends keyof T>({ columns, rows }: GridProps<T, K>) =
     [setSortDirection, setSortedField, sortDirection, sortedField]
   );
 
-  /*  useEffect(() => {
+  useEffect(() => {
     const newRowsArr = rows.slice();
     const fieldOptions = columns.find(item => item.field === sortedField);
+    const compareFunc = getCompareFunc(fieldOptions?.type);
 
     if (fieldOptions?.customSortRules && typeof fieldOptions?.customSortRules === 'function') {
+      const { customSortRules } = fieldOptions;
       setSortedRows(
         newRowsArr.sort((...args) =>
-          fieldOptions.customSortRules({ ...args, fieldName: sortedField, sortDirection })
+          customSortRules({ a: args[0], b: args[1], fieldName: sortedField, sortDirection })
         )
       );
       return;
     }
-    if (fieldOptions?.customSortRules) {
-      setSortedRows(
-        newRowsArr.sort((...args) => dateSortFunc({ ...args, fieldName: sortedField, sortDirection }))
-      );
-      return;
-    }
-
-    setSortedRows(newRowsArr.sort());
-  }, [products, sortedField, sortDirection]); */
+    setSortedRows(
+      newRowsArr.sort((...args) =>
+        compareFunc({ a: args[0], b: args[1], fieldName: sortedField, sortDirection })
+      )
+    );
+  }, [columns, rows, sortedField, sortDirection]);
 
   return (
     <GridWrapper>
@@ -62,7 +61,7 @@ export const Grid = <T, K extends keyof T>({ columns, rows }: GridProps<T, K>) =
         {columns.map(item => (
           <HeaderItem
             {...item}
-            key={item.field}
+            key={`${item.width} ${item.field}`}
             onChangeSortField={handleChangeSort}
             selected={sortedField === item.field}
             sortDirection={sortDirection}
@@ -70,12 +69,12 @@ export const Grid = <T, K extends keyof T>({ columns, rows }: GridProps<T, K>) =
         ))}
       </StyledGridHeader>
       <StyledGridContent>
-        {rows.map(item => (
+        {sortedRows.map(item => (
           <StyledGridRowWrapper>
             <StyledGridContentRow columnWidths={columnWidths}>
               {columnFieldNames.map(name => (
                 <CellItem
-                  key={`${name} ${item.id}`} // добавь в extended интерфейс и отнаследуйся от него, чтобы расширить общие свойства
+                  key={`${name} ${item.id}`}
                   row={item}
                   fieldName={name}
                   headerCellOptions={columns.find(column => column.field === name)}

@@ -1,29 +1,47 @@
 import { memo } from 'react';
 
-import LinkIcon from '@mui/icons-material/Link';
-import { GridColDef, GridRenderCellParams, GridValueFormatterParams } from '@mui/x-data-grid';
 import moment from 'moment';
 
 import { Grid } from 'app/components/grid';
+import { ColumnProps, SortingTypes } from 'app/components/grid/types';
+import LinkIcon from 'assets/link.svg';
 
-import { fieldNames, headerNames, products } from './constants';
-import { StyledLink, AnnLink, InvestorsLinkWrapper } from './styles';
-import { InvestorsProps } from './types';
+import { headerNames, products } from './constants';
+import { StyledLink, AnnLink, InvestorsWrapper, InvestorLinkWrapper } from './styles';
+import { FundsProps } from './types';
 
-const decorateAmount = (params: GridValueFormatterParams) => {
-  const value = params.getValue(params.id, fieldNames.amount);
+const decorateAmount = (row: FundsProps) => {
+  const value = row.amount;
   if (!value) return null;
   return `$ ${value.toLocaleString()}`;
 };
 
-const decorateDate = (params: GridValueFormatterParams) => {
-  const value = params.getValue(params.id, fieldNames.date) as unknown as string;
+const decorateDate = (row: FundsProps) => {
+  const value = row.date;
   if (!value) return null;
   return moment(value).format('DD MMMM YYYY');
 };
 
-const decorateAnn = (params: GridRenderCellParams) => {
-  const value = params.getValue(params.id, fieldNames.ann) as unknown as string;
+const decorateInvestors = (row: FundsProps) => {
+  const value = row.investors;
+  if (!value) return null;
+
+  return (
+    <InvestorsWrapper>
+      {value.map((item, i, array) => (
+        <InvestorLinkWrapper>
+          <StyledLink target="_blank" href={item.link}>
+            {item.title}
+          </StyledLink>
+          {array.length - 1 !== i ? <span>,</span> : null}
+        </InvestorLinkWrapper>
+      ))}
+    </InvestorsWrapper>
+  );
+};
+
+const decorateAnn = (row: FundsProps) => {
+  const value = row.ann;
   if (!value) return null;
   return (
     <>
@@ -34,58 +52,39 @@ const decorateAnn = (params: GridRenderCellParams) => {
   );
 };
 
-const decorateInvestors = (params: GridRenderCellParams) => {
-  const value = params.getValue(params.id, fieldNames.investors) as unknown as InvestorsProps[];
-  if (!value) return null;
-
-  return (
-    <>
-      {value.map((item, i, array) => (
-        <InvestorsLinkWrapper>
-          <StyledLink target="_blank" href={item.link}>
-            {item.title}
-          </StyledLink>
-          {array.length - 1 !== i ? <span>,</span> : null}
-        </InvestorsLinkWrapper>
-      ))}
-    </>
-  );
-};
-
-const columns: GridColDef[] = [
+const columns: ColumnProps<FundsProps>[] = [
   {
-    field: fieldNames.fundrasingRound,
+    field: 'fundrasingRound',
     headerName: headerNames.fundrasingRound,
     width: 105,
   },
   {
-    field: fieldNames.investors,
+    field: 'investors',
     headerName: headerNames.investors,
-    width: 243,
+    width: 233,
     sortable: false,
     renderCell: decorateInvestors,
   },
   {
-    field: fieldNames.amount,
+    field: 'amount',
     headerName: headerNames.amount,
-    width: 110,
-    type: 'number',
+    width: 100,
+    type: SortingTypes.Number,
     valueFormatter: decorateAmount,
   },
   {
-    field: fieldNames.date,
+    field: 'date',
     headerName: headerNames.date,
-    width: 130,
-    type: 'date',
+    width: 120,
+    type: SortingTypes.Date,
     valueFormatter: decorateDate,
   },
   {
-    field: fieldNames.ann,
+    field: 'ann',
     headerName: headerNames.ann,
     sortable: false,
     width: 70,
     renderCell: decorateAnn,
-    headerAlign: 'right',
   },
 ];
 

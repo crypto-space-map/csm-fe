@@ -10,7 +10,9 @@ export const CardWrapper = styled.article`
   padding: 19px;
   font-size: 16px;
   line-height: 22px;
-  ${link}
+  & a {
+    ${link}
+  }
 `;
 
 export const TitleSection = styled.section`

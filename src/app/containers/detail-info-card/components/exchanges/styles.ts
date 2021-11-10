@@ -4,7 +4,6 @@ import { link } from 'global/styles';
 export const StyledLink = styled.a`
   display: flex;
   text-decoration: none;
-  width: -webkit-fill-available;
   ${link}
 `;
 

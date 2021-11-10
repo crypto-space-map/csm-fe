@@ -1,7 +1,8 @@
 export interface ExchangesProps {
+  id: string;
   exchange: string;
   pairLink: string;
-  pairName: string;
+  pair: string;
   price: string;
   volume: string;
   persentVolume: string;

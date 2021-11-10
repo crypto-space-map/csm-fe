@@ -20,7 +20,8 @@ export const headerNames = {
 
 export const products: PartnersProps[] = [
   {
-    partner: 'RioDeFi',
+    id: '1',
+    partner: 'FioDeFi',
     mcap: '13.4',
     mcapInit: 'mln',
     date: '2021-10-16T19:20:42+03:00',
@@ -29,6 +30,7 @@ export const products: PartnersProps[] = [
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaYZPDQVIqIgehcwk1NuZ7OMFzIMTc26H1dg&usqp=CAU',
   },
   {
+    id: '2',
     partner: 'Chainlink',
     mcap: '12.1',
     mcapInit: 'mln',
@@ -38,6 +40,7 @@ export const products: PartnersProps[] = [
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaYZPDQVIqIgehcwk1NuZ7OMFzIMTc26H1dg&usqp=CAU',
   },
   {
+    id: '3',
     partner: 'Polkadot',
     mcap: '28.4',
     mcapInit: 'bln',
@@ -47,7 +50,8 @@ export const products: PartnersProps[] = [
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaYZPDQVIqIgehcwk1NuZ7OMFzIMTc26H1dg&usqp=CAU',
   },
   {
-    partner: 'MATH',
+    id: '4',
+    partner: 'DATH',
     mcap: '142.1',
     mcapInit: 'mln',
     date: '2021-10-19T19:20:42+03:00',
@@ -56,7 +60,8 @@ export const products: PartnersProps[] = [
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaYZPDQVIqIgehcwk1NuZ7OMFzIMTc26H1dg&usqp=CAU',
   },
   {
-    partner: 'Linear',
+    id: '5',
+    partner: 'Binear',
     mcap: '163.1',
     mcapInit: 'mln',
     date: '2021-10-25T19:20:42+03:00',
@@ -65,6 +70,7 @@ export const products: PartnersProps[] = [
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaYZPDQVIqIgehcwk1NuZ7OMFzIMTc26H1dg&usqp=CAU',
   },
   {
+    id: '6',
     partner: 'Akropolis',
     mcap: '73.1',
     mcapInit: 'mln',

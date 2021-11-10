@@ -4,6 +4,7 @@ export interface InvestorsProps {
 }
 
 export interface PartnersProps {
+  id: string;
   partner: string;
   mcap: string;
   mcapInit: string;

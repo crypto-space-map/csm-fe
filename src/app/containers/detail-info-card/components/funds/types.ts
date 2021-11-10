@@ -4,6 +4,7 @@ export interface InvestorsProps {
 }
 
 export interface FundsProps {
+  id: string;
   fundrasingRound: string;
   investors: InvestorsProps[];
   amount: number;

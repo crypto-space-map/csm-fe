@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { SortingValues } from './utils';
+import { SortingValues } from './types';
 
 export const GridWrapper = styled.div``;
 
@@ -18,7 +18,7 @@ export const StyledGridHeader = styled(StyledGridRow)`
 `;
 
 export const StyledGridContentRow = styled(StyledGridRow)`
-  padding-bottom: 10px;
+  padding-bottom: 17px;
 `;
 
 export const StyledGridRowWrapper = styled.div`

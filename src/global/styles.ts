@@ -26,16 +26,16 @@ export const pallette = css`
 export const mainGradient = 'linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%)';
 
 export const link = css`
-  a:link {
+  &:link {
     color: ${LINK_COLOR};
   }
-  a:visited {
+  &:visited {
     color: ${LINK_COLOR};
   }
-  a:hover {
+  &:hover {
     color: ${LINK_COLOR};
   }
-  a:active {
+  &:active {
     color: ${LINK_COLOR};
   }
 `;

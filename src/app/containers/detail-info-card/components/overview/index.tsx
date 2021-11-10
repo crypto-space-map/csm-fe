@@ -3,10 +3,10 @@ import { memo } from 'react';
 import moment from 'moment';
 
 import { Grid } from 'app/components/grid';
-import { ColumnProps } from 'app/components/grid/types';
+import { ColumnProps, SortingTypes } from 'app/components/grid/types';
 import LinkIcon from 'assets/link.svg';
 
-import { headerNames, fieldNames, products } from './constants';
+import { headerNames, products } from './constants';
 import { StyledLink, AnnLink, InvestorsWrapper, InvestorLinkWrapper } from './styles';
 import { FundsProps } from './types';
 
@@ -52,35 +52,35 @@ const decorateAnn = (row: FundsProps) => {
   );
 };
 
-const columns: ColumnProps<FundsProps, keyof FundsProps>[] = [
+const columns: ColumnProps<FundsProps>[] = [
   {
-    field: fieldNames.fundrasingRound,
+    field: 'fundrasingRound',
     headerName: headerNames.fundrasingRound,
     width: 105,
   },
   {
-    field: fieldNames.investors,
+    field: 'investors',
     headerName: headerNames.investors,
     width: 233,
     sortable: false,
     renderCell: decorateInvestors,
   },
   {
-    field: fieldNames.amount,
+    field: 'amount',
     headerName: headerNames.amount,
     width: 100,
-    type: 'number',
+    type: SortingTypes.Number,
     valueFormatter: decorateAmount,
   },
   {
-    field: fieldNames.date,
+    field: 'date',
     headerName: headerNames.date,
     width: 120,
-    type: 'date',
+    type: SortingTypes.Date,
     valueFormatter: decorateDate,
   },
   {
-    field: fieldNames.ann,
+    field: 'ann',
     headerName: headerNames.ann,
     sortable: false,
     width: 70,

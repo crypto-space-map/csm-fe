@@ -1,30 +1,30 @@
 import { memo } from 'react';
 
-import LinkIcon from '@mui/icons-material/Link';
-import { GridColDef, GridRenderCellParams, GridValueFormatterParams } from '@mui/x-data-grid';
 import moment from 'moment';
 
 import { Grid, CryptoLogo } from 'app/components';
+import { ColumnProps, SortingTypes } from 'app/components/grid/types';
+import LinkIcon from 'assets/link.svg';
 
-import { fieldNames, headerNames, products } from './constants';
+import { headerNames, products } from './constants';
 import { AnnLink, PartnerWrapper } from './styles';
+import { PartnersProps } from './types';
 import { cutLink } from './utils';
 
-const decorateMcap = (params: GridValueFormatterParams) => {
-  const mcap = params.getValue(params.id, fieldNames.mcap);
-  const mcapInit = params.getValue(params.id, fieldNames.mcapInit);
+const decorateMcap = (row: PartnersProps) => {
+  const { mcap, mcapInit } = row;
   if (!mcap) return null;
   return `${mcap} ${mcapInit}`;
 };
 
-const decorateDate = (params: GridValueFormatterParams) => {
-  const value = params.getValue(params.id, fieldNames.date) as unknown as string;
+const decorateDate = (row: PartnersProps) => {
+  const value = row.date;
   if (!value) return null;
   return moment(value).format('DD MMMM YYYY');
 };
 
-const decorateAnn = (params: GridRenderCellParams) => {
-  const value = params.getValue(params.id, fieldNames.ann) as unknown as string;
+const decorateAnn = (row: PartnersProps) => {
+  const value = row.ann;
   if (!value) return null;
   return (
     <>
@@ -35,9 +35,8 @@ const decorateAnn = (params: GridRenderCellParams) => {
   );
 };
 
-const decoratePartner = (params: GridRenderCellParams) => {
-  const partnerName = params.getValue(params.id, fieldNames.partner) as unknown as string;
-  const imgSrc = params.getValue(params.id, fieldNames.imgSrc) as unknown as string;
+const decoratePartner = (row: PartnersProps) => {
+  const { partner: partnerName, imgSrc } = row;
   if (!partnerName) return null;
   return (
     <PartnerWrapper>
@@ -47,34 +46,35 @@ const decoratePartner = (params: GridRenderCellParams) => {
   );
 };
 
-const columns: GridColDef[] = [
+const columns: ColumnProps<PartnersProps>[] = [
   {
-    field: fieldNames.id,
+    field: 'id',
     headerName: headerNames.id,
-    width: 50,
+    width: 30,
     sortable: false,
   },
   {
-    field: fieldNames.partner,
+    field: 'partner',
     headerName: headerNames.partner,
     width: 150,
     renderCell: decoratePartner,
   },
   {
-    field: fieldNames.mcap,
+    field: 'mcap',
     headerName: headerNames.mcap,
     width: 110,
+    type: SortingTypes.Number,
     valueFormatter: decorateMcap,
   },
   {
-    field: fieldNames.date,
+    field: 'date',
     headerName: headerNames.date,
     width: 130,
-    type: 'date',
+    type: SortingTypes.Date,
     valueFormatter: decorateDate,
   },
   {
-    field: fieldNames.ann,
+    field: 'ann',
     headerName: headerNames.ann,
     sortable: false,
     width: 184,
@@ -83,9 +83,3 @@ const columns: GridColDef[] = [
 ];
 
 export const Partners = memo(() => <Grid columns={columns} rows={products} />);
-
-/* TODO
-- сортировка mcap
-- многоточие у ссылок
-- авто 
-*/

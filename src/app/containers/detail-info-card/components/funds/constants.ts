@@ -18,6 +18,7 @@ export const headerNames = {
 
 export const products: FundsProps[] = [
   {
+    id: '1',
     fundrasingRound: 'Round A',
     investors: [
       { link: 'http://www.bluesmobil.ru', title: 'Coinbase' },
@@ -31,6 +32,7 @@ export const products: FundsProps[] = [
   },
 
   {
+    id: '2',
     fundrasingRound: 'Round C',
     investors: [
       { link: 'http://www.bluesmobil.ru', title: 'Coinbase' },
@@ -43,6 +45,7 @@ export const products: FundsProps[] = [
     ann: 'https://www.drive2.com',
   },
   {
+    id: '3',
     fundrasingRound: 'Round B',
     investors: [
       { link: 'http://www.bluesmobil.ru', title: 'Multicoin' },
@@ -53,6 +56,7 @@ export const products: FundsProps[] = [
     ann: 'https://www.google.com',
   },
   {
+    id: '4',
     fundrasingRound: 'Round D',
     investors: [{ link: 'http://www.bluesmobil.ru', title: 'Framework capital' }],
     amount: 34000000,

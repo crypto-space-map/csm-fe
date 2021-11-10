@@ -3,14 +3,14 @@ import ArrowIcon from 'assets/arrow.svg';
 import { StyledHeaderItem, ArrowIconWrapper } from './styles';
 import { HeaderItemProps } from './types';
 
-export const HeaderItem = ({
+export const HeaderItem = <T,>({
   field,
   headerName,
   sortable = true,
   onChangeSortField,
   selected,
   sortDirection,
-}: HeaderItemProps) => {
+}: HeaderItemProps<T>) => {
   const handleClick = () => {
     onChangeSortField(field);
   };
