@@ -23,8 +23,6 @@ export const generateCategoryPacks = ({ svg, nodes }: CategoryPacksType) => {
     .attr('fill', 'none')
     .attr('stroke', 'none');
 
-  categoryPacks.append('span').text('ssss');
-
   const funds = categoryPacks
     .selectAll('.county-centroid')
     .data(d => d.nodes)

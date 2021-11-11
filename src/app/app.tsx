@@ -1,7 +1,7 @@
 // TO DO uncomment pages in future
 import { Route, Switch } from 'react-router-dom';
 
-import { CSMap } from './components/csm-chart/chart/chart';
+import { CSMap } from './components/csm-chart';
 import { AppLayout } from './containers/pages/app-layout';
 import { Layout } from './containers/pages/layout';
 import { Login } from './containers/pages/login';

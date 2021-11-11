@@ -3,7 +3,13 @@ import { useEffect, useRef } from 'react';
 import { select } from 'd3';
 
 import { SimulationNodeDatumRadial } from '../types';
-import { circlesSimulation, createBaseMap, createCategoryPacks, generateCategoryPacks } from '../utils';
+import {
+  circlesSimulation,
+  createBaseMap,
+  createCategoryPacks,
+  generateCategoryPacks,
+  categoriesLabels,
+} from '../utils';
 import { data } from './mock-data';
 import { ChartWrapper, RandomSvg } from './styled';
 
@@ -27,6 +33,8 @@ export const CSMap = () => {
       }) as SimulationNodeDatumRadial[];
 
       generateCategoryPacks({ svg, nodes });
+
+      categoriesLabels({ ref: svgRef, nodes });
 
       svg
         .append('g')

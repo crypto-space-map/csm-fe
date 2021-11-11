@@ -4,7 +4,7 @@ import { CSMMapData } from '../types';
 import { mapCords } from './map-cords';
 /** TODO  need to understand where from we take circle coords data */
 
-const NODE = { MIN_RADIUS: 6, MAX_RADIUS: 20 };
+const NODE = { MIN_RADIUS: 10, MAX_RADIUS: 30 };
 /** TODO  May be out NODE params from this code */
 
 export const createCategoryPacks = (categories: CSMMapData) => {

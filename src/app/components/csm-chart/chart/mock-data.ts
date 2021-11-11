@@ -77,6 +77,66 @@ export const data = [
         name: 'LinkDistance',
         value: 2,
       },
+      {
+        name: 'BetweennessCentrality',
+        value: 1,
+      },
+      {
+        name: 'LinkDistance',
+        value: 2,
+      },
+      {
+        name: 'BetweennessCentrality',
+        value: 1,
+      },
+      {
+        name: 'LinkDistance',
+        value: 2,
+      },
+      {
+        name: 'BetweennessCentrality',
+        value: 1,
+      },
+      {
+        name: 'LinkDistance',
+        value: 2,
+      },
+      {
+        name: 'BetweennessCentrality',
+        value: 1,
+      },
+      {
+        name: 'LinkDistance',
+        value: 2,
+      },
+      {
+        name: 'BetweennessCentrality',
+        value: 1,
+      },
+      {
+        name: 'LinkDistance',
+        value: 9,
+      },
+      {
+        name: 'LinkDistance',
+        value: 9,
+      },
+      {
+        name: 'LinkDistance',
+        value: 9,
+      },
+      {
+        name: 'LinkDistance',
+        value: 9,
+      },
+      {
+        name: 'LinkDistance',
+        value: 9,
+      },
+      {
+        name: 'LinkDistance',
+        value: 9,
+      },
     ],
   },
   {
@@ -133,10 +193,6 @@ export const data = [
       {
         name: 'BetweennessCentrality',
         value: 1,
-      },
-      {
-        name: 'LinkDistance',
-        value: 2,
       },
     ],
   },
