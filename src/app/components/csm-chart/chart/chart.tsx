@@ -25,9 +25,8 @@ export const CSMap = () => {
       const map = createBaseMap({ width, height, ref: svgRef });
       const svg = select(map);
       const categoriesPacked = createCategoryPacks(data);
-      const categoriesMapValues = [...new Map(categoriesPacked).values()];
       const nodes = circlesSimulation({
-        nodes: categoriesMapValues,
+        nodes: categoriesPacked,
         width,
         height,
       }) as SimulationNodeDatumRadial[];

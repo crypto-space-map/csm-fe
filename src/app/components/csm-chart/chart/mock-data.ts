@@ -4,7 +4,21 @@ export const data = [
     children: [
       {
         name: 'AgglomerativeCluster',
-        value: 1,
+        value: 10,
+        children: [
+          {
+            name: 'BetweennessCentrality',
+            value: 1,
+          },
+          {
+            name: 'LinkDistance',
+            value: 2,
+          },
+          {
+            name: 'LinkDistance',
+            value: 3,
+          },
+        ],
       },
       {
         name: 'CommunityStructure',

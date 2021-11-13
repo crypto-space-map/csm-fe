@@ -8,7 +8,7 @@ type Sizing = {
 };
 
 export type PackType = Sizing & {
-  data: Record<string, unknown> /* Need to type it */;
+  data: CryptoObject /* Need to type it */;
 };
 
 export type BaseMapParams = Sizing & {
@@ -19,6 +19,7 @@ export type CryptoObject = {
   name: string;
   value: number;
   r?: number;
+  children?: CryptoObject[];
 };
 
 export type CSMMapData = {

@@ -31,5 +31,6 @@ export const createCategoryPacks = (categories: CSMMapData) => {
     const { x, y } = state.properties;
     packedCategories.set(key, { key, nodes, r, x, y });
   }
-  return packedCategories;
+  const categoriesMapValues = [...new Map(packedCategories).values()];
+  return categoriesMapValues;
 };
