@@ -23,8 +23,7 @@ const detailInfoTabs = {
 
 const options = Object.keys(detailInfoTabs).map(item => ({
   label: item,
-  // @ts-ignore
-  value: detailInfoTabs[item],
+  value: detailInfoTabs[item as keyof typeof detailInfoTabs],
 }));
 
 export const TabsSection = memo(() => {

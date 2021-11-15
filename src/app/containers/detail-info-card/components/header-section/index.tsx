@@ -22,25 +22,20 @@ const data = {
   },
 };
 
-export const HeaderSection = () => {
-  const handleClickShare = () => {};
-  const handleClickLike = () => {};
-
-  return (
-    <HeaderSectionWrapper>
-      <CompanyInfo>
-        <Icon src={data.company.logo} alt="logo" />
-        <CompanyName>{data.company.name}</CompanyName>
-        <CompanyTiker>{data.company.tiker}</CompanyTiker>
-        <RankWrapper>
-          <StarIcon />
-          <RankText>{`Rank ${data.company.rank}`}</RankText>
-        </RankWrapper>
-      </CompanyInfo>
-      <Controls>
-        <LikeIcon />
-        <ShareIcon />
-      </Controls>
-    </HeaderSectionWrapper>
-  );
-};
+export const HeaderSection = () => (
+  <HeaderSectionWrapper>
+    <CompanyInfo>
+      <Icon src={data.company.logo} alt="logo" />
+      <CompanyName>{data.company.name}</CompanyName>
+      <CompanyTiker>{data.company.tiker}</CompanyTiker>
+      <RankWrapper>
+        <StarIcon />
+        <RankText>{`Rank ${data.company.rank}`}</RankText>
+      </RankWrapper>
+    </CompanyInfo>
+    <Controls>
+      <LikeIcon />
+      <ShareIcon />
+    </Controls>
+  </HeaderSectionWrapper>
+);

@@ -1,1 +1,1 @@
-export const sliceKey = 'providers';
+export const sliceKey = 'datailInfoCard';

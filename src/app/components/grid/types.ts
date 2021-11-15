@@ -16,7 +16,7 @@ export interface CompareFuncProps<R> {
 }
 export interface ColumnProps<T> {
   field: keyof T;
-  headerName: string;
+  headerName: string | (() => JSX.Element);
   width: number;
   sortable?: boolean;
   type?: string;

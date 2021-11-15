@@ -1,66 +1,32 @@
-import { FundsProps } from './types';
+import { TradingWidgetProps } from 'app/components/trading-widget/types';
 
-export const fieldNames = {
-  fundrasingRound: 'fundrasingRound',
-  investors: 'investors',
-  amount: 'amount',
-  date: 'date',
-  ann: 'ann',
+export const scriptSRC = 'https://s3.tradingview.com/tv.js';
+export const containerId = 'tradingview_widget';
+
+export const widgetOptions: TradingWidgetProps = {
+  width: '100%',
+  height: '100%',
+  symbol: 'KUCOIN:CEREUSDT',
+  interval: '60',
+  range: undefined,
+  timezone: 'Etc/UTC',
+  theme: 'light',
+  style: '1',
+  locale: 'en',
+  toolbar_bg: '#f1f3f6',
+  enable_publishing: false,
+  hide_top_toolbar: false,
+  hide_legend: false,
+  withdateranges: true,
+  hide_side_toolbar: true,
+  allow_symbol_change: true,
+  save_image: false,
+  details: false,
+  hotlist: false,
+  calendar: false,
+  show_popup_button: false,
+  popup_width: '600',
+  popup_height: '400',
+  watchlist: undefined,
+  studies: undefined,
 };
-
-export const headerNames = {
-  fundrasingRound: 'Fundrasing Round',
-  investors: 'Investors',
-  amount: 'Investment amount',
-  date: 'Date',
-  ann: 'Ann.',
-};
-
-export const products: FundsProps[] = [
-  {
-    id: '1',
-    fundrasingRound: 'Round A',
-    investors: [
-      { link: 'http://www.bluesmobil.ru', title: 'Coinbase' },
-      { link: 'http://www.bluesmobil.ru', title: 'Binance labs' },
-      { link: 'http://www.bluesmobil.ru', title: 'Multicoin' },
-      { link: 'http://www.bluesmobil.ru', title: 'Framework capital' },
-    ],
-    amount: 1920000,
-    date: '2021-10-16T19:20:42+03:00',
-    ann: 'http://www.bluesmobil.ru',
-  },
-
-  {
-    id: '2',
-    fundrasingRound: 'Round C',
-    investors: [
-      { link: 'http://www.bluesmobil.ru', title: 'Coinbase' },
-      { link: 'http://www.bluesmobil.ru', title: 'Binance labs' },
-      { link: 'http://www.bluesmobil.ru', title: 'Multicoin' },
-      { link: 'http://www.bluesmobil.ru', title: 'Framework capital' },
-    ],
-    amount: 10000000,
-    date: '2021-10-18T19:20:42+03:00',
-    ann: 'https://www.drive2.com',
-  },
-  {
-    id: '3',
-    fundrasingRound: 'Round B',
-    investors: [
-      { link: 'http://www.bluesmobil.ru', title: 'Multicoin' },
-      { link: 'http://www.bluesmobil.ru', title: 'Framework capital' },
-    ],
-    amount: 1420000,
-    date: '2021-10-17T19:20:42+03:00',
-    ann: 'https://www.google.com',
-  },
-  {
-    id: '4',
-    fundrasingRound: 'Round D',
-    investors: [{ link: 'http://www.bluesmobil.ru', title: 'Framework capital' }],
-    amount: 34000000,
-    date: '2021-10-25T19:20:42+03:00',
-    ann: 'http://www.bluesmobil.ru',
-  },
-];

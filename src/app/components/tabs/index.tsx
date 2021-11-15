@@ -29,7 +29,7 @@ interface CustomTabsProps {
 }
 
 export const CustomTabs = ({ value, options, onChangeTabValue }: CustomTabsProps) => {
-  const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     onChangeTabValue(newValue);
   };
 

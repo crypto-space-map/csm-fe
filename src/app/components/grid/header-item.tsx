@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import ArrowIcon from 'assets/arrow.svg';
 
 import { StyledHeaderItem, ArrowIconWrapper } from './styles';
@@ -14,9 +16,13 @@ export const HeaderItem = <T,>({
   const handleClick = () => {
     onChangeSortField(field);
   };
+  const headerNameValue = useMemo(
+    () => (typeof headerName === 'string' ? headerName : headerName()),
+    [headerName]
+  );
   return (
     <StyledHeaderItem sortable={sortable} onClick={handleClick}>
-      <span>{headerName}</span>
+      <span>{headerNameValue}</span>
       {sortable && (
         <ArrowIconWrapper selected={selected} sortDirection={sortDirection}>
           <ArrowIcon />

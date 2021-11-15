@@ -45,7 +45,7 @@ export const Controls = styled.div`
   display: flex;
   align-items: center;
   margin-right: 38px;
-  & > svg:first-child {
+  & > svg:first-of-type {
     margin-right: 20px;
   }
 `;

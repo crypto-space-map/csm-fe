@@ -26,3 +26,7 @@ export const ExchangeWrapper = styled.span`
   overflow: hidden;
   white-space: nowrap;
 `;
+
+export const DecorateHeader = styled.div`
+  width: max-content;
+`;

@@ -5,6 +5,7 @@ export const DetailWrapper = styled.article`
   position: absolute;
   right: 0;
   height: 100%;
+  background-color: #fff;
 `;
 
 export const TopSection = styled.article`

@@ -4,7 +4,7 @@ import { Grid } from 'app/components';
 import { ColumnProps } from 'app/components/grid/types';
 
 import { headerNames, products } from './constants';
-import { ExchangeWrapper, StyledLink } from './styles';
+import { ExchangeWrapper, StyledLink, DecorateHeader } from './styles';
 import { ExchangesProps } from './types';
 
 const decoratePrice = (row: ExchangesProps) => {
@@ -38,6 +38,8 @@ const decoratePair = (row: ExchangesProps) => {
     </>
   );
 };
+
+const decorateHeaderPersentVolume = () => <DecorateHeader>{headerNames.persentVolume}</DecorateHeader>;
 
 const decorateExchange = (row: ExchangesProps) => {
   const value = row.exchange;
@@ -83,7 +85,7 @@ const columns: ColumnProps<ExchangesProps>[] = [
   },
   {
     field: 'persentVolume',
-    headerName: headerNames.persentVolume,
+    headerName: decorateHeaderPersentVolume,
     width: 100,
     valueFormatter: decoratePersentVolume,
     sortable: false,
