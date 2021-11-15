@@ -4,7 +4,7 @@ export const data = [
     children: [
       {
         name: 'AgglomerativeCluster',
-        value: 10,
+        value: 100,
         children: [
           {
             name: 'BetweennessCentrality',
@@ -77,7 +77,7 @@ export const data = [
     ],
   },
   {
-    name: 'DEFI',
+    name: 'Defi',
     children: [
       {
         name: 'BetweennessCentrality',
@@ -94,7 +94,7 @@ export const data = [
     ],
   },
   {
-    name: 'FUCK_CHART',
+    name: 'Hardware',
     value: 200,
     children: [
       {
@@ -168,7 +168,7 @@ export const data = [
     ],
   },
   {
-    name: 'FUCK_CHART2',
+    name: 'Socail network',
     children: [
       {
         name: 'BetweennessCentrality',

@@ -24,7 +24,7 @@ export const CSMap = () => {
     if (width && height && svgRef.current) {
       const map = createBaseMap({ width, height, ref: svgRef });
       const svg = select(map);
-      const categoriesPacked = createCategoryPacks({ categories: data });
+      const categoriesPacked = createCategoryPacks(data);
       const nodes = circlesSimulation({
         nodes: categoriesPacked,
         width,
@@ -34,20 +34,6 @@ export const CSMap = () => {
       generateCategoryPacks({ svg, nodes });
 
       categoriesLabels({ ref: svgRef, nodes });
-
-      svg
-        .append('g')
-        .classed('centroids', true)
-        .selectAll('circle')
-        .data(nodes)
-        .join('circle')
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y)
-        .attr('r', d => d.r)
-        .attr('fill', 'none')
-        .attr('stroke', 'white')
-        .attr('stroke-dasharray', '10,10')
-        .attr('stroke-width', 1);
     }
   }, [wrapperRef.current?.offsetWidth, wrapperRef.current?.offsetHeight]);
 

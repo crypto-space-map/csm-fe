@@ -37,14 +37,16 @@ export type SimulationNode = {
   nodes: SimulationNodeDatumRadial[];
 };
 
-export type SimulationNodeDatumRadial = SimulationNodeDatum & {
-  r: number;
-  x: number;
-  y: number;
-  nodes: SimulationNode[];
-  key: string;
-  index?: number;
-};
+export type SimulationNodeDatumRadial = SimulationNodeDatum &
+  PackType & {
+    r: number;
+    x: number;
+    y: number;
+    children: SimulationNode[];
+    key: string;
+    value: number;
+    index?: number;
+  };
 
 export type CategoryPacksType = {
   svg: Selection<SVGSVGElement | null, unknown, null, undefined>;

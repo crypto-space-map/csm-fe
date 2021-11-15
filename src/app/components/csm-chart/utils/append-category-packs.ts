@@ -1,6 +1,9 @@
-import { scaleQuantize, schemeGnBu } from 'd3';
+import { scaleQuantize, schemeGnBu, scaleLinear } from 'd3';
 
 import { CategoryPacksType } from '../types';
+import { packedChild } from './child-packer';
+
+const scaled = scaleLinear();
 
 const color = scaleQuantize()
   .domain([0, 1])
@@ -10,35 +13,28 @@ export const generateCategoryPacks = ({ svg, nodes }: CategoryPacksType) => {
   const categoryPacks = svg
     .append('g')
     .classed('category-packs', true)
-    .selectAll('.category-packs')
+    .selectAll('.centroids')
     .data(nodes)
     .enter()
     .append('g')
-    .classed('category-packs', true)
-    .attr('transform', d => `translate(${d.x}, ${d.y})`);
-
-  categoryPacks
-    .append('circle')
-    .attr('r', d => d.r)
-    .attr('fill', 'none')
-    .attr('stroke', 'none');
+    .classed('category', true)
+    .attr('transform', d => `translate(${d.x - d.r}, ${d.y - d.r})`);
 
   const funds = categoryPacks
-    .selectAll('.county-centroid')
-    .data(d => {
-      console.log(d);
-      return d.nodes;
-    })
+    .selectAll('.category')
+    .data(d => packedChild(d, d.r))
     .enter()
     .append('circle')
-    .attr('fill', d => (!!d.data.children ? 'none' : color(d.data.value / 6)))
-    .attr('stroke', d => (!!d.data.children ? 'white' : 'none'))
+    .attr('fill', d => (!!d.children ? 'none' : color(d.value / 6)))
+    .attr('stroke', d => (!!d.children ? 'white' : 'none'))
     .attr('stroke-dasharray', '10,10')
     .attr('stroke-width', 1)
-    .classed('county-centroid-vs-child', d => !!d.data.children)
+    .classed('fund', true)
     .attr('r', d => d.r)
-    .attr('cx', d => d.x)
-    .attr('cy', d => d.y);
+    .attr('cx', d => scaled(d.x))
+    .attr('cy', d => d.y)
+
+    .on('click', event => console.log(event.target.__data__));
 
   funds.append('title').text(d => `${d.data.name}`);
 };
