@@ -1,1 +1,1 @@
-export const sliceKey = 'datailInfoCard';
+export const sliceKey = 'datailInfo';

@@ -1,19 +1,29 @@
-import { fetchDataReducers, fetchDataInitialState } from 'utils/@reduxjs/fetchData';
+import { PayloadAction } from '@reduxjs/toolkit';
+
 import { createSlice } from 'utils/@reduxjs/toolkit';
 
-import type { ContainerState, ProvidersStateDTO } from './types';
+import type { ContainerState, DetailInfoDto } from './types';
 import { sliceKey as name } from './utils';
 
 export const initialState: ContainerState = {
-  ...fetchDataInitialState,
-  data: [],
+  detailInfo: [],
+  detailInfoLoading: false,
 };
 
 const providersListSlice = createSlice({
   name,
   initialState,
   reducers: {
-    ...fetchDataReducers<ProvidersStateDTO>(initialState),
+    fetchDetialInfo(state) {
+      state.detailInfoLoading = true;
+    },
+    fetchDetialInfoSuccess(state, action: PayloadAction<DetailInfoDto[]>) {
+      state.detailInfoLoading = false;
+      state.detailInfo = action.payload;
+    },
+    fetchDetialInfoFail(state) {
+      state.detailInfoLoading = false;
+    },
   },
 });
 

@@ -1,21 +1,18 @@
 import { put, takeLatest, call } from 'typed-redux-saga';
 
-import { toast } from 'app/components';
-
-import { getProviders } from './api';
+import { getDetailInfoCard } from './api';
 import { actions } from './slice';
 
-export function* fetchProviders() {
+export function* fetchDetailInfo() {
   try {
-    const { data } = yield* call(getProviders);
+    const { data } = yield* call(getDetailInfoCard);
 
-    yield* put(actions.fetchDataSuccess({ data }));
-  } catch (error) {
-    yield* put(actions.fetchDataError({ message: error.message }));
-    toast(error.message, 'error');
+    yield* put(actions.fetchDetialInfoSuccess(data));
+  } catch {
+    yield* put(actions.fetchDetialInfoFail());
   }
 }
 
 export function* providersSaga() {
-  yield* takeLatest(actions.fetchData, fetchProviders);
+  yield* takeLatest(actions.fetchDetialInfo, fetchDetailInfo);
 }

@@ -1,14 +1,11 @@
-import { FetchDataState } from 'utils/@reduxjs/fetchData';
-
-export interface ProvidersEntries {
+export interface DetailInfoDto {
   provider_id: number;
   name: string;
 }
 
-export type ProvidersStateDTO = ProvidersEntries[] | [];
-
-export interface ProvidersState extends FetchDataState {
-  data: ProvidersStateDTO | [];
+export interface DetailInfoState {
+  detailInfo: DetailInfoDto[];
+  detailInfoLoading: boolean;
 }
 
-export type ContainerState = ProvidersState;
+export type ContainerState = DetailInfoState;
