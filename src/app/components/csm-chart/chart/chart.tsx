@@ -24,7 +24,7 @@ export const CSMap = () => {
     if (width && height && svgRef.current) {
       const map = createBaseMap({ width, height, ref: svgRef });
       const svg = select(map);
-      const categoriesPacked = createCategoryPacks(data);
+      const categoriesPacked = createCategoryPacks({ categories: data });
       const nodes = circlesSimulation({
         nodes: categoriesPacked,
         width,

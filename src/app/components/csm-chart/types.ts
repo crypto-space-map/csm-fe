@@ -34,6 +34,7 @@ export type SimulationNode = {
   r: number;
   x: number;
   y: number;
+  nodes: SimulationNodeDatumRadial[];
 };
 
 export type SimulationNodeDatumRadial = SimulationNodeDatum & {

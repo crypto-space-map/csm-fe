@@ -25,15 +25,20 @@ export const generateCategoryPacks = ({ svg, nodes }: CategoryPacksType) => {
 
   const funds = categoryPacks
     .selectAll('.county-centroid')
-    .data(d => d.nodes)
+    .data(d => {
+      console.log(d);
+      return d.nodes;
+    })
     .enter()
     .append('circle')
-    .attr('fill', d => color(d.data.value / 6))
-    .classed('county-centroid', true)
+    .attr('fill', d => (!!d.data.children ? 'none' : color(d.data.value / 6)))
+    .attr('stroke', d => (!!d.data.children ? 'white' : 'none'))
+    .attr('stroke-dasharray', '10,10')
+    .attr('stroke-width', 1)
+    .classed('county-centroid-vs-child', d => !!d.data.children)
     .attr('r', d => d.r)
     .attr('cx', d => d.x)
-    .attr('cy', d => d.y)
-    .on('click', event => console.log(event.target.__data__));
+    .attr('cy', d => d.y);
 
   funds.append('title').text(d => `${d.data.name}`);
 };

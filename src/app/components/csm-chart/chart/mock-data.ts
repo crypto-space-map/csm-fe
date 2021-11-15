@@ -27,6 +27,20 @@ export const data = [
       {
         name: 'HierarchicalCluster',
         value: 4,
+        children: [
+          {
+            name: 'BetweennessCentrality',
+            value: 1,
+          },
+          {
+            name: 'LinkDistance',
+            value: 2,
+          },
+          {
+            name: 'LinkDistance',
+            value: 3,
+          },
+        ],
       },
       {
         name: 'MergeEdge',
