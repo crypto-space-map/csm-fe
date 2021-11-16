@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 import styled from '@emotion/styled';
 import { Button as MuiButton, ButtonProps } from '@mui/material';
+import { COLOR_PALLETTE } from 'global/pallette';
 
 import { ButtonsProps } from './types';
 
@@ -11,7 +12,7 @@ const StyledButton = styled(MuiButton)<ButtonProps>`
   font-weight: normal;
   color: #242424;
   text-transform: none;
-  background: #ffffff;
+  background: ${COLOR_PALLETTE.MAIN_WHITE};
   border: 2px solid #e1e1e1;
   border-radius: 24px;
   &:disabled {

@@ -1,13 +1,8 @@
 import { Card } from './card';
 import { TabContentWrapper } from './styles';
+import { CardDataProps } from './types';
 
-/* bitcoin: 'bitcoin',
-  facebook: 'facebook',
-  github: 'github',
-  reddit: 'reddit',
-  telegram: 'telegram',
-  twitter: 'twitter', */
-const cardsData = [
+const cardsData: CardDataProps[] = [
   {
     id: 1,
     statCount: 3654,

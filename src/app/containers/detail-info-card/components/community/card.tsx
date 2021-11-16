@@ -1,63 +1,42 @@
-import LinkIcon from '@mui/icons-material/Link';
+import { useMemo } from 'react';
 
-import BitcoinIcon from 'assets/bitcoin.svg';
-import FacebookIcon from 'assets/facebook.svg';
-import GithubIcon from 'assets/github.svg';
-import RedditIcon from 'assets/reddit.svg';
-import TelegramIcon from 'assets/telegram.svg';
-import TwitterIcon from 'assets/twitter.svg';
-import YoutubeIcon from 'assets/youtube.svg';
+import {
+  BitcoinIcon,
+  FacebookIcon,
+  GithubIcon,
+  RedditIcon,
+  TelegramIcon,
+  TwitterIcon,
+  YoutubeIcon,
+} from 'assets';
 
 import { CardWrapper, CardContent, IconWrapper } from './styles';
+import { SocialNetworkList } from './types';
 
 interface CardProps {
   statCount: number;
-  socialNetwork: string;
+  socialNetwork: keyof typeof SocialNetworkList;
   link: string;
 }
 
-const iconList = {
-  bitcoin: 'bitcoin',
-  facebook: 'facebook',
-  github: 'github',
-  reddit: 'reddit',
-  telegram: 'telegram',
-  twitter: 'twitter',
-  youtube: 'youtube',
-};
+const socialNetworkOptions = [
+  { network: SocialNetworkList.bitcoin, icon: <BitcoinIcon />, unit: 'subscribers' },
+  { network: SocialNetworkList.facebook, icon: <FacebookIcon />, unit: 'followers' },
+  { network: SocialNetworkList.github, icon: <GithubIcon />, unit: 'stars' },
+  { network: SocialNetworkList.reddit, icon: <RedditIcon />, unit: 'subscribers' },
+  { network: SocialNetworkList.telegram, icon: <TelegramIcon />, unit: 'users' },
+  { network: SocialNetworkList.twitter, icon: <TwitterIcon />, unit: 'followers' },
+  { network: SocialNetworkList.youtube, icon: <YoutubeIcon />, unit: 'subscribers' },
+];
 
-const unitList: { [key: string]: string } = {
-  bitcoin: 'subscribers',
-  facebook: 'followers',
-  github: 'stars',
-  reddit: 'subscribers',
-  telegram: 'users',
-  twitter: 'followers',
-  youtube: 'subscribers',
-};
-
-const getIcon = (name: string) => {
-  switch (name) {
-    case iconList.bitcoin:
-      return <BitcoinIcon />;
-    case iconList.facebook:
-      return <FacebookIcon />;
-    case iconList.github:
-      return <GithubIcon />;
-    case iconList.reddit:
-      return <RedditIcon />;
-    case iconList.telegram:
-      return <TelegramIcon />;
-    case iconList.twitter:
-      return <TwitterIcon />;
-    case iconList.youtube:
-      return <YoutubeIcon />;
-    default:
-      return <LinkIcon />;
-  }
-};
+const defaultSocialOption = { unit: '', icon: null };
 
 export const Card = ({ statCount = 0, socialNetwork, link }: CardProps) => {
+  const { unit, icon } = useMemo(
+    () => socialNetworkOptions.find(item => item.network === socialNetwork) || defaultSocialOption,
+    [socialNetwork]
+  );
+
   const handleClick = () => {
     window.open(link, '_blank');
   };
@@ -65,9 +44,9 @@ export const Card = ({ statCount = 0, socialNetwork, link }: CardProps) => {
   return (
     <CardWrapper onClick={handleClick}>
       <CardContent>
-        <IconWrapper>{getIcon(socialNetwork)}</IconWrapper>
+        <IconWrapper>{icon}</IconWrapper>
         <span>{statCount.toLocaleString()}</span>
-        <span>{unitList[socialNetwork]}</span>
+        <span>{unit}</span>
       </CardContent>
     </CardWrapper>
   );
