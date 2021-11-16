@@ -4,7 +4,7 @@ import { link } from 'global/styles';
 export const StyledLink = styled.a`
   display: flex;
   text-decoration: none;
-  ${link}
+  ${link()}
 `;
 
 export const AnnLink = styled(StyledLink)`

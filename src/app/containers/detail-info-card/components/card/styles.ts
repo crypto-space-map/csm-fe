@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import { Button as MuiButton, ButtonProps } from '@mui/material';
+import { COLOR_PALLETTE } from 'global/pallette';
 import { link } from 'global/styles';
 
 export const CardWrapper = styled.article`
@@ -11,7 +13,7 @@ export const CardWrapper = styled.article`
   font-size: 16px;
   line-height: 22px;
   & a {
-    ${link}
+    ${link()}
   }
 `;
 
@@ -53,4 +55,26 @@ export const ButtonsContentWrapper = styled.section`
   & > button:not(:first-of-type) {
     margin-left: 8px;
   }
+`;
+
+export const StyledButton = styled(MuiButton)<ButtonProps>`
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: normal;
+  color: #242424;
+  text-transform: none;
+  background: ${COLOR_PALLETTE.MAIN_WHITE};
+  border: 2px solid #e1e1e1;
+  border-radius: 24px;
+  &:disabled {
+    background: #bdbdbd;
+    &:before {
+      background-image: none;
+    }
+  }
+`;
+
+export const StyledButtonWrapper = styled.a`
+  text-decoration: none;
+  ${link(COLOR_PALLETTE.MAIN_BLACK)}
 `;

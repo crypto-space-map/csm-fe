@@ -79,7 +79,7 @@ const columns: ColumnProps<ExchangesProps>[] = [
   {
     field: 'volume',
     headerName: headerNames.volume,
-    width: 120,
+    width: 100,
     valueFormatter: decorateVolume,
     sortable: false,
   },

@@ -37,12 +37,8 @@ export const Card = ({ statCount = 0, socialNetwork, link }: CardProps) => {
     [socialNetwork]
   );
 
-  const handleClick = () => {
-    window.open(link, '_blank');
-  };
-
   return (
-    <CardWrapper onClick={handleClick}>
+    <CardWrapper href={link} target="_blank">
       <CardContent>
         <IconWrapper>{icon}</IconWrapper>
         <span>{statCount.toLocaleString()}</span>
