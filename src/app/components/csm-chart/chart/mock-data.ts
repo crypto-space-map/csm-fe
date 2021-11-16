@@ -3,7 +3,7 @@ export const data = [
     name: 'Bitcoin',
     children: [
       {
-        name: 'AgglomerativeCluster',
+        name: 'Agglomerative Cluster',
         value: 100,
         children: [
           {
@@ -25,7 +25,7 @@ export const data = [
         value: 2,
       },
       {
-        name: 'HierarchicalCluster',
+        name: 'Hierarchical Cluster',
         value: 4,
         children: [
           {

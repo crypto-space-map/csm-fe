@@ -33,7 +33,6 @@ export const generateCategoryPacks = ({ svg, nodes }: CategoryPacksType) => {
     .attr('r', d => d.r)
     .attr('cx', d => scaled(d.x))
     .attr('cy', d => d.y)
-
     .on('click', event => console.log(event.target.__data__));
 
   funds.append('title').text(d => `${d.data.name}`);

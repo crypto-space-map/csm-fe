@@ -44,6 +44,9 @@ export const RandomSvg = styled.svg`
       fill: #ffffff;
       pointer-events: none;
       text-anchor: middle;
+      &.child {
+        font-size: 10px;
+      }
     }
   }
 `;
