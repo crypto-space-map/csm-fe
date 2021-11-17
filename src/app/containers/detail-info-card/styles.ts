@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
+import { COLOR_PALLETTE } from 'global/pallette';
 
 export const DetailWrapper = styled.article`
-  width: 701px;
+  width: 700px;
   position: absolute;
   right: 0;
   height: 100%;
-  background-color: #fff;
+  background-color: ${COLOR_PALLETTE.MAIN_WHITE};
 `;
 
 export const TopSection = styled.article`

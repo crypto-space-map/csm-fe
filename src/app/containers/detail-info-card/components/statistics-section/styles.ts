@@ -1,10 +1,11 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { COLOR_PALLETTE } from 'global/pallette';
 
 const secondFontOptions = css`
   font-size: 16px;
   line-height: 22px;
-  color: #b2b2b2;
+  color: ${COLOR_PALLETTE.MAIN_GRAY};
 `;
 
 export const StatisticItemWrapper = styled.div`
@@ -21,13 +22,13 @@ export const Increase = styled.span`
 export const Rename = styled.span`
   font-size: 20px;
   line-height: 27px;
-  color: #ffffff;
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
   margin: 8px 0 4px 0;
 `;
 
 export const StatisticsSectionWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   & > div {
     margin-bottom: 36px;
   }

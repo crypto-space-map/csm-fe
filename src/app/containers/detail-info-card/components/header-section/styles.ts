@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { COLOR_PALLETTE } from 'global/pallette';
 
 export const HeaderSectionWrapper = styled.div`
   display: flex;
@@ -19,14 +20,14 @@ export const Icon = styled.img`
 export const CompanyName = styled.span`
   font-size: 20px;
   line-height: 39px;
-  color: #ffffff;
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
   margin: 0 14px;
 `;
 
 export const CompanyTiker = styled.span`
   font-size: 20px;
   line-height: 39px;
-  color: #b2b2b2;
+  color: ${COLOR_PALLETTE.MAIN_GRAY};
 `;
 
 export const RankWrapper = styled.div`
@@ -37,7 +38,7 @@ export const RankWrapper = styled.div`
 export const RankText = styled.span`
   font-size: 16px;
   line-height: 22px;
-  color: #ffffff;
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
   margin-left: 6px;
 `;
 

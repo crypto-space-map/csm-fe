@@ -1,4 +1,4 @@
-interface CompanyProps {
+export interface CompanyProps {
   title: string;
   linkText: string;
   link: string;

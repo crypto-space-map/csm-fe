@@ -27,11 +27,9 @@ const decorateAnn = (row: PartnersProps) => {
   const value = row.ann;
   if (!value) return null;
   return (
-    <>
-      <AnnLink target="_blank" href={value}>
-        <LinkIcon /> <span>{cutLink(value)}</span>
-      </AnnLink>
-    </>
+    <AnnLink target="_blank" href={value}>
+      <LinkIcon /> <span>{cutLink(value)}</span>
+    </AnnLink>
   );
 };
 

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { COLOR_PALLETTE } from 'global/pallette';
 
 import { SortingValues } from './types';
 
@@ -22,7 +23,7 @@ export const StyledGridContentRow = styled(StyledGridRow)`
 `;
 
 export const StyledGridRowWrapper = styled.div`
-  border-bottom: 1px solid #b2b2b2;
+  border-bottom: 1px solid ${COLOR_PALLETTE.MAIN_GRAY};
 `;
 
 export const StyledGridContent = styled.div`
