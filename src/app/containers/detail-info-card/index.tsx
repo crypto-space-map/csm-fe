@@ -5,13 +5,27 @@ import { StatisticsSection } from './components/statistics-section';
 import { TabsSection } from './components/tabs-section';
 import { DetailWrapper, TopSection } from './styles';
 
+//  TODO потом удалить блок с центральным контентом
 export const DetailInfoCard = memo(() => (
-  <DetailWrapper>
-    <TopSection>
-      <HeaderSection />
-      <StatisticsSection />
-    </TopSection>
+  <>
+    <div
+      style={{
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 600,
+        fontSize: 40,
+      }}>
+      Crypto Space Map HERE
+    </div>
+    <DetailWrapper>
+      <TopSection>
+        <HeaderSection />
+        <StatisticsSection />
+      </TopSection>
 
-    <TabsSection />
-  </DetailWrapper>
+      <TabsSection />
+    </DetailWrapper>
+  </>
 ));
