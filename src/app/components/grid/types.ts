@@ -1,11 +1,11 @@
 export enum SortingValues {
-  Asc = 'ASC',
-  Desc = 'DESC',
+  ASC = 'ASC',
+  DESC = 'DESC',
 }
 
 export enum SortingTypes {
-  Date = 'DATE',
-  Number = 'NUMBER',
+  DATE = 'DATE',
+  NUMBER = 'NUMBER',
 }
 
 export interface CompareFuncProps<R> {

@@ -69,14 +69,14 @@ const columns: ColumnProps<FundsProps>[] = [
     field: 'amount',
     headerName: headerNames.amount,
     width: 100,
-    type: SortingTypes.Number,
+    type: SortingTypes.NUMBER,
     valueFormatter: decorateAmount,
   },
   {
     field: 'date',
     headerName: headerNames.date,
     width: 120,
-    type: SortingTypes.Date,
+    type: SortingTypes.DATE,
     valueFormatter: decorateDate,
   },
   {

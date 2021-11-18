@@ -47,7 +47,7 @@ export const ArrowIconWrapper = styled.div<{ selected: boolean; sortDirection: s
     fill: ${props => (props.selected ? '#1d1c1c' : '#bdbdbd')};
 
     transform: rotate(
-      ${props => (props.selected && props.sortDirection === SortingValues.Desc ? '180deg' : '0deg')}
+      ${props => (props.selected && props.sortDirection === SortingValues.DESC ? '180deg' : '0deg')}
     );
   }
 `;

@@ -61,14 +61,14 @@ const columns: ColumnProps<PartnersProps>[] = [
     field: 'mcap',
     headerName: headerNames.mcap,
     width: 110,
-    type: SortingTypes.Number,
+    type: SortingTypes.NUMBER,
     valueFormatter: decorateMcap,
   },
   {
     field: 'date',
     headerName: headerNames.date,
     width: 130,
-    type: SortingTypes.Date,
+    type: SortingTypes.DATE,
     valueFormatter: decorateDate,
   },
   {

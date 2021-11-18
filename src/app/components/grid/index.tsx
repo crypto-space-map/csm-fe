@@ -15,7 +15,7 @@ import { getCompareFunc } from './utils';
 export const Grid = <R extends { id: string }>({ columns, rows }: GridProps<R>) => {
   const [sortedField, setSortedField] = useState(columns[0].field);
 
-  const [sortDirection, setSortDirection] = useState(SortingValues.Asc);
+  const [sortDirection, setSortDirection] = useState(SortingValues.ASC);
   const [sortedRows, setSortedRows] = useState<R[]>([]);
 
   const columnWidths = useMemo(() => columns.map(item => `${item.width}px`).join(' '), [columns]);
@@ -24,10 +24,10 @@ export const Grid = <R extends { id: string }>({ columns, rows }: GridProps<R>) 
   const handleChangeSort = useCallback(
     (fieldName: keyof R) => {
       if (sortedField === fieldName) {
-        setSortDirection(sortDirection === SortingValues.Asc ? SortingValues.Desc : SortingValues.Asc);
+        setSortDirection(sortDirection === SortingValues.ASC ? SortingValues.DESC : SortingValues.ASC);
       }
       if (sortedField !== fieldName) {
-        setSortDirection(SortingValues.Asc);
+        setSortDirection(SortingValues.ASC);
         setSortedField(fieldName);
       }
     },
