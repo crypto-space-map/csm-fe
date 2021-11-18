@@ -16,17 +16,20 @@ export const App = () => (
       <Route
         path="*"
         component={() => (
-          <div
-            style={{
-              color: 'white',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 600,
-              fontSize: 40,
-            }}>
-            Crypto Space Map HERE
-          </div>
+          <>
+            <div
+              style={{
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 600,
+                fontSize: 40,
+              }}>
+              Crypto Space Map HERE
+            </div>
+            <DetailInfoCard />
+          </>
         )}
       />
     </Switch>
