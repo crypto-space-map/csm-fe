@@ -16,6 +16,7 @@ export const createCategoryPacks = (categories: CSMMapData) => {
     children.map(({ value }) => arr.push(value));
     return arr;
   }, [] as number[]);
+  /** Create array of values to d3.domain  */
 
   const radius = scaleSqrt()
     .domain(extent(categoriesChildValues) as Iterable<number>)

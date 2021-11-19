@@ -38,19 +38,19 @@ export type SimulationNode = {
 };
 
 export type SimulationNodeDatumRadial = SimulationNodeDatum &
-  PackType & {
-    r: number;
-    x: number;
-    y: number;
+  PackType &
+  SimulationNode & {
     children: SimulationNode[];
     key: string;
     value: number;
     index?: number;
+    data: CryptoObject;
   };
 
 export type CategoryPacksType = {
   svg: Selection<SVGSVGElement | null, unknown, null, undefined>;
   nodes: SimulationNodeDatumRadial[];
+  fundsTooltip: Selection<HTMLDivElement, unknown, null, undefined>;
 };
 
 export type CirclesSimulation = Sizing & {

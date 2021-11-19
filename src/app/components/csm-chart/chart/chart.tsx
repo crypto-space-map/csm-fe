@@ -10,6 +10,7 @@ import {
   generateCategoryPacks,
   categoriesLabels,
 } from '../utils';
+import { fundsTooltips } from '../utils/funds-tooltip';
 import { data } from './mock-data';
 import { ChartWrapper, RandomSvg } from './styled';
 
@@ -31,7 +32,9 @@ export const CSMap = () => {
         height,
       }) as SimulationNodeDatumRadial[];
 
-      generateCategoryPacks({ svg, nodes });
+      const fundsTooltip = fundsTooltips({ ref: wrapperRef, nodes });
+
+      generateCategoryPacks({ svg, nodes, fundsTooltip });
 
       categoriesLabels({ ref: svgRef, nodes });
     }

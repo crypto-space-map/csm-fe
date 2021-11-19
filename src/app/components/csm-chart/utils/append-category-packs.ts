@@ -1,7 +1,21 @@
 import { scaleQuantize, schemeGnBu, scaleLinear } from 'd3';
+import { COLOR_PALLETTE } from 'global/pallette';
 
-import { CategoryPacksType } from '../types';
+import { generateChildLabels } from '.';
+import { CategoryPacksType, SimulationNodeDatumRadial } from '../types';
 import { packedChild } from './child-packer';
+
+const TOOLTIP_PADDING = 5;
+
+const CLASSNAMES = {
+  CENTROIDS: 'centroids',
+  CATEGORY_PACKS: 'category-packs',
+  CATEGORY: 'category',
+  FUND: 'fund',
+  CATEGORY_LABELS: 'category-labels',
+  LABEL_TEXT: 'label-text',
+  TOOLTIP: { NORMAL: 'tooltip', HOVERED: 'tooltip tooltip--hovered' },
+};
 
 const scaled = scaleLinear();
 
@@ -9,31 +23,54 @@ const color = scaleQuantize()
   .domain([0, 1])
   .range(schemeGnBu[9] as Iterable<number>);
 
-export const generateCategoryPacks = ({ svg, nodes }: CategoryPacksType) => {
+export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPacksType) => {
+  const elem = fundsTooltip.node() as HTMLDivElement;
+
+  const onMouseOver = (event: MouseEvent, item: SimulationNodeDatumRadial) =>
+    fundsTooltip.text(item.data.name).attr('class', CLASSNAMES.TOOLTIP.HOVERED);
+
+  const onMouseMove = (event: MouseEvent) => {
+    const { width, height } = elem.getBoundingClientRect();
+    fundsTooltip
+      .style('top', `${event.pageY}px`)
+      .style('left', `${event.pageX}px`)
+      .style('transform', `translate(-${width / 2}px, -${height + TOOLTIP_PADDING}px)`);
+  };
+  const onMouseOut = () => fundsTooltip.style('opacity', 0).attr('class', CLASSNAMES.TOOLTIP.NORMAL);
+
+  /** Generate categories */
+
   const categoryPacks = svg
     .append('g')
-    .classed('category-packs', true)
-    .selectAll('.centroids')
+    .classed(CLASSNAMES.CATEGORY_PACKS, true)
+    .selectAll(`.${CLASSNAMES.CENTROIDS}`)
     .data(nodes)
     .enter()
     .append('g')
-    .classed('category', true)
-    .attr('transform', d => `translate(${d.x - d.r}, ${d.y - d.r})`);
+    .classed(CLASSNAMES.CATEGORY, true)
+    .attr('transform', item => `translate(${item.x - item.r}, ${item.y - item.r})`);
 
-  const funds = categoryPacks
-    .selectAll('.category')
-    .data(d => packedChild(d, d.r))
+  /** Generate funds */
+
+  categoryPacks
+    .selectAll(`.${CLASSNAMES.CATEGORY}`)
+    .data(item => packedChild(item, item.r))
     .enter()
     .append('circle')
-    .attr('fill', d => (!!d.children ? 'none' : color(d.value / 6)))
-    .attr('stroke', d => (!!d.children ? 'white' : 'none'))
-    .attr('stroke-dasharray', '10,10')
+    .attr('fill', item => (!!item.children && item.value ? 'none' : color(item?.value / 6)))
+    .attr('stroke', item => (!!item.children ? COLOR_PALLETTE.MAIN_WHITE : '#000'))
+    .attr('stroke-dasharray', item => (!!item.children ? '10,10' : 'none'))
     .attr('stroke-width', 1)
-    .classed('fund', true)
-    .attr('r', d => d.r)
-    .attr('cx', d => scaled(d.x))
-    .attr('cy', d => d.y)
-    .on('click', event => console.log(event.target.__data__));
+    .classed(CLASSNAMES.FUND, true)
+    .attr('r', item => item.r)
+    .attr('cx', item => scaled(item.x))
+    .attr('cy', item => item.y)
+    .on('click', event => console.log(event.target.__data__))
+    /** TODO навесить экшн онклик */
+    .on('mousemove', onMouseMove)
+    .on('mouseover', onMouseOver)
+    .on('mouseout', onMouseOut);
 
-  funds.append('title').text(d => `${d.data.name}`);
+  /** Generate categories-child labels */
+  generateChildLabels(categoryPacks);
 };

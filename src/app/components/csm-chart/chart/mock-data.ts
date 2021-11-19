@@ -30,7 +30,7 @@ export const data = [
         children: [
           {
             name: 'BetweennessCentrality',
-            value: 1,
+            value: 3,
           },
           {
             name: 'LinkDistance',
@@ -80,12 +80,40 @@ export const data = [
     name: 'Defi',
     children: [
       {
-        name: 'BetweennessCentrality',
-        value: 1,
+        name: 'Betweenness Centrality',
+        value: 100,
+        children: [
+          {
+            name: 'BetweennessCentrality',
+            value: 1,
+          },
+          {
+            name: 'LinkDistance',
+            value: 2,
+          },
+          {
+            name: 'LinkDistance',
+            value: 3,
+          },
+        ],
       },
       {
-        name: 'LinkDistance',
+        name: 'Link Distance',
         value: 2,
+        children: [
+          {
+            name: 'BetweennessCentrality',
+            value: 1,
+          },
+          {
+            name: 'LinkDistance',
+            value: 2,
+          },
+          {
+            name: 'LinkDistance',
+            value: 3,
+          },
+        ],
       },
       {
         name: 'LinkDistance',
@@ -95,7 +123,7 @@ export const data = [
   },
   {
     name: 'Hardware',
-    value: 200,
+    value: 100,
     children: [
       {
         name: 'BetweennessCentrality',
@@ -150,8 +178,22 @@ export const data = [
         value: 9,
       },
       {
-        name: 'LinkDistance',
+        name: 'Link Distance',
         value: 9,
+        children: [
+          {
+            name: 'BetweennessCentrality',
+            value: 1,
+          },
+          {
+            name: 'LinkDistance',
+            value: 2,
+          },
+          {
+            name: 'LinkDistance',
+            value: 3,
+          },
+        ],
       },
       {
         name: 'LinkDistance',
@@ -169,10 +211,25 @@ export const data = [
   },
   {
     name: 'Socail network',
+    value: 100,
     children: [
       {
-        name: 'BetweennessCentrality',
+        name: 'Betweenness Centrality',
         value: 1,
+        children: [
+          {
+            name: 'BetweennessCentrality',
+            value: 1,
+          },
+          {
+            name: 'LinkDistance',
+            value: 2,
+          },
+          {
+            name: 'LinkDistance',
+            value: 3,
+          },
+        ],
       },
       {
         name: 'LinkDistance',

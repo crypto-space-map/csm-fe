@@ -3,4 +3,4 @@ export * from './category-packs';
 export * from './circles-simulation';
 export * from './map-cords';
 export * from './append-category-packs';
-export * from './category-labels';
+export * from './labels';

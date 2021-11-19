@@ -4,7 +4,7 @@ export const mapCords = [
     id: 'Bitcoin',
     properties: {
       name: 'Bitcoin',
-      x: 200,
+      x: 150,
       y: 180,
     },
   },
@@ -23,7 +23,7 @@ export const mapCords = [
     properties: {
       name: 'Hardware',
       x: 500,
-      y: 400,
+      y: 300,
     },
   },
   {
