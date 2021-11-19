@@ -1,4 +1,4 @@
-import { scaleQuantize, schemeGnBu, scaleLinear, HierarchyCircularNode } from 'd3';
+import { scaleQuantize, scaleLinear, interpolateCool, HierarchyCircularNode } from 'd3';
 import { COLOR_PALLETTE } from 'global/pallette';
 
 import { generateChildLabels } from '.';
@@ -6,6 +6,8 @@ import { CategoryPacksType, SimulationNodeDatumRadial } from '../types';
 import { packedChild } from './child-packer';
 
 const TOOLTIP_PADDING = 5;
+
+const colorArray = [...Array(99).keys()].map(item => interpolateCool(item / 100));
 
 const CLASSNAMES = {
   CENTROIDS: 'centroids',
@@ -20,8 +22,8 @@ const CLASSNAMES = {
 const scaled = scaleLinear();
 
 const color = scaleQuantize()
-  .domain([0, 1])
-  .range(schemeGnBu[9] as Iterable<number>);
+  .domain([0, 2])
+  .range(colorArray as Iterable<number>);
 
 export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
@@ -63,7 +65,7 @@ export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPack
     )
     .attr('stroke-dasharray', item => (!!item.children ? '10,10' : 'none'))
     .attr('stroke-width', 1)
-    .classed(CLASSNAMES.FUND, true)
+    .classed(CLASSNAMES.FUND, item => !item.children)
     .attr('r', item => item.r)
     .attr('cx', item => scaled(item.x))
     .attr('cy', item => item.y)
@@ -71,8 +73,10 @@ export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPack
     /** TODO навесить экшн онклик */
     .on('mousemove', onMouseMove)
     .on('mouseover', onMouseOver)
-    .on('mouseout', onMouseOut);
+    .on('mouseout', onMouseOut)
+    .style('filter', 'url(#drop-shadow)');
 
   /** Generate categories-child labels */
+
   generateChildLabels(categoryPacks);
 };

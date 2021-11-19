@@ -8,15 +8,15 @@ export const data = [
         children: [
           {
             name: 'BetweennessCentrality',
-            value: 1,
+            value: 5,
           },
           {
             name: 'LinkDistance',
-            value: 2,
+            value: 20,
           },
           {
             name: 'LinkDistance',
-            value: 3,
+            value: 100,
           },
         ],
       },
@@ -103,11 +103,11 @@ export const data = [
         children: [
           {
             name: 'BetweennessCentrality',
-            value: 1,
+            value: 9,
           },
           {
             name: 'LinkDistance',
-            value: 2,
+            value: 20,
           },
           {
             name: 'LinkDistance',
@@ -183,7 +183,7 @@ export const data = [
         children: [
           {
             name: 'BetweennessCentrality',
-            value: 1,
+            value: 10,
           },
           {
             name: 'LinkDistance',
@@ -245,7 +245,7 @@ export const data = [
       },
       {
         name: 'BetweennessCentrality',
-        value: 2,
+        value: 20,
       },
       {
         name: 'LinkDistance',

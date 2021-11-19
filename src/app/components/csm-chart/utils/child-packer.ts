@@ -2,7 +2,7 @@ import { pack, hierarchy, HierarchyCircularNode } from 'd3';
 
 import { SimulationNodeDatumRadial } from '../types';
 
-const CIRCLES_PADDING = 30;
+const CIRCLES_PADDING = 25;
 
 export const packedChild = (data: SimulationNodeDatumRadial, r: number) =>
   pack()

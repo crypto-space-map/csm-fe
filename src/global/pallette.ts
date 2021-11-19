@@ -6,5 +6,5 @@ export const COLOR_PALLETTE = {
   // Space map colors
   MAP_LABELS: '#eae0d7',
   MAP_DOTTED_CIRCLES: '#939393',
-  MAP_CHILD_DASH_ARRAY: '#242424',
+  MAP_CHILD_DASH_ARRAY: '#000',
 };

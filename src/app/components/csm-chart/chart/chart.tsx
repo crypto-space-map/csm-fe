@@ -10,6 +10,7 @@ import {
   generateCategoryPacks,
   categoriesLabels,
 } from '../utils';
+import { circleShadow } from '../utils/circle-sdow';
 import { fundsTooltips } from '../utils/funds-tooltip';
 import { data } from './mock-data';
 import { ChartWrapper, RandomSvg } from './styled';
@@ -37,6 +38,8 @@ export const CSMap = () => {
       generateCategoryPacks({ svg, nodes, fundsTooltip });
 
       categoriesLabels({ ref: svgRef, nodes });
+
+      circleShadow(svg);
     }
   }, [wrapperRef.current?.offsetWidth, wrapperRef.current?.offsetHeight]);
 
