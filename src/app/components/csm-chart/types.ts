@@ -39,6 +39,7 @@ export type SimulationNode = {
 
 export type SimulationNodeDatumRadial = SimulationNodeDatum &
   PackType &
+  CryptoObject &
   SimulationNode & {
     children: SimulationNode[];
     key: string;

@@ -1,4 +1,4 @@
-import { scaleQuantize, schemeGnBu, scaleLinear } from 'd3';
+import { scaleQuantize, schemeGnBu, scaleLinear, HierarchyCircularNode } from 'd3';
 import { COLOR_PALLETTE } from 'global/pallette';
 
 import { generateChildLabels } from '.';
@@ -26,7 +26,7 @@ const color = scaleQuantize()
 export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
 
-  const onMouseOver = (event: MouseEvent, item: SimulationNodeDatumRadial) =>
+  const onMouseOver = (event: MouseEvent, item: HierarchyCircularNode<SimulationNodeDatumRadial>) =>
     fundsTooltip.text(item.data.name).attr('class', CLASSNAMES.TOOLTIP.HOVERED);
 
   const onMouseMove = (event: MouseEvent) => {

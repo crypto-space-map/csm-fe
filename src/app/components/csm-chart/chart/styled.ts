@@ -61,11 +61,13 @@ export const RandomSvg = styled.svg`
       &.child {
         font-size: 12px;
         line-height: 16px;
-        fill: ${COLOR_PALLETTE.MAP_LABELS};
+        color: ${COLOR_PALLETTE.MAP_LABELS};
+        text-align: center;
       }
     }
   }
   & .category-labels {
+    pointer-events: none;
     & .label-text {
       font-weight: bold;
       font-size: 16px;
