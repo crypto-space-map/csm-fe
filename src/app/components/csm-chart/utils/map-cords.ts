@@ -5,7 +5,7 @@ export const mapCords = [
     properties: {
       name: 'Bitcoin',
       x: 150,
-      y: 180,
+      y: 200,
     },
   },
   {
@@ -14,7 +14,7 @@ export const mapCords = [
     properties: {
       name: 'Defi',
       x: 500,
-      y: 200,
+      y: 250,
     },
   },
   {
@@ -36,3 +36,8 @@ export const mapCords = [
     },
   },
 ];
+
+export const getLegendCords = (width: number) => ({
+  x: width / 2,
+  y: 100,
+});

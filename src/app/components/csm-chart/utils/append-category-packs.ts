@@ -1,13 +1,12 @@
-import { scaleQuantize, scaleLinear, interpolateCool, HierarchyCircularNode } from 'd3';
+import { scaleLinear, HierarchyCircularNode } from 'd3';
 import { COLOR_PALLETTE } from 'global/pallette';
 
-import { generateChildLabels } from '.';
 import { CategoryPacksType, SimulationNodeDatumRadial } from '../types';
 import { packedChild } from './child-packer';
+import { color } from './colors';
+import { generateChildLabels } from './labels';
 
 const TOOLTIP_PADDING = 5;
-
-const colorArray = [...Array(99).keys()].map(item => interpolateCool(item / 100));
 
 const CLASSNAMES = {
   CENTROIDS: 'centroids',
@@ -19,11 +18,9 @@ const CLASSNAMES = {
   TOOLTIP: { NORMAL: 'tooltip', HOVERED: 'tooltip tooltip--hovered' },
 };
 
-const scaled = scaleLinear();
+const STROKE_DASHARRAY = '4,4';
 
-const color = scaleQuantize()
-  .domain([0, 2])
-  .range(colorArray as Iterable<number>);
+const scaled = scaleLinear();
 
 export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
@@ -59,11 +56,11 @@ export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPack
     .data(item => packedChild(item, item.r))
     .enter()
     .append('circle')
-    .attr('fill', item => (!!item.children && item.value ? 'none' : color(item?.value / 6)))
+    .attr('fill', item => (!!item.children && item.value ? 'none' : color((item?.value || 1) / 6)))
     .attr('stroke', item =>
       !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY
     )
-    .attr('stroke-dasharray', item => (!!item.children ? '10,10' : 'none'))
+    .attr('stroke-dasharray', item => (!!item.children ? STROKE_DASHARRAY : 'none'))
     .attr('stroke-width', 1)
     .classed(CLASSNAMES.FUND, item => !item.children)
     .attr('r', item => item.r)

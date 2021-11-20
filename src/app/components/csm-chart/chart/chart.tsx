@@ -9,9 +9,10 @@ import {
   createCategoryPacks,
   generateCategoryPacks,
   categoriesLabels,
+  circleShadow,
+  fundsTooltips,
 } from '../utils';
-import { circleShadow } from '../utils/circle-sdow';
-import { fundsTooltips } from '../utils/funds-tooltip';
+import { generateFundsLegend } from '../utils/circles-legend';
 import { data } from './mock-data';
 import { ChartWrapper, RandomSvg } from './styled';
 
@@ -34,6 +35,8 @@ export const CSMap = () => {
       }) as SimulationNodeDatumRadial[];
 
       const fundsTooltip = fundsTooltips({ ref: wrapperRef, nodes });
+
+      generateFundsLegend({ svg, nodes });
 
       generateCategoryPacks({ svg, nodes, fundsTooltip });
 

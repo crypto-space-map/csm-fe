@@ -103,7 +103,7 @@ export const data = [
         children: [
           {
             name: 'BetweennessCentrality',
-            value: 9,
+            value: 5,
           },
           {
             name: 'LinkDistance',

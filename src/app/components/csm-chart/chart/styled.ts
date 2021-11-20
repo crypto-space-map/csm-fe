@@ -77,4 +77,9 @@ export const RandomSvg = styled.svg`
       text-anchor: middle;
     }
   }
+  & .legend-label {
+    font-size: 16px;
+    line-height: 22px;
+    fill: ${COLOR_PALLETTE.MAIN_WHITE};
+  }
 `;
