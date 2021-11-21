@@ -44,7 +44,7 @@ export const CSMap = () => {
 
       circleShadow(svg);
     }
-  }, [wrapperRef.current?.offsetWidth, wrapperRef.current?.offsetHeight]);
+  }, [wrapperRef.current?.offsetWidth, wrapperRef.current?.offsetHeight, svgRef]);
 
   return (
     <ChartWrapper ref={wrapperRef}>

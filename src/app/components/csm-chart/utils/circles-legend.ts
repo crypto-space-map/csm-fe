@@ -3,12 +3,13 @@ import { color } from './colors';
 
 const CIRCLES_OFFSET = 90;
 
+type MapLegend = Omit<CategoryPacksType, 'fundsTooltip'>;
+
 export const generateFundsLegend = ({
   svg,
   nodes,
-  width = 100,
 }: //  width will use with screen-size-hook to centroid elem
-Omit<CategoryPacksType, 'fundsTooltip'>) => {
+MapLegend) => {
   const getCirclesValues = (data: SimulationNodeDatumRadial[]) => {
     const values = data.reduce((acc, node) => {
       if (node.children) {
@@ -21,11 +22,15 @@ Omit<CategoryPacksType, 'fundsTooltip'>) => {
     return values;
   };
 
+  const width = parseInt(svg.style('width'), 10);
+
+  console.log(width);
+
   const circleData = [...new Set(getCirclesValues(nodes))].sort((a, b) => a - b);
 
   const legend = svg
     .append('g')
-    .attr('transform', `translate(100, 0)`)
+    .attr('transform', `translate(${width / 10}, 0)`)
     .selectAll(`g`)
     .data(circleData)
     .enter();
