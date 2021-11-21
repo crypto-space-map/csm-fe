@@ -28,7 +28,7 @@ export const createCategoryPacks = (categories: CSMMapData) => {
     children = children.map(data => ({ ...data, data, r: radius(data.value) }));
     const nodes = packSiblings(children as d3.PackRadius[]);
     const { r } = packEnclose(nodes);
-    const state = mapCords.find(d => d.properties.name === key) || { properties: { x: 0, y: 0 } };
+    const state = mapCords.find(d => d.name === key) || { properties: { x: 0, y: 0 } };
     const { x, y } = state.properties;
     packedCategories.set(key, { key, children: nodes, r, x, y });
   }

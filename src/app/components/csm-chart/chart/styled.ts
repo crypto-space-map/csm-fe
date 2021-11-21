@@ -82,4 +82,7 @@ export const RandomSvg = styled.svg`
     line-height: 22px;
     fill: ${COLOR_PALLETTE.MAIN_WHITE};
   }
+  & .legend-circle {
+    cursor: pointer;
+  }
 `;

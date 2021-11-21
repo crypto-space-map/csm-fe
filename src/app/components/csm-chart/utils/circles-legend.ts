@@ -1,10 +1,14 @@
+import { select, BaseType } from 'd3';
+
 import { CategoryPacksType, SimulationNodeDatumRadial } from '../types';
 import { color } from './colors';
 
-const CIRCLES_OFFSET = 90;
-
 type MapLegend = Omit<CategoryPacksType, 'fundsTooltip'>;
 
+const CIRCLE = {
+  OFFSET: 80,
+  RADIUS: 12,
+};
 export const generateFundsLegend = ({
   svg,
   nodes,
@@ -22,11 +26,9 @@ MapLegend) => {
     return values;
   };
 
-  const width = parseInt(svg.style('width'), 10);
-
-  console.log(width);
-
   const circleData = [...new Set(getCirclesValues(nodes))].sort((a, b) => a - b);
+
+  const width = parseInt(svg.style('width'), 10);
 
   const legend = svg
     .append('g')
@@ -38,16 +40,23 @@ MapLegend) => {
   legend
     .append('circle')
     .attr('fill', item => color(item / 6))
-    .attr('cy', 20)
-    .attr('cx', (d, i) => i * CIRCLES_OFFSET)
-    .attr('r', 12)
-    .style('filter', 'url(#drop-shadow)');
+    .attr('transform', `translate(0, 20)`)
+    .attr('cx', (d, i) => i * CIRCLE.OFFSET)
+    .attr('r', CIRCLE.RADIUS)
+    .classed('legend-circle', true)
+    .style('filter', 'url(#drop-shadow)')
+    .on('click', (event: MouseEvent) => {
+      const circle = select(event.target as BaseType);
+      const isSelected = circle.attr('stroke') === '#83D9F5';
+      circle.attr('stroke', !isSelected ? '#83D9F5' : 'none').attr('stroke-width', 2);
+      // TODO   Move out
+    });
 
   legend
     .append('text')
-    .attr('y', 26)
-    .attr('x', (d, i) => i * CIRCLES_OFFSET + 18)
-    .text((d, i) => `${circleData[i - 1] || 0} - ${circleData[i] || ''}`)
+    .attr('transform', `translate(0, ${CIRCLE.RADIUS * 2})`)
+    .attr('x', (d, i) => i * CIRCLE.OFFSET + 14)
+    .text((d, i) => `${circleData[i - 1] || 0}0-${circleData[i] || ''}0`)
     .classed('legend-label', true)
-    .style('font-size', 16);
+    .style('font-size', 14);
 };
