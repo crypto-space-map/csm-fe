@@ -4,7 +4,7 @@ COPY . /app/
 
 WORKDIR /app/
 RUN npm ci
-RUN npm run build
+RUN npm run build:dev
 RUN rm -fr /root/.npm
 
 # production environment
