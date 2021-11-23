@@ -26,6 +26,27 @@ const options = Object.keys(detailInfoTabs).map(item => ({
   value: detailInfoTabs[item as keyof typeof detailInfoTabs],
 }));
 
+const selectComponentByTabValue = (value: string) => {
+  switch (value) {
+    case detailInfoTabs.overview:
+      return <Overview />;
+    case detailInfoTabs.funds:
+      return <Funds />;
+    case detailInfoTabs.partners:
+      return <Partners />;
+    case detailInfoTabs.exchanges:
+      return <Exchanges />;
+    case detailInfoTabs.community:
+      return <Community />;
+    case detailInfoTabs.social:
+      return <Social />;
+    case detailInfoTabs.events:
+      return <Events />;
+    default:
+      return null;
+  }
+};
+
 export const TabsSection = memo(() => {
   const [activeTab, setActiveTab] = useState(detailInfoTabs.overview);
 
@@ -33,15 +54,7 @@ export const TabsSection = memo(() => {
     <TabSectionWrapper>
       <CustomTabs value={activeTab} options={options} onChangeTabValue={setActiveTab} />
       <TabContentWrapper>
-        <TabContent>
-          {activeTab === detailInfoTabs.overview && <Overview />}
-          {activeTab === detailInfoTabs.funds && <Funds />}
-          {activeTab === detailInfoTabs.partners && <Partners />}
-          {activeTab === detailInfoTabs.exchanges && <Exchanges />}
-          {activeTab === detailInfoTabs.community && <Community />}
-          {activeTab === detailInfoTabs.social && <Social />}
-          {activeTab === detailInfoTabs.events && <Events />}
-        </TabContent>
+        <TabContent>{selectComponentByTabValue(activeTab)}</TabContent>
       </TabContentWrapper>
     </TabSectionWrapper>
   );

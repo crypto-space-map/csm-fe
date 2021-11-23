@@ -1,26 +1,40 @@
 import moment from 'moment';
 
-import { SortingValues, SortingTypes, CompareFuncProps } from './types';
+import { SortingValues, SortingTypes, CompareFuncProps, GetCompareValueFuncProps } from './types';
 
-export const dateSortFunc = <R>({ a, b, fieldName, sortDirection }: CompareFuncProps<R>): number =>
-  sortDirection === SortingValues.ASC
-    ? moment(a[fieldName]).valueOf() - moment(b[fieldName]).valueOf()
-    : moment(b[fieldName]).valueOf() - moment(a[fieldName]).valueOf();
+const getMomentValue = (value: string) => moment(value).valueOf();
 
-export const numberSortFunc = <R>({ a, b, fieldName, sortDirection }: CompareFuncProps<R>): number =>
-  sortDirection === SortingValues.ASC
-    ? Number(a[fieldName]) - Number(b[fieldName])
-    : Number(b[fieldName]) - Number(a[fieldName]);
+const getRowsValue = <R>({ a, b, fieldName }: GetCompareValueFuncProps<R>) => {
+  const firstRowValue = a[fieldName] ?? '';
+  const seconsRowValue = b[fieldName] ?? '';
+  return [firstRowValue, seconsRowValue];
+};
+
+export const dateSortFunc = <R>({ a, b, fieldName, sortDirection }: CompareFuncProps<R>): number => {
+  const [firstValue, secondValue] = getRowsValue({ a, b, fieldName }) as string[];
+  return sortDirection === SortingValues.ASC
+    ? getMomentValue(firstValue) - getMomentValue(secondValue)
+    : getMomentValue(secondValue) - getMomentValue(firstValue);
+};
+
+export const numberSortFunc = <R>({ a, b, fieldName, sortDirection }: CompareFuncProps<R>): number => {
+  const [firstValue, secondValue] = getRowsValue({ a, b, fieldName });
+  return sortDirection === SortingValues.ASC
+    ? Number(firstValue) - Number(secondValue)
+    : Number(secondValue) - Number(firstValue);
+};
 
 export const stringSortFunc = <R extends Record<string, string>>({
   a,
   b,
   fieldName,
   sortDirection,
-}: CompareFuncProps<R>): number =>
-  sortDirection === SortingValues.ASC
-    ? a[fieldName].localeCompare(b[fieldName])
-    : b[fieldName].localeCompare(a[fieldName]);
+}: CompareFuncProps<R>): number => {
+  const [firstValue, secondValue] = getRowsValue({ a, b, fieldName });
+  return sortDirection === SortingValues.ASC
+    ? firstValue.localeCompare(secondValue)
+    : secondValue.localeCompare(firstValue);
+};
 
 export const getCompareFunc = (type = '') => {
   if (type === SortingTypes.DATE) return dateSortFunc;

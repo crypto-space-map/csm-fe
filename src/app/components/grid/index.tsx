@@ -1,14 +1,8 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 
-import { CellItem } from './cell-item';
-import { HeaderItem } from './header-item';
-import {
-  GridWrapper,
-  StyledGridContent,
-  StyledGridHeader,
-  StyledGridContentRow,
-  StyledGridRowWrapper,
-} from './styles';
+import { GridContent } from './components/grid-content';
+import { GridHeader } from './components/grid-header';
+import { GridWrapper } from './styles';
 import { GridProps, SortingValues } from './types';
 import { getCompareFunc } from './utils';
 
@@ -19,7 +13,6 @@ export const Grid = <R extends { id: string }>({ columns, rows }: GridProps<R>) 
   const [sortedRows, setSortedRows] = useState<R[]>([]);
 
   const columnWidths = useMemo(() => columns.map(item => `${item.width}px`).join(' '), [columns]);
-  const columnFieldNames = useMemo(() => columns.map(item => item.field), [columns]);
 
   const handleChangeSort = useCallback(
     (fieldName: keyof R) => {
@@ -34,6 +27,7 @@ export const Grid = <R extends { id: string }>({ columns, rows }: GridProps<R>) 
     [setSortDirection, setSortedField, sortDirection, sortedField]
   );
 
+  // TODO Вынести в отдельный хук
   useEffect(() => {
     const newRowsArr = rows.slice();
     const fieldOptions = columns.find(item => item.field === sortedField);
@@ -57,33 +51,14 @@ export const Grid = <R extends { id: string }>({ columns, rows }: GridProps<R>) 
 
   return (
     <GridWrapper>
-      <StyledGridHeader columnWidths={columnWidths}>
-        {columns.map(item => (
-          <HeaderItem
-            {...item}
-            key={`${item.width} ${item.field}`}
-            onChangeSortField={handleChangeSort}
-            selected={sortedField === item.field}
-            sortDirection={sortDirection}
-          />
-        ))}
-      </StyledGridHeader>
-      <StyledGridContent>
-        {sortedRows.map(item => (
-          <StyledGridRowWrapper>
-            <StyledGridContentRow columnWidths={columnWidths}>
-              {columnFieldNames.map(name => (
-                <CellItem
-                  key={`${name} ${item.id}`}
-                  row={item}
-                  fieldName={name}
-                  headerCellOptions={columns.find(column => column.field === name)}
-                />
-              ))}
-            </StyledGridContentRow>
-          </StyledGridRowWrapper>
-        ))}
-      </StyledGridContent>
+      <GridHeader
+        sortedField={sortedField}
+        sortDirection={sortDirection}
+        handleChangeSort={handleChangeSort}
+        columns={columns}
+        columnWidths={columnWidths}
+      />
+      <GridContent sortedRows={sortedRows} columns={columns} columnWidths={columnWidths} />
     </GridWrapper>
   );
 };

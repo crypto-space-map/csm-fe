@@ -85,7 +85,7 @@ const columns: ColumnProps<ExchangesProps>[] = [
   },
   {
     field: 'persentVolume',
-    headerName: decorateHeaderPersentVolume,
+    renderCustomHeaderName: decorateHeaderPersentVolume,
     width: 100,
     valueFormatter: decoratePersentVolume,
     sortable: false,

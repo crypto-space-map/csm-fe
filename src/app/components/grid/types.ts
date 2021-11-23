@@ -8,15 +8,18 @@ export enum SortingTypes {
   NUMBER = 'NUMBER',
 }
 
-export interface CompareFuncProps<R> {
+export interface GetCompareValueFuncProps<R> {
   a: R;
   b: R;
   fieldName: keyof R;
+}
+export interface CompareFuncProps<R> extends GetCompareValueFuncProps<R> {
   sortDirection: SortingValues;
 }
 export interface ColumnProps<T> {
   field: keyof T;
-  headerName: string | (() => JSX.Element);
+  headerName?: string;
+  renderCustomHeaderName?: () => JSX.Element;
   width: number;
   sortable?: boolean;
   type?: string;

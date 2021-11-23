@@ -1,4 +1,4 @@
-import { ColumnProps } from './types';
+import { ColumnProps } from '../../types';
 
 interface CellItemProps<R, F> {
   row: R;
@@ -16,5 +16,5 @@ export const CellItem = <R, F extends keyof R>({
   if (headerCellOptions?.renderCell) {
     return headerCellOptions.renderCell(row);
   }
-  return <>{row[fieldName]}</>;
+  return <span>{row[fieldName] ?? ''}</span>;
 };
