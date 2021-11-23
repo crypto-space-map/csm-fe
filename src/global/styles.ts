@@ -3,13 +3,14 @@ import { css } from '@emotion/react';
 import { COLOR_PALLETTE } from './pallette';
 import { GradientBorderProps } from './styles-types';
 
-const { MAIN_BLUE, MAIN_GREEN } = COLOR_PALLETTE;
+const { MAIN_BLUE, MAIN_GREEN, LINK_COLOR } = COLOR_PALLETTE;
 
 export const pallette = css`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
   * {
     font-family: 'Roboto', sans-serif;
   }
+
   @property --mainGreen {
     syntax: '<color>';
     initial-value: ${MAIN_GREEN};
@@ -23,6 +24,21 @@ export const pallette = css`
 `;
 
 export const mainGradient = 'linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%)';
+
+export const link = (color: string = LINK_COLOR) => css`
+  &:link {
+    color: ${color};
+  }
+  &:visited {
+    color: ${color};
+  }
+  &:hover {
+    color: ${color};
+  }
+  &:active {
+    color: ${color};
+  }
+`;
 
 export const gradientText = css`
   background-image: ${mainGradient};

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Link as MuiLink } from '@mui/material';
+import { COLOR_PALLETTE } from 'global/pallette';
 
 export const StyledLinksPanel = styled.div`
   display: grid;
@@ -11,6 +12,6 @@ export const StyledLinksPanel = styled.div`
 export const Link = styled(MuiLink)`
   font-size: 16px;
   line-height: 22px;
-  color: #ffffff;
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
   text-decoration: none;
 `;
