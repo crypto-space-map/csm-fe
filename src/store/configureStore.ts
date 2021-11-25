@@ -9,7 +9,7 @@ import createSagaMiddleware from 'redux-saga';
 import type { InjectedReducersType } from 'utils/types/injector-typings';
 
 import type { RootState } from '../types/root-state';
-// import { checkJwtMiddleware } from './check-jwt'
+// import { checkJwtMiddleware } from './check-jwt';
 import { createReducer } from './reducers';
 import { rootSaga } from './sagas';
 
