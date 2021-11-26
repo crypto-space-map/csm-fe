@@ -28,8 +28,7 @@ export const Rename = styled.span`
 
 export const StatisticsSectionWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  & > div {
-    margin-bottom: 36px;
-  }
+  grid-gap: 36px 0;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  margin-bottom: 36px;
 `;

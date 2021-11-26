@@ -10,3 +10,4 @@ export { default as LikeIcon } from 'assets/like.svg';
 export { default as LinkIcon } from 'assets/link.svg';
 export { default as ShareIcon } from 'assets/share.svg';
 export { default as StarIcon } from 'assets/star.svg';
+export { default as CloseIcon } from 'assets/close.svg';
