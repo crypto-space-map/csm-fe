@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { IconButton, Input } from '@mui/material';
+import { COLOR_PALLETTE } from 'global/pallette';
 
 const BACKGROUND = '#444444';
 
@@ -30,13 +31,13 @@ export const StyledInput = styled(Input)`
 export const StyledIconButton = styled(IconButton)`
   transition: 0.2s linear;
   & > svg {
-    fill: #b2b2b2;
+    fill: ${COLOR_PALLETTE.MAIN_GRAY};
   }
   &:hover {
     background: ${BACKGROUND};
   }
   &:active {
-    background: #ffffff;
+    background: ${COLOR_PALLETTE.MAIN_WHITE};
     & > svg {
       fill: #383838;
     }

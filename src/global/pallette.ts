@@ -7,4 +7,7 @@ export const COLOR_PALLETTE = {
   MAP_LABELS: '#eae0d7',
   MAP_DOTTED_CIRCLES: '#939393',
   MAP_CHILD_DASH_ARRAY: '#000',
+  MAIN_BLACK: '#1d1c1c',
+  MAIN_GRAY: '#b2b2b2',
+  LINK_COLOR: '#41aacc',
 };
