@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 
 import { select } from 'd3';
 
+import { useSpaceMap } from 'app/containers/pages/ space-map/hooks';
+
 import { SimulationNodeDatumRadial } from '../types';
 import {
   circlesSimulation,
@@ -20,11 +22,21 @@ export const CSMap = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
+  const {
+    fetchSpaceMapData,
+    spaceMapData: { data: csmData, loading },
+  } = useSpaceMap();
+
+  useEffect(() => {
+    if (!csmData && !loading) {
+      fetchSpaceMapData();
+    }
+  }, [fetchSpaceMapData, csmData, loading]);
+
   useEffect(() => {
     const width = wrapperRef.current?.offsetWidth;
     const height = wrapperRef.current?.offsetHeight;
-
-    if (width && height && svgRef.current) {
+    if (width && height && svgRef.current && csmData) {
       const map = createBaseMap({ width, height, ref: svgRef });
       const svg = select(map);
       const categoriesPacked = createCategoryPacks(data);
@@ -44,7 +56,7 @@ export const CSMap = () => {
 
       circleShadow(svg);
     }
-  }, [wrapperRef.current?.offsetWidth, wrapperRef.current?.offsetHeight, svgRef]);
+  }, [wrapperRef.current?.offsetWidth, wrapperRef.current?.offsetHeight, svgRef, csmData]);
 
   return (
     <ChartWrapper ref={wrapperRef}>

@@ -1,4 +1,5 @@
 import { DetailInfoState } from 'app/containers/detail-info-card/types';
+import { SpaceMapPageState } from 'app/containers/pages/ space-map/types';
 import { LoginPageState } from 'app/containers/pages/login/types';
 
 /*
@@ -8,4 +9,5 @@ import { LoginPageState } from 'app/containers/pages/login/types';
 export interface RootState {
   user: LoginPageState;
   datailInfo: DetailInfoState;
+  spaceMapData: SpaceMapPageState;
 }
