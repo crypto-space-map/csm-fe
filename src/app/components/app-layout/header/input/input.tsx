@@ -1,9 +1,9 @@
 import { IconButtonProps } from '@mui/material';
 
 import FilterIcon from 'assets/icons/filter.svg';
-import SearchIcon from 'assets/icons/search.svg';
 
-import { HeaderInputContainer, StyledIconButton, StyledInput } from './styled';
+import { HeaderInputContainer, StyledIconButton } from './styled';
+import { SuggestInput } from './suggest-input/suggest-input';
 
 const FilterButton = (props: IconButtonProps) => (
   <StyledIconButton {...props}>
@@ -11,14 +11,9 @@ const FilterButton = (props: IconButtonProps) => (
   </StyledIconButton>
 );
 
-export const HeaderInput = () => {
-  const disableLineErr = 'arrow-body-style at HeaderInput';
-  console.log(disableLineErr);
-
-  return (
-    <HeaderInputContainer>
-      <StyledInput placeholder="Search" disableUnderline fullWidth startAdornment={<SearchIcon />} />
-      <FilterButton />
-    </HeaderInputContainer>
-  );
-};
+export const HeaderInput = () => (
+  <HeaderInputContainer>
+    <SuggestInput />
+    <FilterButton />
+  </HeaderInputContainer>
+);
