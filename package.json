@@ -10,7 +10,6 @@
     "axios": "^0.21.1",
     "cross-env": "^7.0.3",
     "d3": "^7.1.1",
-    "force-in-a-box": "^1.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-error-boundary": "^3.1.3",
