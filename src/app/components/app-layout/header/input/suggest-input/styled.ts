@@ -15,7 +15,7 @@ export const StyledInput = styled(Input)`
   align-items: center;
   border-radius: 40px;
   color: rgba(190, 190, 190, 0.9);
-  gap: 1em;
+  gap: 0.5em;
   padding: 0 10px;
   transition: all 0.2s linear;
   z-index: 1;
@@ -31,11 +31,20 @@ export const StyledInput = styled(Input)`
 `;
 
 export const StyledListItem = styled(ListItem)`
-  padding: 12px 30px;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  grid-gap: 12px;
+  padding: 12px 20px;
   background-color: ${COLOR_PALLETTE.MAIN_WHITE};
   border: none;
   cursor: pointer;
+  font-size: 16px;
   transition: all 0.2s linear;
+  & > picture > img {
+    width: 24px;
+    height: 24px;
+  }
   &:hover {
     background: #e5e5e5;
   }
@@ -51,10 +60,16 @@ export const SuggestionList = styled.div`
   height: 30px;
   border-radius: ${BORDER_RADIUS};
   height: auto;
-  transition: all 0.5s ease-out;
   overflow: hidden;
-
+  transition: all 0.5s ease-out;
+  & ::first-letter {
+    text-transform: uppercase;
+  }
   & :nth-last-of-type(1) {
     border-radius: ${BORDER_RADIUS};
   }
+`;
+
+export const HighLight = styled.span`
+  font-weight: 600;
 `;
