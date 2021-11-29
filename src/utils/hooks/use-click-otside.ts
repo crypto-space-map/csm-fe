@@ -8,11 +8,9 @@ export function useOnClickOutside<T extends HTMLElement = HTMLElement>(
 ): void {
   document.addEventListener('mousedown', event => {
     const el = ref?.current;
-
     if (!el || el.contains(event.target as Node)) {
       return;
     }
-
     handler(event as unknown as MouseEvent);
   });
 }

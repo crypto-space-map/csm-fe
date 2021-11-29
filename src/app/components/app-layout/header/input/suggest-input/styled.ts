@@ -11,6 +11,8 @@ export const SuggestInputContainer = styled.div`
 `;
 
 export const StyledInput = styled(Input)`
+  grid-area: 1/1/2/2;
+  align-items: center;
   background: ${BACKGROUND};
   align-items: center;
   border-radius: 40px;
@@ -70,6 +72,17 @@ export const SuggestionList = styled.div`
   }
 `;
 
+export const ListItemSymbol = styled.span`
+  color: #b2b2b2;
+  text-transform: uppercase;
+`;
+
 export const HighLight = styled.span`
   font-weight: 600;
+`;
+
+export const InputHint = styled.span`
+  grid-area: 1/1/2/2;
+  padding: 12px 20px;
+  z-index: 1;
 `;
