@@ -9,7 +9,7 @@ export const packedChild = (data: SimulationNodeDatumRadial, r: number) =>
     .size([r * 2, r * 2]) /** Set pack size by parent radius */
     .padding(CIRCLES_PADDING)(
     hierarchy<SimulationNodeDatumRadial>(data)
-      .sum(d => d.value)
+      .sum(d => d.marketCap)
       .sort(
         (a, b) => (b.value || 1) - (a?.value || 0)
       ) /** Aggregated numeric value as calculated by sum(value) or count(), if previously invoked. */

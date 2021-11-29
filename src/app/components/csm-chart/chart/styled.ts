@@ -45,7 +45,7 @@ export const RandomSvg = styled.svg`
   & .fund {
     cursor: pointer;
     transition: 0.2s linear;
-    animation: ${circleAnimation} 0.3s linear;
+    /* animation: ${circleAnimation} 0.3s linear; */
     &:hover {
       stroke-width: 3;
     }

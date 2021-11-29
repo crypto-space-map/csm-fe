@@ -17,20 +17,21 @@ export type BaseMapParams = Sizing & {
 
 export type CryptoObject = {
   name: string;
-  value: number;
+  marketCap: number;
   r?: number;
   children?: CryptoObject[];
 };
 
 export type CSMMapData = {
   name: string;
-  value?: number | string;
+  marketCap?: number | string;
   id?: number | string;
   children: CryptoObject[];
 }[];
 
 export type SimulationNode = {
   data: CryptoObject;
+  marketCap: number;
   r: number;
   x: number;
   y: number;
@@ -43,7 +44,7 @@ export type SimulationNodeDatumRadial = SimulationNodeDatum &
   SimulationNode & {
     children: SimulationNodeDatumRadial[];
     key: string;
-    value: number;
+    marketCap: number;
     index?: number;
     data: CryptoObject;
   };

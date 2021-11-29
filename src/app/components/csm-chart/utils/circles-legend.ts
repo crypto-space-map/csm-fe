@@ -18,7 +18,7 @@ MapLegend) => {
     const values = data.reduce((acc, node) => {
       if (node.children) {
         acc.concat(getCirclesValues(node.children));
-        node.children.map(item => acc.push(item.value));
+        node.children.map(item => acc.push(item.marketCap));
       }
       return acc;
     }, [] as number[]);

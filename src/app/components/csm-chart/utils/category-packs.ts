@@ -13,7 +13,7 @@ export const createCategoryPacks = (categories: CSMMapData) => {
   const packedCategories = new Map();
 
   const categoriesChildValues = categories.reduce((arr, { children }) => {
-    children.map(({ value }) => arr.push(value));
+    children.map(({ marketCap }) => arr.push(marketCap));
     return arr;
   }, [] as number[]);
   /** Create array of values to d3.domain  */
@@ -24,11 +24,12 @@ export const createCategoryPacks = (categories: CSMMapData) => {
 
   for (let [key, value] of mappedCategories) {
     let { children } = value[0];
-    children.sort((a, b) => b.value - a.value);
-    children = children.map(data => ({ ...data, data, r: radius(data.value) }));
+    // children.sort((a, b) => b.marketCap - a.marketCap);
+    children = children.map(data => ({ ...data, data, r: radius(data.marketCap) }));
     const nodes = packSiblings(children as d3.PackRadius[]);
     const { r } = packEnclose(nodes);
-    const state = mapCords.find(d => d.name === key) || { properties: { x: 0, y: 0 } };
+    // mock cords { x: 500, y: 250 }
+    const state = mapCords.find(d => d.name === key) || { properties: { x: 500, y: 450 } };
     const { x, y } = state.properties;
     packedCategories.set(key, { key, children: nodes, r, x, y });
   }

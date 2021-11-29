@@ -15,7 +15,7 @@ import {
   fundsTooltips,
 } from '../utils';
 import { generateFundsLegend } from '../utils/circles-legend';
-import { data } from './mock-data';
+// import { data } from './mock-data';
 import { ChartWrapper, RandomSvg } from './styled';
 
 export const CSMap = () => {
@@ -39,7 +39,7 @@ export const CSMap = () => {
     if (width && height && svgRef.current && csmData) {
       const map = createBaseMap({ width, height, ref: svgRef });
       const svg = select(map);
-      const categoriesPacked = createCategoryPacks(data);
+      const categoriesPacked = createCategoryPacks(csmData);
       const nodes = circlesSimulation({
         nodes: categoriesPacked,
         width,
