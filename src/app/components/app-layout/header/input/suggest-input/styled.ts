@@ -41,7 +41,7 @@ export const StyledListItem = styled(ListItem)`
   cursor: pointer;
   font-size: 16px;
   transition: all 0.2s linear;
-  & > picture > img {
+  & > img {
     width: 24px;
     height: 24px;
   }

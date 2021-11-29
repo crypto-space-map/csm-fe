@@ -8,6 +8,7 @@ import SearchIcon from 'assets/icons/search.svg';
 import { lowerCaseTransform } from './helpers';
 import { ListItem } from './list-item';
 import { SuggestInputContainer, SuggestionList, StyledInput } from './styled';
+import { useOnClickOutside } from 'utils/hooks/use-click-otside';
 
 // TODO mock data remove
 const top100Films = [
@@ -40,6 +41,10 @@ export const SuggestInput = () => {
 
   const handleClickInput = () => setSuggestVisible(true);
 
+  const handleClickOutside = () => {
+    setSuggestVisible(false);
+  };
+
   const onClearInput = useCallback(e => {
     if (inputRef.current) {
       e.stopPropagation();
@@ -63,6 +68,8 @@ export const SuggestInput = () => {
       setSuggestVisible(true);
     }
   }, [state, suggestVisible]);
+
+  useOnClickOutside(inputRef, handleClickOutside);
 
   return (
     <SuggestInputContainer>
