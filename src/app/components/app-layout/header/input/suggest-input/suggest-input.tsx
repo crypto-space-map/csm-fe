@@ -1,14 +1,13 @@
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import { IconButton } from '@mui/material';
 
 import CloseIcon from 'assets/icons/close-ico.svg';
 import SearchIcon from 'assets/icons/search.svg';
-import { useOnClickOutside } from 'utils/hooks/use-click-otside';
 
 import { lowerCaseTransform } from './helpers';
 import { ListItem } from './list-item';
-import { SuggestInputContainer, SuggestionList, StyledInput, InputHint } from './styled';
+import { StyledAutocomplete, StyledTextField, SuggestionList } from './styled';
 
 // TODO mock data remove
 const top100Films = [
@@ -26,89 +25,44 @@ const top100Films = [
 ];
 
 export const SuggestInput = () => {
-  const [state, setState] = useState('');
-  const [sortedFunds, setSortedFunds] = useState<typeof top100Films>([]);
-  const [suggestVisible, setSuggestVisible] = useState(false);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const isDataPresence = suggestVisible && !!sortedFunds.length;
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => setState(event.target.value);
-
-  const onClick = (e: string) => {
-    setState(e);
-    setSuggestVisible(false);
-  };
-
-  const handleClickInput = () => setSuggestVisible(true);
-
-  const handleClickOutside = () => {
-    setSuggestVisible(false);
-  };
-
-  const onClearInput = useCallback(e => {
-    if (inputRef.current) {
-      e.stopPropagation();
-      Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set?.call(
-        inputRef.current,
-        ''
-      );
-      inputRef.current.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
-      inputRef.current.focus();
-    }
-  }, []);
-
-  useEffect(() => {
-    const sorted = state
-      ? top100Films
-          .filter(({ label, symbol }) =>
-            lowerCaseTransform(label + symbol).includes(lowerCaseTransform(state))
-          )
-          .slice(0, 10) || []
-      : [];
-    setSortedFunds(sorted);
-    if (suggestVisible) {
-      setSuggestVisible(true);
-    }
-  }, [state, suggestVisible]);
-
-  useOnClickOutside(inputRef, handleClickOutside);
+  const [inputValue, setInputValue] = useState('');
 
   return (
-    <SuggestInputContainer>
-      <StyledInput
-        inputRef={inputRef}
-        placeholder="Search"
-        disableUnderline
-        fullWidth
-        startAdornment={<SearchIcon />}
-        value={state}
-        onChange={handleChange}
-        onClick={handleClickInput}
-        endAdornment={
-          state ? (
-            <IconButton onClick={onClearInput}>
-              <CloseIcon />
-            </IconButton>
-          ) : null
-        }
-      />
-      {isDataPresence && <InputHint>{sortedFunds[0].label}</InputHint>}
-      {isDataPresence && (
-        <SuggestionList>
-          {sortedFunds.map(item => (
-            <ListItem
-              onClick={onClick}
-              value={item.label}
-              symbol={item.symbol}
-              highLight={lowerCaseTransform(state)}
-              key={item.label + item.year}>
-              {lowerCaseTransform(item.label)}
-            </ListItem>
-          ))}
-        </SuggestionList>
+    <StyledAutocomplete
+      options={top100Films}
+      inputValue={inputValue}
+      freeSolo
+      open
+      autoComplete
+      PopperComponent={SuggestionList}
+      clearIcon={<CloseIcon />}
+      includeInputInList
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+      }}
+      renderOption={(props, option) => {
+        // after emotion styling missed some types
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const { label, symbol, year } = option;
+        return (
+          <ListItem {...props} symbol={symbol} highLight={inputValue} key={label + year + year}>
+            {label}
+          </ListItem>
+        );
+      }}
+      renderInput={params => (
+        <StyledTextField
+          {...params}
+          placeholder="Search by Project Name or Ticker"
+          variant="standard"
+          InputProps={{
+            ...params.InputProps,
+            startAdornment: <SearchIcon />,
+            disableUnderline: true,
+          }}
+        />
       )}
-    </SuggestInputContainer>
+    />
   );
 };

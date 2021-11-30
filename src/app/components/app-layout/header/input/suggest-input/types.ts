@@ -1,7 +1,5 @@
-export type ListItemProps<T extends unknown> = {
-  value: T;
+export type ListItemProps = {
   highLight?: string;
   symbol: string;
-  onClick: (value: T) => void;
   children: string;
 };

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Input, ListItem } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import { COLOR_PALLETTE } from 'global/pallette';
 
 const BACKGROUND = '#444444';
@@ -10,32 +10,55 @@ export const SuggestInputContainer = styled.div`
   display: grid;
 `;
 
-export const StyledInput = styled(Input)`
-  grid-area: 1/1/2/2;
-  align-items: center;
+export const StyledAutocomplete = styled(Autocomplete)`
+  box-sizing: border-box;
+  &.MuiAutocomplete-popper {
+    overflow: hidden;
+  }
+  & .MuiAutocomplete-endAdornment {
+    right: 10px;
+    top: calc(50% - 13px);
+  }
+`;
+
+export const StyledTextField = styled(TextField)`
+  box-sizing: border-box;
+  display: flex;
   background: ${BACKGROUND};
   align-items: center;
+  justify-content: center;
   border-radius: 40px;
   color: rgba(190, 190, 190, 0.9);
-  gap: 0.5em;
-  padding: 0 10px;
+  gap: 1em;
+  /* padding: 0 10px; */
   transition: all 0.2s linear;
-  z-index: 1;
-
-  & .MuiInput-input {
-    padding: 0;
+  z-index: 2;
+  height: 100%;
+  width: auto;
+  & .MuiInput-root {
+    display: flex;
+    color: #b2b2b2;
+    padding: 0 10px;
+    gap: 1em;
+    & ::-webkit-input-placeholder {
+      color: #b2b2b2;
+    }
+    &:focus-within {
+      color: black;
+    }
   }
   &:focus-within {
     background: ${COLOR_PALLETTE.MAIN_WHITE};
-    color: #1d1c1c;
+    color: black;
     box-shadow: 0px 4px 5px 0px #0000005e;
   }
 `;
 
-export const StyledListItem = styled(ListItem)`
+export const StyledListItem = styled.li`
   display: grid;
   grid-auto-flow: column;
   align-items: center;
+  justify-content: start;
   grid-gap: 12px;
   padding: 12px 20px;
   background-color: ${COLOR_PALLETTE.MAIN_WHITE};
@@ -52,26 +75,6 @@ export const StyledListItem = styled(ListItem)`
   }
 `;
 
-export const SuggestionList = styled.div`
-  position: absolute;
-  display: grid;
-  width: 100%;
-  top: 50%;
-  padding-top: 1.2em;
-  background-color: ${COLOR_PALLETTE.MAIN_WHITE};
-  height: 30px;
-  border-radius: ${BORDER_RADIUS};
-  height: auto;
-  overflow: hidden;
-  transition: all 0.5s ease-out;
-  & ::first-letter {
-    text-transform: uppercase;
-  }
-  & :nth-last-of-type(1) {
-    border-radius: ${BORDER_RADIUS};
-  }
-`;
-
 export const ListItemSymbol = styled.span`
   color: #b2b2b2;
   text-transform: uppercase;
@@ -81,8 +84,30 @@ export const HighLight = styled.span`
   font-weight: 600;
 `;
 
-export const InputHint = styled.span`
-  grid-area: 1/1/2/2;
-  padding: 12px 20px;
-  z-index: 1;
+export const SuggestionList = styled.div`
+  position: absolute;
+  display: grid;
+  top: 32px;
+  /* padding-top: 1em; */
+  background-color: ${COLOR_PALLETTE.MAIN_WHITE};
+  border-radius: ${BORDER_RADIUS};
+  height: auto;
+  transition: all 0.5s ease-out;
+  overflow: hidden;
+  border: none;
+  z-index: 0 !important;
+  & :nth-last-of-type(1) {
+    border-radius: ${BORDER_RADIUS};
+  }
+  & .MuiAutocomplete-listbox {
+    overflow: hidden;
+    height: 100%;
+    padding-top: 1.5em;
+  }
+  & .MuiAutocomplete-paper {
+    box-shadow: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 `;
