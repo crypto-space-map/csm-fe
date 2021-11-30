@@ -16,6 +16,13 @@ export const headerNames = {
   ann: 'Ann.',
 };
 
+const options = [
+  { id: '1', link: 'https://codesandbox.io/s/react-custom-select-bpsi7' },
+  { id: '2', link: 'https://developer.mozilla.org/' },
+  { id: '3', link: 'https://developer.mozilla.org/' },
+  { id: '4', link: 'https://developer.mozilla.org/' },
+];
+
 export const products: FundsProps[] = [
   {
     id: '1',
@@ -28,7 +35,7 @@ export const products: FundsProps[] = [
     ],
     amount: 1920000,
     date: '2021-10-16T19:20:42+03:00',
-    ann: 'http://www.bluesmobil.ru',
+    ann: options,
   },
 
   {
@@ -42,7 +49,7 @@ export const products: FundsProps[] = [
     ],
     amount: 10000000,
     date: '2021-10-18T19:20:42+03:00',
-    ann: 'https://www.drive2.com',
+    ann: options,
   },
   {
     id: '3',
@@ -53,7 +60,7 @@ export const products: FundsProps[] = [
     ],
     amount: 1420000,
     date: '2021-10-17T19:20:42+03:00',
-    ann: 'https://www.google.com',
+    ann: options,
   },
   {
     id: '4',
@@ -61,6 +68,6 @@ export const products: FundsProps[] = [
     investors: [{ link: 'http://www.bluesmobil.ru', title: 'Framework capital' }],
     amount: 34000000,
     date: '2021-10-25T19:20:42+03:00',
-    ann: 'http://www.bluesmobil.ru',
+    ann: options,
   },
 ];

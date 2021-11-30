@@ -2,12 +2,11 @@ import { memo } from 'react';
 
 import moment from 'moment';
 
-import { Grid } from 'app/components/grid';
+import { Grid, SelectWithLink } from 'app/components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
-import LinkIcon from 'assets/link.svg';
 
 import { headerNames, products } from './constants';
-import { StyledLink, AnnLink, InvestorsWrapper, InvestorLinkWrapper } from './styles';
+import { StyledLink, InvestorsWrapper, InvestorLinkWrapper } from './styles';
 import { FundsProps } from './types';
 
 const decorateAmount = (row: FundsProps) => {
@@ -29,7 +28,7 @@ const decorateInvestors = (row: FundsProps) => {
   return (
     <InvestorsWrapper>
       {value.map((item, i, array) => (
-        <InvestorLinkWrapper>
+        <InvestorLinkWrapper key={`investorLinkWrapper ${item.title}`}>
           <StyledLink target="_blank" href={item.link}>
             {item.title}
           </StyledLink>
@@ -41,15 +40,9 @@ const decorateInvestors = (row: FundsProps) => {
 };
 
 const decorateAnn = (row: FundsProps) => {
-  const value = row.ann;
-  if (!value) return null;
-  return (
-    <>
-      <AnnLink target="_blank" href={value}>
-        <LinkIcon /> <span>Link</span>
-      </AnnLink>
-    </>
-  );
+  const options = row.ann;
+  if (!options) return null;
+  return <SelectWithLink options={options} />;
 };
 
 const columns: ColumnProps<FundsProps>[] = [

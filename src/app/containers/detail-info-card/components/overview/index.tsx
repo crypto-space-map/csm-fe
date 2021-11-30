@@ -1,21 +1,42 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
-import { TradingWidget } from 'app/components/trading-widget';
+import { Box, CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
 
+import { TradingWidget } from 'app/components';
+
+import * as selectors from '../../selectors';
+import { useDispatchAction } from '../../slice';
 import { scriptSRC, widgetOptions, containerId } from './constants';
 import { OverviewWrapper } from './styles';
 
-const symbol = 'KUCOIN:CEREUSDT';
+export const Overview = memo(() => {
+  const overviewTradingStock = useSelector(selectors.overviewTradingStock);
+  const overviewTradingStockLoading = useSelector(selectors.overviewTradingStockLoading);
 
-export const Overview = memo(() => (
-  <OverviewWrapper>
-    <div>
-      <TradingWidget
-        scriptSRC={scriptSRC}
-        containerId={containerId}
-        widgetOptions={widgetOptions}
-        symbol={symbol}
-      />
-    </div>
-  </OverviewWrapper>
-));
+  const { fetchOverviewTradingStock } = useDispatchAction();
+  useEffect(() => {
+    fetchOverviewTradingStock();
+  }, [fetchOverviewTradingStock]);
+
+  if (overviewTradingStockLoading) {
+    return (
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  return (
+    <OverviewWrapper>
+      <div>
+        <TradingWidget
+          scriptSRC={scriptSRC}
+          containerId={containerId}
+          widgetOptions={widgetOptions}
+          symbol={`${overviewTradingStock}:CEREUSDT`}
+        />
+      </div>
+    </OverviewWrapper>
+  );
+});

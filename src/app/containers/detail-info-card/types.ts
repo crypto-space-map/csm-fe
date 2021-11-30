@@ -6,6 +6,8 @@ export interface DetailInfoDto {
 export interface DetailInfoState {
   detailInfo: DetailInfoDto[];
   detailInfoLoading: boolean;
+  overviewTradingStockLoading: boolean;
+  overviewTradingStock: string;
 }
 
 export type ContainerState = DetailInfoState;

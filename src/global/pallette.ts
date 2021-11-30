@@ -6,4 +6,5 @@ export const COLOR_PALLETTE = {
   MAIN_GRAY: '#b2b2b2',
   ERROR_COLOR: '#ff8484',
   LINK_COLOR: '#41aacc',
+  LIGHT_GRAY: '#E5E5E5',
 };
