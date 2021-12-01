@@ -1,6 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
-
-import { IconButton } from '@mui/material';
+import { useState } from 'react';
 
 import CloseIcon from 'assets/icons/close-ico.svg';
 import SearchIcon from 'assets/icons/search.svg';
@@ -26,17 +24,31 @@ const top100Films = [
 
 export const SuggestInput = () => {
   const [inputValue, setInputValue] = useState('');
+  // after emotion styling missed some types
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
 
   const filterOptions = (options: any[], { inputValue: value }: any) =>
-    options.filter(({ label, symbol }) =>
-      lowerCaseTransform(label + symbol).includes(lowerCaseTransform(value))
-    );
+    options
+      .filter(({ label, symbol }) => lowerCaseTransform(label + symbol).includes(lowerCaseTransform(value)))
+      .slice(0, 10);
+
+  const onChange = (e: Event, value: typeof top100Films[number]) => {
+    if (typeof value !== 'object') return;
+    console.log(value);
+    // TODO pass here changeProject func
+  };
 
   return (
     <StyledAutocomplete
       options={top100Films}
       inputValue={inputValue}
       freeSolo
+      // after emotion styling missed some types
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      onChange={onChange}
+      openOnFocus={!inputValue}
       autoComplete
       filterOptions={filterOptions}
       PopperComponent={SuggestionList}

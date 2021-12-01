@@ -2,21 +2,17 @@ import styled from '@emotion/styled';
 import { Autocomplete, TextField } from '@mui/material';
 import { COLOR_PALLETTE } from 'global/pallette';
 
-const BACKGROUND = '#444444';
-const BORDER_RADIUS = '0px 0px 8px 8px';
-
 export const SuggestInputContainer = styled.div`
   position: relative;
   display: grid;
 `;
 
 export const StyledAutocomplete = styled(Autocomplete)`
-  box-sizing: border-box;
   &.MuiAutocomplete-popper {
     overflow: hidden;
   }
   & .MuiAutocomplete-endAdornment {
-    right: 10px;
+    right: 12px;
     top: calc(50% - 13px);
   }
 `;
@@ -24,7 +20,7 @@ export const StyledAutocomplete = styled(Autocomplete)`
 export const StyledTextField = styled(TextField)`
   box-sizing: border-box;
   display: flex;
-  background: ${BACKGROUND};
+  background: ${COLOR_PALLETTE.HEADER.INPUT.BACKGROUND};
   align-items: center;
   justify-content: center;
   border-radius: 40px;
@@ -37,14 +33,14 @@ export const StyledTextField = styled(TextField)`
   width: auto;
   & .MuiInput-root {
     display: flex;
-    color: #b2b2b2;
+    color: ${COLOR_PALLETTE.MAIN_GRAY};
     padding: 0 10px;
     gap: 1em;
     & ::-webkit-input-placeholder {
-      color: #b2b2b2;
+      color: ${COLOR_PALLETTE.MAIN_GRAY};
     }
     &:focus-within {
-      color: black;
+      color: ${COLOR_PALLETTE.MAIN_BLACK};
     }
   }
   &:focus-within {
@@ -71,12 +67,12 @@ export const StyledListItem = styled.li`
     height: 24px;
   }
   &:hover {
-    background: #e5e5e5;
+    background: ${COLOR_PALLETTE.HEADER.INPUT.BACKGROUND_FOCUSED};
   }
 `;
 
 export const ListItemSymbol = styled.span`
-  color: #b2b2b2;
+  color: ${COLOR_PALLETTE.MAIN_GRAY};
   text-transform: uppercase;
 `;
 
@@ -88,16 +84,15 @@ export const SuggestionList = styled.div`
   position: absolute;
   display: grid;
   top: 32px;
-  /* padding-top: 1em; */
   background-color: ${COLOR_PALLETTE.MAIN_WHITE};
-  border-radius: ${BORDER_RADIUS};
+  border-radius: 0px 0px 8px 8px;
   height: auto;
   transition: all 0.5s ease-out;
   overflow: hidden;
   border: none;
   z-index: 0 !important;
   & :nth-last-of-type(1) {
-    border-radius: ${BORDER_RADIUS};
+    max-height: 100%;
   }
   & .MuiAutocomplete-listbox {
     overflow: hidden;

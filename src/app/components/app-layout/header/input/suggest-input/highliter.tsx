@@ -1,20 +1,28 @@
 import { HighLight } from './styled';
 
+const escapeRegExp = (str = '') => str.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+
 export type HighlighterProps = {
   item: string;
   coloredValue: string;
   i: number;
 };
 
-export const Highlighter = ({ item, coloredValue, i }: HighlighterProps) => {
+export const Highlighter = ({ item, coloredValue }: HighlighterProps) => {
   if (item && coloredValue) {
-    let splitString: string[] = item.replace(coloredValue, `/${coloredValue}/`).split('/');
-
+    const regex = new RegExp(`(${escapeRegExp(coloredValue)})`, 'gi');
+    const parts = item.split(regex);
     return (
-      <span key={`span-highlight-${i}`}>
-        {splitString.map(part =>
-          part === coloredValue ? <HighLight key={`part-${i}`}>{part}</HighLight> : part
-        )}
+      <span>
+        {parts
+          .filter(part => part)
+          .map((part, i) =>
+            regex.test(part) ? (
+              <HighLight key={`part-${part + i}`}>{part}</HighLight>
+            ) : (
+              <span key={`part-${part + i}`}>{part}</span>
+            )
+          )}
       </span>
     );
   }
