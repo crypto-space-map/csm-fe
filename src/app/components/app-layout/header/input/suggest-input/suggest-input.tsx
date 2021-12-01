@@ -27,17 +27,22 @@ const top100Films = [
 export const SuggestInput = () => {
   const [inputValue, setInputValue] = useState('');
 
+  const filterOptions = (options: any[], { inputValue: value }: any) =>
+    options.filter(({ label, symbol }) =>
+      lowerCaseTransform(label + symbol).includes(lowerCaseTransform(value))
+    );
+
   return (
     <StyledAutocomplete
       options={top100Films}
       inputValue={inputValue}
       freeSolo
-      open
       autoComplete
+      filterOptions={filterOptions}
       PopperComponent={SuggestionList}
       clearIcon={<CloseIcon />}
       includeInputInList
-      onInputChange={(event, newInputValue) => {
+      onInputChange={(_event, newInputValue) => {
         setInputValue(newInputValue);
       }}
       renderOption={(props, option) => {
