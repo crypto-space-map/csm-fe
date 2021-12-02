@@ -1,9 +1,9 @@
 export const mapCords = [
   {
-    name: 'Bitcoin',
+    name: 'Currency',
     properties: {
-      x: 150,
-      y: 200,
+      x: 590,
+      y: 330,
     },
   },
   {

@@ -2,13 +2,13 @@ import { RefObject } from 'react';
 
 import { select } from 'd3';
 
-import { SimulationNodeDatumRadial } from '../types';
+import { PackedCategories } from '../types';
 
 const TOOLTIP = 'tooltip';
 
 type FundsTooltipProps = {
   ref: RefObject<HTMLDivElement>;
-  nodes: SimulationNodeDatumRadial[];
+  nodes: PackedCategories[];
 };
 
 export const fundsTooltips = ({ ref }: FundsTooltipProps) => {

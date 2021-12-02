@@ -2,7 +2,7 @@ import { RefObject } from 'react';
 
 import { select, Selection } from 'd3';
 
-import { SimulationNodeDatumRadial } from '../types';
+import { PackedCategories } from '../types';
 import { packedChild } from './child-packer';
 
 const PADDING = {
@@ -18,7 +18,7 @@ const CLASSNAMES = {
 
 type CategoriesLabelsProps = {
   ref: RefObject<SVGSVGElement>;
-  nodes: SimulationNodeDatumRadial[];
+  nodes: PackedCategories[];
 };
 
 export const categoriesLabels = ({ ref, nodes }: CategoriesLabelsProps) => {
@@ -33,15 +33,13 @@ export const categoriesLabels = ({ ref, nodes }: CategoriesLabelsProps) => {
   /** Generate categories labels */
   labelArea
     .append('text')
-    .text(item => item.key)
+    .text(item => item.key || '')
     .classed('label-text', true)
     .attr('x', ({ x }) => x)
     .attr('y', ({ y, r }) => y - r - PADDING.PARENT);
 };
 
-export const generateChildLabels = (
-  elem: Selection<SVGGElement, SimulationNodeDatumRadial, SVGGElement, unknown>
-) =>
+export const generateChildLabels = (elem: Selection<SVGGElement, PackedCategories, SVGGElement, unknown>) =>
   elem
     .selectAll(`.${CLASSNAMES.LABEL_TEXT} ${CLASSNAMES.CHILD}`)
     .data(d => packedChild(d, d.r))

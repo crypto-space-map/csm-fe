@@ -1,7 +1,7 @@
 import { scaleLinear, HierarchyCircularNode } from 'd3';
 import { COLOR_PALLETTE } from 'global/pallette';
 
-import { CategoryPacksType, SimulationNodeDatumRadial } from '../types';
+import { CategoryPacksType, PackedCategories } from '../types';
 import { packedChild } from './child-packer';
 import { color } from './colors';
 import { generateChildLabels } from './labels';
@@ -25,7 +25,7 @@ const scaled = scaleLinear();
 export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
 
-  const onMouseOver = (event: MouseEvent, item: HierarchyCircularNode<SimulationNodeDatumRadial>) =>
+  const onMouseOver = (event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) =>
     fundsTooltip.text(item.data.name).attr('class', CLASSNAMES.TOOLTIP.HOVERED);
 
   const onMouseMove = (event: MouseEvent) => {
@@ -63,7 +63,7 @@ export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPack
     .attr('stroke-dasharray', item => (!!item.children ? STROKE_DASHARRAY : 'none'))
     .attr('stroke-width', 1)
     .classed(CLASSNAMES.FUND, item => !item.children)
-    .attr('r', item => item.r)
+    .attr('r', item => (item.r < 2 ? 3 : item.r))
     .attr('cx', item => scaled(item.x))
     .attr('cy', item => item.y)
     .on('click', event => console.log(event.target.__data__))

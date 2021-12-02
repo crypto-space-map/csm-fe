@@ -1,6 +1,6 @@
 import { select, BaseType } from 'd3';
 
-import { CategoryPacksType, SimulationNodeDatumRadial } from '../types';
+import { CategoryPacksType, PackedCategories } from '../types';
 import { color } from './colors';
 
 type MapLegend = Omit<CategoryPacksType, 'fundsTooltip'>;
@@ -14,7 +14,7 @@ export const generateFundsLegend = ({
   nodes,
 }: //  width will use with screen-size-hook to centroid elem
 MapLegend) => {
-  const getCirclesValues = (data: SimulationNodeDatumRadial[]) => {
+  const getCirclesValues = (data: PackedCategories[]) => {
     const values = data.reduce((acc, node) => {
       if (node.children) {
         acc.concat(getCirclesValues(node.children));

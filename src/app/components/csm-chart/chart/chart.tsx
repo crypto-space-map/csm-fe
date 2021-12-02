@@ -4,18 +4,15 @@ import { select } from 'd3';
 
 import { useSpaceMap } from 'app/containers/pages/ space-map/hooks';
 
-import { SimulationNodeDatumRadial } from '../types';
 import {
   circlesSimulation,
   createBaseMap,
   createCategoryPacks,
   generateCategoryPacks,
   categoriesLabels,
-  circleShadow,
   fundsTooltips,
 } from '../utils';
 import { generateFundsLegend } from '../utils/circles-legend';
-// import { data } from './mock-data';
 import { ChartWrapper, RandomSvg } from './styled';
 
 export const CSMap = () => {
@@ -44,7 +41,7 @@ export const CSMap = () => {
         nodes: categoriesPacked,
         width,
         height,
-      }) as SimulationNodeDatumRadial[];
+      });
 
       const fundsTooltip = fundsTooltips({ ref: wrapperRef, nodes });
 
@@ -53,8 +50,6 @@ export const CSMap = () => {
       generateCategoryPacks({ svg, nodes, fundsTooltip });
 
       categoriesLabels({ ref: svgRef, nodes });
-
-      circleShadow(svg);
     }
   }, [wrapperRef.current?.offsetWidth, wrapperRef.current?.offsetHeight, svgRef, csmData]);
 

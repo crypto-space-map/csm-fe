@@ -1,6 +1,8 @@
 import { RefObject } from 'react';
 
-import { Selection, SimulationNodeDatum } from 'd3';
+import { Selection, SimulationNodeDatum, PackCircle } from 'd3';
+
+import { CSMMapCategory } from 'app/containers/pages/ space-map/types';
 
 type Sizing = {
   width: number;
@@ -51,10 +53,31 @@ export type SimulationNodeDatumRadial = SimulationNodeDatum &
 
 export type CategoryPacksType = {
   svg: Selection<SVGSVGElement | null, unknown, null, undefined>;
-  nodes: SimulationNodeDatumRadial[];
+  nodes: PackedCategories[];
   fundsTooltip: Selection<HTMLDivElement, unknown, null, undefined>;
 };
 
 export type CirclesSimulation = Sizing & {
-  nodes: SimulationNodeDatumRadial[];
+  nodes: PackedCategories[];
+};
+
+type CategoriesChild = {
+  data: CSMMapCategory;
+  r: number;
+  id: string;
+  name: string;
+  children: CSMMapCategory[];
+  marketCap: number;
+};
+
+export type PackedCategories = {
+  key?: string;
+  children: Array<CategoriesChild & PackCircle>;
+  data: CSMMapCategory;
+  id: string;
+  name: string;
+  marketCap: number;
+  r: number;
+  x: number;
+  y: number;
 };
