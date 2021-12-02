@@ -70,8 +70,8 @@ export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPack
     /** TODO навесить экшн онклик */
     .on('mousemove', onMouseMove)
     .on('mouseover', onMouseOver)
-    .on('mouseout', onMouseOut)
-    .style('filter', 'url(#drop-shadow)');
+    .on('mouseout', onMouseOut);
+  // .style('filter', 'url(#drop-shadow)');
 
   /** Generate categories-child labels */
 
