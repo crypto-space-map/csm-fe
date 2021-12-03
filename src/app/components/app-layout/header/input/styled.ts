@@ -11,6 +11,11 @@ export const HeaderInputContainer = styled.div`
   grid-gap: 14px;
 `;
 
+export const FilterButtonContainer = styled.div`
+  position: relative;
+  display: grid;
+`;
+
 export const StyledIconButton = styled(IconButton)`
   transition: 0.2s linear;
   & > svg {

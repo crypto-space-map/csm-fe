@@ -1,15 +1,33 @@
-import { IconButtonProps } from '@mui/material';
+import { useRef, useState } from 'react';
 
 import FilterIcon from 'assets/icons/filter.svg';
+import { useOnClickOutside } from 'utils/hooks/use-click-otside';
 
-import { HeaderInputContainer, StyledIconButton } from './styled';
+import { FilterBlock } from './filter-block/filter-block';
+import { FilterButtonContainer, HeaderInputContainer, StyledIconButton } from './styled';
 import { SuggestInput } from './suggest-input/suggest-input';
 
-const FilterButton = (props: IconButtonProps) => (
-  <StyledIconButton {...props}>
-    <FilterIcon />
-  </StyledIconButton>
-);
+const FilterButton = () => {
+  const filterRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    setOpen(!open);
+  };
+  const handleClickOutside = () => {
+    setOpen(false);
+  };
+
+  useOnClickOutside(filterRef, handleClickOutside);
+
+  return (
+    <FilterButtonContainer ref={filterRef}>
+      <StyledIconButton onClick={handleClick}>
+        <FilterIcon />
+      </StyledIconButton>
+      <FilterBlock visible={open} />
+    </FilterButtonContainer>
+  );
+};
 
 export const HeaderInput = () => (
   <HeaderInputContainer>

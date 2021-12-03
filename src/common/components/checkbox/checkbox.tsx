@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Checkbox as MuiCheckbox, CheckboxProps, FormControlLabel } from '@mui/material';
+import { Checkbox as MuiCheckbox, CheckboxProps as MuiCheckboxProps, FormControlLabel } from '@mui/material';
 import { gradientText } from 'global/styles';
 
 import CheckBoxCheckedIcon from './icons/checkbox-checked.svg';
@@ -9,9 +9,9 @@ const StyledFCL = styled(FormControlLabel)`
   ${gradientText}
 `;
 
-type FCLCheckbox = CheckboxProps & { label: string };
+export type CheckboxProps = MuiCheckboxProps & { label: string };
 
-export const CheckBox = (props: FCLCheckbox) => (
+export const CheckBox = (props: CheckboxProps) => (
   <StyledFCL
     label={props.label}
     control={<MuiCheckbox {...props} icon={<CheckBoxIcon />} checkedIcon={<CheckBoxCheckedIcon />} />}
