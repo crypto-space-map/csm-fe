@@ -2,6 +2,7 @@ import { packSiblings, extent, scaleSqrt, group, PackCircle } from 'd3';
 
 import { CSMMapCategory } from 'app/containers/pages/ space-map/types';
 
+import { PackedCategories } from '../types';
 import { mapCords } from './map-cords';
 /** TODO  need to understand where from we take circle coords data */
 
@@ -36,6 +37,7 @@ export const createCategoryPacks = (categories: CSMMapCategory[]) => {
 
     const nodes = packSiblings<typeof circledChildren[number]>(circledChildren);
 
+    // TODO мок значение битка убрать
     const maxCalculatedRadius = (value[0].marketCap / 1268865289918) * 100 * 2;
 
     const r = radius(maxCalculatedRadius);
@@ -44,6 +46,6 @@ export const createCategoryPacks = (categories: CSMMapCategory[]) => {
     const { x, y } = state.properties;
     packedCategories.set(key, { key, children: nodes, r, x, y });
   }
-  const categoriesMapValues = [...new Map(packedCategories).values()];
+  const categoriesMapValues = [...new Map(packedCategories).values()] as PackedCategories[];
   return categoriesMapValues;
 };

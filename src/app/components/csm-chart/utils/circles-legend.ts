@@ -17,7 +17,7 @@ MapLegend) => {
   const getCirclesValues = (data: PackedCategories[]) => {
     const values = data.reduce((acc, node) => {
       if (node.children) {
-        acc.concat(getCirclesValues(node.children));
+        acc.concat(getCirclesValues(node.children as PackedCategories[]));
         node.children.map(item => acc.push(item.marketCap));
       }
       return acc;
@@ -44,7 +44,7 @@ MapLegend) => {
     .attr('cx', (d, i) => i * CIRCLE.OFFSET)
     .attr('r', CIRCLE.RADIUS)
     .classed('legend-circle', true)
-    .style('filter', 'url(#drop-shadow)')
+    // .style('filter', 'url(#drop-shadow)')
     .on('click', (event: MouseEvent) => {
       const circle = select(event.target as BaseType);
       const isSelected = circle.attr('stroke') === '#83D9F5';
