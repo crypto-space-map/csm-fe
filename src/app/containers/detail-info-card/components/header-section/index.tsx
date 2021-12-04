@@ -1,6 +1,4 @@
-import LikeIcon from 'assets/like.svg';
-import ShareIcon from 'assets/share.svg';
-import StarIcon from 'assets/star.svg';
+import { ShareIcon, StarIcon, LikeIcon, CloseIcon } from 'assets';
 
 import {
   Icon,
@@ -11,6 +9,7 @@ import {
   HeaderSectionWrapper,
   RankText,
   Controls,
+  CloseIconWrapper,
 } from './styles';
 
 const data = {
@@ -22,7 +21,11 @@ const data = {
   },
 };
 
-export const HeaderSection = () => (
+interface HeaderSectionProps {
+  onClose: () => void;
+}
+
+export const HeaderSection = ({ onClose }: HeaderSectionProps) => (
   <HeaderSectionWrapper>
     <CompanyInfo>
       <Icon src={data.company.logo} alt="logo" />
@@ -36,6 +39,9 @@ export const HeaderSection = () => (
     <Controls>
       <LikeIcon />
       <ShareIcon />
+      <CloseIconWrapper onClick={onClose}>
+        <CloseIcon />
+      </CloseIconWrapper>
     </Controls>
   </HeaderSectionWrapper>
 );

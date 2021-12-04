@@ -10,11 +10,13 @@ export const HeaderSectionWrapper = styled.div`
 export const CompanyInfo = styled.div`
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 `;
 
 export const Icon = styled.img`
   width: 43px;
   height: fit-content;
+  flex-shrink: inherit;
 `;
 
 export const CompanyName = styled.span`
@@ -22,6 +24,7 @@ export const CompanyName = styled.span`
   line-height: 39px;
   color: ${COLOR_PALLETTE.MAIN_WHITE};
   margin: 0 14px;
+  flex-shrink: inherit;
 `;
 
 export const CompanyTiker = styled.span`
@@ -49,4 +52,11 @@ export const Controls = styled.div`
   & > svg:first-of-type {
     margin-right: 20px;
   }
+`;
+
+export const CloseIconWrapper = styled.div`
+  position: absolute;
+  top: 23px;
+  right: 23px;
+  cursor: pointer;
 `;
