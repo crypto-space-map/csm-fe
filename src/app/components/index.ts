@@ -5,3 +5,4 @@ export * from './tabs';
 export * from './select-with-link';
 export * from './crypto-logo';
 export * from './trading-widget';
+export * from './spinner';
