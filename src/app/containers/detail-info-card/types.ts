@@ -1,13 +1,22 @@
-export interface DetailInfoDto {
-  provider_id: number;
-  name: string;
+export interface ExchangeRequest {
+  page: number;
+}
+export interface ExchangeDTO {
+  exchange: string;
+  url: string;
+  pair: string;
+  price: number;
+  volume: number;
+  persentVolume?: string;
+  updatedAt: string;
 }
 
 export interface DetailInfoState {
-  detailInfo: DetailInfoDto[];
-  detailInfoLoading: boolean;
+  exchangesData: ExchangeDTO[];
+  exchangesDataLoading: boolean;
   overviewTradingStockLoading: boolean;
   overviewTradingStock: string;
+  exchangesPage: number;
 }
 
 export type ContainerState = DetailInfoState;
