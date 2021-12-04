@@ -2,7 +2,13 @@ import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
 
 export const DetailWrapper = styled.article`
-  height: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  position: absolute;
+  right: 0;
+  overflow: hidden;
   background-color: ${COLOR_PALLETTE.MAIN_WHITE};
 `;
 
@@ -19,7 +25,6 @@ export const TransitionWrapper = styled.div<{ open: boolean }>`
   height: 100%;
   background-color: black;
   z-index: 999;
-  border-radius: 0px 10px 10px 0px;
   transition-duration: 1s;
   transition-property: width;
   overflow: hidden;

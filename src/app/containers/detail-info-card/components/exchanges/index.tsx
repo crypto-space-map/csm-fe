@@ -1,59 +1,79 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
+
+import { useSelector } from 'react-redux';
 
 import { Grid } from 'app/components';
-import { ColumnProps } from 'app/components/grid/types';
+import { ColumnProps, SortingTypes } from 'app/components/grid/types';
+import { useInjectReducer, useInjectSaga } from 'hooks/redux-injectors';
 
-import { headerNames, products } from './constants';
+import { detailInfoSaga } from '../../saga';
+import * as selectors from '../../selectors';
+import { useDispatchAction, sliceKey, reducer } from '../../slice';
+import { ExchangeDTO } from '../../types';
+import { headerNames } from './constants';
 import { ExchangeWrapper, StyledLink, DecorateHeader } from './styles';
-import { ExchangesProps } from './types';
+import { getUpdatevalue } from './utils';
 
-const decoratePrice = (row: ExchangesProps) => {
+interface EnrichedExchangeProps extends ExchangeDTO {
+  id: string;
+}
+
+const decoratePrice = (row: EnrichedExchangeProps) => {
   const value = row.price;
   if (!value) return null;
-  return `$${value}`;
+  return `$ ${value}`;
 };
 
-const decorateVolume = (row: ExchangesProps) => {
+const decorateVolume = (row: EnrichedExchangeProps) => {
   const value = row.volume;
 
   if (!value) return null;
-  return `$${value}`;
+  return `$ ${value}`;
 };
 
-const decoratePersentVolume = (row: ExchangesProps) => {
+const decoratePersentVolume = (row: EnrichedExchangeProps) => {
   const value = row.persentVolume;
 
   if (!value) return null;
   return `${value}%`;
 };
 
-const decoratePair = (row: ExchangesProps) => {
-  const { pair, pairLink } = row;
-  if (!pair || !pairLink) return null;
-  return (
-    <>
-      <StyledLink target="_blank" href={pairLink}>
-        {pair}
-      </StyledLink>
-    </>
+const decorateUpdatedAt = (row: EnrichedExchangeProps) => {
+  const value = row.updatedAt;
+
+  if (!value) return null;
+  return getUpdatevalue(value);
+};
+
+const decoratePair = (row: EnrichedExchangeProps) => {
+  const { pair, url } = row;
+  if (!pair) return null;
+
+  return url ? (
+    <StyledLink target="_blank" href={url}>
+      {pair}
+    </StyledLink>
+  ) : (
+    <span>{pair}</span>
   );
 };
 
 const decorateHeaderPersentVolume = () => <DecorateHeader>{headerNames.persentVolume}</DecorateHeader>;
 
-const decorateExchange = (row: ExchangesProps) => {
+const decorateExchange = (row: EnrichedExchangeProps) => {
   const value = row.exchange;
 
   if (!value) return null;
   return <ExchangeWrapper>{value}</ExchangeWrapper>;
 };
 
-const columns: ColumnProps<ExchangesProps>[] = [
+const columns: ColumnProps<EnrichedExchangeProps>[] = [
   {
     field: 'id',
     headerName: headerNames.id,
     width: 30,
     sortable: false,
+    type: SortingTypes.NUMBER,
   },
   {
     field: 'exchange',
@@ -91,11 +111,26 @@ const columns: ColumnProps<ExchangesProps>[] = [
     sortable: false,
   },
   {
-    field: 'updated',
+    field: 'updatedAt',
     headerName: headerNames.updated,
     width: 90,
+    valueFormatter: decorateUpdatedAt,
     sortable: false,
   },
 ];
 
-export const Exchanges = memo(() => <Grid columns={columns} rows={products} />);
+export const Exchanges = memo(() => {
+  const { fetchExchangesData } = useDispatchAction();
+
+  const enrichedExchangesData = useSelector(selectors.enrichedExchangesData);
+  const exchangesDataLoading = useSelector(selectors.exchangesDataLoading);
+
+  useInjectReducer({ key: sliceKey, reducer });
+  useInjectSaga({ key: sliceKey, saga: detailInfoSaga });
+
+  useEffect(() => {
+    fetchExchangesData();
+  }, [fetchExchangesData]);
+
+  return <Grid columns={columns} rows={enrichedExchangesData} />;
+});
