@@ -15,11 +15,17 @@ export function useSpaceMapPageSlice() {
 }
 
 export function useSpaceMap() {
-  const { fetchData } = useSpaceMapPageSlice();
-  const spaceMapData = useSelector(selectCSMMapData);
+  const { fetchSpaceMapData, fetchProjects } = useSpaceMapPageSlice();
+  const {
+    mapTree: { data: spaceMapData, loading: fetchingMapData },
+    projects: { data: projects },
+  } = useSelector(selectCSMMapData);
 
   return {
-    fetchSpaceMapData: fetchData,
+    fetchProjects,
+    fetchSpaceMapData,
     spaceMapData,
+    projects,
+    fetchingMapData,
   };
 }

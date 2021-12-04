@@ -56,7 +56,7 @@ export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPack
     .data(item => packedChild(item, item.r))
     .enter()
     .append('circle')
-    .attr('fill', item => (!!item.children && item.value ? 'none' : color((item?.value || 1) / 6)))
+    .attr('fill', item => (!!item.children && item.value ? 'none' : color(item?.value || 1)))
     .attr('stroke', item =>
       !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY
     )

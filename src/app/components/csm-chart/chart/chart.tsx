@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { select } from 'd3';
 
-import { useSpaceMap } from 'app/containers/pages/ space-map/hooks';
+import { useSpaceMap } from 'app/containers/pages/space-map/hooks';
 
 import {
   circlesSimulation,
@@ -21,22 +21,23 @@ export const CSMap = () => {
 
   const {
     fetchSpaceMapData,
-    spaceMapData: { data: csmData, loading },
+    spaceMapData: { tree, maxMarketCap, minMarketCap },
+    fetchingMapData: loading,
   } = useSpaceMap();
 
   useEffect(() => {
-    if (!csmData && !loading) {
+    if (!tree && !loading) {
       fetchSpaceMapData();
     }
-  }, [fetchSpaceMapData, csmData, loading]);
+  }, [fetchSpaceMapData, tree, loading]);
 
   useEffect(() => {
     const width = wrapperRef.current?.offsetWidth;
     const height = wrapperRef.current?.offsetHeight;
-    if (width && height && svgRef.current && csmData) {
+    if (width && height && svgRef.current && tree) {
       const map = createBaseMap({ width, height, ref: svgRef });
       const svg = select(map);
-      const categoriesPacked = createCategoryPacks(csmData);
+      const categoriesPacked = createCategoryPacks(tree);
       const nodes = circlesSimulation({
         nodes: categoriesPacked,
         width,
@@ -51,7 +52,14 @@ export const CSMap = () => {
 
       categoriesLabels({ ref: svgRef, nodes });
     }
-  }, [wrapperRef.current?.offsetWidth, wrapperRef.current?.offsetHeight, svgRef, csmData]);
+  }, [
+    wrapperRef.current?.offsetWidth,
+    wrapperRef.current?.offsetHeight,
+    svgRef,
+    tree,
+    maxMarketCap,
+    minMarketCap,
+  ]);
 
   return (
     <ChartWrapper ref={wrapperRef}>

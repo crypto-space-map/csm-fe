@@ -2,7 +2,7 @@ import { RefObject } from 'react';
 
 import { Selection, SimulationNodeDatum, PackCircle } from 'd3';
 
-import { CSMMapCategory } from 'app/containers/pages/ space-map/types';
+import { CSMMapCategory } from 'app/containers/pages/space-map/types';
 
 type Sizing = {
   width: number;
