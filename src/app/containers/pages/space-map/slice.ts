@@ -20,14 +20,12 @@ export const initialState: ContainerState = {
   },
 };
 
-const {
-  fetchDataSuccess: fetchSpaceMapDataSuccess,
-  // clearData: clearSpaceMapData,
-  fetchDataError: fetchSpaceMapDataError,
-} = fetchDataReducers<typeof initialState['mapTree']['data']>(initialState.mapTree);
+const { fetchDataSuccess: fetchSpaceMapDataSuccess, ...restMapReducerProps } = fetchDataReducers<
+  ContainerState['mapTree']['data']
+>(initialState.mapTree);
 
-const { fetchDataSuccess: fetchProjectsSuccess, fetchDataError: fetchProjectError } = fetchDataReducers<
-  typeof initialState['projects']['data']
+const { fetchDataSuccess: fetchProjectsSuccess, ...restProjectReducerProps } = fetchDataReducers<
+  ContainerState['projects']['data']
 >(initialState.projects);
 
 const loginPageSlice = createSlice({
@@ -40,18 +38,13 @@ const loginPageSlice = createSlice({
     fetchSpaceMapDataSuccess(state, action: PayloadAction<{ data: MapDataResponse }>) {
       fetchSpaceMapDataSuccess(state.mapTree, action);
     },
-    fetchSpaceMapDataError(state, action: PayloadAction<{ message: string }>) {
-      fetchSpaceMapDataError(state.mapTree, action);
-    },
     fetchProjects(state) {
       state.projects.loading = true;
     },
     fetchProjectsSuccess(state, action: PayloadAction<{ data: ProjectData[] }>) {
       fetchProjectsSuccess(state.projects, action);
     },
-    fetchProjectError(state, action: PayloadAction<{ message: string }>) {
-      fetchProjectError(state.mapTree, action);
-    },
+    ...restProjectReducerProps,
   },
 });
 
