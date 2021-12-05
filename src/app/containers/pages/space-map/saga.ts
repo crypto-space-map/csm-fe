@@ -22,7 +22,7 @@ export function* fetchProjectsData() {
     yield* put(actions.fetchProjectsSuccess({ data }));
   } catch (error) {
     toast(error.message, 'error');
-    yield* put(actions.fetchSpaceMapDataError({ message: error.message }));
+    yield* put(actions.fetchProjectsError({ message: error.message }));
   }
 }
 

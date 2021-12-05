@@ -21,7 +21,7 @@ type PackedNodes = {
   y: number;
 };
 
-export const createCategoryPacks = (categories: CSMMapCategory[]) => {
+export const createCategoryPacks = (categories: CSMMapCategory[], marketCap: number) => {
   const mappedCategories = group(categories, d => d.name);
 
   const packedCategories = new Map<string, PackedNodes>();
@@ -38,7 +38,7 @@ export const createCategoryPacks = (categories: CSMMapCategory[]) => {
     const nodes = packSiblings<typeof circledChildren[number]>(circledChildren);
 
     // TODO мок значение битка убрать
-    const maxCalculatedRadius = (value[0].marketCap / 1268865289918) * 100 * 2;
+    const maxCalculatedRadius = (value[0].marketCap / marketCap) * 100 * 2;
 
     const r = radius(maxCalculatedRadius);
 
