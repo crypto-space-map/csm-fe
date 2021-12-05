@@ -3,8 +3,9 @@ import { COLOR_PALLETTE } from 'global/pallette';
 import { gradientBorder, link } from 'global/styles';
 
 export const TabContentWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(143px, 1fr));
+  grid-gap: 14px;
 `;
 
 export const IconWrapper = styled.div`
@@ -12,9 +13,6 @@ export const IconWrapper = styled.div`
 `;
 
 export const CardWrapper = styled.a`
-  width: 143px;
-  height: 117px;
-  margin: 0 0 14px 14px;
   cursor: pointer;
   position: relative;
   text-decoration: none;
