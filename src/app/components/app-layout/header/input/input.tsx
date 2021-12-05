@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 
 import FilterIcon from 'assets/icons/filter.svg';
-import { useOnClickOutside } from 'utils/hooks/use-click-otside';
+import { useOnClickOutside } from 'hooks';
 
 import { FilterBlock } from './filter-block/filter-block';
 import { FilterButtonContainer, HeaderInputContainer, StyledIconButton } from './styled';
