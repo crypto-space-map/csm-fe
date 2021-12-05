@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
 
-const referentNumber = 9;
+const REFERENCE_NUMBER = 9;
 
 export const StyledFilterBlock = styled.div<{ visible: boolean }>`
   display: flex;
@@ -16,15 +16,15 @@ export const StyledFilter = styled.div`
   background-color: ${COLOR_PALLETTE.MAIN_BLACK};
   padding: 16px;
   border-radius: 8px;
-  transform: translateY(${referentNumber}px);
+  transform: translateY(${REFERENCE_NUMBER}px);
   &:before {
     content: '';
     position: absolute;
     left: 50%;
-    margin-left: -${referentNumber}px;
-    top: -${referentNumber}px;
+    margin-left: -${REFERENCE_NUMBER}px;
+    top: -${REFERENCE_NUMBER}px;
     transform: translateY(-50%) rotate(90deg);
-    border: ${referentNumber}px solid ${COLOR_PALLETTE.MAIN_BLACK};
+    border: ${REFERENCE_NUMBER}px solid ${COLOR_PALLETTE.MAIN_BLACK};
     border-color: transparent ${COLOR_PALLETTE.MAIN_BLACK} transparent transparent;
   }
 `;

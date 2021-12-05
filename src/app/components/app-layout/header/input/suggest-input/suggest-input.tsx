@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 
 import CloseIcon from 'assets/icons/close-ico.svg';
 import SearchIcon from 'assets/icons/search.svg';
@@ -39,6 +39,9 @@ export const SuggestInput = () => {
     // TODO pass here changeProject func
   };
 
+  const onInputChange = (_event: SyntheticEvent<Element, Event>, newInputValue: string) =>
+    setInputValue(newInputValue);
+
   return (
     <StyledAutocomplete
       options={top100Films}
@@ -54,9 +57,7 @@ export const SuggestInput = () => {
       PopperComponent={SuggestionList}
       clearIcon={<CloseIcon />}
       includeInputInList
-      onInputChange={(_event, newInputValue) => {
-        setInputValue(newInputValue);
-      }}
+      onInputChange={onInputChange}
       renderOption={(props, option) => {
         // after emotion styling missed some types
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
