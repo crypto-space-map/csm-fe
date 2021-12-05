@@ -13,6 +13,18 @@ export function* fetchDetailInfo() {
   }
 }
 
+export function* overviewTradingStockWorker() {
+  try {
+    // TODO сделать реальный запрос
+    // const { data } = yield* call(getDetailInfoCard);
+    const data = 'HUOBI';
+    yield* put(actions.fetchOverviewTradingStockSuccess(data));
+  } catch {
+    yield* put(actions.fetchOverviewTradingStockFail());
+  }
+}
+
 export function* providersSaga() {
   yield* takeLatest(actions.fetchDetialInfo, fetchDetailInfo);
+  yield* takeLatest(actions.fetchOverviewTradingStock, overviewTradingStockWorker);
 }

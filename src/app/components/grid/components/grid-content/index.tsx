@@ -19,7 +19,7 @@ export const GridContent = <R extends { id: string }>({
   return (
     <StyledGridContent>
       {sortedRows.map(item => (
-        <StyledGridRowWrapper>
+        <StyledGridRowWrapper key={item.id}>
           <StyledGridContentRow columnWidths={columnWidths}>
             {columnFieldNames.map(name => (
               <CellItem

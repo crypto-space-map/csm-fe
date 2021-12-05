@@ -7,17 +7,6 @@ export const StyledLink = styled.a`
   ${link()}
 `;
 
-export const AnnLink = styled(StyledLink)`
-  & > span {
-    margin-left: 5px;
-  }
-
-  & > svg {
-    color: #000;
-    opacity: 0.54;
-  }
-`;
-
 export const InvestorsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;

@@ -1,4 +1,4 @@
-import { createRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 import { TradingWidgetProps } from './types';
 
@@ -15,28 +15,34 @@ export const TradingWidget = ({
   symbol: string;
   widgetOptions: TradingWidgetProps;
 }): JSX.Element => {
-  const ref: { current: HTMLDivElement | null } = createRef();
+  const [scriptElement, setScriptElement] = useState<HTMLScriptElement | null>(null);
+  const ref: { current: HTMLDivElement | null } = useRef(null);
 
   useEffect(() => {
-    let refValue: HTMLDivElement;
-
     if (ref.current) {
       const script = document.createElement('script');
       script.src = scriptSRC;
       script.async = true;
       script.type = 'text/javascript';
+      setScriptElement(script);
+    }
+  }, [ref, scriptSRC]);
 
+  useEffect(() => {
+    let refValue: HTMLDivElement;
+
+    if (ref.current && scriptElement) {
       if (typeof TradingView !== undefined) {
-        script.onload = () => {
-          script.innerHTML = JSON.stringify(
+        scriptElement.onload = () => {
+          scriptElement.innerHTML = JSON.stringify(
             // eslint-disable-next-line new-cap
             new TradingView.widget({ ...widgetOptions, container_id: containerId, symbol })
           );
         };
       } else {
-        script.innerHTML = JSON.stringify(widgetOptions);
+        scriptElement.innerHTML = JSON.stringify(widgetOptions);
       }
-      ref.current.appendChild(script);
+      ref.current.appendChild(scriptElement);
       refValue = ref.current;
     }
     return () => {
@@ -46,7 +52,7 @@ export const TradingWidget = ({
         }
       }
     };
-  }, [ref, widgetOptions, containerId, scriptSRC, symbol]);
+  }, [ref, scriptElement, widgetOptions, containerId, symbol]);
 
   return <div ref={ref} id={containerId} />;
 };

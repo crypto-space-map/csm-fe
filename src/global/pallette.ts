@@ -10,4 +10,5 @@ export const COLOR_PALLETTE = {
   MAIN_BLACK: '#1d1c1c',
   MAIN_GRAY: '#b2b2b2',
   LINK_COLOR: '#41aacc',
+  LIGHT_GRAY: '#E5E5E5',
 };
