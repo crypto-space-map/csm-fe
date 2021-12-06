@@ -1,24 +1,37 @@
-import { IconButtonProps } from '@mui/material';
+import { useRef, useState } from 'react';
 
 import FilterIcon from 'assets/icons/filter.svg';
-import SearchIcon from 'assets/icons/search.svg';
+import { useOnClickOutside } from 'hooks';
 
-import { HeaderInputContainer, StyledIconButton, StyledInput } from './styled';
+import { FilterBlock } from './filter-block/filter-block';
+import { FilterButtonContainer, HeaderInputContainer, StyledIconButton } from './styled';
+import { SuggestInput } from './suggest-input/suggest-input';
 
-const FilterButton = (props: IconButtonProps) => (
-  <StyledIconButton {...props}>
-    <FilterIcon />
-  </StyledIconButton>
-);
+const FilterButton = () => {
+  const filterRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    setOpen(!open);
+  };
+  const handleClickOutside = () => {
+    setOpen(false);
+  };
 
-export const HeaderInput = () => {
-  const disableLineErr = 'arrow-body-style at HeaderInput';
-  console.log(disableLineErr);
+  useOnClickOutside(filterRef, handleClickOutside);
 
   return (
-    <HeaderInputContainer>
-      <StyledInput placeholder="Search" disableUnderline fullWidth startAdornment={<SearchIcon />} />
-      <FilterButton />
-    </HeaderInputContainer>
+    <FilterButtonContainer ref={filterRef}>
+      <StyledIconButton onClick={handleClick}>
+        <FilterIcon />
+      </StyledIconButton>
+      <FilterBlock visible={open} />
+    </FilterButtonContainer>
   );
 };
+
+export const HeaderInput = () => (
+  <HeaderInputContainer>
+    <SuggestInput />
+    <FilterButton />
+  </HeaderInputContainer>
+);

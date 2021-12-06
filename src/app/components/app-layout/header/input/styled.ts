@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { IconButton, Input } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { COLOR_PALLETTE } from 'global/pallette';
 
 const BACKGROUND = '#444444';
@@ -11,21 +11,9 @@ export const HeaderInputContainer = styled.div`
   grid-gap: 14px;
 `;
 
-export const StyledInput = styled(Input)`
-  background: ${BACKGROUND};
-  align-items: center;
-  border-radius: 40px;
-  color: rgba(190, 190, 190, 0.9);
-  gap: 1em;
-  padding: 0 10px;
-  transition: all 0.2s linear;
-  & .MuiInput-input {
-    padding: 0;
-  }
-  &:focus-within {
-    background: #e5e5e5;
-    color: #1d1c1c;
-  }
+export const FilterButtonContainer = styled.div`
+  position: relative;
+  display: grid;
 `;
 
 export const StyledIconButton = styled(IconButton)`

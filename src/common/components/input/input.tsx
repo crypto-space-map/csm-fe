@@ -31,6 +31,7 @@ const Label = styled.span<LabelProps>`
   color: ${({ error }) => isError(error)};
   font-size: 14px;
   line-height: 16px;
+  min-height: 16px;
 `;
 
 export const Input = (props: InputProps) => {
