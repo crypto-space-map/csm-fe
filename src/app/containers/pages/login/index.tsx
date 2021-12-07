@@ -1,3 +1,4 @@
+import { FormContainer } from 'app/containers/user-page/forms/form-container';
 import { memo } from 'react';
 
 import { Redirect } from 'react-router-dom';
@@ -8,5 +9,9 @@ export const Login = memo(() => {
   const token = getCookie('token');
   if (token) return <Redirect to="/" />;
 
-  return <div style={{ height: '100vh', overflow: 'hidden' }}>тут скоро что-то будет</div>;
+  return (
+    <div>
+      <FormContainer />
+    </div>
+  );
 });
