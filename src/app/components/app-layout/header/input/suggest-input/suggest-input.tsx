@@ -1,12 +1,12 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 
+import { useSpaceMap } from 'app/containers/space-map/hooks';
 import CloseIcon from 'assets/icons/close-ico.svg';
 import SearchIcon from 'assets/icons/search.svg';
 
 import { lowerCaseTransform } from './helpers';
 import { ListItem } from './list-item';
 import { StyledAutocomplete, StyledTextField, SuggestionList } from './styled';
-import { useSpaceMap } from 'app/containers/pages/space-map/hooks';
 
 // TODO mock data remove
 

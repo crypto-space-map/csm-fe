@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { select } from 'd3';
 
-import { useSpaceMap } from 'app/containers/pages/space-map/hooks';
+import { useSpaceMap } from 'app/containers/space-map/hooks';
 
 import {
   circlesSimulation,

@@ -1,6 +1,6 @@
 import { packSiblings, extent, scaleSqrt, group, PackCircle } from 'd3';
 
-import { CSMMapCategory } from 'app/containers/pages/space-map/types';
+import { CSMMapCategory } from 'app/containers/space-map/types';
 
 import { PackedCategories } from '../types';
 import { mapCords } from './map-cords';

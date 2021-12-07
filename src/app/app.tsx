@@ -1,11 +1,11 @@
 // TO DO uncomment pages in future
 import { Route, Switch } from 'react-router-dom';
 
+import { AppLayout } from './containers/app-layout';
 import { DetailInfoCard } from './containers/detail-info-card';
-import { AppLayout } from './containers/pages/app-layout';
-import { Layout } from './containers/pages/layout';
-import { Login } from './containers/pages/login';
-import { SpaceMapPage } from './containers/pages/space-map';
+import { Layout } from './containers/layout';
+import { Login } from './containers/login';
+import { SpaceMapPage } from './containers/space-map';
 
 export const App = () => (
   <AppLayout>
