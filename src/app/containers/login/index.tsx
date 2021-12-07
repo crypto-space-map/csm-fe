@@ -1,4 +1,4 @@
-import { FormContainer } from 'app/containers/user-page/forms/form-container';
+import { FormContainer } from 'app/containers/login/components/forms/form-container';
 import { memo } from 'react';
 
 import { Redirect } from 'react-router-dom';

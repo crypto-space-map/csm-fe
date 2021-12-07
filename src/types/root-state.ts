@@ -1,5 +1,5 @@
 import { DetailInfoState } from 'app/containers/detail-info-card/types';
-import { LoginPageState } from 'app/containers/pages/login/types';
+import { LoginPageState } from 'app/containers/login/types';
 
 /*
   Because the redux-injectors injects your reducers asynchronously somewhere in your code
