@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 
 import CloseIcon from 'assets/icons/close-ico.svg';
 import SearchIcon from 'assets/icons/search.svg';
@@ -6,47 +6,43 @@ import SearchIcon from 'assets/icons/search.svg';
 import { lowerCaseTransform } from './helpers';
 import { ListItem } from './list-item';
 import { StyledAutocomplete, StyledTextField, SuggestionList } from './styled';
+import { useSpaceMap } from 'app/containers/pages/space-map/hooks';
 
 // TODO mock data remove
-const top100Films = [
-  { label: 'The shawshank Redemption', year: 1994, symbol: 'фф' },
-  { label: 'The Godfather', year: 1972, symbol: 'вв' },
-  { label: 'The Godfather: Part II', year: 1974, symbol: 'ф' },
-  { label: 'The Dark Knight', year: 2008, symbol: 'ы' },
-  { label: 'The 12 Angry Men', year: 1957, symbol: 'The' },
-  { label: "The Schindler's List", year: 1993, symbol: 'яясяч' },
-  { label: 'The Pulp Fiction', year: 1994, symbol: 'The' },
-  { label: 'The Pulp Schindler', year: 1994, symbol: 'п' },
-  { label: 'The Schindler Fiction', year: 1994, symbol: 'вв' },
-  { label: 'The Pulp Men', year: 1994, symbol: 'ыы' },
-  { label: 'The Men Fiction', year: 1994, symbol: 'е' },
-];
 
 export const SuggestInput = () => {
   const [inputValue, setInputValue] = useState('');
+  const { projects, fetchProjects } = useSpaceMap();
+
   // after emotion styling missed some types
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-
   const filterOptions = (options: any[], { inputValue: value }: any) =>
     options
-      .filter(({ label, symbol }) => lowerCaseTransform(label + symbol).includes(lowerCaseTransform(value)))
+      .filter(({ name, symbol }) => lowerCaseTransform(name + symbol).includes(lowerCaseTransform(value)))
       .slice(0, 10);
 
-  const onChange = (e: Event, value: typeof top100Films[number]) => {
+  const onChange = (e: Event, value: typeof projects[number]) => {
     if (typeof value !== 'object') return;
     console.log(value);
     // TODO pass here changeProject func
   };
 
+  const getOptionLabel = (option: typeof projects[number]) => option.name;
+
   const onInputChange = (_event: SyntheticEvent<Element, Event>, newInputValue: string) =>
     setInputValue(newInputValue);
 
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
   return (
     <StyledAutocomplete
-      options={top100Films}
+      options={projects}
       inputValue={inputValue}
       freeSolo
+      getOptionLabel={getOptionLabel}
       // after emotion styling missed some types
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -62,10 +58,10 @@ export const SuggestInput = () => {
         // after emotion styling missed some types
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const { label, symbol, year } = option;
+        const { id, icon, name, symbol } = option;
         return (
-          <ListItem {...props} symbol={symbol} highLight={inputValue} key={label + year + year}>
-            {label}
+          <ListItem {...props} symbol={symbol} icon={icon} highLight={inputValue} key={id}>
+            {name}
           </ListItem>
         );
       }}
