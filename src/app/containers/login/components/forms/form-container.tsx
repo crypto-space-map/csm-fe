@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { Button } from 'common/components/button';
 
 import { UserForms } from '../types';
-import { StyledFormContainer } from './styled';
+import { SignInForm } from './sign-up';
+import { StyledFormContainer, StyledFormHeader } from './styled';
 
 export const FormContainer = () => {
   const [selectedForm, setSelectedForm] = useState(UserForms.LOGIN);
@@ -13,7 +14,7 @@ export const FormContainer = () => {
   const renderForm = () => {
     switch (selectedForm) {
       case UserForms.LOGIN:
-        return <div>login</div>;
+        return <SignInForm />;
       case UserForms.REGISTER:
         return <div>register</div>;
       default:
@@ -23,6 +24,7 @@ export const FormContainer = () => {
 
   return (
     <StyledFormContainer>
+      <StyledFormHeader>Sing up</StyledFormHeader>
       {renderForm()}
       <Button onClick={handleClick}>NEXT FORM</Button>
     </StyledFormContainer>

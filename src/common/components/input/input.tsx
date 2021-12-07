@@ -32,6 +32,9 @@ const Label = styled.span<LabelProps>`
   font-size: 14px;
   line-height: 16px;
   min-height: 16px;
+  &::first-letter {
+    text-transform: uppercase;
+  }
 `;
 
 export const Input = (props: InputProps) => {
