@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import styled from '@emotion/styled';
 import { TextField, TextFieldProps } from '@mui/material';
 import { COLOR_PALLETTE } from 'global/pallette';
@@ -37,13 +39,14 @@ const Label = styled.span<LabelProps>`
   }
 `;
 
-export const Input = (props: InputProps) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { error, label, errorMessage } = props;
   return (
     <InputContainer>
       <Label error={error}>{label}</Label>
       <StyledInput
         {...props}
+        ref={ref}
         variant="standard"
         label=""
         InputProps={{ ...props.InputProps, disableUnderline: true }}
@@ -52,8 +55,4 @@ export const Input = (props: InputProps) => {
       {error && errorMessage && <Label error={error}>{errorMessage}</Label>}
     </InputContainer>
   );
-};
-
-Input.defaultProps = {
-  errorMessage: null,
-};
+});
