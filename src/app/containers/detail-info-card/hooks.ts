@@ -5,7 +5,7 @@ import { detailInfoSaga } from './saga';
 import { actions, reducer } from './slice';
 import { sliceKey } from './utils';
 
-export function useProvidersSlice() {
+export function useDetailInfoSlice() {
   useInjectReducer({ key: sliceKey, reducer });
   useInjectSaga({ key: sliceKey, saga: detailInfoSaga });
   return useActions(actions);

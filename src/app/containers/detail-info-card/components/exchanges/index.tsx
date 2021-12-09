@@ -1,14 +1,12 @@
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
 import { Grid } from 'app/components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
-import { useInjectReducer, useInjectSaga } from 'hooks/redux-injectors';
 
-import { detailInfoSaga } from '../../saga';
 import * as selectors from '../../selectors';
-import { useDispatchAction, sliceKey, reducer } from '../../slice';
+import { useDispatchAction } from '../../slice';
 import { ExchangeDTO } from '../../types';
 import { headerNames } from './constants';
 import { ExchangeWrapper, StyledLink, DecorateHeader } from './styles';
@@ -124,13 +122,27 @@ export const Exchanges = memo(() => {
 
   const enrichedExchangesData = useSelector(selectors.enrichedExchangesData);
   const exchangesDataLoading = useSelector(selectors.exchangesDataLoading);
+  const exchangesPage = useSelector(selectors.exchangesPage);
 
-  useInjectReducer({ key: sliceKey, reducer });
-  useInjectSaga({ key: sliceKey, saga: detailInfoSaga });
+  const loadData = useCallback(
+    (page: number) => {
+      fetchExchangesData({ page });
+    },
+    [fetchExchangesData]
+  );
 
   useEffect(() => {
-    fetchExchangesData();
-  }, [fetchExchangesData]);
+    if (enrichedExchangesData.length === 0) loadData(exchangesPage);
+  }, [enrichedExchangesData, exchangesPage, loadData]);
 
-  return <Grid columns={columns} rows={enrichedExchangesData} />;
+  return (
+    <Grid
+      columns={columns}
+      rows={enrichedExchangesData}
+      loading={exchangesDataLoading}
+      fetchData={loadData}
+      infinite
+      page={exchangesPage}
+    />
+  );
 });

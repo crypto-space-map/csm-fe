@@ -1,17 +1,7 @@
 import { put, takeLatest, call } from 'typed-redux-saga';
 
-import { getDetailInfoCard, getExchangesData } from './api';
+import { getExchangesData } from './api';
 import { actions } from './slice';
-
-export function* fetchDetailInfo() {
-  try {
-    const { data } = yield* call(getDetailInfoCard);
-
-    yield* put(actions.fetchDetialInfoSuccess(data));
-  } catch {
-    yield* put(actions.fetchDetialInfoFail());
-  }
-}
 
 export function* overviewTradingStockWorker() {
   try {
@@ -24,10 +14,10 @@ export function* overviewTradingStockWorker() {
   }
 }
 
-export function* exchangesDataWorker() {
+export function* exchangesDataWorker(action: ReturnType<typeof actions.fetchExchangesData>) {
   try {
-    const { data } = yield* call(getExchangesData);
-
+    const { data } = yield* call(getExchangesData, 'solana', action.payload);
+    yield* put(actions.setExchangesPage(action.payload.page));
     yield* put(actions.fetchExchangesDataSuccess(data));
   } catch {
     yield* put(actions.fetchExchangesDataFail());
@@ -35,7 +25,6 @@ export function* exchangesDataWorker() {
 }
 
 export function* detailInfoSaga() {
-  yield* takeLatest(actions.fetchDetialInfo, fetchDetailInfo);
   yield* takeLatest(actions.fetchOverviewTradingStock, overviewTradingStockWorker);
   yield* takeLatest(actions.fetchExchangesData, exchangesDataWorker);
 }

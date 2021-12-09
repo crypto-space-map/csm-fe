@@ -1,12 +1,13 @@
 import { memo, useState } from 'react';
 
-import { HeaderSection } from './components/header-section';
-import { StatisticsSection } from './components/statistics-section';
+import { HeaderSection, StatisticsSection } from './components';
 import { TabsSection } from './components/tabs-section';
+import { useDetailInfoSlice } from './hooks';
 import { DetailWrapper, TopSection, TransitionWrapper } from './styles';
 
 //  TODO потом удалить блок с центральным контентом
 export const DetailInfoCard = memo(() => {
+  useDetailInfoSlice();
   const [isShow, setIsShow] = useState(false);
 
   const handleClick = () => {
