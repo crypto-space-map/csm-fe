@@ -46,7 +46,7 @@ export const RowsContainer = styled.div`
 export const StyledForm = styled.form`
   display: grid;
   grid-gap: 16px;
-  min-width: 280px;
+  width: 280px;
 `;
 
 export const InputActionHelper = styled.span`
@@ -59,4 +59,10 @@ export const InputActionHelper = styled.span`
 export const SignFormInputContainer = styled.div`
   position: relative;
   display: grid;
+`;
+
+export const ChangePasswordNotify = styled.span`
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 300;
 `;

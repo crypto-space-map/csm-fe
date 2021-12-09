@@ -24,6 +24,9 @@ const loginPageSlice = createSlice({
     fetchUser(state) {
       state.loading = true;
     },
+    registerUser(state) {
+      state.loading = true;
+    },
     logOut(state) {
       state.isAuth = false;
     },

@@ -29,7 +29,7 @@ const defaultValues = {
 
 const isPassword = (fieldType: string) => fieldType === 'password';
 
-export const SignForm = ({ signIn = false }: SignFormProps) => {
+export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProps) => {
   const btnText = signIn ? 'Sign In' : 'Sign Up';
 
   const {
@@ -75,7 +75,11 @@ export const SignForm = ({ signIn = false }: SignFormProps) => {
               type={isVisible ? 'text' : item}
               label={item}
               labelHelper={
-                forgotPassLink(item) && <LoginPageLink fontSize={14}>Forgot Password?</LoginPageLink>
+                forgotPassLink(item) && (
+                  <LoginPageLink fontSize={14} onClick={handleClickForgotPass}>
+                    Forgot Password?
+                  </LoginPageLink>
+                )
               }
               InputProps={{
                 endAdornment: isPassword(item) ? (

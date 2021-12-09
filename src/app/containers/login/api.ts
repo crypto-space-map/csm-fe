@@ -6,6 +6,14 @@ export async function getToken(params: LoginDTORequestParams) {
   return axios.post<{ token: string }>('logIn', params, { withCredentials: true });
 }
 
+export async function registerUser() {
+  return axios.get<LoginPageStateDTO>('registerUser', { withCredentials: true });
+}
+
+export async function forgotPassword() {
+  return axios.get<LoginPageStateDTO>('registerUser', { withCredentials: true });
+}
+
 export async function getUser() {
   return axios.get<LoginPageStateDTO>('getUser', { withCredentials: true });
 }

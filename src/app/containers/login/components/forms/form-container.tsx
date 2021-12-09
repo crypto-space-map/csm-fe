@@ -1,26 +1,44 @@
 import { useState } from 'react';
 
+import { OutlinedArrow } from 'assets/icons';
+import { IconButton } from 'common/components/button';
+
 import { LoginPageLink } from '../styled';
 import { UserForms } from '../types';
+import { ForgotPassForm } from './forgot-pass';
 import { SignForm } from './sign';
 import { FormsBlock, StyledFormContainer, StyledFormHeader } from './styled';
 
 export const FormContainer = () => {
-  const [selectedForm, setSelectedForm] = useState(UserForms.LOGIN);
+  const [selectedForm, setSelectedForm] = useState(UserForms.REGISTER);
 
   const isRegisterForm = UserForms.REGISTER === selectedForm;
+  const isForgotPassForm = UserForms.FORGOT_PASS === selectedForm;
 
-  const helperText = isRegisterForm ? `Don't` : 'Already';
-  const sign = isRegisterForm ? 'Sign In' : 'Sign Up';
-  const linkText = isRegisterForm ? 'Sign Up' : 'Sign In';
+  const helperText = isRegisterForm ? 'Already' : `Don't`;
+  const sign = isRegisterForm ? 'Sign Up' : 'Sign In';
+  const linkText = isRegisterForm ? 'Sign In' : 'Sign Up';
 
-  const handleClick = () => setSelectedForm(selectedForm === 1 ? UserForms.LOGIN : UserForms.REGISTER);
+  const headerText = isForgotPassForm ? 'Change Password' : sign;
+
+  const handleClick = () => setSelectedForm(isRegisterForm ? UserForms.LOGIN : UserForms.REGISTER);
+
+  const handleClickForgotPass = () => setSelectedForm(UserForms.FORGOT_PASS);
 
   return (
     <FormsBlock>
       <StyledFormContainer>
-        <StyledFormHeader>{sign}</StyledFormHeader>
-        <SignForm signIn={isRegisterForm} />
+        {isForgotPassForm && (
+          <IconButton variant="text" onClick={handleClick}>
+            <OutlinedArrow />
+          </IconButton>
+        )}
+        <StyledFormHeader>{headerText}</StyledFormHeader>
+        {isForgotPassForm ? (
+          <ForgotPassForm onBack={handleClick} />
+        ) : (
+          <SignForm signIn={!isRegisterForm} handleClickForgotPass={handleClickForgotPass} />
+        )}
       </StyledFormContainer>
       <span>
         {helperText} have an account? <LoginPageLink onClick={handleClick}>{linkText}</LoginPageLink>
