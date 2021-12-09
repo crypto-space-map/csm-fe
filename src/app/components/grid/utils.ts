@@ -2,6 +2,11 @@ import moment from 'moment';
 
 import { SortingValues, SortingTypes, CompareFuncProps, GetCompareValueFuncProps } from './types';
 
+const maxLimitInfiniteScroll = 500;
+const minLimitInfiniteScroll = 100;
+
+export const infiniteScrollTarget = 'scrollableTarget';
+
 const getMomentValue = (value: string) => moment(value).valueOf();
 
 const getRowsValue = <R>({ a, b, fieldName }: GetCompareValueFuncProps<R>) => {
@@ -41,3 +46,8 @@ export const getCompareFunc = (type = '') => {
   if (type === SortingTypes.NUMBER) return numberSortFunc;
   return stringSortFunc;
 };
+
+export const getHasMoreFlag = (rowsCount = 0, page = 1) =>
+  rowsCount < maxLimitInfiniteScroll &&
+  !(rowsCount % minLimitInfiniteScroll) &&
+  rowsCount / page === minLimitInfiniteScroll;
