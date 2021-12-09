@@ -80,4 +80,7 @@ const columns: ColumnProps<PartnersProps>[] = [
   },
 ];
 
-export const Partners = memo(() => <Grid columns={columns} rows={products} />);
+export const Partners = memo(() => {
+  const loadData = () => {};
+  return <Grid columns={columns} rows={products} fetchData={loadData} />;
+});

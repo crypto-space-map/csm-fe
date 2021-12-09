@@ -24,9 +24,9 @@ export function* overviewTradingStockWorker() {
   }
 }
 
-export function* exchangesDataWorker() {
+export function* exchangesDataWorker(action: ReturnType<typeof actions.fetchExchangesData>) {
   try {
-    const { data } = yield* call(getExchangesData);
+    const { data } = yield* call(getExchangesData, action.payload);
 
     yield* put(actions.fetchExchangesDataSuccess(data));
   } catch {

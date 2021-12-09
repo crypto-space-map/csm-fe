@@ -1,14 +1,9 @@
 import { memo, useState } from 'react';
 
 import { CustomTabs } from 'app/components';
+import { infiniteScrollTarget } from 'app/components/grid/utils';
 
-import { Community } from '../community';
-import { Events } from '../events';
-import { Exchanges } from '../exchanges';
-import { Funds } from '../funds';
-import { Overview } from '../overview';
-import { Partners } from '../partners';
-import { Social } from '../social';
+import { Community, Events, Exchanges, Funds, Overview, Partners, Social } from '..';
 import { TabContentWrapper, TabContent, TabSectionWrapper } from './styles';
 
 const detailInfoTabs = {
@@ -48,12 +43,12 @@ const selectComponentByTabValue = (value: string) => {
 };
 
 export const TabsSection = memo(() => {
-  const [activeTab, setActiveTab] = useState(detailInfoTabs.overview);
+  const [activeTab, setActiveTab] = useState(detailInfoTabs.exchanges);
 
   return (
     <TabSectionWrapper>
       <CustomTabs value={activeTab} options={options} onChangeTabValue={setActiveTab} />
-      <TabContentWrapper>
+      <TabContentWrapper id={infiniteScrollTarget}>
         <TabContent>{selectComponentByTabValue(activeTab)}</TabContent>
       </TabContentWrapper>
     </TabSectionWrapper>

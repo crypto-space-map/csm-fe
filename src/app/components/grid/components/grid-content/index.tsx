@@ -3,22 +3,30 @@ import { useMemo } from 'react';
 import { StyledGridContent, StyledGridContentRow, StyledGridRowWrapper } from '../../styles';
 import { ColumnProps } from '../../types';
 import { CellItem } from './cell-item';
+import { InfiniteScrollComponent } from './infinite-scroll';
 
 interface GridContentProps<R> {
   sortedRows: R[];
   columns: Array<ColumnProps<R>>;
   columnWidths: string;
+  loading?: boolean;
+  infinite?: boolean;
+  fetchData: (page: number) => void;
 }
 
 export const GridContent = <R extends { id: string }>({
   sortedRows,
   columns,
   columnWidths,
+  loading,
+  infinite,
+  fetchData,
 }: GridContentProps<R>) => {
   const columnFieldNames = useMemo(() => columns.map(item => item.field), [columns]);
-  return (
-    <StyledGridContent>
-      {sortedRows.map(item => (
+
+  const rows = useMemo(
+    () =>
+      sortedRows.map(item => (
         <StyledGridRowWrapper key={item.id}>
           <StyledGridContentRow columnWidths={columnWidths}>
             {columnFieldNames.map(name => (
@@ -31,7 +39,24 @@ export const GridContent = <R extends { id: string }>({
             ))}
           </StyledGridContentRow>
         </StyledGridRowWrapper>
-      ))}
+      )),
+    [sortedRows, columnFieldNames, columns, columnWidths]
+  );
+
+  return (
+    <StyledGridContent>
+      {infinite ? (
+        <InfiniteScrollComponent count={sortedRows.length} loading={loading} fetchData={fetchData}>
+          {rows}
+        </InfiniteScrollComponent>
+      ) : (
+        rows
+      )}
     </StyledGridContent>
   );
+};
+
+GridContent.defaultProps = {
+  loading: false,
+  infinite: false,
 };

@@ -40,15 +40,18 @@ const providersListSlice = createSlice({
     fetchOverviewTradingStockFail(state) {
       state.overviewTradingStockLoading = false;
     },
-    fetchExchangesData(state) {
+    fetchExchangesData(state, _action: PayloadAction<{ page: number }>) {
       state.exchangesDataLoading = true;
     },
     fetchExchangesDataSuccess(state, action: PayloadAction<ExchangeDTO[]>) {
       state.exchangesDataLoading = false;
-      state.exchangesData = action.payload;
+      state.exchangesData = state.exchangesData.concat(action.payload);
     },
     fetchExchangesDataFail(state) {
       state.exchangesDataLoading = false;
+    },
+    clearExchangesData(state) {
+      state.exchangesData = initialState.exchangesData;
     },
   },
 });

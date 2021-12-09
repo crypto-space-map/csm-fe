@@ -3,6 +3,9 @@ export interface DetailInfoDto {
   name: string;
 }
 
+export interface ExchangeRequest {
+  page: number;
+}
 export interface ExchangeDTO {
   exchange: string;
   url: string;
