@@ -21,7 +21,9 @@ export const FormContainer = () => {
 
   const headerText = isForgotPassForm ? 'Change Password' : sign;
 
-  const handleClick = () => setSelectedForm(isRegisterForm ? UserForms.LOGIN : UserForms.REGISTER);
+  const backForm = isForgotPassForm ? UserForms.LOGIN : UserForms.REGISTER;
+
+  const handleClick = () => setSelectedForm(isRegisterForm ? UserForms.LOGIN : backForm);
 
   const handleClickForgotPass = () => setSelectedForm(UserForms.FORGOT_PASS);
 
@@ -30,7 +32,7 @@ export const FormContainer = () => {
       <StyledFormContainer>
         {isForgotPassForm && (
           <IconButton variant="text" onClick={handleClick}>
-            <OutlinedArrow />
+            <OutlinedArrow fill="#B2B2B2" />
           </IconButton>
         )}
         <StyledFormHeader>{headerText}</StyledFormHeader>

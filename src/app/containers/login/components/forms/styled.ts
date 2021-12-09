@@ -4,6 +4,7 @@ import { gradientText } from 'global/styles';
 
 export const FormsBlock = styled.div`
   display: grid;
+  justify-self: center;
   color: ${COLOR_PALLETTE.MAIN_WHITE};
   & > span {
     display: grid;
