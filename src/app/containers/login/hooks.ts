@@ -7,7 +7,7 @@ import { getCookie } from 'utils/cookie';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { loginPageSaga } from './saga';
-import { selectAuth } from './selectors';
+import { selectAuth, selectLoading } from './selectors';
 import { actions, reducer } from './slice';
 import { sliceKey } from './utils';
 
@@ -18,8 +18,9 @@ export function useLoginPageSlice() {
 }
 
 export function useLogin() {
-  const { fetchUser, registerUser, setAuth } = useLoginPageSlice();
+  const { fetchUser, registerUser, recoverMsg, setAuth } = useLoginPageSlice();
   const isAuth = useSelector(selectAuth);
+  const loading = useSelector(selectLoading);
   const token = getCookie('token');
 
   useEffect(() => {
@@ -29,5 +30,7 @@ export function useLogin() {
   return {
     fetchUser,
     registerUser,
+    recoverMsg,
+    actions: { loading },
   };
 }

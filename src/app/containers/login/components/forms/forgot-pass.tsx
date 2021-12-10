@@ -5,6 +5,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Button } from 'common/components/button';
 import { Input } from 'common/components/input';
 
+import { useLoginPageSlice } from '../../hooks';
 import { ChangePasswordNotify, StyledForm } from './styled';
 
 type ForgotPassFormProps = {
@@ -16,6 +17,8 @@ const defaultValues = {
 };
 
 export const ForgotPassForm = ({ onBack }: ForgotPassFormProps) => {
+  const { recoverMsg } = useLoginPageSlice();
+
   const [userMail, setUserMail] = useState('');
   const { control, handleSubmit } = useForm<typeof defaultValues>({
     defaultValues,
@@ -27,10 +30,10 @@ export const ForgotPassForm = ({ onBack }: ForgotPassFormProps) => {
 
   const btnText = !userMail ? 'Change Password' : 'Back to Sing in';
 
-  const onSubmit = (val: typeof defaultValues) => {
-    setUserMail(val.email);
+  const onSubmit = ({ email }: typeof defaultValues) => {
+    setUserMail(email);
     if (userMail) return onBack();
-    return console.log(val);
+    return recoverMsg({ email });
   };
 
   return (

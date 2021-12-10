@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
+import { COLOR_PALLETTE } from 'global/pallette';
+
 import { OutlinedArrow } from 'assets/icons';
 import { IconButton } from 'common/components/button';
+import { SVGWrapper } from 'common/components/svg-wrapper';
 
 import { LoginPageLink } from '../styled';
 import { UserForms } from '../types';
@@ -32,7 +35,9 @@ export const FormContainer = () => {
       <StyledFormContainer>
         {isForgotPassForm && (
           <IconButton variant="text" onClick={handleClick}>
-            <OutlinedArrow fill="#B2B2B2" />
+            <SVGWrapper fill={COLOR_PALLETTE.MAIN_GRAY}>
+              <OutlinedArrow />
+            </SVGWrapper>
           </IconButton>
         )}
         <StyledFormHeader>{headerText}</StyledFormHeader>

@@ -7,6 +7,7 @@ import EyeCrossed from 'assets/icons/eye-cross-out.svg';
 import Eye from 'assets/icons/eye.svg';
 import { Button } from 'common/components/button';
 
+import { useLogin } from '../../hooks';
 import { PrivacyBlock } from '../privacy-block/privacy-block';
 import { LoginPageLink } from '../styled';
 import { SignFormProps } from '../types';
@@ -33,6 +34,12 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
   const btnText = signIn ? 'Sign In' : 'Sign Up';
 
   const {
+    registerUser,
+    fetchUser,
+    actions: { loading },
+  } = useLogin();
+
+  const {
     control,
     handleSubmit,
     formState: { touchedFields },
@@ -46,7 +53,7 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
   const [isVisible, setIsVisible] = useState(false);
 
   const handleShowPass = () => setIsVisible(!isVisible);
-  const onSubmit = (data: typeof defaultValues) => console.log({ data });
+  const onSubmit = (data: typeof defaultValues) => (signIn ? fetchUser(data) : registerUser(data));
 
   const passwordErrors = {
     minLength: watch().password.length < 8,
@@ -102,7 +109,9 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
           ))}
         </RowsContainer>
       )}
-      <Button type="submit">{btnText}</Button>
+      <Button type="submit" disabled={loading}>
+        {btnText}
+      </Button>
       {!signIn && <PrivacyBlock />}
     </StyledForm>
   );
