@@ -23,14 +23,15 @@ export function useLogin() {
   const loading = useSelector(selectLoading);
   const token = getCookie('token');
 
-  useEffect(() => {
-    if (!token && isAuth) setAuth({ isAuth: false });
-  }, [token, isAuth, setAuth]);
+  // useEffect(() => {
+  //   if (!token && isAuth) setAuth({ isAuth: false });
+  // }, [token, isAuth, setAuth]);
 
   return {
     fetchUser,
     registerUser,
     recoverMsg,
     actions: { loading },
+    isAuth,
   };
 }

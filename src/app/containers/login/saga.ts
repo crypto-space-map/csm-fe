@@ -15,10 +15,35 @@ import { LoginDTORequestParams } from './types';
 
 export function* fetchUser(action: ReturnType<typeof actions['fetchUser']>) {
   try {
-    const { data } = yield* call(getUser, action.payload);
-    yield* put(actions.setAuth({ isAuth: true }));
+    const { email, password } = action.payload;
+    // MOCK
+    if (email === 'csm@test.com' && password === 'CSMMvp123+') {
+      yield* put(actions.setAuth({ isAuth: true }));
+      const data = {
+        auth: true,
+        uid: '123',
+        uname: '123',
+        sn: '123',
+        fullname: '123',
+        mail: '123',
+        admin: false,
+        supervisor: false,
+        cost: '123',
+        capManager: false,
+        jwt: {
+          iat: 123,
+          exp: 123,
+        },
+      };
 
-    yield* put(actions.fetchDataSuccess({ data }));
+      yield* put(actions.fetchDataSuccess({ data }));
+    }
+    // UNMOCK WITH REAL DATA
+
+    // const { data } = yield* call(getUser, action.payload);
+    // yield* put(actions.setAuth({ isAuth: true }));
+
+    // yield* put(actions.fetchDataSuccess({ data }));
   } catch (error) {
     yield* put(actions.setAuth({ isAuth: false }));
     if (error instanceof Error) {
