@@ -12,13 +12,15 @@ interface InfiniteScrollComponentProps {
   fetchData: (page: number) => void;
 }
 
+const startedPage = 1;
+
 export const InfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = ({
   count,
   loading,
   fetchData,
   children,
 }) => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(startedPage);
 
   const hasMore = useMemo(() => getHasMoreFlag(count, page), [count, page]);
 
@@ -27,12 +29,12 @@ export const InfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = (
   }, [setPage, page]);
 
   useEffect(() => {
-    if (fetchData && page !== 1) {
+    if (fetchData && page !== startedPage) {
       fetchData(page);
     }
   }, [fetchData, page]);
 
-  if (page === 1 && loading) {
+  if (page === startedPage && loading) {
     return <Loader />;
   }
 

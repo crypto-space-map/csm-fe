@@ -1,37 +1,23 @@
-import { PayloadAction } from '@reduxjs/toolkit';
-
 import { useActions } from 'hooks';
-import { createSlice } from 'utils/@reduxjs/toolkit';
+import { fetchDataReducers, fetchDataInitialState } from 'utils/@reduxjs/fetchData';
+import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
-import type { ContainerState, DetailInfoDto, ExchangeDTO } from './types';
+import type { ContainerState, ExchangeDTO } from './types';
 import { sliceKey as name } from './utils';
 
 export const initialState: ContainerState = {
-  detailInfo: [],
   overviewTradingStock: '',
   overviewTradingStockLoading: false,
   exchangesData: [],
   exchangesDataLoading: false,
-  detailInfoLoading: false,
 };
 
 const providersListSlice = createSlice({
   name,
   initialState,
   reducers: {
-    fetchDetialInfo(state) {
-      state.detailInfoLoading = true;
-    },
-    fetchDetialInfoSuccess(state, action: PayloadAction<DetailInfoDto[]>) {
-      state.detailInfoLoading = false;
-      state.detailInfo = action.payload;
-    },
-    fetchDetialInfoFail(state) {
-      state.detailInfoLoading = false;
-    },
-
     fetchOverviewTradingStock(state) {
-      state.detailInfoLoading = true;
+      state.overviewTradingStockLoading = true;
     },
     fetchOverviewTradingStockSuccess(state, action: PayloadAction<string>) {
       state.overviewTradingStockLoading = false;
