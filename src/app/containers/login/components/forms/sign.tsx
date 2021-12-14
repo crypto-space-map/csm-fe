@@ -39,15 +39,11 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
     actions: { loading },
   } = useLogin();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { touchedFields },
-    watch,
-  } = useForm<typeof defaultValues>({
+  const { control, handleSubmit, watch } = useForm<typeof defaultValues>({
     defaultValues,
     mode: 'all',
     criteriaMode: 'all',
+    reValidateMode: 'onChange',
   });
 
   const [isVisible, setIsVisible] = useState(false);
@@ -102,8 +98,8 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
           {helperRows.map(({ text, key }) => (
             <PasswordHelperRow
               key={key}
-              error={touchedFields.password && passwordErrors[key as keyof typeof passwordErrors]}
-              touched={touchedFields.password}>
+              error={!!watch().password && passwordErrors[key as keyof typeof passwordErrors]}
+              touched={!!watch().password}>
               {text}
             </PasswordHelperRow>
           ))}
