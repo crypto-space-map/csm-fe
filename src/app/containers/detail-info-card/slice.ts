@@ -1,18 +1,22 @@
 import { useActions } from 'hooks';
-import { fetchDataReducers, fetchDataInitialState } from 'utils/@reduxjs/fetchData';
+import {
+  fetchDataReducers,
+  fetchDataInitialState,
+  fetchDataReducersWithName,
+} from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
-import type { ContainerState, ExchangeDTO } from './types';
+import type { ContainerState, ExchangeDTO, DetailInfoState } from './types';
 import { sliceKey as name } from './utils';
 
-export const initialState: ContainerState = {
+/* export const initialState: ContainerState = {
   overviewTradingStock: '',
   overviewTradingStockLoading: false,
   exchangesData: [],
   exchangesDataLoading: false,
 };
 
-const providersListSlice = createSlice({
+const detailIfoSlice = createSlice({
   name,
   initialState,
   reducers: {
@@ -40,7 +44,22 @@ const providersListSlice = createSlice({
       state.exchangesData = initialState.exchangesData;
     },
   },
+}); */
+
+// новое
+export const initialState: ContainerState = {
+  overviewTradingStock: { data: '', ...fetchDataInitialState },
+  exchangesData: { data: [], ...fetchDataInitialState },
+};
+
+const detailIfoSlice = createSlice({
+  name,
+  initialState,
+  reducers: {
+    ...fetchDataReducersWithName<string, string>('overviewTradingStock', initialState),
+    ...fetchDataReducersWithName<ExchangeDTO[], string>('exchangesData', initialState),
+  },
 });
 
-export const { actions, reducer, name: sliceKey } = providersListSlice;
+export const { actions, reducer, name: sliceKey } = detailIfoSlice;
 export const useDispatchAction = () => useActions(actions);

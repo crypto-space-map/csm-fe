@@ -1,5 +1,7 @@
 import { put, takeLatest, call } from 'typed-redux-saga';
 
+import { toast } from 'app/components';
+
 import { getExchangesData } from './api';
 import { actions } from './slice';
 
@@ -8,9 +10,13 @@ export function* overviewTradingStockWorker() {
     // TODO сделать реальный запрос
     // const { data } = yield* call(getDetailInfoCard);
     const data = 'HUOBI';
-    yield* put(actions.fetchOverviewTradingStockSuccess(data));
-  } catch {
-    yield* put(actions.fetchOverviewTradingStockFail());
+    yield* put(actions.fetchExchangesDataSuccess(data));
+  } catch (error) {
+    if (error instanceof Error) {
+      const { message } = error;
+      yield* put(actions.fetchOverviewTradingStockError(message));
+      toast(message, 'error');
+    }
   }
 }
 

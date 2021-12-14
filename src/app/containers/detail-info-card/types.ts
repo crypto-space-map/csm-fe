@@ -1,3 +1,5 @@
+import type { FetchDataState, NewFetchDataState } from 'utils/@reduxjs/fetchData';
+
 export interface ExchangeRequest {
   page: number;
 }
@@ -11,11 +13,22 @@ export interface ExchangeDTO {
   updatedAt: string;
 }
 
-export interface DetailInfoState {
+/* export interface DetailInfoState {
   exchangesData: ExchangeDTO[];
   exchangesDataLoading: boolean;
   overviewTradingStockLoading: boolean;
   overviewTradingStock: string;
+} */
+interface OverviewTradingStockProps extends Omit<FetchDataState, 'data'> {
+  data: string;
 }
+
+interface ExchangesDataOptionsProps extends Omit<FetchDataState, 'data'> {
+  data: ExchangeDTO[];
+}
+export type DetailInfoState = {
+  overviewTradingStock: NewFetchDataState<string>;
+  exchangesData: NewFetchDataState<ExchangeDTO[]>;
+};
 
 export type ContainerState = DetailInfoState;
