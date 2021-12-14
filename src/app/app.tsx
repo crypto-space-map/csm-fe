@@ -1,6 +1,7 @@
 // TO DO uncomment pages in future
 import { Route, Switch } from 'react-router-dom';
 
+import { Account } from './containers/account';
 import { DetailInfoCard } from './containers/detail-info-card';
 import { AppLayout } from './containers/pages/app-layout';
 import { Layout } from './containers/pages/layout';
@@ -12,7 +13,7 @@ export const App = () => (
       <Route exact path="/login" component={Login} />
       <Route path="/card" component={DetailInfoCard} />
       <Route path="/layout" component={Layout} />
-
+      <Route path="/account" component={Account} />
       <Route
         path="*"
         component={() => (

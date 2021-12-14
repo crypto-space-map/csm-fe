@@ -60,7 +60,7 @@ export const gradientText = css`
  */
 
 export const gradientBorder = ({ borderRadius = 4, border = '2px' }: GradientBorderProps = {}) => css`
-  &:before {
+  &::after {
     content: '';
     position: absolute;
     top: -1px;
@@ -73,6 +73,7 @@ export const gradientBorder = ({ borderRadius = 4, border = '2px' }: GradientBor
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
+    z-index: 3;
   }
 `;
 
