@@ -1,9 +1,11 @@
 import { LikeIcon } from 'assets';
 
+import { MenuItems } from '../../types';
+
 export const menuTabs = [
-  { label: 'Favorite Projects', icon: LikeIcon },
-  { label: 'My Refferals', icon: LikeIcon },
-  { label: 'Plans', icon: LikeIcon },
-  { label: 'Profile & Notification Settings', icon: LikeIcon },
-  { label: 'CSM News & Development', icon: LikeIcon },
+  { label: MenuItems.FAVORITE_PROJECTS, icon: LikeIcon },
+  { label: MenuItems.MY_REFFERALS, icon: LikeIcon },
+  { label: MenuItems.PLANS, icon: LikeIcon },
+  { label: MenuItems.PROFILE_SETTINGS, icon: LikeIcon },
+  { label: MenuItems.CSM_NEWS, icon: LikeIcon },
 ];

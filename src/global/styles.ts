@@ -74,6 +74,7 @@ export const gradientBorder = ({ borderRadius = 4, border = '2px' }: GradientBor
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
     z-index: 3;
+    transition: 0.2s linear;
   }
 `;
 

@@ -1,3 +1,4 @@
+import { AccountPageStateDTO } from 'app/containers/account/types';
 import { DetailInfoState } from 'app/containers/detail-info-card/types';
 import { LoginPageState } from 'app/containers/pages/login/types';
 
@@ -8,4 +9,5 @@ import { LoginPageState } from 'app/containers/pages/login/types';
 export interface RootState {
   user: LoginPageState;
   datailInfo: DetailInfoState;
+  account: AccountPageStateDTO;
 }

@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 import { getCookie } from 'utils/cookie';
 
+import { ActionBlock } from './components/action-block';
 import { AccountMenu } from './components/menu';
 import { AccountContainer } from './styled';
 
@@ -14,6 +15,7 @@ export const Account = memo(() => {
   return (
     <AccountContainer>
       <AccountMenu />
+      <ActionBlock />
     </AccountContainer>
   );
 });

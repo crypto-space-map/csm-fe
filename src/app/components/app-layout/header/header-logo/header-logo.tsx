@@ -1,17 +1,18 @@
-import React from 'react';
+import { HtmlHTMLAttributes } from 'react';
 
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 
 import Logo from '../../../../../assets/images/csm-logo.svg';
 
-const CSMLogoContainer = styled.div`
+const CSMLogoContainer = styled(Link)`
   cursor: pointer;
   justify-content: start;
   z-index: 20;
 `;
 
-export const MainLogo = (props: React.HtmlHTMLAttributes<HTMLDivElement>) => (
-  <CSMLogoContainer {...props}>
+export const MainLogo = (props: HtmlHTMLAttributes<HTMLAnchorElement>) => (
+  <CSMLogoContainer {...props} to="/">
     <Logo />
   </CSMLogoContainer>
 );

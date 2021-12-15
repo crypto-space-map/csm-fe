@@ -18,6 +18,7 @@ export const Wrapper = styled.div`
   grid-auto-flow: column;
   grid-gap: 40px;
   justify-content: end;
+  z-index: 30;
   & > * {
     transition: all 0.2 linear;
   }

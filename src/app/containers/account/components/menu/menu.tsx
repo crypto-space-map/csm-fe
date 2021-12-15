@@ -1,19 +1,17 @@
-import { useState } from 'react';
-
 import { Counter } from 'common/components/counter';
 import { MenuItem } from 'common/components/menu-item';
 import { SVGWrapper } from 'common/components/svg-wrapper';
 
+import { useAccount } from '../../hooks';
+import { MenuWrapper } from './styled';
 import { menuTabs } from './tabs';
 
 export const AccountMenu = () => {
-  const [selectedTab, setSelectedTab] = useState(menuTabs[3].label);
-  const onChange = val => setSelectedTab(val);
-  console.log(selectedTab)
+  const { selectedTab, onSetTab } = useAccount();
   return (
-    <div style={{ paddingTop: 100 }}>
+    <MenuWrapper>
       {menuTabs.map(({ label, icon: Ico }) => (
-        <MenuItem key={label} onClick={() => onChange(label)} selected={selectedTab === label}>
+        <MenuItem key={label} value={label} onClick={onSetTab} selected={label === selectedTab}>
           <SVGWrapper fill="white">
             <Ico />
           </SVGWrapper>
@@ -21,6 +19,6 @@ export const AccountMenu = () => {
           <Counter>1</Counter>
         </MenuItem>
       ))}
-    </div>
+    </MenuWrapper>
   );
 };

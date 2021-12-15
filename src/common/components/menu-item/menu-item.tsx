@@ -6,7 +6,11 @@ import { ListItemButton as MuiMenuItem, ListItemButtonProps as MuiProps } from '
 import { COLOR_PALLETTE } from 'global/pallette';
 import { gradientBorder, gradientText } from 'global/styles';
 
-export type MenuItemProps = MuiProps & { children: ReactNode };
+export type MenuItemProps<T> = Omit<MuiProps, 'onClick'> & {
+  children: ReactNode;
+  value: T;
+  onClick: (value: T) => void;
+};
 
 const actionStyle = css`
   ${gradientText}
@@ -19,14 +23,16 @@ const actionStyle = css`
   }
 `;
 
-const StyledMenuItem = styled(MuiMenuItem)<MenuItemProps>`
+const StyledMenuItem = styled(MuiMenuItem)<MenuItemProps<any>>`
   display: grid;
   grid-auto-flow: column;
   grid-gap: 1em;
   padding: 0;
   transition: 0.2s linear;
   color: ${COLOR_PALLETTE.MAIN_WHITE};
-  ${({ selected = false }) => selected && actionStyle}
+  &.Mui-selected {
+    background-color: ${COLOR_PALLETTE.MAIN_LAYOUT} !important;
+  }
   & > div {
     display: grid;
     align-items: center;
@@ -44,8 +50,11 @@ const StyledMenuItem = styled(MuiMenuItem)<MenuItemProps>`
   }
 `;
 
-export const MenuItem = (props: MenuItemProps) => (
-  <StyledMenuItem {...props} disableRipple>
-    <div>{props.children}</div>
-  </StyledMenuItem>
-);
+export const MenuItem = <T,>(props: MenuItemProps<T>) => {
+  const onClick = () => props.onClick && props.onClick(props.value);
+  return (
+    <StyledMenuItem {...props} disableRipple onClick={onClick}>
+      <div>{props.children}</div>
+    </StyledMenuItem>
+  );
+};
