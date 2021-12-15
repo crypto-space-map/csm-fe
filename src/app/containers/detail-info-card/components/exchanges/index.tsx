@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { Grid, Spinner } from 'app/components';
+import { Grid } from 'app/components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
 import { useInjectReducer, useInjectSaga } from 'hooks/redux-injectors';
 
@@ -131,10 +131,6 @@ export const Exchanges = memo(() => {
   useEffect(() => {
     fetchExchangesData();
   }, [fetchExchangesData]);
-
-  if (exchangesDataLoading) {
-    return <Spinner />;
-  }
 
   return <Grid columns={columns} rows={enrichedExchangesData} />;
 });
