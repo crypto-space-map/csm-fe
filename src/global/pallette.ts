@@ -11,4 +11,5 @@ export const COLOR_PALLETTE = {
     INPUT: { BACKGROUND: '#444444', BACKGROUND_FOCUSED: '#e5e5e5' },
   },
   LIGHT_GRAY: '#E5E5E5',
+  DARK_GREEN: '#78BD4D',
 };

@@ -15,3 +15,5 @@ export { default as RefferalIcon } from 'assets/refferal.svg';
 export { default as LightningIcon } from 'assets/lightning.svg';
 export { default as GearIcon } from 'assets/gear.svg';
 export { default as ListIcon } from 'assets/list.svg';
+export { default as TradingDownIcon } from 'assets/trading-down.svg';
+export { default as TradingUpIcon } from 'assets/trading-up.svg';
