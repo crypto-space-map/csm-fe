@@ -11,10 +11,8 @@ export const StyledActionBlock = styled.div`
 `;
 
 export const AccountTabHeader = styled.span`
-  grid-area: 2/2/3/3;
   font-style: normal;
   font-weight: bold;
-  padding: 0 40px;
   font-size: 32px;
   line-height: 44px;
   color: ${COLOR_PALLETTE.MAIN_WHITE};
@@ -22,7 +20,9 @@ export const AccountTabHeader = styled.span`
 `;
 
 export const SelectedTabWrapper = styled.div`
-  grid-area: 3/2/4/3;
-  padding: 32px 40px;
+  display: grid;
+  grid-auto-rows: max-content;
+  grid-area: 2/2/5/3;
+  padding: 0 40px;
   z-index: 1;
 `;

@@ -6,8 +6,14 @@ const Indicator = styled.span`
   ${gradientBorder({ border: '0 0 4px 0' })}
 `;
 
+const StyledMuiTabs = styled(MuiTabs)`
+  & .MuiTabs-flexContainer {
+    gap: 24px;
+  }
+`;
+
 export const Tabs = (props: TabsProps) => (
-  <MuiTabs TabIndicatorProps={{ children: <Indicator /> }} {...props}>
+  <StyledMuiTabs TabIndicatorProps={{ children: <Indicator /> }} {...props}>
     {props.children}
-  </MuiTabs>
+  </StyledMuiTabs>
 );

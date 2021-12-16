@@ -1,14 +1,23 @@
+import { FavoriteProjects } from '../../../account-favorite-projects';
 import { useAccount } from '../../hooks';
-import { AccountTabHeader, SelectedTabWrapper, StyledActionBlock } from './styled';
+import { MenuItems } from '../../types';
+import { SelectedTabWrapper, StyledActionBlock } from './styled';
+
+const switchedTab = (selectedTab: MenuItems) => {
+  switch (selectedTab) {
+    case MenuItems.FAVORITE_PROJECTS:
+      return <FavoriteProjects />;
+    default:
+      return null;
+  }
+};
 
 export const ActionBlock = () => {
   const { selectedTab } = useAccount();
-  console.log(selectedTab);
   return (
     <>
-      <AccountTabHeader>{selectedTab}</AccountTabHeader>
       <StyledActionBlock />
-      <SelectedTabWrapper>123</SelectedTabWrapper>
+      <SelectedTabWrapper>{switchedTab(selectedTab)}</SelectedTabWrapper>
     </>
   );
 };

@@ -23,7 +23,7 @@ const actionStyle = css`
   }
 `;
 
-const StyledMenuItem = styled(MuiMenuItem)<MenuItemProps<any>>`
+const StyledMenuItem = styled(MuiMenuItem)<MenuItemProps<unknown>>`
   display: grid;
   grid-auto-flow: column;
   grid-gap: 1em;
@@ -43,10 +43,7 @@ const StyledMenuItem = styled(MuiMenuItem)<MenuItemProps<any>>`
     ${({ selected = false }) => selected && actionStyle}
   }
   &:hover {
-    background-color: #242424 !important;
-    & > div {
-      ${actionStyle}
-    }
+    background-color: #383838;
   }
 `;
 

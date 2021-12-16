@@ -11,3 +11,7 @@ export { default as LinkIcon } from 'assets/link.svg';
 export { default as ShareIcon } from 'assets/share.svg';
 export { default as StarIcon } from 'assets/star.svg';
 export { default as CloseIcon } from 'assets/close.svg';
+export { default as RefferalIcon } from 'assets/refferal.svg';
+export { default as LightningIcon } from 'assets/lightning.svg';
+export { default as GearIcon } from 'assets/gear.svg';
+export { default as ListIcon } from 'assets/list.svg';
