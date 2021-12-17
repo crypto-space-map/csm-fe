@@ -5,7 +5,8 @@ import { useForm, Controller } from 'react-hook-form';
 
 import EyeCrossed from 'assets/icons/eye-cross-out.svg';
 import Eye from 'assets/icons/eye.svg';
-import { Button } from 'common/components/button';
+import { Button } from 'common/components';
+import { EMAIL_REG_EXP, PASS_REG_EXP } from 'utils/reg-exp';
 
 import { useLogin } from '../../hooks';
 import { PrivacyBlock } from '../privacy-block/privacy-block';
@@ -13,8 +14,6 @@ import { LoginPageLink } from '../styled';
 import { SignFormProps } from '../types';
 import { PasswordHelperRow, RowsContainer, StyledForm } from './styled';
 import { SignFormInput } from './styled-input';
-
-const PASS_REG_EXP = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]/g;
 
 const helperRows = [
   { text: '8 characters minimum', key: 'minLength' },
@@ -39,7 +38,12 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
     actions: { loading },
   } = useLogin();
 
-  const { control, handleSubmit, watch } = useForm<typeof defaultValues>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<typeof defaultValues>({
     defaultValues,
     mode: 'all',
     criteriaMode: 'all',
@@ -70,13 +74,14 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
           rules={{
             required: true,
             minLength: 8,
-            pattern: (isPassword(item) && !signIn && PASS_REG_EXP) || undefined,
+            pattern: isPassword(item) ? (!signIn && PASS_REG_EXP) || undefined : EMAIL_REG_EXP,
           }}
           render={({ field }) => (
             <SignFormInput
               {...field}
               type={isVisible ? 'text' : item}
               label={item}
+              error={!!errors[item as keyof typeof errors]?.type}
               labelHelper={
                 forgotPassLink(item) && (
                   <LoginPageLink fontSize={14} onClick={handleClickForgotPass}>

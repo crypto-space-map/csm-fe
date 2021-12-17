@@ -1,9 +1,6 @@
-import { useEffect } from 'react';
-
 import { useSelector } from 'react-redux';
 
 import { useActions } from 'hooks';
-import { getCookie } from 'utils/cookie';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { loginPageSaga } from './saga';
@@ -18,14 +15,9 @@ export function useLoginPageSlice() {
 }
 
 export function useLogin() {
-  const { fetchUser, registerUser, recoverMsg, setAuth } = useLoginPageSlice();
+  const { fetchUser, registerUser, recoverMsg } = useLoginPageSlice();
   const isAuth = useSelector(selectAuth);
   const loading = useSelector(selectLoading);
-  const token = getCookie('token');
-
-  // useEffect(() => {
-  //   if (!token && isAuth) setAuth({ isAuth: false });
-  // }, [token, isAuth, setAuth]);
 
   return {
     fetchUser,

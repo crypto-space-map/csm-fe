@@ -1,6 +1,6 @@
 import { forwardRef, ReactNode } from 'react';
 
-import { Input, InputProps } from 'common/components/input';
+import { Input, InputProps } from 'common/components';
 
 import { InputActionHelper, SignFormInputContainer } from './styled';
 

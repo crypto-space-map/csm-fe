@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 
 import { Button } from 'common/components/button';
 import { Input } from 'common/components/input';
+import { EMAIL_REG_EXP } from 'utils/reg-exp';
 
 import { useLoginPageSlice } from '../../hooks';
 import { ChangePasswordNotify, StyledForm } from './styled';
@@ -20,7 +21,11 @@ export const ForgotPassForm = ({ onBack }: ForgotPassFormProps) => {
   const { recoverMsg } = useLoginPageSlice();
 
   const [userMail, setUserMail] = useState('');
-  const { control, handleSubmit } = useForm<typeof defaultValues>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, touchedFields },
+  } = useForm<typeof defaultValues>({
     defaultValues,
     mode: 'all',
     criteriaMode: 'all',
@@ -36,6 +41,8 @@ export const ForgotPassForm = ({ onBack }: ForgotPassFormProps) => {
     return recoverMsg({ email });
   };
 
+  const isError = touchedFields.email && errors.email?.type;
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       {!!userMail ? (
@@ -46,8 +53,11 @@ export const ForgotPassForm = ({ onBack }: ForgotPassFormProps) => {
           control={control}
           rules={{
             required: true,
+            pattern: EMAIL_REG_EXP,
           }}
-          render={({ field }) => <Input {...field} label="email" type="email" />}
+          render={({ field }) => (
+            <Input {...field} label="email" type="email" error={!!isError} errorMessage="No such Email" />
+          )}
         />
       )}
       <Button type="submit" size="large">
