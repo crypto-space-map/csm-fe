@@ -1,29 +1,40 @@
 import { TradingDownIcon, TradingUpIcon } from 'assets';
 
-import { ProjectChangeHeader, StyledProjectChange, TradingInfo } from './styled';
+import { PriceChange, ProjectChangeHeader, StyledProjectChange, TradingInfo } from './styled';
 
 type ProjectChangeProps = {
-  alignItems?: 'start' | 'end';
-  change: number;
-  price?: number;
+  textAlign?: 'start' | 'end';
+  changePeriod: '24H Change' | '7D Change';
+  lightVariant?: boolean;
+  percentageChange: string;
+  priceChange?: string | null;
 };
 
-export const ProjectChange = ({ alignItems, change, price = 0 }: ProjectChangeProps) => {
-  const isTardeUp = change >= 0;
+const isTradeUp = (value: string) => +value >= 0;
+
+export const ProjectChange = ({
+  textAlign,
+  percentageChange,
+  changePeriod,
+  priceChange,
+  lightVariant,
+}: ProjectChangeProps) => {
+  const isTardeUp = isTradeUp(percentageChange);
+  const isPriceUp = priceChange && isTradeUp(priceChange) ? `+$${priceChange}` : `-$${priceChange}`;
   return (
-    <StyledProjectChange alignItems={alignItems}>
-      <ProjectChangeHeader>24H Change</ProjectChangeHeader>
+    <StyledProjectChange textAlign={textAlign}>
+      <ProjectChangeHeader lightVariant={lightVariant}>{changePeriod}</ProjectChangeHeader>
       <TradingInfo isTardeUp={isTardeUp}>
         {isTardeUp ? <TradingUpIcon /> : <TradingDownIcon />}
-        <div>
-          <span>{change}%</span>
-        </div>
+        <span>{percentageChange}%</span>
       </TradingInfo>
+      {priceChange && <PriceChange isTardeUp={isTardeUp}>{isPriceUp}</PriceChange>}
     </StyledProjectChange>
   );
 };
 
 ProjectChange.defaultProps = {
-  price: 0,
-  alignItems: 'start',
+  priceChange: null,
+  textAlign: 'start',
+  lightVariant: false,
 };

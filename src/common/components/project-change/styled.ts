@@ -1,13 +1,16 @@
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
 
-export const StyledProjectChange = styled.div<{ alignItems?: 'start' | 'end' }>`
+export const StyledProjectChange = styled.div<{ textAlign?: 'start' | 'end' }>`
   display: grid;
-  align-items: ${({ alignItems = 'start' }) => alignItems};
+  align-items: center;
+  height: fit-content;
+  text-align: ${({ textAlign = 'start' }) => textAlign};
 `;
 
-export const ProjectChangeHeader = styled.span`
-  color: ${COLOR_PALLETTE.MAIN_BLACK};
+export const ProjectChangeHeader = styled.span<{ lightVariant?: boolean }>`
+  color: ${({ lightVariant = false }) =>
+    lightVariant ? COLOR_PALLETTE.MAIN_WHITE : COLOR_PALLETTE.MAIN_BLACK};
   font-size: 14px;
   line-height: 16px;
 `;
@@ -21,7 +24,10 @@ export const TradingInfo = styled.div<{ isTardeUp: boolean }>`
   font-weight: bold;
   font-size: 20px;
   line-height: 27px;
-  & > div {
-    display: grid;
-  }
+`;
+
+export const PriceChange = styled.span<{ isTardeUp: boolean }>`
+  font-size: 16px;
+  line-height: 22px;
+  color: ${({ isTardeUp = false }) => (isTardeUp ? COLOR_PALLETTE.DARK_GREEN : COLOR_PALLETTE.ERROR_COLOR)};
 `;
