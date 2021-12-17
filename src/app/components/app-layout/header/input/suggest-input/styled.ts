@@ -90,7 +90,7 @@ export const SuggestionList = styled.div`
   transition: all 0.5s ease-out;
   overflow: hidden;
   border: none;
-  z-index: 0 !important;
+  z-index: 1 !important;
   & :nth-last-of-type(1) {
     max-height: 100%;
   }

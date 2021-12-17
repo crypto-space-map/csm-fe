@@ -1,7 +1,7 @@
 import { FetchDataState } from 'utils/@reduxjs/fetchData';
 
 export interface LoginDTORequestParams {
-  username?: string;
+  email?: string;
   password?: string;
 }
 export interface LoginPageStateDTO {
@@ -23,6 +23,8 @@ export interface LoginPageStateDTO {
 export interface LoginPageState extends FetchDataState {
   data: LoginPageStateDTO | null;
   isAuth: boolean;
+  recoverMsgSended: boolean;
+  userMail: string | null;
 }
 
 export type ContainerState = LoginPageState;
