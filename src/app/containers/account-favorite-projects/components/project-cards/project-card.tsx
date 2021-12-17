@@ -16,11 +16,10 @@ export const ProjectCard = ({
   liked,
   onLikeClick,
 }: ProjectCardProps) => {
-  const isLiked = liked ? 'white' : 'black';
   const statusVariant = liked ? 'outlined' : 'black';
   const handleClick = () => onLikeClick(name);
   return (
-    <StyledProjectCard color={isLiked}>
+    <StyledProjectCard liked={liked}>
       <ProjectCardSection>
         <LikeButton liked={liked} onClick={handleClick} />
         <InfoBlock>
