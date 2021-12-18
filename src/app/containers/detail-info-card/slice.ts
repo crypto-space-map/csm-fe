@@ -1,35 +1,24 @@
-import { PayloadAction } from '@reduxjs/toolkit';
-
 import { useActions } from 'hooks';
-import { createSlice } from 'utils/@reduxjs/toolkit';
+import { fetchDataReducers, fetchDataInitialState } from 'utils/@reduxjs/fetchData';
+import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
-import type { ContainerState, DetailInfoDto } from './types';
+import type { ContainerState, ExchangeDTO } from './types';
 import { sliceKey as name } from './utils';
 
 export const initialState: ContainerState = {
-  detailInfo: [],
   overviewTradingStock: '',
   overviewTradingStockLoading: false,
-  detailInfoLoading: false,
+  exchangesData: [],
+  exchangesPage: 1,
+  exchangesDataLoading: false,
 };
 
 const providersListSlice = createSlice({
   name,
   initialState,
   reducers: {
-    fetchDetialInfo(state) {
-      state.detailInfoLoading = true;
-    },
-    fetchDetialInfoSuccess(state, action: PayloadAction<DetailInfoDto[]>) {
-      state.detailInfoLoading = false;
-      state.detailInfo = action.payload;
-    },
-    fetchDetialInfoFail(state) {
-      state.detailInfoLoading = false;
-    },
-
     fetchOverviewTradingStock(state) {
-      state.detailInfoLoading = true;
+      state.overviewTradingStockLoading = true;
     },
     fetchOverviewTradingStockSuccess(state, action: PayloadAction<string>) {
       state.overviewTradingStockLoading = false;
@@ -37,6 +26,23 @@ const providersListSlice = createSlice({
     },
     fetchOverviewTradingStockFail(state) {
       state.overviewTradingStockLoading = false;
+    },
+    fetchExchangesData(state, _action: PayloadAction<{ page: number }>) {
+      state.exchangesDataLoading = true;
+    },
+    fetchExchangesDataSuccess(state, action: PayloadAction<ExchangeDTO[]>) {
+      state.exchangesDataLoading = false;
+      // TODO сделать фильтрацию дублей
+      state.exchangesData = state.exchangesData.concat(action.payload);
+    },
+    fetchExchangesDataFail(state) {
+      state.exchangesDataLoading = false;
+    },
+    clearExchangesData(state) {
+      state.exchangesData = initialState.exchangesData;
+    },
+    setExchangesPage(state, action: PayloadAction<number>) {
+      state.exchangesPage = action.payload;
     },
   },
 });

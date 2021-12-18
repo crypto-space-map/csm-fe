@@ -1,12 +1,12 @@
 import { useActions } from 'hooks';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
-import { providersSaga } from './saga';
+import { detailInfoSaga } from './saga';
 import { actions, reducer } from './slice';
 import { sliceKey } from './utils';
 
-export function useProvidersSlice() {
+export function useDetailInfoSlice() {
   useInjectReducer({ key: sliceKey, reducer });
-  useInjectSaga({ key: sliceKey, saga: providersSaga });
+  useInjectSaga({ key: sliceKey, saga: detailInfoSaga });
   return useActions(actions);
 }
