@@ -19,7 +19,8 @@ module.exports = ({ htmlPluginMinify, mode, devServer, minimizer, output }) => {
 
   return {
     experiments: {
-      asset: true,
+      // TODO Ломает сборку
+      // asset: true,
     },
     stats: STATS,
     mode,
