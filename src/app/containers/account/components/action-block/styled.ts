@@ -4,7 +4,7 @@ import { COLOR_PALLETTE } from 'global/pallette';
 export const StyledActionBlock = styled.div`
   position: relative;
   width: auto;
-  height: 100%;
+  height: 100vh;
   background-color: ${COLOR_PALLETTE.MAIN_LAYOUT};
   grid-area: 1/2/5/3;
   padding: 0 0 0 40px;
@@ -25,4 +25,5 @@ export const SelectedMenuItemWrapper = styled.div`
   grid-area: 2/2/5/3;
   padding: 0 0 0 40px;
   z-index: 1;
+  max-height: calc(100vh - 64px);
 `;

@@ -1,7 +1,6 @@
-import { Button } from 'common/components/button';
-
 import {
   AboutProjectSection,
+  CardLink,
   PostActionBlock,
   PostDate,
   PostText,
@@ -30,12 +29,12 @@ export const ProjectEventCard = () => {
       </AboutProjectSection>
       <PostText>{project.post}</PostText>
       <PostActionBlock>
-        <Button variant="text" size="large">
+        <CardLink href="http://cryptospacemap.com/" target="_blank" rel="noreferrer">
           Proof
-        </Button>
-        <Button variant="text" size="large">
+        </CardLink>
+        <CardLink href="http://cryptospacemap.com/" target="_blank" rel="noreferrer">
           Source
-        </Button>
+        </CardLink>
       </PostActionBlock>
     </StyledEventCard>
   );

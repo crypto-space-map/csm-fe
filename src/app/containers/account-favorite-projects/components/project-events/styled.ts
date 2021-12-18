@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
+import { gradientText, link, scrollBarStyles } from 'global/styles';
 
 const grayStylesSpan = css`
   font-size: 14px;
@@ -9,16 +10,24 @@ const grayStylesSpan = css`
 `;
 
 export const StyledEventsContainer = styled.div`
-  display: grid;
-  grid-auto-rows: max-content;
-  padding: 16px 16px 0px 18px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
   background-color: ${COLOR_PALLETTE.MAIN_BLACK};
   height: 100%;
   border-radius: 16px 0px 0px 0px;
 `;
 
+export const EventsContainerOverflow = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  ${scrollBarStyles}
+`;
+
 export const EventsContainerHeader = styled.span`
-  padding: 24px 0;
+  padding: 40px 0 24px 0;
   font-size: 20px;
   line-height: 27px;
   font-weight: bold;
@@ -30,8 +39,14 @@ export const EventsContainerHeader = styled.span`
 export const StyledEventCard = styled.div`
   display: grid;
   grid-gap: 13px 0;
-  border-bottom: 1px solid #b2b2b2;
+  margin-right: 15px;
   padding: 12px 0;
+  border-bottom: 1px solid #b2b2b2;
+`;
+
+export const CardLink = styled.a`
+  padding: 9px 14px;
+  ${gradientText}
 `;
 
 export const ProjectIcon = styled.img`

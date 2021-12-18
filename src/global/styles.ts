@@ -82,3 +82,15 @@ export const gradientBackground = css`
   background-size: 100%;
   background-image: ${mainGradient};
 `;
+
+export const scrollBarStyles = css`
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: 10px;
+    width: 5px;
+  }
+`;
