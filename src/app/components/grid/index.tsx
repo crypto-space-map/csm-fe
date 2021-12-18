@@ -2,11 +2,19 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 
 import { GridContent } from './components/grid-content';
 import { GridHeader } from './components/grid-header';
+import { RefreshContent } from './components/refresh-content';
 import { GridWrapper } from './styles';
 import { GridProps, SortingValues } from './types';
 import { getCompareFunc } from './utils';
 
-export const Grid = <R extends { id: string }>({ columns, rows }: GridProps<R>) => {
+export const Grid = <R extends { id: string }>({
+  columns,
+  rows,
+  infinite,
+  loading,
+  page,
+  fetchData,
+}: GridProps<R>) => {
   const [sortedField, setSortedField] = useState(columns[0].field);
 
   const [sortDirection, setSortDirection] = useState(SortingValues.ASC);
@@ -49,6 +57,10 @@ export const Grid = <R extends { id: string }>({ columns, rows }: GridProps<R>) 
     );
   }, [columns, rows, sortedField, sortDirection]);
 
+  if (!loading && !rows.length) {
+    return <RefreshContent fetchData={fetchData} />;
+  }
+
   return (
     <GridWrapper>
       <GridHeader
@@ -58,7 +70,15 @@ export const Grid = <R extends { id: string }>({ columns, rows }: GridProps<R>) 
         columns={columns}
         columnWidths={columnWidths}
       />
-      <GridContent sortedRows={sortedRows} columns={columns} columnWidths={columnWidths} />
+      <GridContent
+        sortedRows={sortedRows}
+        columns={columns}
+        columnWidths={columnWidths}
+        fetchData={fetchData}
+        infinite={infinite}
+        loading={loading}
+        page={page}
+      />
     </GridWrapper>
   );
 };

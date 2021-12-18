@@ -4,7 +4,7 @@ import qs from 'qs';
 /* AXIOS INSTANCE */
 const setBackendUrl = () =>
   // some backend
-  'http://49.12.13.50';
+  'http://49.12.13.50/api/v0/';
 const formatParams = (params: Record<string, unknown>): string =>
   qs.stringify(params, { indices: false, arrayFormat: 'repeat' });
 

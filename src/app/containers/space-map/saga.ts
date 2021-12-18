@@ -11,8 +11,11 @@ export function* fetchMapData() {
     const { data } = yield* call(apiFetchMapData);
     yield* put(actions.fetchSpaceMapDataSuccess({ data }));
   } catch (error) {
-    toast(error.message, 'error');
-    yield* put(actions.fetchSpaceMapDataError({ message: error.message }));
+    if (error instanceof Error) {
+      const { message } = error;
+      toast(message, 'error');
+      yield* put(actions.fetchSpaceMapDataError({ message }));
+    }
   }
 }
 
@@ -21,8 +24,11 @@ export function* fetchProjectsData() {
     const { data } = yield* call(apiFetchProjects);
     yield* put(actions.fetchProjectsSuccess({ data }));
   } catch (error) {
-    toast(error.message, 'error');
-    yield* put(actions.fetchProjectsError({ message: error.message }));
+    if (error instanceof Error) {
+      const { message } = error;
+      toast(message, 'error');
+      yield* put(actions.fetchSpaceMapDataError({ message }));
+    }
   }
 }
 

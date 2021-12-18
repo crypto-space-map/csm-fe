@@ -9,6 +9,8 @@ export const initialState: ContainerState = {
   ...fetchDataInitialState,
   data: null,
   isAuth: false,
+  recoverMsgSended: false,
+  userMail: null,
 };
 
 const loginPageSlice = createSlice({
@@ -21,8 +23,20 @@ const loginPageSlice = createSlice({
     setAuth(state, action: PayloadAction<{ isAuth: boolean }>) {
       state.isAuth = action.payload.isAuth;
     },
-    fetchUser(state) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    fetchUser(state, _action: PayloadAction<LoginDTORequestParams>) {
       state.loading = true;
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    registerUser(state, _action: PayloadAction<LoginDTORequestParams>) {
+      state.loading = true;
+    },
+    recoverMsg(state, action: PayloadAction<{ email: string }>) {
+      state.loading = true;
+      state.userMail = action.payload.email;
+    },
+    recoverMsgSended(state) {
+      state.recoverMsgSended = true;
     },
     logOut(state) {
       state.isAuth = false;

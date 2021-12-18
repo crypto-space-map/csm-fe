@@ -34,6 +34,8 @@ export interface HeaderItemProps<T> extends ColumnProps<T> {
   sortDirection: string;
 }
 
+export type FetchDataType = (page: number) => void | (() => void);
+
 export type RowObjProps<R> = {
   [key in keyof R]: R[key];
 };
@@ -41,6 +43,10 @@ export type RowObjProps<R> = {
 export interface GridProps<R> {
   columns: Array<ColumnProps<R>>;
   rows: Array<R>;
+  loading?: boolean;
+  infinite?: boolean;
+  page?: number;
+  fetchData: FetchDataType;
 }
 
 export type CompareFuncOutputProps = { compareFunc: () => number } | { compareFunc: () => boolean };

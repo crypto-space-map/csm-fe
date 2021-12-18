@@ -23,13 +23,28 @@ export const StyledGridContentRow = styled(StyledGridRow)`
 `;
 
 export const StyledGridRowWrapper = styled.div`
+  &:not(:first-of-type) {
+    margin-top: 17px;
+  }
   border-bottom: 1px solid ${COLOR_PALLETTE.MAIN_GRAY};
 `;
 
 export const StyledGridContent = styled.div`
-  & > div:not(:first-of-type) {
-    margin-top: 17px;
+  & .infinite-scroll-component {
+    overflow: unset !important;
   }
+`;
+
+export const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+`;
+
+export const StyledEndMessage = styled.p`
+  text-align: center;
+  padding: 24px 0;
+  margin: 0;
 `;
 
 export const StyledHeaderItem = styled.div<{ sortable: boolean }>`
@@ -49,5 +64,20 @@ export const ArrowIconWrapper = styled.div<{ selected: boolean; sortDirection: s
     transform: rotate(
       ${props => (props.selected && props.sortDirection === SortingValues.DESC ? '180deg' : '0deg')}
     );
+  }
+`;
+
+export const StyledRefreshContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 36px;
+
+  & > span {
+    color: ${COLOR_PALLETTE.MAIN_GRAY};
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 27px;
+    margin-bottom: 24px;
   }
 `;

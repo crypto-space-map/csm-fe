@@ -6,7 +6,7 @@ import { getButtonVariant, StyledChildren } from './styled';
 const StyledButton = styled(MuiButton)<ButtonProps>`
   display: grid;
   border: none;
-  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'inherit')};
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'max-content')};
   grid-auto-columns: 1fr;
   grid-auto-rows: 1fr;
   border-radius: 4px;
