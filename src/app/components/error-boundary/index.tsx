@@ -3,7 +3,7 @@ import type { ReactNode, ReactElement } from 'react';
 
 import { ErrorBoundary as OriginalErrorBoundary } from 'react-error-boundary';
 
-import { ErrorPage } from 'app/containers/pages';
+import { ErrorPage } from 'app/containers/error';
 
 interface ErrorBoundaryProps {
   children: ReactNode;

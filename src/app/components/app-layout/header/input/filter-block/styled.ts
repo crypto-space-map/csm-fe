@@ -17,6 +17,7 @@ export const StyledFilter = styled.div`
   padding: 16px;
   border-radius: 8px;
   transform: translateY(${REFERENCE_NUMBER}px);
+  z-index: 10;
   &:before {
     content: '';
     position: absolute;

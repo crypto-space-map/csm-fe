@@ -1,6 +1,8 @@
 import { useHistory } from 'react-router-dom';
 
+import { useLogin } from 'app/containers/login/hooks';
 import BellIcon from 'assets/icons/bell.svg';
+import { Button } from 'common/components/button';
 
 import { StyledIconButton, Wrapper } from './styled';
 import { UserBellButtonProps, UserBlockProps } from './types';
@@ -13,12 +15,20 @@ const Notifications = (props: UserBellButtonProps) => (
 );
 
 export const HeaderUserBlock = ({ avatarSrc, haveUnreadMessages }: UserBlockProps = {}) => {
-  const { push: historyPush } = useHistory();
-  const handleClick = () => historyPush('/account');
+  const { isAuth } = useLogin();
+  const { push: pushHistory } = useHistory();
+  const handleClick = () => pushHistory('/login');
+
   return (
     <Wrapper>
-      <Notifications haveUnreadMessages={haveUnreadMessages} />
-      <UserButtonAvatar src={avatarSrc} alt="user-avatar-image" size="small" onClick={handleClick} />
+      {!isAuth ? (
+        <Button onClick={handleClick}>Sign in or Sign up</Button>
+      ) : (
+        <>
+          <Notifications haveUnreadMessages={haveUnreadMessages} />
+          <UserButtonAvatar src={avatarSrc} alt="user-avatar-image" size="small" />
+        </>
+      )}
     </Wrapper>
   );
 };

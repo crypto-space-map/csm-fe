@@ -1,1 +1,1 @@
-export * from './swg-wrapper';
+export * from './svg-wrapper';
