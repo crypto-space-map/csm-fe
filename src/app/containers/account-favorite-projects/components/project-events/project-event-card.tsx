@@ -1,4 +1,15 @@
-import { AboutProjectSection, ProjectIcon, ProjectName, ProjectSite, StyledEventCard } from './styled';
+import { Button } from 'common/components/button';
+
+import {
+  AboutProjectSection,
+  PostActionBlock,
+  PostDate,
+  PostText,
+  ProjectIcon,
+  ProjectName,
+  ProjectSite,
+  StyledEventCard,
+} from './styled';
 
 export const ProjectEventCard = () => {
   const project = {
@@ -15,7 +26,17 @@ export const ProjectEventCard = () => {
         <ProjectIcon src={project.img} alt="123" />
         <ProjectName>{project.name}</ProjectName>
         <ProjectSite>{project.siteName}</ProjectSite>
+        <PostDate>{project.postDate}</PostDate>
       </AboutProjectSection>
+      <PostText>{project.post}</PostText>
+      <PostActionBlock>
+        <Button variant="text" size="large">
+          Proof
+        </Button>
+        <Button variant="text" size="large">
+          Source
+        </Button>
+      </PostActionBlock>
     </StyledEventCard>
   );
 };

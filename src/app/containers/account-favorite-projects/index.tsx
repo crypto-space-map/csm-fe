@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import Fade from '@mui/material/Fade';
 
-import { AccountTabHeader } from '../account/components/action-block/styled';
+import { AccountSelectedMenuHeader } from '../account/components/action-block/styled';
 import { useAccount } from '../account/hooks';
 import { ProjectsCardContainer } from './components/project-cards/project-cards-container';
 import { ProjectEventsBlock } from './components/project-events';
@@ -15,7 +15,7 @@ export const FavoriteProjects = memo(() => {
     <Fade in>
       <StyledFavoriteProject>
         <ContentSection>
-          <AccountTabHeader>{selectedTab}</AccountTabHeader>
+          <AccountSelectedMenuHeader>{selectedTab}</AccountSelectedMenuHeader>
           <ProjectsTabs />
           <ProjectsCardContainer />
         </ContentSection>

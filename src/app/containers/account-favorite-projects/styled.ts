@@ -8,12 +8,12 @@ enum Areas {
 export const StyledFavoriteProject = styled.div`
   display: grid;
   grid-auto-columns: auto;
-  grid-auto-rows: max-content;
+  grid-auto-rows: auto;
   grid-auto-flow: column;
-  grid-template-areas:
-    '${Areas.CONTENT} ${Areas.SIDE_DATA}'
-    '${Areas.CONTENT} ${Areas.SIDE_DATA}';
+  gap: 2em;
+  grid-template-areas: '${Areas.CONTENT} ${Areas.SIDE_DATA}';
   width: 100%;
+  overflow: hidden;
 `;
 
 export const ContentSection = styled.section`
@@ -24,4 +24,7 @@ export const ContentSection = styled.section`
 `;
 export const SideDataSection = styled.section`
   grid-area: ${Areas.SIDE_DATA};
+  max-width: 480px;
+  width: 100%;
+  justify-self: end;
 `;

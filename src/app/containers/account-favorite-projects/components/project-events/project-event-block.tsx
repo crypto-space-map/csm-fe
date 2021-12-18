@@ -5,5 +5,7 @@ export const ProjectEventsBlock = () => (
   <StyledEventsContainer>
     <EventsContainerHeader>Favorite Projects Events</EventsContainerHeader>
     <ProjectEventCard />
+    <ProjectEventCard />
+    <ProjectEventCard />
   </StyledEventsContainer>
 );

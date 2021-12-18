@@ -1,7 +1,7 @@
 import { FavoriteProjects } from '../../../account-favorite-projects';
 import { useAccount } from '../../hooks';
 import { MenuItems } from '../../types';
-import { SelectedTabWrapper, StyledActionBlock } from './styled';
+import { SelectedMenuItemWrapper, StyledActionBlock } from './styled';
 
 const switchedTab = (selectedTab: MenuItems) => {
   switch (selectedTab) {
@@ -17,7 +17,7 @@ export const ActionBlock = () => {
   return (
     <>
       <StyledActionBlock />
-      <SelectedTabWrapper>{switchedTab(selectedTab)}</SelectedTabWrapper>
+      <SelectedMenuItemWrapper>{switchedTab(selectedTab)}</SelectedMenuItemWrapper>
     </>
   );
 };

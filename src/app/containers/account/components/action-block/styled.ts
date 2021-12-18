@@ -10,7 +10,7 @@ export const StyledActionBlock = styled.div`
   padding: 0 0 0 40px;
 `;
 
-export const AccountTabHeader = styled.span`
+export const AccountSelectedMenuHeader = styled.span`
   font-style: normal;
   font-weight: bold;
   font-size: 32px;
@@ -19,9 +19,9 @@ export const AccountTabHeader = styled.span`
   z-index: 1;
 `;
 
-export const SelectedTabWrapper = styled.div`
+export const SelectedMenuItemWrapper = styled.div`
   display: grid;
-  grid-auto-rows: max-content;
+  grid-auto-rows: 100%;
   grid-area: 2/2/5/3;
   padding: 0 0 0 40px;
   z-index: 1;
