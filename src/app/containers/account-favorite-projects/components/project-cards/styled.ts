@@ -8,7 +8,6 @@ export const StyledProjectCard = styled.div<{ liked?: boolean }>`
   justify-content: space-between;
   padding: 14px 14px 16px;
   border-radius: 8px;
-  max-width: 740px;
   background-color: ${({ liked = false }) =>
     liked ? COLOR_PALLETTE.MAIN_WHITE : COLOR_PALLETTE.MAIN_BLACK};
   transition: 0.2s linear;

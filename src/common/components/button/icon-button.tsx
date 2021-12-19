@@ -4,7 +4,7 @@ import { IconButton as MuiIconButton, IconButtonProps as MuiIconButtonProps } fr
 import { getButtonVariant, StyledChildren } from './styled';
 
 export type IconButtonProps = MuiIconButtonProps & {
-  variant?: 'outlined' | 'contained' | 'text';
+  variant?: 'outlined' | 'contained' | 'text' | 'text-mono';
 };
 
 const StyledButton = styled(MuiIconButton)<IconButtonProps>`

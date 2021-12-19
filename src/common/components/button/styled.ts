@@ -16,22 +16,26 @@ export const StyledChildren = styled.span`
   z-index: 1;
 `;
 
-export const notContainedButtonsActions = css`
+const monoColored = css`
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
+`;
+
+export const notContainedButtonsActions = (monoColor = false) => css`
   & ${StyledChildren} {
-    ${gradientText}
+    ${monoColor ? monoColored : gradientText}
   }
   &:hover {
     border: none;
     background-color: #383838;
     & ${StyledChildren} {
-      ${gradientText}
+      ${monoColor ? monoColored : gradientText}
     }
   }
   &:active {
     border: none;
     background-color: #1d1c1c;
     & ${StyledChildren} {
-      ${gradientText}
+      ${monoColor ? monoColored : gradientText}
     }
   }
 `;
@@ -49,18 +53,18 @@ export const containedAnimation = css`
   }
 `;
 
-export const getButtonVariant = (variant: ButtonProps['variant']) => {
+export const getButtonVariant = (variant: ButtonProps['variant'] | 'text-mono', monoColor = false) => {
   switch (variant) {
     case 'outlined':
       return css`
         ${gradientBorder()}
-        ${notContainedButtonsActions}
+        ${notContainedButtonsActions()}
       `;
     case 'text':
       return css`
         background-color: none;
         border: none;
-        ${notContainedButtonsActions}
+        ${notContainedButtonsActions(monoColor)}
       `;
     case 'contained':
     default:

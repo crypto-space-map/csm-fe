@@ -17,3 +17,4 @@ export { default as GearIcon } from 'assets/gear.svg';
 export { default as ListIcon } from 'assets/list.svg';
 export { default as TradingDownIcon } from 'assets/trading-down.svg';
 export { default as TradingUpIcon } from 'assets/trading-up.svg';
+export { default as PencilIcon } from 'assets/pencil.svg';
