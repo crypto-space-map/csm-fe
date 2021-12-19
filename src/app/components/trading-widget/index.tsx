@@ -1,20 +1,11 @@
 import { useRef, useEffect, useState } from 'react';
 
+import { scriptSRC, widgetOptions, containerId } from './constants';
 import { TradingWidgetProps } from './types';
 
 declare const TradingView: { widget: new (arg0: TradingWidgetProps) => void };
 
-export const TradingWidget = ({
-  scriptSRC,
-  containerId,
-  widgetOptions,
-  symbol,
-}: {
-  scriptSRC: string;
-  containerId: string;
-  symbol: string;
-  widgetOptions: TradingWidgetProps;
-}): JSX.Element => {
+export const TradingWidget = ({ symbol }: { symbol: string }): JSX.Element => {
   const [scriptElement, setScriptElement] = useState<HTMLScriptElement | null>(null);
   const ref: { current: HTMLDivElement | null } = useRef(null);
 
@@ -26,7 +17,7 @@ export const TradingWidget = ({
       script.type = 'text/javascript';
       setScriptElement(script);
     }
-  }, [ref, scriptSRC]);
+  }, [ref]);
 
   useEffect(() => {
     let refValue: HTMLDivElement;
@@ -52,7 +43,7 @@ export const TradingWidget = ({
         }
       }
     };
-  }, [ref, scriptElement, widgetOptions, containerId, symbol]);
+  }, [ref, scriptElement, symbol]);
 
   return <div ref={ref} id={containerId} />;
 };
