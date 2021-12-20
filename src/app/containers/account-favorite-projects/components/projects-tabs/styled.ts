@@ -13,5 +13,13 @@ export const TabsContainer = styled.div`
   display: grid;
   grid-auto-flow: column;
   align-items: center;
+  justify-content: space-between;
   max-width: 740px;
+`;
+
+export const TabActionsContainer = styled.div`
+  display: grid;
+  gap: 0 30px;
+  grid-auto-flow: column;
+  align-items: center;
 `;

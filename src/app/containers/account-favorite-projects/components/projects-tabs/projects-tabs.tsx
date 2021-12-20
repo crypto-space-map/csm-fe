@@ -4,7 +4,7 @@ import { Tab, Tabs } from 'common/components/tabs';
 
 import { TabsButtonContainer } from './buttons-container';
 import { ListEditBlock } from './list-edit';
-import { TabsContainer } from './styled';
+import { TabActionsContainer, TabsContainer } from './styled';
 
 const values = [
   {
@@ -56,12 +56,14 @@ export const ProjectsTabs = () => {
           <Tab value={i} label={item.value} key={item.value} />
         ))}
       </Tabs>
-      <TabsButtonContainer
-        onNextClick={handleClickNext}
-        onPrevClick={handleClickPrev}
-        showShadow={value !== lastIndex}
-      />
-      <ListEditBlock />
+      <TabActionsContainer>
+        <TabsButtonContainer
+          onNextClick={handleClickNext}
+          onPrevClick={handleClickPrev}
+          showShadow={value !== lastIndex}
+        />
+        <ListEditBlock />
+      </TabActionsContainer>
     </TabsContainer>
   );
 };
