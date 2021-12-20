@@ -23,8 +23,6 @@ const options = Object.keys(detailInfoTabs).map(item => ({
 
 const selectComponentByTabValue = (value: string) => {
   switch (value) {
-    case detailInfoTabs.overview:
-      return <Overview />;
     case detailInfoTabs.funds:
       return <Funds />;
     case detailInfoTabs.partners:
@@ -49,7 +47,10 @@ export const TabsSection = memo(() => {
     <TabSectionWrapper>
       <CustomTabs value={activeTab} options={options} onChangeTabValue={setActiveTab} />
       <TabContentWrapper id={infiniteScrollTarget}>
-        <TabContent>{selectComponentByTabValue(activeTab)}</TabContent>
+        <TabContent show={activeTab === detailInfoTabs.overview}>
+          <Overview />
+        </TabContent>
+        <TabContent show>{selectComponentByTabValue(activeTab)}</TabContent>
       </TabContentWrapper>
     </TabSectionWrapper>
   );

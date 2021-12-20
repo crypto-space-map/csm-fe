@@ -1,4 +1,4 @@
-import { TradingWidgetProps } from 'app/components/trading-widget/types';
+import { TradingWidgetProps } from './types';
 
 export const scriptSRC = 'https://s3.tradingview.com/tv.js';
 export const containerId = 'tradingview_widget';
@@ -6,7 +6,6 @@ export const containerId = 'tradingview_widget';
 export const widgetOptions: TradingWidgetProps = {
   width: '100%',
   height: '100%',
-  symbol: 'KUCOIN:CEREUSDT',
   interval: '60',
   range: undefined,
   timezone: 'Etc/UTC',
