@@ -1,9 +1,10 @@
+import { AccountDataContainer } from 'app/components/account/styled';
 import { ProjectChange } from 'common/components/project-change';
 import { Status } from 'common/components/status';
 
 import { FavoriteProject } from '../../types';
 import { LikeButton } from './like-button';
-import { InfoBlock, ProjectCardHeader, ProjectCardSection, StyledProjectCard, TagsBlock } from './styled';
+import { InfoBlock, ProjectCardHeader, ProjectCardSection, TagsBlock } from './styled';
 
 type ProjectCardProps = FavoriteProject & { onLikeClick: (val: string) => void };
 
@@ -19,7 +20,7 @@ export const ProjectCard = ({
   const statusVariant = liked ? 'outlined' : 'black';
   const handleClick = () => onLikeClick(name);
   return (
-    <StyledProjectCard liked={liked}>
+    <AccountDataContainer invert={liked}>
       <ProjectCardSection>
         <LikeButton liked={liked} onClick={handleClick} />
         <InfoBlock>
@@ -48,6 +49,6 @@ export const ProjectCard = ({
           lightVariant={!liked}
         />
       </ProjectCardSection>
-    </StyledProjectCard>
+    </AccountDataContainer>
   );
 };

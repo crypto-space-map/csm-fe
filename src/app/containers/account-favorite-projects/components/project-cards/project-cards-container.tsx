@@ -1,12 +1,102 @@
 import { useState } from 'react';
 
+import { ContainerOverflow } from 'app/containers/account/components/action-block/styled';
+
 import { FavoriteProject } from '../../types';
 import { ProjectCard } from './project-card';
 import { StyledProjectCardContainer } from './styled';
 
 const data: FavoriteProject[] = [
   {
+    name: 'Robonomics Network 1',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: true,
+  },
+  {
+    name: 'Robonomics Network 2',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: true,
+  },
+  {
+    name: 'Robonomics Network 3',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: false,
+  },
+  {
+    name: 'Robonomics Network 4',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: true,
+  },
+  {
     name: 'Robonomics Network',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: true,
+  },
+  {
+    name: 'Robonomics Network 5',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: true,
+  },
+  {
+    name: 'Robonomics Network 6',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: false,
+  },
+  {
+    name: 'Robonomics Network 7',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: true,
+  },
+  {
+    name: 'Robonomics Network 8',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: true,
+  },
+  {
+    name: 'Robonomics Network',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: false,
+  },
+  {
+    name: 'Robonomics Network 9',
+    symbol: 'XRT',
+    tags: ['IoT', 'Telecommunication'],
+    dayChange: '-13.55',
+    weekChange: '10.01',
+    liked: true,
+  },
+  {
+    name: 'Robonomics Network 10',
     symbol: 'XRT',
     tags: ['IoT', 'Telecommunication'],
     dayChange: '-13.55',
@@ -52,9 +142,11 @@ export const ProjectsCardContainer = () => {
     );
   return (
     <StyledProjectCardContainer>
-      {state.map(project => (
-        <ProjectCard {...project} key={project.name + project.symbol} onLikeClick={onLikeClick} />
-      ))}
+      <ContainerOverflow>
+        {state.map(project => (
+          <ProjectCard {...project} key={project.name + project.symbol} onLikeClick={onLikeClick} />
+        ))}
+      </ContainerOverflow>
     </StyledProjectCardContainer>
   );
 };

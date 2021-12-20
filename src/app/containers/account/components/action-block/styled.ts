@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
+import { scrollBarStyles } from 'global/styles';
 
 export const StyledActionBlock = styled.div`
   position: relative;
@@ -10,15 +11,6 @@ export const StyledActionBlock = styled.div`
   padding: 0 0 0 40px;
 `;
 
-export const AccountSelectedMenuHeader = styled.span`
-  font-style: normal;
-  font-weight: bold;
-  font-size: 32px;
-  line-height: 44px;
-  color: ${COLOR_PALLETTE.MAIN_WHITE};
-  z-index: 1;
-`;
-
 export const SelectedMenuItemWrapper = styled.div`
   display: grid;
   grid-auto-rows: 100%;
@@ -26,4 +18,14 @@ export const SelectedMenuItemWrapper = styled.div`
   padding: 0 0 0 40px;
   z-index: 1;
   max-height: calc(100vh - 64px);
+`;
+
+export const ContainerOverflow = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  gap: 5px;
+  padding-right: 15px;
+  ${scrollBarStyles}
 `;

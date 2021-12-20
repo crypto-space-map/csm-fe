@@ -1,4 +1,6 @@
-import { CanvasHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react';
+import { CanvasHTMLAttributes, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { COLOR_PALLETTE } from 'global/pallette';
 
 export type RefferalArcProps = CanvasHTMLAttributes<HTMLCanvasElement> & {
   percents: number;
@@ -7,10 +9,13 @@ export type RefferalArcProps = CanvasHTMLAttributes<HTMLCanvasElement> & {
 
 export const RefferalArc = ({ percents, radius = 70, ...rest }: RefferalArcProps) => {
   const ref = useRef<HTMLCanvasElement>(null);
+  const backgroundRef = useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null | undefined>(null);
+  const [backgroundCtx, setBackgroundCtx] = useState<CanvasRenderingContext2D | null | undefined>(null);
 
   useEffect(() => {
     setCtx(ref.current?.getContext('2d'));
+    setBackgroundCtx(backgroundRef.current?.getContext('2d'));
   }, []);
 
   /**
@@ -37,16 +42,28 @@ export const RefferalArc = ({ percents, radius = 70, ...rest }: RefferalArcProps
     [radius]
   );
 
-  useEffect(() => {
-    if (ctx) {
-      ctx.beginPath();
-      ctx.lineWidth = lineWidth;
-      ctx.lineCap = 'round';
-      ctx.strokeStyle = '#A9F89D';
-      ctx.arc(radius + lineWidth, radius + lineWidth, radius, startAngle, endAngle, false);
-      ctx.stroke();
-    }
-  }, [ctx, endAngle, radius, startAngle]);
+  const ctxRender = useCallback(
+    (context: CanvasRenderingContext2D, fullWidth = null) => {
+      context.beginPath();
+      context.lineWidth = lineWidth;
+      context.lineCap = 'round';
+      context.strokeStyle = fullWidth ? COLOR_PALLETTE.MAIN_LAYOUT : COLOR_PALLETTE.MAIN_GREEN;
+      context.arc(radius + lineWidth, radius + lineWidth, radius, startAngle, fullWidth || endAngle, false);
+      context.stroke();
+    },
+    [radius, startAngle, endAngle]
+  );
 
-  return <canvas {...canvas} ref={ref} {...rest} />;
+  useEffect(() => {
+    if (ctx && backgroundCtx) {
+      ctxRender(ctx);
+      ctxRender(backgroundCtx, '-0');
+    }
+  }, [backgroundCtx, ctx, ctxRender, endAngle, radius, startAngle]);
+
+  return (
+    <>
+      <canvas {...canvas} ref={backgroundRef} {...rest} /> <canvas {...canvas} ref={ref} {...rest} />
+    </>
+  );
 };

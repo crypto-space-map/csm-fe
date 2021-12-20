@@ -1,16 +1,18 @@
+import { ContainerOverflow } from 'app/containers/account/components/action-block/styled';
+
 import { ProjectEventCard } from './project-event-card';
-import { EventsContainerHeader, EventsContainerOverflow, StyledEventsContainer } from './styled';
+import { EventsContainerHeader, StyledEventsContainer } from './styled';
 
 export const ProjectEventsBlock = () => (
   <StyledEventsContainer>
     <EventsContainerHeader>Favorite Projects Events</EventsContainerHeader>
-    <EventsContainerOverflow>
+    <ContainerOverflow>
       <ProjectEventCard />
       <ProjectEventCard />
       <ProjectEventCard />
       <ProjectEventCard />
       <ProjectEventCard />
       <ProjectEventCard />
-    </EventsContainerOverflow>
+    </ContainerOverflow>
   </StyledEventsContainer>
 );

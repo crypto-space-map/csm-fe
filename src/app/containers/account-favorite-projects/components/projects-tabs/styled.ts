@@ -14,7 +14,8 @@ export const TabsContainer = styled.div`
   grid-auto-flow: column;
   align-items: center;
   justify-content: space-between;
-  max-width: 740px;
+  max-width: inherit;
+  padding-right: 15px;
 `;
 
 export const TabActionsContainer = styled.div`

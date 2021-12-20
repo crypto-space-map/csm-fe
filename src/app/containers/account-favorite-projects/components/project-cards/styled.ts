@@ -2,21 +2,13 @@ import styled from '@emotion/styled';
 import { IconButton } from '@mui/material';
 import { COLOR_PALLETTE } from 'global/pallette';
 
-export const StyledProjectCard = styled.div<{ liked?: boolean }>`
-  display: grid;
-  grid-auto-flow: column;
-  justify-content: space-between;
-  padding: 14px 14px 16px;
-  border-radius: 8px;
-  background-color: ${({ liked = false }) =>
-    liked ? COLOR_PALLETTE.MAIN_WHITE : COLOR_PALLETTE.MAIN_BLACK};
-  transition: 0.2s linear;
-`;
+import { ContainerOverflow } from 'app/containers/account/components/action-block/styled';
 
 export const StyledProjectCardContainer = styled.div`
   display: grid;
-  gap: 6px 0;
+  height: 100%;
   padding: 32px 0;
+  overflow: hidden;
 `;
 
 export const ProjectCardSection = styled.section`

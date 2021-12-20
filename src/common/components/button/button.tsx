@@ -18,7 +18,6 @@ const StyledButton = styled(MuiButton)<ButtonProps>`
   mask-composite: exclude;
   transition: all 0.2s linear;
   text-transform: none;
-  line-height: normal;
   ${({ variant, monoColor }) => getButtonVariant(variant, monoColor)}
   &:disabled {
     background: #bdbdbd;
