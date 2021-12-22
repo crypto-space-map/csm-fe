@@ -1,6 +1,9 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
 import { gradientBorder, gradientText } from 'global/styles';
+
+import { Status } from 'common/components';
 
 export const PlanPrice = styled.span`
   font-weight: bold;
@@ -37,7 +40,6 @@ export const StyledPlanCard = styled.div<{ selected?: boolean }>`
 export const PlanPropertiesContainer = styled.div`
   display: grid;
   gap: 44px 0;
-  height: 100%;
   padding: 20px 0;
 `;
 
@@ -63,4 +65,26 @@ export const SelectedPlan = styled.span`
   font-weight: bold;
   font-size: 20px;
   line-height: 27px;
+`;
+
+export const ButtonsBlock = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  min-height: 37px;
+  gap: 16px;
+`;
+
+export const StyledPlanStatus = styled(Status)<{ gradient?: boolean; redColored?: boolean }>`
+  ${({ gradient }) =>
+    gradient &&
+    css`
+      ${gradientText}
+      ${gradientBorder({ borderRadius: 20 })}
+          background-color: inherit;
+    `}
+  ${({ redColored }) =>
+    redColored &&
+    css`
+      background-color: ${COLOR_PALLETTE.ERROR_COLOR};
+    `}
 `;

@@ -17,7 +17,7 @@ export function* fetchUser(action: ReturnType<typeof actions['fetchUser']>) {
   try {
     const { email, password } = action.payload;
     // MOCK
-    if (email === 'csm@test.com' && password === 'CSMMvp123+') {
+    if (email === 'csm@test.com' && password === 'CSMMvp123!') {
       yield* put(actions.setAuth({ isAuth: true }));
       const data = {
         auth: true,
@@ -37,6 +37,8 @@ export function* fetchUser(action: ReturnType<typeof actions['fetchUser']>) {
       };
 
       yield* put(actions.fetchDataSuccess({ data }));
+    } else {
+      yield* put(actions.fetchDataError({ message: '123' }));
     }
     // UNMOCK WITH REAL DATA
 

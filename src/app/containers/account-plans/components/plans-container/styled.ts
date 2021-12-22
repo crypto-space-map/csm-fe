@@ -8,6 +8,9 @@ export const StyledPlansContainer = styled.div`
   overflow: auto;
   padding: 32px 0;
   height: 100%;
-  grid-auto-columns: 1fr;
+  grid-auto-columns: auto;
   ${scrollBarStyles}
+  & > :nth-of-type(1) {
+    padding-left: 0;
+  }
 `;

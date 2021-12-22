@@ -15,7 +15,7 @@ export type MenuItemProps<T> = Omit<MuiProps, 'onClick'> & {
 const actionStyle = css`
   ${gradientText}
   ${gradientBorder({ borderRadius: 0 })}
-    &::after {
+    &::before {
     padding: 0 0 0 4px;
   }
   & svg {
