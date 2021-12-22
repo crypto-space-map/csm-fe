@@ -27,5 +27,6 @@ export const ContainerOverflow = styled.div`
   overflow: auto;
   gap: 5px;
   padding-right: 15px;
+  z-index: 10;
   ${scrollBarStyles}
 `;
