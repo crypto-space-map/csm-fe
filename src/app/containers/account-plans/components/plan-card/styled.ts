@@ -45,7 +45,7 @@ export const PlanPropertiesContainer = styled.div`
 
 export const PropertiesBlock = styled.div`
   display: grid;
-  gap: 18px;
+  gap: 8px;
   color: ${COLOR_PALLETTE.MAIN_WHITE};
   font-weight: bold;
   font-size: 16px;
@@ -59,11 +59,11 @@ export const StyledProperty = styled.div`
   justify-content: start;
   gap: 15px;
   font-weight: normal;
-  z-index: 1;
+  padding: 5px;
   &::before {
-    content: '';
+    content: ' ';
     position: absolute;
-    z-index: 0;
+    z-index: -1;
     top: 0;
     left: 0;
     width: 100%;
@@ -71,7 +71,8 @@ export const StyledProperty = styled.div`
   }
   &:hover {
     &::before {
-      width: 80vw;
+      width: 1000%;
+      transform: translateX(-50%);
       background-color: ${COLOR_PALLETTE.MAIN_BLACK};
     }
   }
