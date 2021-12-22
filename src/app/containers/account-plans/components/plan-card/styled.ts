@@ -53,11 +53,28 @@ export const PropertiesBlock = styled.div`
 `;
 
 export const StyledProperty = styled.div`
+  position: relative;
   display: grid;
   grid-auto-flow: column;
   justify-content: start;
   gap: 15px;
   font-weight: normal;
+  z-index: 1;
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &:hover {
+    &::before {
+      width: 80vw;
+      background-color: ${COLOR_PALLETTE.MAIN_BLACK};
+    }
+  }
 `;
 
 export const SelectedPlan = styled.span`
