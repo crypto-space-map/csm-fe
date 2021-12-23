@@ -16,7 +16,7 @@ export function* overviewTradingStockWorker() {
 
 export function* exchangesDataWorker(action: ReturnType<typeof actions.fetchExchangesData>) {
   try {
-    const { data } = yield* call(getExchangesData, 'solana', action.payload);
+    const { data } = yield* call(getExchangesData, action.payload);
     yield* put(actions.setExchangesPage(action.payload.page));
     yield* put(actions.fetchExchangesDataSuccess(data));
   } catch {

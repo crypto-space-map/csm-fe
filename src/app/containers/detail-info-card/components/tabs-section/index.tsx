@@ -1,10 +1,9 @@
-import { memo, useState } from 'react';
+import { memo, useState, useMemo, useEffect } from 'react';
 
-import { CustomTabs } from 'app/components';
+import { DetailTabSection, TabContent } from 'app/components';
 import { infiniteScrollTarget } from 'app/components/grid/utils';
 
 import { Community, Events, Exchanges, Funds, Overview, Partners, Social } from '..';
-import { TabContentWrapper, TabContent, TabSectionWrapper } from './styles';
 
 const detailInfoTabs = {
   overview: 'overview',
@@ -16,7 +15,7 @@ const detailInfoTabs = {
   events: 'events',
 };
 
-const options = Object.keys(detailInfoTabs).map(item => ({
+const tabOptions = Object.keys(detailInfoTabs).map(item => ({
   label: item,
   value: detailInfoTabs[item as keyof typeof detailInfoTabs],
 }));
@@ -40,18 +39,33 @@ const selectComponentByTabValue = (value: string) => {
   }
 };
 
-export const TabsSection = memo(() => {
-  const [activeTab, setActiveTab] = useState(detailInfoTabs.overview);
+export const TabsSection = memo(({ isShow = false }: { isShow: boolean }) => {
+  const [activeTab, setActiveTab] = useState(detailInfoTabs.community);
+
+  const options = useMemo(
+    () => ({
+      activeTab,
+      options: tabOptions,
+      targetId: infiniteScrollTarget,
+      setActiveTab,
+    }),
+    [activeTab]
+  );
+
+  useEffect(() => {
+    if (!isShow) setActiveTab(detailInfoTabs.overview);
+  }, [isShow, setActiveTab]);
 
   return (
-    <TabSectionWrapper>
-      <CustomTabs value={activeTab} options={options} onChangeTabValue={setActiveTab} />
-      <TabContentWrapper id={infiniteScrollTarget}>
-        <TabContent show={activeTab === detailInfoTabs.overview}>
-          <Overview />
-        </TabContent>
-        <TabContent show>{selectComponentByTabValue(activeTab)}</TabContent>
-      </TabContentWrapper>
-    </TabSectionWrapper>
+    <DetailTabSection detailTabProps={options}>
+      {isShow && (
+        <>
+          <TabContent show={activeTab === detailInfoTabs.overview}>
+            <Overview />
+          </TabContent>
+          <TabContent show>{selectComponentByTabValue(activeTab)}</TabContent>
+        </>
+      )}
+    </DetailTabSection>
   );
 });

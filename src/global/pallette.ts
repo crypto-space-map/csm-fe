@@ -14,7 +14,8 @@ export const COLOR_PALLETTE = {
   HEADER: {
     INPUT: { BACKGROUND: '#444444', BACKGROUND_FOCUSED: '#e5e5e5' },
   },
-  LIGHT_GRAY: '#E5E5E5',
+  LIGHT_GRAY: '#e5e5e5',
   DARK_GREEN: '#78BD4D',
   ICO_COMMON_COLOR: '#bdbdbd',
+  PROJECT_CATEGORY: '#d1f1ff',
 };

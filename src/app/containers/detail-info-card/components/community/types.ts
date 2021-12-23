@@ -8,9 +8,15 @@ export enum SocialNetworkList {
   youtube = 'youtube',
 }
 
+export interface StatOptions {
+  unit: string;
+  count: number;
+}
+
 export interface CardDataProps {
   id: number;
   statCount: number;
+  stats?: StatOptions[];
   socialNetwork: keyof typeof SocialNetworkList;
   link: string;
 }

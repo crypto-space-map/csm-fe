@@ -2,6 +2,6 @@ import { axios } from 'api';
 
 import type { ExchangeDTO, ExchangeRequest } from './types';
 
-export async function getExchangesData(projectId: string, params: ExchangeRequest) {
-  return axios.get<ExchangeDTO[]>(`project/tickers/${projectId}`, { params });
+export async function getExchangesData({ projectName, page }: ExchangeRequest) {
+  return axios.get<ExchangeDTO[]>(`project/tickers/${projectName}`, { params: { page } });
 }

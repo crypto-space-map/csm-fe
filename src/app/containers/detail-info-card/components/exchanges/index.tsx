@@ -4,8 +4,13 @@ import { useSelector } from 'react-redux';
 
 import { Grid } from 'app/components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
+import { selectedProjectName } from 'store/pageStore/selectors';
 
-import * as selectors from '../../selectors';
+import {
+  selectedEnrichedExchangesData,
+  selectedExchangesDataLoading,
+  selectedExchangesPage,
+} from '../../selectors';
 import { useDispatchAction } from '../../slice';
 import { ExchangeDTO } from '../../types';
 import { headerNames } from './constants';
@@ -120,15 +125,16 @@ const columns: ColumnProps<EnrichedExchangeProps>[] = [
 export const Exchanges = memo(() => {
   const { fetchExchangesData } = useDispatchAction();
 
-  const enrichedExchangesData = useSelector(selectors.enrichedExchangesData);
-  const exchangesDataLoading = useSelector(selectors.exchangesDataLoading);
-  const exchangesPage = useSelector(selectors.exchangesPage);
+  const enrichedExchangesData = useSelector(selectedEnrichedExchangesData);
+  const exchangesDataLoading = useSelector(selectedExchangesDataLoading);
+  const exchangesPage = useSelector(selectedExchangesPage);
+  const projectName = useSelector(selectedProjectName);
 
   const loadData = useCallback(
     (page: number) => {
-      fetchExchangesData({ page });
+      if (projectName) fetchExchangesData({ projectName, page });
     },
-    [fetchExchangesData]
+    [projectName, fetchExchangesData]
   );
 
   useEffect(() => {

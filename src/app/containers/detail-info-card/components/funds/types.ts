@@ -1,7 +1,5 @@
-import { Options } from 'app/components/select-with-link/types';
-
 export interface InvestorsProps {
-  link: string;
+  id: string;
   title: string;
 }
 
@@ -11,5 +9,5 @@ export interface FundsProps {
   investors: InvestorsProps[];
   amount: number;
   date: string;
-  ann: Options[];
+  ann: string;
 }

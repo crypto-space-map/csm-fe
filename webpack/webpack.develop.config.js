@@ -17,6 +17,7 @@ module.exports = require('./webpack.init.config')({
     client: {
       overlay: {
         errors: true,
+        warnings: false,
       },
       logging: 'info',
       progress: true,

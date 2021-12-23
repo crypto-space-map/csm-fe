@@ -2,5 +2,8 @@ import { StyledImg } from './styles';
 
 interface CryptoLogoProps {
   path: string;
+  size?: number;
 }
-export const CryptoLogo = ({ path }: CryptoLogoProps) => <StyledImg src={path} alt="small_logo" />;
+export const CryptoLogo = ({ path, size = 24 }: CryptoLogoProps) => (
+  <StyledImg size={size} src={path} alt="small_logo" />
+);

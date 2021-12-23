@@ -6,6 +6,7 @@ export const TabContentWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, minmax(143px, 1fr));
   grid-gap: 14px;
+  margin-top: 24px;
 `;
 
 export const IconWrapper = styled.div`
@@ -25,4 +26,31 @@ export const CardContent = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 16px 0;
+`;
+
+export const StyledCount = styled.span`
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+`;
+
+export const DoubleCardWrapper = styled(CardWrapper)`
+  grid-column: 1/3;
+`;
+
+export const DoubleCardContent = styled.div`
+  display: flex;
+  padding: 16px 18px;
+`;
+
+export const InfoWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(108px, 1fr));
+  grid-gap: 14px;
+  margin-left: 16px;
+`;
+
+export const StyledInfo = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
