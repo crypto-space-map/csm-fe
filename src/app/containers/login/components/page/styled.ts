@@ -9,6 +9,8 @@ export const StyledLoginPage = styled.div`
   grid-template-columns: 32px 1fr 32px;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
   z-index: 100;
   background: linear-gradient(252.36deg, #83d9f5 0%, #242424 22.31%);
   grid-template-areas:
