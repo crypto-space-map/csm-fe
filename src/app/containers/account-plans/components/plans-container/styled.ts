@@ -18,5 +18,6 @@ export const StyledPlansContainer = styled.div`
 
 export const PlansContainerWrapper = styled.div`
   width: 100%;
+  overflow: auto;
   ${scrollBarStyles}
 `;

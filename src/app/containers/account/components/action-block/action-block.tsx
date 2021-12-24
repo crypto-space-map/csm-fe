@@ -1,6 +1,7 @@
 import { Fade } from '@mui/material';
 
 import { StyledContentContainer } from 'app/components/account';
+import { AccountCsmNews } from 'app/containers/account-csm-news';
 import { FavoriteProjects } from 'app/containers/account-favorite-projects';
 import { AccountPlans } from 'app/containers/account-plans';
 import { AccountRefferals } from 'app/containers/account-refferals';
@@ -18,6 +19,8 @@ const switchedTab = (selectedTab: MenuItems) => {
         return <AccountRefferals />;
       case MenuItems.PLANS:
         return <AccountPlans />;
+      case MenuItems.CSM_NEWS:
+        return <AccountCsmNews />;
       default:
         return null;
     }

@@ -51,7 +51,7 @@ export const ProjectsTabs = () => {
 
   return (
     <TabsContainer>
-      <Tabs value={value} onChange={handleChangeTab}>
+      <Tabs value={value} onChange={handleChangeTab} variant="scrollable" scrollButtons={false}>
         {values.map((item, i) => (
           <Tab value={i} label={item.value} key={item.value} />
         ))}
