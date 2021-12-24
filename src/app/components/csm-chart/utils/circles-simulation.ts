@@ -34,8 +34,6 @@ export const circlesSimulation = ({ nodes, width, height }: CirclesSimulation) =
     .force(
       'collide',
       forceCollide()
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore по факту ключ r есть
         .radius(d => d.r + NODE.PADDING)
         .strength(1)
     )
