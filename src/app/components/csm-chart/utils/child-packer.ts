@@ -4,7 +4,7 @@ import { PackedCategories } from '../types';
 
 const CIRCLES_PADDING = 5;
 
-export const packedChild = (data: PackedCategories, r: number) =>
+export const packedChild = (data: PackedCategories, r = 0) =>
   pack()
     .size([r * 2, r * 2]) /** Set pack size by parent radius */
     .padding(CIRCLES_PADDING)(

@@ -19,6 +19,7 @@ export type ProjectData = {
   name: string;
   projectId: string;
   symbol: string;
+  marketCap: number;
 };
 
 interface MapTree extends FetchDataState {

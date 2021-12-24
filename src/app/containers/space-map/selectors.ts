@@ -4,4 +4,4 @@ import { initialState } from './slice';
 
 const selectDomain = (state: RootState) => state.spaceMapData || initialState;
 
-export const selectCSMMapData = (state: RootState) => selectDomain(state) || null;
+export const selectMapData = (state: RootState) => selectDomain(state) || null;

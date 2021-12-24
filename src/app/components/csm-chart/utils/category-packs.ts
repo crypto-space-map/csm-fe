@@ -21,26 +21,39 @@ type PackedNodes = {
   y: number;
 };
 
-export const createCategoryPacks = (categories: CSMMapCategory[], marketCap: number) => {
+/** Incoming categories values  from to  */
+const DOMAIN = {
+  RADIUS_FROM: 0,
+  RADIUS_TO: 200,
+};
+/** At this interval, the function will place incoming values from the DOMAIN and exactly set relative to each other */
+const RANGE = {
+  MIN: 20,
+  MAX: 200,
+};
+
+export const createCategoryPacks = (categories: CSMMapCategory[], maxMarketCap = 100) => {
   const mappedCategories = group(categories, d => d.name);
 
   const packedCategories = new Map<string, PackedNodes>();
 
   const radius = scaleSqrt()
-    .domain(extent([0, 200]) as Iterable<number>)
-    .range([20, 200]);
+    .domain(extent([DOMAIN.RADIUS_FROM, DOMAIN.RADIUS_TO]) as Iterable<number>)
+    .range([RANGE.MIN, RANGE.MAX]);
 
   for (let [key, value] of mappedCategories) {
-    const { children } = value[0];
+    const { children, marketCap } = value[0];
 
     const circledChildren = children.map(data => ({ ...data, data, r: 0 }));
 
     const nodes = packSiblings<typeof circledChildren[number]>(circledChildren);
 
     // TODO мок значение битка убрать
-    const maxCalculatedRadius = (value[0].marketCap / marketCap) * 100 * 2;
+    const maxCalculatedRadius = (marketCap / maxMarketCap) * 100 * 2;
 
     const r = radius(maxCalculatedRadius);
+
+    /** TODO create function to find page center instead properties { x: 600, y: 350 } */
 
     const state = mapCords.find(d => d.name === key) || { properties: { x: 600, y: 350 } };
     const { x, y } = state.properties;

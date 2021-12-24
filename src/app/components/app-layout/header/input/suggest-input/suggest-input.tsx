@@ -1,5 +1,7 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 
+import { createFilterOptions } from '@mui/material';
+
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import CloseIcon from 'assets/icons/close-ico.svg';
 import SearchIcon from 'assets/icons/search.svg';
@@ -17,10 +19,10 @@ export const SuggestInput = () => {
   // after emotion styling missed some types
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const filterOptions = (options: any[], { inputValue: value }: any) =>
-    options
-      .filter(({ name, symbol }) => lowerCaseTransform(name + symbol).includes(lowerCaseTransform(value)))
-      .slice(0, 10);
+  const filterOptions = createFilterOptions<ProjectData>({
+    limit: 10,
+    stringify: ({ name, symbol }) => lowerCaseTransform(name + symbol),
+  });
 
   const onChange = (e: Event, value: typeof projects[number]) => {
     if (typeof value !== 'object') return;

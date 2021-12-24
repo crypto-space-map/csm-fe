@@ -4,7 +4,7 @@ import { useActions } from 'hooks';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { spaceMapSaga } from './saga';
-import { selectCSMMapData } from './selectors';
+import { selectMapData } from './selectors';
 import { actions, reducer } from './slice';
 import { sliceKey } from './utils';
 
@@ -19,7 +19,7 @@ export function useSpaceMap() {
   const {
     mapTree: { data: spaceMapData, loading: fetchingMapData },
     projects: { data: projects },
-  } = useSelector(selectCSMMapData);
+  } = useSelector(selectMapData);
 
   return {
     fetchProjects,

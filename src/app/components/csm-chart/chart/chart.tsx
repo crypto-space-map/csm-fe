@@ -15,7 +15,7 @@ import {
 import { generateFundsLegend } from '../utils/circles-legend';
 import { ChartWrapper, RandomSvg } from './styled';
 
-export const CSMap = () => {
+export const SpaceChart = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
