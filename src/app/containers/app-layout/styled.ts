@@ -12,7 +12,10 @@ export const AppContainer = styled.div`
     '. hd .'
     '. route .'
     '. ft .';
-  & > :nth-of-type(2) {
-    grid-area: route;
-  }
+`;
+export const RouteWrapper = styled.div`
+  grid-area: route;
+  display: flex;
+  width: 100%;
+  height: 100%;
 `;

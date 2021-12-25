@@ -17,7 +17,7 @@ export function* fetchUser(action: ReturnType<typeof actions['fetchUser']>) {
   try {
     const { email, password } = action.payload;
     // MOCK
-    if (email === 'csm@test.com' && password === 'CSMMvp123+') {
+    if (email === 'csm@test.com' && password === 'CSMMvp123!') {
       yield* put(actions.setAuth({ isAuth: true }));
       const data = {
         auth: true,
