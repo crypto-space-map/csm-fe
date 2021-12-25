@@ -22,6 +22,11 @@ const StyledInput = styled(TextField)`
   border-radius: 4px;
   padding: 4px 8px;
   border: 1px solid ${({ error }) => isError(error)};
+  /** Hide arrows at number input */
+  & ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 const InputContainer = styled.div`

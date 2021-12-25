@@ -1,7 +1,7 @@
 import { fetchDataInitialState, fetchDataReducers } from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
-import type { ContainerState, MapDataResponse, ProjectData } from './types';
+import type { ContainerState, FilterProps, MapDataResponse, ProjectData } from './types';
 import { sliceKey as name } from './utils';
 
 // The initial state of the DeparturesPage container
@@ -17,6 +17,10 @@ export const initialState: ContainerState = {
   projects: {
     data: [],
     ...fetchDataInitialState,
+  },
+  filters: {
+    mCapFrom: null,
+    mCapTo: null,
   },
 };
 
@@ -54,6 +58,9 @@ const spaceMapPageSlice = createSlice({
     clearData(state) {
       state.mapTree = initialState.mapTree;
       state.projects = initialState.projects;
+    },
+    setFilters(state, action: PayloadAction<FilterProps>) {
+      state.filters = { ...action.payload };
     },
   },
 });

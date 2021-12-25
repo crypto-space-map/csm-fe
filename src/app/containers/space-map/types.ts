@@ -22,6 +22,11 @@ export type ProjectData = {
   marketCap: number;
 };
 
+export type FilterProps = {
+  mCapFrom: number | null;
+  mCapTo: number | null;
+};
+
 interface MapTree extends FetchDataState {
   data: {
     tree: Array<CSMMapCategory> | null;
@@ -37,6 +42,7 @@ interface Projects extends FetchDataState {
 export interface SpaceMapPageState {
   mapTree: MapTree;
   projects: Projects;
+  filters: FilterProps;
 }
 
 export type ContainerState = SpaceMapPageState;

@@ -8,7 +8,7 @@ export const StyledFilterBlock = styled.div<{ visible: boolean }>`
   justify-content: center;
 `;
 
-export const StyledFilter = styled.div`
+export const StyledFilter = styled.form`
   position: absolute;
   display: grid;
   grid-gap: 24px;
