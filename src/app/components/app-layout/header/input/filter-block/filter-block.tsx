@@ -1,4 +1,4 @@
-import { forwardRef, ComponentProps } from 'react';
+import { forwardRef, ComponentProps, useState } from 'react';
 
 import { Fade } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
@@ -6,7 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import Dollar from 'assets/icons/dollar.svg';
 import { Button } from 'common/components/button';
-import { CheckBox, CheckboxProps } from 'common/components/checkbox';
+import { CheckBox } from 'common/components/checkbox';
 import { Input } from 'common/components/input';
 
 import { StyledFilterBlock, StyledFilter, InputsGroup, CheckBoxGroup } from './styled';
@@ -15,33 +15,36 @@ const inputs = [
   { key: 'mCapFrom', placeholder: 'From: 100 000', label: 'Mcap' },
   { key: 'mCapTo', placeholder: '' },
 ];
-const defaultValues = {
-  mCapFrom: 0,
-  mCapTo: 0,
-};
-
-const checkboxes: CheckboxProps[] = [
-  { label: 'Binance', checked: true },
-  { label: 'Coinbase', checked: true },
-  { label: 'Ftx', checked: true },
-  { label: 'Huobi', checked: true },
-  { label: 'Okex', checked: true },
-];
 
 type FilterBlockProps = ComponentProps<typeof StyledFilterBlock>;
 
 export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, ref) => {
-  const { control, handleSubmit } = useForm<typeof defaultValues>({
-    defaultValues,
+  const { filters, setFilters } = useSpaceMap();
+
+  const [checkboxes] = useState(filters.exchanges);
+
+  const { control, handleSubmit, watch } = useForm<typeof filters>({
+    defaultValues: filters,
     mode: 'all',
     criteriaMode: 'all',
   });
 
-  const { filters, setFilters } = useSpaceMap();
+  const { exchanges } = watch();
 
-  const onSubmit = (data: typeof defaultValues) => {
-    const numberParsed: typeof defaultValues = { ...data, mCapFrom: +data.mCapFrom, mCapTo: +data.mCapTo };
+  const onSubmit = (data: typeof filters) => {
+    const numberParsed: typeof filters = {
+      ...data,
+      mCapFrom: Number(data.mCapFrom),
+      mCapTo: Number(data.mCapTo),
+    };
     return setFilters({ ...filters, ...numberParsed });
+  };
+
+  const handleSelect = (checkedName: typeof exchanges[number]) => {
+    const newExchanges = exchanges?.includes(checkedName)
+      ? exchanges?.filter(name => name !== checkedName)
+      : [...(exchanges ?? []), checkedName];
+    return newExchanges;
   };
 
   return (
@@ -51,7 +54,7 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
           <InputsGroup>
             {inputs.map(input => (
               <Controller
-                name={input.key as keyof typeof defaultValues}
+                name={input.key as keyof typeof filters}
                 control={control}
                 render={({ field: { value, ...rest } }) => (
                   <Input
@@ -70,8 +73,18 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
           </InputsGroup>
           <CheckBoxGroup>
             <span>Exchanges</span>
-            {checkboxes.map(checkbox => (
-              <CheckBox {...checkbox} />
+            {checkboxes.map(name => (
+              <Controller
+                name="exchanges"
+                render={({ field: { onChange } }) => (
+                  <CheckBox
+                    label={name}
+                    checked={watch().exchanges.includes(name)}
+                    onChange={() => onChange(handleSelect(name))}
+                  />
+                )}
+                control={control}
+              />
             ))}
           </CheckBoxGroup>
           <Button type="submit">Filter Data</Button>

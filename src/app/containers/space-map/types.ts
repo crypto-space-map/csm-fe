@@ -1,5 +1,13 @@
 import { FetchDataState } from 'utils/@reduxjs/fetchData';
 
+export enum Exchanges {
+  Binance = 'Binance',
+  Coinbase = 'Coinbase',
+  Ftx = 'Ftx',
+  Huobi = 'Huobi',
+  Okex = 'Okex',
+}
+
 export type MapDataResponse = {
   tree: Array<CSMMapCategory>;
   maxMarketCap: number;
@@ -25,6 +33,7 @@ export type ProjectData = {
 export type FilterProps = {
   mCapFrom: number | null;
   mCapTo: number | null;
+  exchanges: Array<keyof typeof Exchanges>;
 };
 
 interface MapTree extends FetchDataState {

@@ -20,6 +20,10 @@ export const SpaceChart = () => {
   const svgRef = useRef<SVGSVGElement>(null);
 
   const {
+    filters: { mCapFrom, mCapTo },
+  } = useSpaceMap();
+
+  const {
     fetchSpaceMapData,
     spaceMapData: { tree, maxMarketCap, minMarketCap },
     fetchingMapData: loading,
@@ -48,7 +52,7 @@ export const SpaceChart = () => {
 
       generateFundsLegend({ svg, nodes });
 
-      generateCategoryPacks({ svg, nodes, fundsTooltip });
+      generateCategoryPacks({ svg, nodes, fundsTooltip, mCapFrom, mCapTo });
 
       categoriesLabels({ ref: svgRef, nodes });
     }
@@ -59,6 +63,8 @@ export const SpaceChart = () => {
     tree,
     maxMarketCap,
     minMarketCap,
+    mCapFrom,
+    mCapTo,
   ]);
 
   return (

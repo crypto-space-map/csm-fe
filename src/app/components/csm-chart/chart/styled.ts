@@ -50,6 +50,9 @@ export const RandomSvg = styled.svg`
       stroke-width: 3;
     }
   }
+  & .fund_hidden {
+    opacity: 0.1;
+  }
   & .category {
     & .label-text {
       font-weight: bold;

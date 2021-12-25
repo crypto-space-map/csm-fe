@@ -22,8 +22,15 @@ const STROKE_DASHARRAY = '4,4';
 
 const scaled = scaleLinear();
 
-export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPacksType) => {
+export const generateCategoryPacks = ({ svg, nodes, fundsTooltip, mCapFrom, mCapTo }: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
+  const isTransparent = (value: number) => {
+    if (!mCapFrom && !mCapTo) return 1;
+    if (mCapFrom || mCapTo) {
+      return value > mCapFrom && value < mCapTo ? 1 : 0.1;
+    }
+    return 0.1;
+  };
 
   const onMouseOver = (event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) =>
     fundsTooltip.text(item.data.name).attr('class', CLASSNAMES.TOOLTIP.HOVERED);
@@ -62,6 +69,7 @@ export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPack
     )
     .attr('stroke-dasharray', item => (!!item.children ? STROKE_DASHARRAY : 'none'))
     .attr('stroke-width', 1)
+    .attr('fill-opacity', item => isTransparent(item.data.marketCap))
     .classed(CLASSNAMES.FUND, item => !item.children)
     .attr('r', item => (item.r < 2 ? 3 : item.r))
     .attr('cx', item => scaled(item.x))

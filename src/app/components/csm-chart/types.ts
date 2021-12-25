@@ -55,6 +55,8 @@ export type CategoryPacksType = {
   svg: Selection<SVGSVGElement | null, unknown, null, undefined>;
   nodes: PackedCategories[];
   fundsTooltip: Selection<HTMLDivElement, unknown, null, undefined>;
+  mCapFrom?: number | null;
+  mCapTo?: number | null;
 };
 
 export type CirclesSimulation = Sizing & {

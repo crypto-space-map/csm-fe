@@ -21,6 +21,7 @@ export const initialState: ContainerState = {
   filters: {
     mCapFrom: null,
     mCapTo: null,
+    exchanges: ['Binance', 'Coinbase', 'Ftx', 'Huobi', 'Okex'],
   },
 };
 
