@@ -2,8 +2,6 @@ import { memo } from 'react';
 
 import { Redirect } from 'react-router-dom';
 
-import { getCookie } from 'utils/cookie';
-
 import { LoginPage } from './components/page';
 import { useLogin } from './hooks';
 

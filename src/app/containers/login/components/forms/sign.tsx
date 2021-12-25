@@ -59,8 +59,10 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
     minLength: watch().password.length < 8,
     uppercase: !/[A-Z]/.test(watch().password),
     numbers: !/[0-9]/.test(watch().password),
-    specialSymbols: !/[!@#$%^&*)(+=._-]/.test(watch().password),
+    specialSymbols: !/[!@#$%^&*)(=._]/.test(watch().password),
   };
+
+  const signUpRegExp = !signIn ? PASS_REG_EXP : undefined;
 
   const forgotPassLink = (field: string) => field === 'password' && signIn;
 
@@ -73,8 +75,7 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
           key={item}
           rules={{
             required: true,
-            minLength: 8,
-            pattern: isPassword(item) ? (!signIn && PASS_REG_EXP) || undefined : EMAIL_REG_EXP,
+            pattern: isPassword(item) ? signUpRegExp : EMAIL_REG_EXP,
           }}
           render={({ field }) => (
             <SignFormInput

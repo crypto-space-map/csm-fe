@@ -10,6 +10,8 @@ export const AccountContainer = styled.div`
   z-index: 10;
   height: 100vh;
   width: 100vw;
+  top: 0;
+  left: 0;
   background-color: ${COLOR_PALLETTE.MAIN_BLACK};
   overflow: hidden;
 `;

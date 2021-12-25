@@ -77,8 +77,8 @@ const makeOptimization = (isDev, minimizer) => ({
         chunks: 'all',
         enforce: true,
         name(module) {
-          const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-          return `${packageName.replace('@', '')}`;
+          const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+          return packageName?.length > 1 ? `${packageName[1].replace('@', '')}` : '';
         },
       },
       default: {
