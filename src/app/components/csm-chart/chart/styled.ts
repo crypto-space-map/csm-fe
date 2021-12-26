@@ -42,6 +42,10 @@ export const ChartWrapper = styled.div`
 export const RandomSvg = styled.svg`
   width: 100%;
   height: 100%;
+  & > circle {
+    transition: 0.2s linear;
+  }
+
   & .fund {
     cursor: pointer;
     transition: 0.2s linear;
@@ -49,9 +53,6 @@ export const RandomSvg = styled.svg`
     &:hover {
       stroke-width: 3;
     }
-  }
-  & .fund_hidden {
-    opacity: 0.1;
   }
   & .category {
     & .label-text {

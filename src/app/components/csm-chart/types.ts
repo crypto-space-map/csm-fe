@@ -2,7 +2,7 @@ import { RefObject } from 'react';
 
 import { Selection, SimulationNodeDatum, PackCircle } from 'd3';
 
-import { CSMMapCategory } from 'app/containers/space-map/types';
+import { CSMMapCategory, Exchanges } from 'app/containers/space-map/types';
 
 type Sizing = {
   width: number;
@@ -57,6 +57,7 @@ export type CategoryPacksType = {
   fundsTooltip: Selection<HTMLDivElement, unknown, null, undefined>;
   mCapFrom?: number | null;
   mCapTo?: number | null;
+  exchanges?: Array<keyof typeof Exchanges>;
 };
 
 export type CirclesSimulation = Sizing & {
@@ -75,6 +76,7 @@ type CategoriesChild = {
 export type PackedCategories = {
   key?: string;
   children: Array<CategoriesChild & PackCircle>;
+  exchanges?: Array<keyof typeof Exchanges>;
   data: CSMMapCategory;
   id: string;
   name: string;
