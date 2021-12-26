@@ -28,7 +28,7 @@ export const circlesSimulation = ({ nodes, width, height }: CirclesSimulation) =
       'y',
       forceY()
         .y(d => d.y as number)
-        .strength(2)
+        .strength(3)
     )
     .force('charge', forceManyBody().strength(-1))
     .force(
