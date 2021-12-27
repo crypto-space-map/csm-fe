@@ -29,12 +29,14 @@ export const generateCategoryPacks = ({
   mCapFrom = 0,
   mCapTo = 0,
   exchanges = [],
+  maxMarketCap,
+  minMarketCap,
 }: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
   const isTransparent = (value: number, itemExchangesArr: typeof exchanges) => {
     let opacity = 1;
     if (mCapTo || mCapFrom) {
-      if (value < (mCapFrom || 0) || value > (mCapTo || 0)) {
+      if (value < (mCapFrom || minMarketCap) || value > (mCapTo || maxMarketCap)) {
         opacity = 0.1;
       }
     }

@@ -58,6 +58,8 @@ export type CategoryPacksType = {
   mCapFrom?: number | null;
   mCapTo?: number | null;
   exchanges?: Array<keyof typeof Exchanges>;
+  maxMarketCap: number;
+  minMarketCap: number;
 };
 
 export type CirclesSimulation = Sizing & {

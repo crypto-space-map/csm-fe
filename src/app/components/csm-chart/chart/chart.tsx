@@ -57,7 +57,16 @@ export const SpaceChart = () => {
       // TODO  убрал тк нет актуальных данных (выглядит не оч)
       // generateFundsLegend({ svg, nodes });
 
-      generateCategoryPacks({ svg, nodes, fundsTooltip, mCapFrom, mCapTo, exchanges });
+      generateCategoryPacks({
+        svg,
+        nodes,
+        fundsTooltip,
+        mCapFrom,
+        mCapTo,
+        exchanges,
+        maxMarketCap,
+        minMarketCap,
+      });
 
       categoriesLabels({ ref: svgRef, nodes });
     }
