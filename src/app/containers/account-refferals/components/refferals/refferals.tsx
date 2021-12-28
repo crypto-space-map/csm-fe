@@ -6,7 +6,7 @@ import { StyledRefferalsBlock } from './styled';
 const localDate = (date: string) =>
   new Date(date).toLocaleString('en-Us', { day: 'numeric', month: 'short', year: 'numeric' });
 
-const _refferals = [
+const refferals = [
   { email: 'Manuel...@mail.com', registerDate: localDate(new Date().toISOString()) },
   { email: 'Manuel...@mail.com', registerDate: localDate(new Date().toISOString()) },
   { email: 'Manuel...@mail.com', registerDate: localDate(new Date().toISOString()) },
@@ -15,7 +15,7 @@ const _refferals = [
 export const Refferals = () => (
   <StyledRefferalsBlock>
     <ContainerOverflow>
-      {_refferals.map(item => (
+      {refferals.map(item => (
         <RefferalCard key={item.registerDate} {...item} />
       ))}
     </ContainerOverflow>

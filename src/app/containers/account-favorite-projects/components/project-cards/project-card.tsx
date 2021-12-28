@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { AccountDataContainer } from 'app/components/account/styled';
 import { ProjectChange } from 'common/components/project-change';
 import { Status } from 'common/components/status';
@@ -18,7 +20,7 @@ export const ProjectCard = ({
   onLikeClick,
 }: ProjectCardProps) => {
   const statusVariant = liked ? 'outlined' : 'black';
-  const handleClick = () => onLikeClick(name);
+  const handleClick = useCallback(() => onLikeClick(name), [onLikeClick, name]);
   return (
     <AccountDataContainer invert={liked}>
       <ProjectCardSection>
