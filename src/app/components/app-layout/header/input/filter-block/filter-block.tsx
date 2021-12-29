@@ -1,4 +1,4 @@
-import { forwardRef, ComponentProps, useState } from 'react';
+import { forwardRef, ComponentProps, useState, useCallback } from 'react';
 
 import { Fade } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
@@ -7,11 +7,11 @@ import { useSpaceMap } from 'app/containers/space-map/hooks';
 import Dollar from 'assets/icons/dollar.svg';
 import { Button } from 'common/components/button';
 import { CheckBox } from 'common/components/checkbox';
-import { Input } from 'common/components/input';
+import { Input, InputProps } from 'common/components/input';
 
 import { StyledFilterBlock, StyledFilter, InputsGroup, CheckBoxGroup } from './styled';
 
-const inputs = [
+const inputs: InputProps[] = [
   { key: 'mCapFrom', placeholder: 'From: 100 000', label: 'Mcap' },
   { key: 'mCapTo', placeholder: '' },
 ];
@@ -34,18 +34,21 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
   const onSubmit = (data: typeof filters) => {
     const numberParsed: typeof filters = {
       ...data,
-      mCapFrom: Number(data.mCapFrom),
-      mCapTo: Number(data.mCapTo),
+      mCapFrom: Number(data.mCapFrom) || 0,
+      mCapTo: Number(data.mCapTo) || 0,
     };
     return setFilters({ ...filters, ...numberParsed });
   };
 
-  const handleSelect = (checkedName: typeof exchanges[number]) => {
-    const newExchanges = exchanges?.includes(checkedName)
-      ? exchanges?.filter(name => name !== checkedName)
-      : [...(exchanges ?? []), checkedName];
-    return newExchanges;
-  };
+  const handleSelect = useCallback(
+    (checkedName: typeof exchanges[number]) => {
+      const newExchanges = exchanges?.includes(checkedName)
+        ? exchanges?.filter(name => name !== checkedName)
+        : [...(exchanges ?? []), checkedName];
+      return newExchanges;
+    },
+    [exchanges]
+  );
 
   return (
     <Fade in={props.visible}>
@@ -58,8 +61,8 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
                 control={control}
                 render={({ field: { value, ...rest } }) => (
                   <Input
-                    {...rest}
                     {...input}
+                    {...rest}
                     value={value || ''}
                     type="number"
                     InputProps={{

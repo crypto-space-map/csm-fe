@@ -1,7 +1,7 @@
 import { fetchDataInitialState, fetchDataReducers } from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
-import type { ContainerState, FilterProps, MapDataResponse, ProjectData } from './types';
+import { ContainerState, Exchanges, FilterProps, MapDataResponse, ProjectData } from './types';
 import { sliceKey as name } from './utils';
 
 // The initial state of the DeparturesPage container
@@ -21,7 +21,7 @@ export const initialState: ContainerState = {
   filters: {
     mCapFrom: null,
     mCapTo: null,
-    exchanges: ['Binance', 'Coinbase', 'Ftx', 'Huobi', 'Okex'],
+    exchanges: Object.values(Exchanges),
   },
 };
 

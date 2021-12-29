@@ -38,7 +38,11 @@ export const SpaceChart = () => {
   useLayoutEffect(() => {
     const width = wrapperRef.current?.offsetWidth;
     const height = wrapperRef.current?.offsetHeight;
-    if (width && height && svgRef.current && tree && maxMarketCap && minMarketCap) {
+
+    const IS_RENDER_PROPS_AVAILABLE =
+      width && height && svgRef.current && tree && maxMarketCap && minMarketCap;
+
+    if (IS_RENDER_PROPS_AVAILABLE) {
       const map = createBaseMap({ width, height, ref: svgRef });
       const svg = select(map);
       const wrapper = select(wrapperRef.current);

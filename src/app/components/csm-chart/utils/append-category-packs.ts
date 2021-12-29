@@ -35,8 +35,12 @@ export const generateCategoryPacks = ({
   const elem = fundsTooltip.node() as HTMLDivElement;
   const isTransparent = (value: number, itemExchangesArr: typeof exchanges) => {
     let opacity = 1;
+
+    const isLessThanCapFrom = mCapFrom || minMarketCap;
+    const isMoreThanCapTo = mCapTo || maxMarketCap;
+
     if (mCapTo || mCapFrom) {
-      if (value < (mCapFrom || minMarketCap) || value > (mCapTo || maxMarketCap)) {
+      if (value < isLessThanCapFrom || value > isMoreThanCapTo) {
         opacity = 0.1;
       }
     }

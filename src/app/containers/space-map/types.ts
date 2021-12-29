@@ -1,11 +1,11 @@
 import { FetchDataState } from 'utils/@reduxjs/fetchData';
 
 export enum Exchanges {
-  Binance = 'Binance',
-  Coinbase = 'Coinbase',
-  Ftx = 'Ftx',
-  Huobi = 'Huobi',
-  Okex = 'Okex',
+  binance = 'Binance',
+  gdax = 'Coinbase',
+  huobi = 'Ftx',
+  ftx_spot = 'Huobi',
+  kucoin = 'Kucoin',
 }
 
 export type MapDataResponse = {
@@ -33,7 +33,7 @@ export type ProjectData = {
 export type FilterProps = {
   mCapFrom: number | null;
   mCapTo: number | null;
-  exchanges: Array<keyof typeof Exchanges>;
+  exchanges: Exchanges[];
 };
 
 interface MapTree extends FetchDataState {
