@@ -16,13 +16,13 @@ export const circlesSimulation = ({ nodes, width, height }: CirclesSimulation) =
       'cy',
       forceY()
         .y(height / 2)
-        .strength(0.00000001)
+        .strength(0.0000000001)
     )
     .force(
       'x',
       forceX()
         .x(d => d.x as number)
-        .strength(0.2)
+        .strength(0.19)
     )
     .force(
       'y',

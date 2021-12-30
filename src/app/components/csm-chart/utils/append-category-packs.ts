@@ -1,4 +1,4 @@
-import { scaleLinear, HierarchyCircularNode } from 'd3';
+import { scaleLinear, HierarchyCircularNode, select } from 'd3';
 import { COLOR_PALLETTE } from 'global/pallette';
 
 import { CategoryPacksType, PackedCategories } from '../types';
@@ -22,8 +22,33 @@ const STROKE_DASHARRAY = '4,4';
 
 const scaled = scaleLinear();
 
-export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPacksType) => {
+export const generateCategoryPacks = ({
+  svg,
+  nodes,
+  fundsTooltip,
+  mCapFrom = 0,
+  mCapTo = 0,
+  exchanges = [],
+  maxMarketCap,
+  minMarketCap,
+}: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
+  const isTransparent = (value: number, itemExchangesArr: typeof exchanges) => {
+    let opacity = 1;
+
+    const isLessThanCapFrom = mCapFrom || minMarketCap;
+    const isMoreThanCapTo = mCapTo || maxMarketCap;
+
+    if (mCapTo || mCapFrom) {
+      if (value < isLessThanCapFrom || value > isMoreThanCapTo) {
+        opacity = 0.1;
+      }
+    }
+    const registryArr = [...exchanges.map(item => item.toLowerCase())];
+    const isIncludes = itemExchangesArr.some(item => registryArr.includes(item));
+    if (!isIncludes) opacity = 0.1;
+    return opacity;
+  };
 
   const onMouseOver = (event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) =>
     fundsTooltip.text(item.data.name).attr('class', CLASSNAMES.TOOLTIP.HOVERED);
@@ -56,6 +81,10 @@ export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPack
     .data(item => packedChild(item, item.r))
     .enter()
     .append('circle')
+    .attr(
+      'opacity',
+      ({ data, children }) => !!!children && isTransparent(data.marketCap, data.exchanges || [])
+    )
     .attr('fill', item => (!!item.children && item.value ? 'none' : color(item?.value || 1)))
     .attr('stroke', item =>
       !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY
@@ -74,6 +103,7 @@ export const generateCategoryPacks = ({ svg, nodes, fundsTooltip }: CategoryPack
   // .style('filter', 'url(#drop-shadow)');
 
   /** Generate categories-child labels */
+  categoryPacks.exit().remove();
 
   generateChildLabels(categoryPacks);
 };

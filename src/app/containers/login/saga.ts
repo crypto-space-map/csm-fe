@@ -37,6 +37,8 @@ export function* fetchUser(action: ReturnType<typeof actions['fetchUser']>) {
       };
 
       yield* put(actions.fetchDataSuccess({ data }));
+    } else {
+      yield* put(actions.fetchDataError({ message: 'err' }));
     }
     // UNMOCK WITH REAL DATA
 
