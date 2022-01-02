@@ -1,8 +1,7 @@
-import { useState } from 'react';
-
 import { AccordionDetails } from '@mui/material';
 
 import { AccountDataContainer } from 'app/components/account';
+import { useBooleanState } from 'hooks';
 
 import { CSMNewsProps } from '../../types';
 import { ShowNewsButton } from './show-news-button';
@@ -16,15 +15,15 @@ import {
 } from './styled';
 
 export const NewsCard = ({ img, header, text }: CSMNewsProps) => {
-  const [isOpen, setOpen] = useState(false);
-  const handleOpen = () => setOpen(!isOpen);
+  const [isOpen, setOpen, setClose] = useBooleanState(false);
+  const handleClick = () => (isOpen ? setClose() : setOpen());
 
   return (
     <AccountDataContainer invert>
-      <StyledNewsCard isOpen={isOpen}>
+      <StyledNewsCard isOpen={isOpen as boolean}>
         <span>
           <NewsHeader>{header}</NewsHeader>
-          <ShowNewsButton isOpen={isOpen} onClick={handleOpen} />
+          <ShowNewsButton isOpen={isOpen} onClick={handleClick} />
         </span>
         <StyledAccordion expanded={isOpen}>
           <AccordionDetails />

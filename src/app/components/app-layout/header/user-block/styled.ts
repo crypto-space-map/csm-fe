@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
   grid-auto-flow: column;
   grid-gap: 40px;
   justify-content: end;
-  z-index: 30;
+  z-index: 30; /** To display on top of all tabs  */
   & > * {
     transition: all 0.2 linear;
   }

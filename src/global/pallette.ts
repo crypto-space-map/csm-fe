@@ -16,4 +16,5 @@ export const COLOR_PALLETTE = {
   },
   LIGHT_GRAY: '#E5E5E5',
   DARK_GREEN: '#78BD4D',
+  ICO_COMMON_COLOR: '#bdbdbd',
 };

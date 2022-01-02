@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
-import { scrollBarStyles } from 'global/styles';
 
 export const AccountDataContainer = styled.div<{ invert?: boolean }>`
   display: grid;
