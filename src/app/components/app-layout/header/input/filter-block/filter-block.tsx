@@ -1,4 +1,4 @@
-import { forwardRef, ComponentProps, useState, useCallback } from 'react';
+import { forwardRef, ComponentProps, useState, useCallback, useEffect } from 'react';
 
 import { Fade } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
@@ -19,17 +19,17 @@ const inputs: InputProps[] = [
 type FilterBlockProps = ComponentProps<typeof StyledFilterBlock>;
 
 export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, ref) => {
-  const { filters, onChangeFilters, submitFilters } = useSpaceMap();
+  const { filters, submitFilters, onChangeFilters } = useSpaceMap();
 
   const [checkboxes] = useState(filters.exchanges);
 
-  const { control, handleSubmit, watch } = useForm<typeof filters>({
+  const { control, handleSubmit, watch } = useForm({
     defaultValues: filters,
     mode: 'all',
     criteriaMode: 'all',
   });
 
-  const { exchanges } = watch();
+  const { exchanges, mCapFrom, mCapTo } = watch();
 
   const handleSelect = useCallback(
     (checkedName: typeof exchanges[number]) => {
@@ -41,6 +41,10 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
     [exchanges]
   );
 
+  useEffect(() => {
+    onChangeFilters({ exchanges, mCapTo, mCapFrom });
+  }, [exchanges, mCapFrom, mCapTo, onChangeFilters]);
+
   return (
     <Fade in={props.visible}>
       <StyledFilterBlock {...props} ref={ref}>
@@ -50,12 +54,14 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
               <Controller
                 name={input.key as keyof typeof filters}
                 control={control}
-                render={({ field: { value, ...rest } }) => (
+                render={({ field: { name, ...rest } }) => (
                   <Input
                     {...input}
                     {...rest}
-                    value={value || ''}
+                    type="number"
+                    value={filters[name] || ''}
                     InputProps={{
+                      inputProps: { step: 10000 },
                       endAdornment: <Dollar />,
                     }}
                   />

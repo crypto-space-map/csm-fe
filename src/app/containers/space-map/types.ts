@@ -31,8 +31,8 @@ export type ProjectData = {
 };
 
 export type FilterProps = {
-  mCapFrom: number | null;
-  mCapTo: number | null;
+  mCapFrom: string | null;
+  mCapTo: string | null;
   exchanges: Exchanges[];
 };
 

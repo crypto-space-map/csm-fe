@@ -55,9 +55,9 @@ export type CategoryPacksType = {
   svg: Selection<SVGSVGElement | null, unknown, null, undefined>;
   nodes: PackedCategories[];
   fundsTooltip: Selection<HTMLDivElement, unknown, null, undefined>;
-  mCapFrom?: number | null;
-  mCapTo?: number | null;
-  exchanges?: Array<keyof typeof Exchanges>;
+  mCapFrom?: string | null;
+  mCapTo?: string | null;
+  exchanges?: Exchanges[];
   maxMarketCap: number;
   minMarketCap: number;
 };
@@ -78,7 +78,7 @@ type CategoriesChild = {
 export type PackedCategories = {
   key?: string;
   children: Array<CategoriesChild & PackCircle>;
-  exchanges?: Array<keyof typeof Exchanges>;
+  exchanges?: Exchanges[];
   data: CSMMapCategory;
   id: string;
   name: string;

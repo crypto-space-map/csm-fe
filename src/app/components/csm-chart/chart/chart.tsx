@@ -1,8 +1,10 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 
 import { select } from 'd3';
+import { useSelector } from 'react-redux';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
+import { selectMapData } from 'app/containers/space-map/selectors';
 
 import {
   circlesSimulation,
@@ -21,7 +23,7 @@ export const SpaceChart = () => {
 
   const {
     filters: { mCapFrom, mCapTo, exchanges },
-  } = useSpaceMap();
+  } = useSelector(selectMapData);
 
   const {
     fetchSpaceMapData,

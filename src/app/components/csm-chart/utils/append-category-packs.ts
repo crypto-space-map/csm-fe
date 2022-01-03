@@ -1,4 +1,4 @@
-import { scaleLinear, HierarchyCircularNode, select } from 'd3';
+import { scaleLinear, HierarchyCircularNode } from 'd3';
 import { COLOR_PALLETTE } from 'global/pallette';
 
 import { CategoryPacksType, PackedCategories } from '../types';
@@ -26,8 +26,8 @@ export const generateCategoryPacks = ({
   svg,
   nodes,
   fundsTooltip,
-  mCapFrom = 0,
-  mCapTo = 0,
+  mCapFrom = '',
+  mCapTo = '',
   exchanges = [],
   maxMarketCap,
   minMarketCap,
@@ -40,7 +40,7 @@ export const generateCategoryPacks = ({
     const isMoreThanCapTo = mCapTo || maxMarketCap;
 
     if (mCapTo || mCapFrom) {
-      if (value < isLessThanCapFrom || value > isMoreThanCapTo) {
+      if (value < +isLessThanCapFrom || value > +isMoreThanCapTo) {
         opacity = 0.1;
       }
     }
