@@ -4,19 +4,24 @@ module.exports = require('./webpack.init.config')({
   mode: 'development',
   extractCss: false,
   devServer: {
-    port: 3000,
-    host: 'localhost',
-    public: 'localhost:3000',
-    disableHostCheck: true,
-    publicPath: '/',
+    allowedHosts: 'all',
     hot: true,
-    watchContentBase: true,
-    progress: true,
     open: true,
     historyApiFallback: true,
-    clientLogLevel: 'silent',
-    overlay: {
-      errors: true,
+    static: {
+      watchContentBase: true,
+      publicPath: '/',
+    },
+    client: {
+      webSocketURL: {
+        port: 3000,
+        hostname: 'localhost',
+      },
+      overlay: {
+        errors: true,
+      },
+      logging: 'info',
+      progress: true,
     },
   },
   htmlPluginMinify: {},
