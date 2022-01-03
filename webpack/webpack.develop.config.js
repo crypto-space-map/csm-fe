@@ -6,6 +6,8 @@ module.exports = require('./webpack.init.config')({
   devServer: {
     allowedHosts: 'all',
     hot: true,
+    port: 3000,
+    host: 'localhost',
     open: true,
     historyApiFallback: true,
     static: {
@@ -13,10 +15,6 @@ module.exports = require('./webpack.init.config')({
       publicPath: '/',
     },
     client: {
-      webSocketURL: {
-        port: 3000,
-        hostname: 'localhost',
-      },
       overlay: {
         errors: true,
       },
