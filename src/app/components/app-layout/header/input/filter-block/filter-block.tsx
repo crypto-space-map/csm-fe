@@ -19,7 +19,7 @@ const inputs: InputProps[] = [
 type FilterBlockProps = ComponentProps<typeof StyledFilterBlock>;
 
 export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, ref) => {
-  const { filters, setFilters } = useSpaceMap();
+  const { filters, onChangeFilters, submitFilters } = useSpaceMap();
 
   const [checkboxes] = useState(filters.exchanges);
 
@@ -30,15 +30,6 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
   });
 
   const { exchanges } = watch();
-
-  const onSubmit = (data: typeof filters) => {
-    const numberParsed: typeof filters = {
-      ...data,
-      mCapFrom: Number(data.mCapFrom) || 0,
-      mCapTo: Number(data.mCapTo) || 0,
-    };
-    return setFilters({ ...filters, ...numberParsed });
-  };
 
   const handleSelect = useCallback(
     (checkedName: typeof exchanges[number]) => {
@@ -53,7 +44,7 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
   return (
     <Fade in={props.visible}>
       <StyledFilterBlock {...props} ref={ref}>
-        <StyledFilter onSubmit={handleSubmit(onSubmit)}>
+        <StyledFilter onSubmit={handleSubmit(submitFilters)}>
           <InputsGroup>
             {inputs.map(input => (
               <Controller
@@ -64,9 +55,7 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
                     {...input}
                     {...rest}
                     value={value || ''}
-                    type="number"
                     InputProps={{
-                      inputProps: { min: 0 },
                       endAdornment: <Dollar />,
                     }}
                   />

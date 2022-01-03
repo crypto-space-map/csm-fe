@@ -1,3 +1,5 @@
+import { useCallback, useState } from 'react';
+
 import { useSelector } from 'react-redux';
 
 import { useActions } from 'hooks';
@@ -15,12 +17,18 @@ export function useSpaceMapPageSlice() {
 }
 
 export function useSpaceMap() {
-  const { fetchSpaceMapData, fetchProjects, setFilters } = useSpaceMapPageSlice();
+  const { fetchSpaceMapData, fetchProjects, setFilters: setReducerFilters } = useSpaceMapPageSlice();
   const {
     mapTree: { data: spaceMapData, loading: fetchingMapData },
     projects: { data: projects },
-    filters,
+    filters: reducerFilters,
   } = useSelector(selectMapData);
+
+  const [filters, setFilters] = useState(reducerFilters);
+
+  const onChangeFilters = useCallback((data: typeof filters) => {}, []);
+
+  const submitFilters = useCallback(() => setReducerFilters(filters), []);
 
   return {
     fetchProjects,
@@ -28,7 +36,8 @@ export function useSpaceMap() {
     spaceMapData,
     projects,
     fetchingMapData,
-    setFilters,
     filters,
+    onChangeFilters,
+    submitFilters,
   };
 }
