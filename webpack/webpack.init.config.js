@@ -18,11 +18,6 @@ module.exports = ({ htmlPluginMinify, mode, devServer, minimizer, output }) => {
   const modeLoader = isDev ? 'style-loader' : MiniCssExtractPlugin.loader;
 
   return {
-    experiments: {
-      // TODO Ломает сборку
-      // asset: true,
-    },
-    stats: STATS,
     mode,
     entry: {
       [name]: {
@@ -142,8 +137,8 @@ module.exports = ({ htmlPluginMinify, mode, devServer, minimizer, output }) => {
     },
     devServer: {
       ...devServer,
-      contentBase: PATHS.public,
-      stats: STATS,
+      static: { directory: PATHS.public },
+      devMiddleware: { stats: STATS },
     },
   };
 };
