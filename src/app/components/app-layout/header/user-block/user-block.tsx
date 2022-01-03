@@ -17,16 +17,22 @@ const Notifications = (props: UserBellButtonProps) => (
 export const HeaderUserBlock = ({ avatarSrc, haveUnreadMessages }: UserBlockProps = {}) => {
   const { isAuth } = useLogin();
   const { push: pushHistory } = useHistory();
-  const handleClick = () => pushHistory('/login');
+  const handleClickLogin = () => pushHistory('/login');
+  const handleClickAccount = () => pushHistory('/account');
 
   return (
     <Wrapper>
       {!isAuth ? (
-        <Button onClick={handleClick}>Sign in or Sign up</Button>
+        <Button onClick={handleClickLogin}>Sign in or Sign up</Button>
       ) : (
         <>
           <Notifications haveUnreadMessages={haveUnreadMessages} />
-          <UserButtonAvatar src={avatarSrc} alt="user-avatar-image" size="small" />
+          <UserButtonAvatar
+            src={avatarSrc}
+            alt="user-avatar-image"
+            size="small"
+            onClick={handleClickAccount}
+          />
         </>
       )}
     </Wrapper>

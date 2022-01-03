@@ -60,7 +60,7 @@ export const gradientText = css`
  */
 
 export const gradientBorder = ({ borderRadius = 4, border = '2px' }: GradientBorderProps = {}) => css`
-  &:before {
+  &::before {
     content: '';
     position: absolute;
     top: -1px;
@@ -73,10 +73,24 @@ export const gradientBorder = ({ borderRadius = 4, border = '2px' }: GradientBor
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
+    z-index: 0;
+    transition: 0.2s linear;
   }
 `;
 
 export const gradientBackground = css`
   background-size: 100%;
   background-image: ${mainGradient};
+`;
+
+export const scrollBarStyles = css`
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: 10px;
+    width: 5px;
+  }
 `;

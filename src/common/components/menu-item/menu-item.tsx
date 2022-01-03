@@ -1,32 +1,57 @@
 import { ReactNode } from 'react';
 
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { MenuItem as MuiMenuItem, MenuItemProps as MuiProps } from '@mui/material';
+import { ListItemButton as MuiMenuItem, ListItemButtonProps as MuiProps } from '@mui/material';
 import { COLOR_PALLETTE } from 'global/pallette';
 import { gradientBorder, gradientText } from 'global/styles';
 
-export type MenuItemProps = MuiProps & { children: ReactNode };
+export type MenuItemProps<T> = Omit<MuiProps, 'onClick'> & {
+  children: ReactNode;
+  value: T;
+  onClick: (value: T) => void;
+};
 
-const StyledMenuItem = styled(MuiMenuItem)`
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 1em;
-  transition: 0.2s linear;
-  color: ${COLOR_PALLETTE.MAIN_WHITE};
-  &:hover {
-    ${gradientText}
-    ${gradientBorder({ borderRadius: 0 })}
-    &:before {
-      padding: 0 0 0 4px;
-    }
-    & svg {
-      fill: url(#csm_icon_gradient);
-    }
+const actionStyle = css`
+  ${gradientText}
+  ${gradientBorder({ borderRadius: 0 })}
+    &::before {
+    padding: 0 0 0 4px;
+  }
+  & svg {
+    fill: url(#csm_icon_gradient);
   }
 `;
 
-export const MenuItem = (props: MenuItemProps) => (
-  <StyledMenuItem {...props} disableRipple>
-    {props.children}
-  </StyledMenuItem>
-);
+const StyledMenuItem = styled(MuiMenuItem)<MenuItemProps<unknown>>`
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 1em;
+  padding: 0;
+  transition: 0.2s linear;
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
+  &.Mui-selected {
+    background-color: ${COLOR_PALLETTE.MAIN_LAYOUT} !important;
+  }
+  & > div {
+    display: grid;
+    align-items: center;
+    grid-auto-flow: column;
+    grid-gap: 1em;
+    padding: 8px 16px;
+    transition: 0.2s linear;
+    ${({ selected = false }) => selected && actionStyle}
+  }
+  &:hover {
+    background-color: #383838;
+  }
+`;
+
+export const MenuItem = <T,>(props: MenuItemProps<T>) => {
+  const onClick = () => props.onClick && props.onClick(props.value);
+  return (
+    <StyledMenuItem {...props} disableRipple onClick={onClick}>
+      <div>{props.children}</div>
+    </StyledMenuItem>
+  );
+};

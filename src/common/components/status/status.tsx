@@ -5,7 +5,7 @@ import { gradientBackground, gradientBorder } from 'global/styles';
 
 export type StatusProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
   size?: 's' | 'm' | 'l';
-  variant?: 'text' | 'outlined' | 'contained';
+  variant?: 'text' | 'outlined' | 'contained' | 'black';
   text: string;
 };
 
@@ -15,6 +15,11 @@ const getStatusVariant = (variant: StatusProps['variant']) => {
       return css`
         background: ${COLOR_PALLETTE.MAIN_WHITE};
         ${gradientBorder({ borderRadius: 20 })}
+      `;
+    case 'black':
+      return css`
+        background: ${COLOR_PALLETTE.MAIN_LAYOUT};
+        color: ${COLOR_PALLETTE.MAIN_WHITE};
       `;
     case 'text':
       return css`

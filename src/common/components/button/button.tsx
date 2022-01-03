@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
-import { Button as MuiButton, ButtonProps } from '@mui/material';
+import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
 
 import { getButtonVariant, StyledChildren } from './styled';
+
+export type ButtonProps = MuiButtonProps & {
+  monoColor?: boolean;
+};
 
 const StyledButton = styled(MuiButton)<ButtonProps>`
   display: grid;
@@ -14,7 +18,7 @@ const StyledButton = styled(MuiButton)<ButtonProps>`
   mask-composite: exclude;
   transition: all 0.2s linear;
   text-transform: none;
-  ${({ variant }) => getButtonVariant(variant)}
+  ${({ variant, monoColor }) => getButtonVariant(variant, monoColor)}
   &:disabled {
     background: #bdbdbd;
     &:before {
