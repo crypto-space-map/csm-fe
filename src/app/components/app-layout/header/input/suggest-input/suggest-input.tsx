@@ -1,7 +1,9 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 
 import { createFilterOptions } from '@mui/material';
+import { useSelector } from 'react-redux';
 
+import { selectAuth } from 'app/containers/login/selectors';
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import CloseIcon from 'assets/icons/close-ico.svg';
 import SearchIcon from 'assets/icons/search.svg';
@@ -15,7 +17,7 @@ import { StyledAutocomplete, StyledTextField, SuggestionList } from './styled';
 export const SuggestInput = () => {
   const [inputValue, setInputValue] = useState('');
   const { projects, fetchProjects } = useSpaceMap();
-
+  const isAuth = useSelector(selectAuth);
   // after emotion styling missed some types
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -36,8 +38,10 @@ export const SuggestInput = () => {
     setInputValue(newInputValue);
 
   useEffect(() => {
-    fetchProjects();
-  }, []);
+    if (isAuth) {
+      fetchProjects();
+    }
+  }, [isAuth, fetchProjects]);
 
   return (
     <StyledAutocomplete
