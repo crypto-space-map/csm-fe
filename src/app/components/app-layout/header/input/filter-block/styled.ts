@@ -36,6 +36,13 @@ export const InputsGroup = styled.div`
   grid-template-columns: repeat(2, 1fr);
 `;
 
+export const StyledButtonsGroup = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  grid-gap: 24px;
+`;
+
 export const CheckBoxGroup = styled.div`
   display: grid;
   grid-gap: 8px;

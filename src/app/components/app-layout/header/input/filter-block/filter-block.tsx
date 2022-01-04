@@ -5,11 +5,11 @@ import { useForm, Controller } from 'react-hook-form';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import Dollar from 'assets/icons/dollar.svg';
-import { Button } from 'common/components/button';
 import { CheckBox } from 'common/components/checkbox';
 import { Input, InputProps } from 'common/components/input';
 import { NUMBER_SEPARATOR_REG_EXP } from 'utils/reg-exp';
 
+import { ButtonsGroup } from './buttons-group';
 import { StyledFilterBlock, StyledFilter, InputsGroup, CheckBoxGroup } from './styled';
 
 const inputs: InputProps[] = [
@@ -23,11 +23,11 @@ const separatedValue = (val: number | null) =>
 type FilterBlockProps = ComponentProps<typeof StyledFilterBlock>;
 
 export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, ref) => {
-  const { filters, submitFilters, onChangeFilters } = useSpaceMap();
+  const { filters, submitFilters, onChangeFilters, onClearFilters } = useSpaceMap();
 
   const [checkboxes] = useState(filters.exchanges);
 
-  const { control, handleSubmit, watch } = useForm({
+  const { control, handleSubmit, watch, reset } = useForm({
     defaultValues: filters,
     mode: 'all',
     criteriaMode: 'all',
@@ -44,6 +44,11 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
     },
     [exchanges]
   );
+
+  const handleClear = () => {
+    onClearFilters();
+    reset();
+  };
 
   useEffect(() => {
     onChangeFilters({ exchanges, mCapTo, mCapFrom });
@@ -88,7 +93,7 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
               />
             ))}
           </CheckBoxGroup>
-          <Button type="submit">Filter Data</Button>
+          <ButtonsGroup onClear={handleClear} />
         </StyledFilter>
       </StyledFilterBlock>
     </Fade>

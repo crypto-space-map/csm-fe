@@ -63,6 +63,9 @@ const spaceMapPageSlice = createSlice({
     setFilters(state, action: PayloadAction<FilterProps>) {
       state.filters = { ...action.payload };
     },
+    clearFilters(state) {
+      state.filters = initialState.filters;
+    },
   },
 });
 

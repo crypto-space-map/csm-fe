@@ -33,6 +33,7 @@ export const ChartWrapper = styled.div`
     line-height: 17px;
     opacity: 0;
     pointer-events: none;
+    z-index: 2;
     &.tooltip--hovered {
       animation: ${showAnimation} 0.5s forwards;
     }
@@ -42,6 +43,7 @@ export const ChartWrapper = styled.div`
 export const RandomSvg = styled.svg`
   width: 100%;
   height: 100%;
+  overflow: overlay;
   & > circle {
     transition: 0.2s linear;
   }
