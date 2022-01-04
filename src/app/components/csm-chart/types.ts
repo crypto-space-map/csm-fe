@@ -55,8 +55,8 @@ export type CategoryPacksType = {
   svg: Selection<SVGSVGElement | null, unknown, null, undefined>;
   nodes: PackedCategories[];
   fundsTooltip: Selection<HTMLDivElement, unknown, null, undefined>;
-  mCapFrom?: string | null;
-  mCapTo?: string | null;
+  mCapFrom?: number | null;
+  mCapTo?: number | null;
   exchanges?: Exchanges[];
   maxMarketCap: number;
   minMarketCap: number;

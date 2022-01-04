@@ -11,10 +11,11 @@ import { selectMapData } from './selectors';
 import { actions, reducer } from './slice';
 import { sliceKey } from './utils';
 
-const checkForNumber = (value: string | null, previousVal: string | null) => {
-  if (!value) return '';
-  if (!ONLY_NUMBERS_REG_EXP.test(value)) return previousVal;
-  return value;
+const checkForNumber = (value: number | null, previousVal: number | null) => {
+  if (!value) return null;
+  const newVal = value.toString().replace(/ /g, '');
+  if (!ONLY_NUMBERS_REG_EXP.test(newVal)) return previousVal;
+  return +newVal;
 };
 
 export function useSpaceMapPageSlice() {

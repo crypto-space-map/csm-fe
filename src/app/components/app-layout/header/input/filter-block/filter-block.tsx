@@ -8,6 +8,7 @@ import Dollar from 'assets/icons/dollar.svg';
 import { Button } from 'common/components/button';
 import { CheckBox } from 'common/components/checkbox';
 import { Input, InputProps } from 'common/components/input';
+import { NUMBER_SEPARATOR_REG_EXP } from 'utils/reg-exp';
 
 import { StyledFilterBlock, StyledFilter, InputsGroup, CheckBoxGroup } from './styled';
 
@@ -15,6 +16,9 @@ const inputs: InputProps[] = [
   { key: 'mCapFrom', placeholder: 'From: 100 000', label: 'Mcap' },
   { key: 'mCapTo', placeholder: '' },
 ];
+
+const separatedValue = (val: number | null) =>
+  val ? val.toString().replace(NUMBER_SEPARATOR_REG_EXP, ' ') : '';
 
 type FilterBlockProps = ComponentProps<typeof StyledFilterBlock>;
 
@@ -58,8 +62,7 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
                   <Input
                     {...input}
                     {...rest}
-                    type="number"
-                    value={filters[name] || ''}
+                    value={separatedValue(filters[name] as number)}
                     InputProps={{
                       inputProps: { step: 10000 },
                       endAdornment: <Dollar />,

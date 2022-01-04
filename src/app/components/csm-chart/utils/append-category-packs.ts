@@ -26,8 +26,8 @@ export const generateCategoryPacks = ({
   svg,
   nodes,
   fundsTooltip,
-  mCapFrom = '',
-  mCapTo = '',
+  mCapFrom = null,
+  mCapTo = null,
   exchanges = [],
   maxMarketCap,
   minMarketCap,
@@ -35,7 +35,6 @@ export const generateCategoryPacks = ({
   const elem = fundsTooltip.node() as HTMLDivElement;
   const isTransparent = (value: number, itemExchangesArr: typeof exchanges) => {
     let opacity = 1;
-
     const isLessThanCapFrom = mCapFrom || minMarketCap;
     const isMoreThanCapTo = mCapTo || maxMarketCap;
 
