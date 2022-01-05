@@ -14,8 +14,8 @@ import {
   StyledNewsCard,
 } from './styled';
 
-export const NewsCard = ({ img, header, text }: CSMNewsProps) => {
-  const [isOpen, setOpen, setClose] = useBooleanState(false);
+export const NewsCard = ({ img, header, text, open = false }: CSMNewsProps) => {
+  const [isOpen, setOpen, setClose] = useBooleanState(open);
   const handleClick = () => (isOpen ? setClose() : setOpen());
 
   return (

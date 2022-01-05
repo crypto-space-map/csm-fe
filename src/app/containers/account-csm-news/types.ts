@@ -3,4 +3,5 @@ export type CSMNewsProps = {
   text: string;
   img?: string;
   isQuiz?: boolean;
+  open?: boolean;
 };
