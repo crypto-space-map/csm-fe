@@ -7,6 +7,8 @@ const StyledTab = styled(MuiTab)`
   color: ${COLOR_PALLETTE.MAIN_WHITE};
   padding: 16px 0;
   min-width: auto;
+  text-transform: none;
+  font-weight: 400;
   &.Mui-selected {
     color: ${COLOR_PALLETTE.MAIN_WHITE};
     ${gradientBorder({ border: '0 0 4px 0' })};
