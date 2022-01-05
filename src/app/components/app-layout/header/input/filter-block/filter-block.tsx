@@ -11,6 +11,7 @@ import { NUMBER_SEPARATOR_REG_EXP } from 'utils/reg-exp';
 
 import { ButtonsGroup } from './buttons-group';
 import { StyledFilterBlock, StyledFilter, InputsGroup, CheckBoxGroup } from './styled';
+import { RangesGroup } from './suggest-group';
 
 const inputs: InputProps[] = [
   { key: 'mCapFrom', placeholder: 'From: 100 000', label: 'Mcap' },
@@ -20,14 +21,16 @@ const inputs: InputProps[] = [
 const separatedValue = (val: number | null) =>
   val ? val.toString().replace(NUMBER_SEPARATOR_REG_EXP, ' ') : '';
 
-type FilterBlockProps = ComponentProps<typeof StyledFilterBlock>;
+type FilterBlockProps = ComponentProps<typeof StyledFilterBlock> & { setClose: () => void };
 
 export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, ref) => {
+  const { visible, setClose } = props;
+
   const { filters, submitFilters, onChangeFilters, onClearFilters } = useSpaceMap();
 
   const [checkboxes] = useState(filters.exchanges);
 
-  const { control, handleSubmit, watch, reset } = useForm({
+  const { control, handleSubmit, watch, reset, setValue } = useForm({
     defaultValues: filters,
     mode: 'all',
     criteriaMode: 'all',
@@ -45,19 +48,33 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
     [exchanges]
   );
 
+  const handleSubmitFilters = useCallback(() => {
+    submitFilters();
+    setClose();
+  }, [submitFilters, setClose]);
+
   const handleClear = () => {
     onClearFilters();
     reset();
   };
+
+  const handleChangeRange = useCallback(
+    (data: Omit<typeof filters, 'exchanges'>) => {
+      Object.keys(data).forEach(item =>
+        setValue(item as keyof typeof data, data[item as keyof typeof data])
+      );
+    },
+    [setValue]
+  );
 
   useEffect(() => {
     onChangeFilters({ exchanges, mCapTo, mCapFrom });
   }, [exchanges, mCapFrom, mCapTo, onChangeFilters]);
 
   return (
-    <Fade in={props.visible}>
+    <Fade in={visible}>
       <StyledFilterBlock {...props} ref={ref}>
-        <StyledFilter onSubmit={handleSubmit(submitFilters)}>
+        <StyledFilter onSubmit={handleSubmit(handleSubmitFilters)}>
           <InputsGroup>
             {inputs.map(input => (
               <Controller
@@ -77,6 +94,7 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
               />
             ))}
           </InputsGroup>
+          <RangesGroup onChange={handleChangeRange} />
           <CheckBoxGroup>
             <span>Exchanges</span>
             {checkboxes.map(name => (
