@@ -1,57 +1,68 @@
-import { forwardRef, ComponentProps, useState, useCallback, useEffect } from 'react';
+import { forwardRef, ComponentProps, useState, useCallback, useMemo } from 'react';
 
 import { Fade } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
-import Dollar from 'assets/icons/dollar.svg';
+import { Exchanges, FilterProps } from 'app/containers/space-map/types';
 import { CheckBox } from 'common/components/checkbox';
-import { Input, InputProps } from 'common/components/input';
-import { NUMBER_SEPARATOR_REG_EXP } from 'utils/reg-exp';
 
 import { ButtonsGroup } from './buttons-group';
+import { FilterInputs } from './inputs-group';
 import { StyledFilterBlock, StyledFilter, InputsGroup, CheckBoxGroup } from './styled';
 import { RangesGroup } from './suggest-group';
 
-const inputs: InputProps[] = [
-  { key: 'mCapFrom', placeholder: 'From: 100 000', label: 'Mcap' },
-  { key: 'mCapTo', placeholder: '' },
-];
+interface StateProps {
+  mCapFrom: string | null;
+  mCapTo: string | null;
+  exchanges: Exchanges[];
+}
 
-const separatedValue = (val: number | null) =>
-  val ? val.toString().replace(NUMBER_SEPARATOR_REG_EXP, ' ') : '';
+const initialState: StateProps = {
+  mCapFrom: null,
+  mCapTo: null,
+  exchanges: Object.values(Exchanges).map(exch => exch),
+};
 
 type FilterBlockProps = ComponentProps<typeof StyledFilterBlock> & { setClose: () => void };
 
 export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, ref) => {
   const { visible, setClose } = props;
 
-  const { filters, submitFilters, onChangeFilters, onClearFilters } = useSpaceMap();
+  const { submitFilters, onClearFilters } = useSpaceMap();
 
-  const [checkboxes] = useState(filters.exchanges);
+  const [checkboxes] = useState(initialState.exchanges);
+  const [selectedExchanges, setSelectedExchanges] = useState(initialState.exchanges);
 
-  const { control, handleSubmit, watch, reset, setValue } = useForm({
-    defaultValues: filters,
+  const { control, handleSubmit, reset, setValue } = useForm({
+    defaultValues: initialState,
     mode: 'all',
     criteriaMode: 'all',
   });
 
-  const { exchanges, mCapFrom, mCapTo } = watch();
-
   const handleSelect = useCallback(
-    (checkedName: typeof exchanges[number]) => {
-      const newExchanges = exchanges?.includes(checkedName)
-        ? exchanges?.filter(name => name !== checkedName)
-        : [...(exchanges ?? []), checkedName];
+    (checkedName: typeof selectedExchanges[number]) => {
+      const newExchanges = selectedExchanges?.includes(checkedName)
+        ? selectedExchanges?.filter(name => name !== checkedName)
+        : [...(selectedExchanges ?? []), checkedName];
+      setSelectedExchanges(newExchanges);
       return newExchanges;
     },
-    [exchanges]
+    [selectedExchanges]
   );
 
-  const handleSubmitFilters = useCallback(() => {
-    submitFilters();
-    setClose();
-  }, [submitFilters, setClose]);
+  const handleSubmitFilters = useCallback(
+    (data: FilterProps) => {
+      const parsedData: FilterProps = {
+        ...data,
+        mCapFrom: data.mCapFrom && +data.mCapFrom,
+        mCapTo: data.mCapTo && +data.mCapTo,
+      };
+      submitFilters(parsedData);
+      setClose();
+    },
+    [submitFilters, setClose]
+  );
 
   const handleClear = () => {
     onClearFilters();
@@ -59,7 +70,7 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
   };
 
   const handleChangeRange = useCallback(
-    (data: Omit<typeof filters, 'exchanges'>) => {
+    (data: Omit<typeof initialState, 'exchanges'>) => {
       Object.keys(data).forEach(item =>
         setValue(item as keyof typeof data, data[item as keyof typeof data])
       );
@@ -67,32 +78,12 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
     [setValue]
   );
 
-  useEffect(() => {
-    onChangeFilters({ exchanges, mCapTo, mCapFrom });
-  }, [exchanges, mCapFrom, mCapTo, onChangeFilters]);
-
   return (
     <Fade in={visible}>
       <StyledFilterBlock {...props} ref={ref}>
         <StyledFilter onSubmit={handleSubmit(handleSubmitFilters)}>
           <InputsGroup>
-            {inputs.map(input => (
-              <Controller
-                name={input.key as keyof typeof filters}
-                control={control}
-                render={({ field: { name, ...rest } }) => (
-                  <Input
-                    {...input}
-                    {...rest}
-                    value={separatedValue(filters[name] as number)}
-                    InputProps={{
-                      inputProps: { step: 10000 },
-                      endAdornment: <Dollar />,
-                    }}
-                  />
-                )}
-              />
-            ))}
+            <FilterInputs<StateProps> control={control} />
           </InputsGroup>
           <RangesGroup onChange={handleChangeRange} />
           <CheckBoxGroup>
@@ -103,7 +94,7 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
                 render={({ field: { onChange } }) => (
                   <CheckBox
                     label={name}
-                    checked={watch().exchanges.includes(name)}
+                    checked={selectedExchanges.includes(name)}
                     onChange={() => onChange(handleSelect(name))}
                   />
                 )}

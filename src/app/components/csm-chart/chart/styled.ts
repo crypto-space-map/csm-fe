@@ -25,7 +25,7 @@ export const ChartWrapper = styled.div`
   width: 100%;
   height: 100%;
   & .tooltip {
-    position: absolute;
+    position: fixed;
     padding: 4px 10px;
     border-radius: 18px;
     background-color: ${COLOR_PALLETTE.MAIN_WHITE};
@@ -34,6 +34,7 @@ export const ChartWrapper = styled.div`
     opacity: 0;
     pointer-events: none;
     z-index: 2;
+    overflow: hidden;
     &.tooltip--hovered {
       animation: ${showAnimation} 0.5s forwards;
     }

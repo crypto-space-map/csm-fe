@@ -1,25 +1,24 @@
-import { useCallback } from 'react';
+import { memo, useCallback } from 'react';
 
-import { FilterProps } from 'app/containers/space-map/types';
 import { Button } from 'common/components';
 
 import { StyledRangesGroup } from './styled';
 
-type Range = { btnText: string } & Omit<FilterProps, 'exchanges'>;
+type Range = { btnText: string; mCapFrom: string | null; mCapTo: string | null };
 
 type RangeGroupProps = {
-  onChange: (data: Omit<FilterProps, 'exchanges'>) => void;
+  onChange: (data: Omit<Range, 'btnText'>) => void;
 };
 
 type BtnProps = RangeGroupProps & Range;
 
 const ranges: Range[] = [
-  { mCapFrom: 1000000000, mCapTo: null, btnText: '> $10B' },
-  { mCapFrom: 100000000, mCapTo: 1000000000, btnText: '$1B — $10B' },
-  { mCapFrom: 10000000, mCapTo: 100000000, btnText: '$100M — $1B' },
-  { mCapFrom: 1000000, mCapTo: 10000000, btnText: '$10M — $100M' },
-  { mCapFrom: 100000, mCapTo: 1000000, btnText: '$1M — $10M' },
-  { mCapFrom: 10000, mCapTo: 100000, btnText: '$10M — $100M' },
+  { mCapFrom: '10000000000', mCapTo: null, btnText: '> $10B' },
+  { mCapFrom: '1000000000', mCapTo: '10000000000', btnText: '$1B — $10B' },
+  { mCapFrom: '100000000', mCapTo: '1000000000', btnText: '$100M — $1B' },
+  { mCapFrom: '10000000', mCapTo: '100000000', btnText: '$10M — $100M' },
+  { mCapFrom: '1000000', mCapTo: '10000000', btnText: '$1M — $10M' },
+  { mCapFrom: null, mCapTo: '1000000', btnText: '<$1M' },
 ];
 
 const Btn = ({ onChange, mCapTo, mCapFrom, btnText }: BtnProps) => {
@@ -31,7 +30,7 @@ const Btn = ({ onChange, mCapTo, mCapFrom, btnText }: BtnProps) => {
   );
 };
 
-export const RangesGroup = ({ onChange }: RangeGroupProps) => (
+export const RangesGroup = memo(({ onChange }: RangeGroupProps) => (
   <StyledRangesGroup>
     <span>Most searched ranges</span>
     <div>
@@ -40,4 +39,4 @@ export const RangesGroup = ({ onChange }: RangeGroupProps) => (
       ))}
     </div>
   </StyledRangesGroup>
-);
+));
