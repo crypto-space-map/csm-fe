@@ -25,9 +25,11 @@ export const SpaceChart = () => {
 
   const {
     fetchSpaceMapData,
+    fetchPartnershipsData,
     spaceMapData: { tree, maxMarketCap, minMarketCap },
     fetchingMapData: loading,
     loadMapDataError,
+    clearReducerObjectData,
   } = useSpaceMap();
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export const SpaceChart = () => {
       const map = createBaseMap({ width, height, ref: svgRef });
       const svg = select(map);
       const wrapper = select(wrapperRef.current);
-      const categoriesPacked = createCategoryPacks(tree, maxMarketCap);
+      const categoriesPacked = createCategoryPacks(tree, maxMarketCap, width, height);
       const nodes = circlesSimulation({
         nodes: categoriesPacked,
         width,
@@ -62,7 +64,7 @@ export const SpaceChart = () => {
       // TODO  убрал тк нет актуальных данных (выглядит не оч)
       // generateFundsLegend({ svg, nodes });
 
-      generateCategoryPacks({
+      generateCategoryPacks<typeof fetchPartnershipsData>({
         svg,
         nodes,
         fundsTooltip,
@@ -71,6 +73,7 @@ export const SpaceChart = () => {
         exchanges,
         maxMarketCap,
         minMarketCap,
+        fetchPartnershipsData,
       });
 
       categoriesLabels({ ref: svgRef, nodes });
@@ -85,11 +88,13 @@ export const SpaceChart = () => {
     mCapFrom,
     mCapTo,
     exchanges,
+    fetchPartnershipsData,
   ]);
 
   return (
     <ChartWrapper ref={wrapperRef}>
       <RandomSvg ref={svgRef} />
+      <button onClick={clearReducerObjectData}>123123</button>
     </ChartWrapper>
   );
 };

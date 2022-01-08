@@ -1,7 +1,7 @@
 import { fetchDataInitialState, fetchDataReducers } from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
-import { ContainerState, Exchanges, FilterProps, MapDataResponse, ProjectData } from './types';
+import { ContainerState, Exchanges, FilterProps, MapDataResponse, Partnership, ProjectData } from './types';
 import { sliceKey as name } from './utils';
 
 // The initial state of the DeparturesPage container
@@ -36,6 +36,9 @@ const { fetchDataSuccess: fetchProjectsSuccess, fetchDataError: fetchProjectsErr
   ContainerState['projects']['data']
 >(initialState.projects);
 
+const { fetchDataSuccess: fetchPartnershipsSuccess, fetchDataError: fetchPartnershipsError } =
+  fetchDataReducers<ContainerState['projectPartnerships']['data']>(initialState.projectPartnerships);
+
 const spaceMapPageSlice = createSlice({
   name,
   initialState,
@@ -60,11 +63,21 @@ const spaceMapPageSlice = createSlice({
     fetchProjectsError(state, action: PayloadAction<{ message: string }>) {
       fetchProjectsError(state.mapTree, action);
     },
-
     // fetch partnerships
-    clearData(state) {
-      state.mapTree = initialState.mapTree;
-      state.projects = initialState.projects;
+    fetchPartnerships(state, _action: PayloadAction<string>) {
+      state.projectPartnerships.loading = true;
+    },
+    fetchPartnershipsSuccess(state, action: PayloadAction<{ data: Partnership[] }>) {
+      fetchPartnershipsSuccess(state.projects, action);
+    },
+    fetchPartnershipsError(state, action: PayloadAction<{ message: string }>) {
+      fetchPartnershipsError(state.mapTree, action);
+    },
+    clearData(state, { payload }: PayloadAction<Array<keyof ContainerState>>) {
+      // TODO додумать типизацию
+      payload.forEach(item => {
+        state[item as keyof typeof state] = initialState[item];
+      });
     },
     setFilters(state, action: PayloadAction<FilterProps>) {
       state.filters = { ...action.payload };

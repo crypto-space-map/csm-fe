@@ -57,9 +57,10 @@ export type CategoryPacksType = {
   fundsTooltip: Selection<HTMLDivElement, unknown, null, undefined>;
   mCapFrom?: number | null;
   mCapTo?: number | null;
-  exchanges?: Array<keyof typeof Exchanges>;
+  exchanges?: Exchanges[];
   maxMarketCap: number;
   minMarketCap: number;
+  fetchPartnershipsData: (val: string) => void;
 };
 
 export type CirclesSimulation = Sizing & {
@@ -78,9 +79,10 @@ type CategoriesChild = {
 export type PackedCategories = {
   key?: string;
   children: Array<CategoriesChild & PackCircle>;
-  exchanges?: Array<keyof typeof Exchanges>;
+  exchanges?: Exchanges[];
   data: CSMMapCategory;
   id: string;
+  projectId?: string;
   name: string;
   marketCap: number;
   r: number;

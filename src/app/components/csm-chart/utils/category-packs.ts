@@ -32,7 +32,12 @@ const RANGE = {
   MAX: 200,
 };
 
-export const createCategoryPacks = (categories: CSMMapCategory[], maxMarketCap = 100) => {
+export const createCategoryPacks = (
+  categories: CSMMapCategory[],
+  maxMarketCap = 100,
+  width = 0,
+  height = 0
+) => {
   const mappedCategories = group(categories, d => d.name);
 
   const packedCategories = new Map<string, PackedNodes>();
@@ -48,14 +53,11 @@ export const createCategoryPacks = (categories: CSMMapCategory[], maxMarketCap =
 
     const nodes = packSiblings<typeof circledChildren[number]>(circledChildren);
 
-    // TODO мок значение битка убрать
     const maxCalculatedRadius = (marketCap / maxMarketCap) * 100 * 2;
 
-    const r = radius(maxCalculatedRadius);
+    const r = radius(maxCalculatedRadius > 150 ? 200 : maxCalculatedRadius);
 
-    /** TODO create function to find page center instead properties { x: 600, y: 350 } */
-
-    const state = mapCords.find(d => d.name === key) || { properties: { x: 600, y: 350 } };
+    const state = mapCords.find(d => d.name === key) || { properties: { x: width / 2, y: height / 2 } };
     const { x, y } = state.properties;
     packedCategories.set(key, { key, children: nodes, r, x, y });
   }

@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { useSelector } from 'react-redux';
 
 import { useActions } from 'hooks';
@@ -15,16 +17,23 @@ export function useSpaceMapPageSlice() {
 }
 
 export function useSpaceMap() {
-  const { fetchSpaceMapData, fetchProjects, setFilters } = useSpaceMapPageSlice();
+  const { fetchSpaceMapData, fetchProjects, setFilters, fetchPartnerships, clearData } =
+    useSpaceMapPageSlice();
   const {
     mapTree: { data: spaceMapData, loading: fetchingMapData, loadError: loadMapDataError },
     projects: { data: projects },
     filters,
   } = useSelector(selectMapData);
 
+  const fetchPartnershipsData = useCallback((val: string) => fetchPartnerships(val), [fetchPartnerships]);
+
+  const clearReducerObjectData = useCallback(() => clearData(['filters']), [clearData]);
+
   return {
     fetchProjects,
     fetchSpaceMapData,
+    fetchPartnershipsData,
+    clearReducerObjectData,
     spaceMapData,
     projects,
     fetchingMapData,

@@ -22,7 +22,7 @@ const STROKE_DASHARRAY = '4,4';
 
 const scaled = scaleLinear();
 
-export const generateCategoryPacks = ({
+export const generateCategoryPacks = <T>({
   svg,
   nodes,
   fundsTooltip,
@@ -31,6 +31,7 @@ export const generateCategoryPacks = ({
   exchanges = [],
   maxMarketCap,
   minMarketCap,
+  fetchPartnershipsData,
 }: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
   const isTransparent = (value: number, itemExchangesArr: typeof exchanges) => {
@@ -50,7 +51,7 @@ export const generateCategoryPacks = ({
     return opacity;
   };
 
-  const onMouseOver = (event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) =>
+  const onMouseOver = (_event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) =>
     fundsTooltip.text(item.data.name).attr('class', CLASSNAMES.TOOLTIP.HOVERED);
 
   const onMouseMove = (event: MouseEvent) => {
@@ -62,6 +63,11 @@ export const generateCategoryPacks = ({
   };
   const onMouseOut = () => fundsTooltip.style('opacity', 0).attr('class', CLASSNAMES.TOOLTIP.NORMAL);
 
+  const onClick = (_event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) => {
+    if (item.data.projectId) {
+      fetchPartnershipsData(item.data.projectId);
+    }
+  };
   /** Generate categories */
 
   const categoryPacks = svg
@@ -95,8 +101,7 @@ export const generateCategoryPacks = ({
     .attr('r', item => (item.r < 2 ? 3 : item.r))
     .attr('cx', item => scaled(item.x))
     .attr('cy', item => item.y)
-    .on('click', event => console.log(event.target.__data__))
-    /** TODO навесить экшн онклик */
+    .on('click', onClick)
     .on('mousemove', onMouseMove)
     .on('mouseover', onMouseOver)
     .on('mouseout', onMouseOut);
