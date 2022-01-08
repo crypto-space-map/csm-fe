@@ -27,13 +27,14 @@ export const SpaceChart = () => {
     fetchSpaceMapData,
     spaceMapData: { tree, maxMarketCap, minMarketCap },
     fetchingMapData: loading,
+    loadMapDataError,
   } = useSpaceMap();
 
   useEffect(() => {
-    if (!tree && !loading) {
+    if (!tree && !loading && !loadMapDataError) {
       fetchSpaceMapData();
     }
-  }, [fetchSpaceMapData, tree, loading]);
+  }, [fetchSpaceMapData, tree, loading, loadMapDataError]);
 
   useLayoutEffect(() => {
     const width = wrapperRef.current?.offsetWidth;

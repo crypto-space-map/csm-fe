@@ -23,6 +23,10 @@ export const initialState: ContainerState = {
     mCapTo: null,
     exchanges: Object.values(Exchanges),
   },
+  projectPartnerships: {
+    data: null,
+    ...fetchDataInitialState,
+  },
 };
 
 const { fetchDataSuccess: fetchSpaceMapDataSuccess, fetchDataError: fetchSpaceMapDataError } =
@@ -56,6 +60,8 @@ const spaceMapPageSlice = createSlice({
     fetchProjectsError(state, action: PayloadAction<{ message: string }>) {
       fetchProjectsError(state.mapTree, action);
     },
+
+    // fetch partnerships
     clearData(state) {
       state.mapTree = initialState.mapTree;
       state.projects = initialState.projects;

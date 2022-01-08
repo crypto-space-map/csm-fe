@@ -8,6 +8,15 @@ export enum Exchanges {
   kucoin = 'Kucoin',
 }
 
+export type Partnership = {
+  announcement: string;
+  date: string;
+  icon: string;
+  marketCap: number;
+  name: string;
+  projectId: string;
+};
+
 export type MapDataResponse = {
   tree: Array<CSMMapCategory>;
   maxMarketCap: number;
@@ -48,10 +57,14 @@ interface Projects extends FetchDataState {
   data: Array<ProjectData>;
 }
 
+interface Partnerships extends FetchDataState {
+  data: Partnership[] | null;
+}
 export interface SpaceMapPageState {
   mapTree: MapTree;
   projects: Projects;
   filters: FilterProps;
+  projectPartnerships: Partnerships;
 }
 
 export type ContainerState = SpaceMapPageState;
