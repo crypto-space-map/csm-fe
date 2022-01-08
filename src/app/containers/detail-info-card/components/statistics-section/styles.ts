@@ -16,10 +16,10 @@ export const StatistiсTitle = styled.span`
   ${secondFontOptions}
 `;
 
-export const Increase = styled.span`
+export const AdditionalValue = styled.span`
   ${secondFontOptions}
 `;
-export const Rename = styled.span`
+export const MainValue = styled.span`
   font-size: 20px;
   line-height: 27px;
   color: ${COLOR_PALLETTE.MAIN_WHITE};

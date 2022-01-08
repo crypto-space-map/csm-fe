@@ -1,15 +1,15 @@
-import { Increase, StatistiсTitle, Rename, StatisticItemWrapper } from './styles';
+import { AdditionalValue, StatistiсTitle, MainValue, StatisticItemWrapper } from './styles';
 
 interface StatisticItemProps {
   title: string;
-  rename: string;
-  increase: string;
+  main: string;
+  additional: string;
 }
 
-export const StatisticItem = ({ title, rename, increase }: StatisticItemProps) => (
+export const StatisticItem = ({ title, main, additional }: StatisticItemProps) => (
   <StatisticItemWrapper>
     <StatistiсTitle>{title}</StatistiсTitle>
-    <Rename>{rename}</Rename>
-    <Increase>{increase}</Increase>
+    <MainValue>{main}</MainValue>
+    <AdditionalValue>{additional}</AdditionalValue>
   </StatisticItemWrapper>
 );
