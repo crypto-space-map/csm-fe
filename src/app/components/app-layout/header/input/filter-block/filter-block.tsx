@@ -1,15 +1,15 @@
-import { forwardRef, ComponentProps, useState, useCallback, useMemo } from 'react';
+import { forwardRef, ComponentProps, useCallback } from 'react';
 
 import { Fade } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import { Exchanges, FilterProps } from 'app/containers/space-map/types';
-import { CheckBox } from 'common/components/checkbox';
 
 import { ButtonsGroup } from './buttons-group';
+import { ExchangesGroup } from './exchanges-group';
 import { FilterInputs } from './inputs-group';
-import { StyledFilterBlock, StyledFilter, InputsGroup, CheckBoxGroup } from './styled';
+import { StyledFilterBlock, StyledFilter, InputsGroup } from './styled';
 import { RangesGroup } from './suggest-group';
 
 interface StateProps {
@@ -31,25 +31,11 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
 
   const { submitFilters, onClearFilters } = useSpaceMap();
 
-  const [checkboxes] = useState(initialState.exchanges);
-  const [selectedExchanges, setSelectedExchanges] = useState(initialState.exchanges);
-
   const { control, handleSubmit, reset, setValue } = useForm({
     defaultValues: initialState,
     mode: 'all',
     criteriaMode: 'all',
   });
-
-  const handleSelect = useCallback(
-    (checkedName: typeof selectedExchanges[number]) => {
-      const newExchanges = selectedExchanges?.includes(checkedName)
-        ? selectedExchanges?.filter(name => name !== checkedName)
-        : [...(selectedExchanges ?? []), checkedName];
-      setSelectedExchanges(newExchanges);
-      return newExchanges;
-    },
-    [selectedExchanges]
-  );
 
   const handleSubmitFilters = useCallback(
     (data: FilterProps) => {
@@ -86,22 +72,7 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
             <FilterInputs<StateProps> control={control} />
           </InputsGroup>
           <RangesGroup onChange={handleChangeRange} />
-          <CheckBoxGroup>
-            <span>Exchanges</span>
-            {checkboxes.map(name => (
-              <Controller
-                name="exchanges"
-                render={({ field: { onChange } }) => (
-                  <CheckBox
-                    label={name}
-                    checked={selectedExchanges.includes(name)}
-                    onChange={() => onChange(handleSelect(name))}
-                  />
-                )}
-                control={control}
-              />
-            ))}
-          </CheckBoxGroup>
+          <ExchangesGroup control={control} />
           <ButtonsGroup onClear={handleClear} />
         </StyledFilter>
       </StyledFilterBlock>

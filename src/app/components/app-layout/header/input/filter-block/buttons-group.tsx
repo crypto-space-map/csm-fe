@@ -8,7 +8,7 @@ type Props = {
 
 export const ButtonsGroup = ({ onClear }: Props) => (
   <StyledButtonsGroup>
-    <Button type="submit">Filter Data</Button>
+    <Button type="submit">Apply Filter</Button>
     <Button variant="outlined" onClick={onClear}>
       Clear
     </Button>
