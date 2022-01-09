@@ -14,7 +14,7 @@ type FilterInputsProps<T> = {
 
 const inputs: InputProps[] = [
   { key: 'mCapFrom', placeholder: 'From: 100 000', label: 'Mcap' },
-  { key: 'mCapTo', placeholder: 'To :' },
+  { key: 'mCapTo', placeholder: 'To:' },
 ];
 
 const separatedValue = (val: string | null) =>

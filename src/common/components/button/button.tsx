@@ -14,6 +14,7 @@ const StyledButton = styled(MuiButton)<ButtonProps>`
   grid-auto-columns: 1fr;
   grid-auto-rows: 1fr;
   border-radius: 4px;
+  padding: 6px 14px;
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
   transition: all 0.2s linear;
