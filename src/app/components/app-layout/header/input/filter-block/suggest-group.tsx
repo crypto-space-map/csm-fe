@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 
 import { Button } from 'common/components';
 
-import { StyledRangesGroup } from './styled';
+import { RangeButton, StyledRangesGroup } from './styled';
 
 type Range = { btnText: string; mCapFrom: string | null; mCapTo: string | null };
 
@@ -24,9 +24,9 @@ const ranges: Range[] = [
 const Btn = ({ onChange, mCapTo, mCapFrom, btnText }: BtnProps) => {
   const handleChange = useCallback(() => onChange({ mCapFrom, mCapTo }), [onChange, mCapTo, mCapFrom]);
   return (
-    <Button variant="text" size="small" onClick={handleChange}>
+    <RangeButton variant="text" size="small" onClick={handleChange}>
       {btnText}
-    </Button>
+    </RangeButton>
   );
 };
 

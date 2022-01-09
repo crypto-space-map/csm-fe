@@ -4,6 +4,8 @@ import Dollar from 'assets/icons/dollar.svg';
 import { Input, InputProps } from 'common/components';
 import { NUMBER_SEPARATOR_REG_EXP } from 'utils/reg-exp';
 
+import { InputsGroup } from './styled';
+
 type FilterInputsProps<T> = {
   // At react-hook-form  Control have default object type
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -12,14 +14,14 @@ type FilterInputsProps<T> = {
 
 const inputs: InputProps[] = [
   { key: 'mCapFrom', placeholder: 'From: 100 000', label: 'Mcap' },
-  { key: 'mCapTo', placeholder: '' },
+  { key: 'mCapTo', placeholder: 'To :' },
 ];
 
 const separatedValue = (val: string | null) =>
   val ? `${val}`.replace(/\D/g, '').replace(/ /g, '').replace(NUMBER_SEPARATOR_REG_EXP, ' ') : '';
 
 export const FilterInputs = <T,>({ control }: FilterInputsProps<T>) => (
-  <>
+  <InputsGroup>
     {inputs.map(input => (
       <Controller
         key={input.key}
@@ -37,5 +39,5 @@ export const FilterInputs = <T,>({ control }: FilterInputsProps<T>) => (
         )}
       />
     ))}
-  </>
+  </InputsGroup>
 );

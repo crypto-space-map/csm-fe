@@ -2,6 +2,8 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
 
+import { Button } from 'common/components';
+
 const actionsHeaders = css`
   font-size: 16px;
   line-height: 22px;
@@ -62,6 +64,11 @@ export const StyledRangesGroup = styled.div`
   & > span {
     ${actionsHeaders}
   }
+`;
+
+export const RangeButton = styled(Button)`
+  padding: 3px 8px;
+  min-width: auto;
 `;
 
 export const CheckBoxGroup = styled.div`
