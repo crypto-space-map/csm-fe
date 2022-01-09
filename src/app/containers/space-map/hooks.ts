@@ -27,7 +27,10 @@ export function useSpaceMap() {
 
   const fetchPartnershipsData = useCallback((val: string) => fetchPartnerships(val), [fetchPartnerships]);
 
-  const clearReducerObjectData = useCallback(() => clearData(['filters']), [clearData]);
+  const clearReducerObjectData = useCallback(
+    (payload: ReturnType<typeof clearData>['payload']) => clearData(payload),
+    [clearData]
+  );
 
   return {
     fetchProjects,

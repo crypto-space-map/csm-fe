@@ -55,7 +55,7 @@ export const createCategoryPacks = (
 
     const maxCalculatedRadius = (marketCap / maxMarketCap) * 100 * 2;
 
-    const r = radius(maxCalculatedRadius > 150 ? 200 : maxCalculatedRadius);
+    const r = radius(maxCalculatedRadius);
 
     const state = mapCords.find(d => d.name === key) || { properties: { x: width / 2, y: height / 2 } };
     const { x, y } = state.properties;

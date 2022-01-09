@@ -29,7 +29,6 @@ export const SpaceChart = () => {
     spaceMapData: { tree, maxMarketCap, minMarketCap },
     fetchingMapData: loading,
     loadMapDataError,
-    clearReducerObjectData,
   } = useSpaceMap();
 
   useEffect(() => {
@@ -94,7 +93,6 @@ export const SpaceChart = () => {
   return (
     <ChartWrapper ref={wrapperRef}>
       <RandomSvg ref={svgRef} />
-      <button onClick={clearReducerObjectData}>123123</button>
     </ChartWrapper>
   );
 };

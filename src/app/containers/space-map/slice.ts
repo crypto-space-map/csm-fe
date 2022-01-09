@@ -74,10 +74,11 @@ const spaceMapPageSlice = createSlice({
       fetchPartnershipsError(state.mapTree, action);
     },
     clearData(state, { payload }: PayloadAction<Array<keyof ContainerState>>) {
-      // TODO додумать типизацию
-      payload.forEach(item => {
-        state[item as keyof typeof state] = initialState[item];
-      });
+      const clearedState = payload.reduce(
+        (obj, item) => ({ ...state, ...obj, [item]: initialState[item] }),
+        {} as ContainerState
+      );
+      return clearedState;
     },
     setFilters(state, action: PayloadAction<FilterProps>) {
       state.filters = { ...action.payload };
