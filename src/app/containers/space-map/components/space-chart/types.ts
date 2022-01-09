@@ -1,8 +1,8 @@
 import { RefObject } from 'react';
 
-import { Selection, SimulationNodeDatum, PackCircle } from 'd3';
+import { Selection, SimulationNodeDatum, PackCircle, Simulation } from 'd3';
 
-import { CSMMapCategory, Exchanges } from 'app/containers/space-map/types';
+import { CSMMapCategory, Exchanges, Partnership } from 'app/containers/space-map/types';
 
 type Sizing = {
   width: number;
@@ -65,6 +65,7 @@ export type CategoryPacksType = {
 
 export type CirclesSimulation = Sizing & {
   nodes: PackedCategories[];
+  links: Partnership[] | null;
 };
 
 type CategoriesChild = {
@@ -88,4 +89,11 @@ export type PackedCategories = {
   r: number;
   x: number;
   y: number;
+};
+
+//  Project links generator
+
+export type ProjectsLinksGeneratorProps = {
+  simulation: Simulation<PackedCategories, undefined>;
+  partnerships: Partnership[] | null;
 };

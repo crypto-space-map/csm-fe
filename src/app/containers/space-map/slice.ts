@@ -68,7 +68,7 @@ const spaceMapPageSlice = createSlice({
       state.projectPartnerships.loading = true;
     },
     fetchPartnershipsSuccess(state, action: PayloadAction<{ data: Partnership[] }>) {
-      fetchPartnershipsSuccess(state.projects, action);
+      fetchPartnershipsSuccess(state.projectPartnerships, action);
     },
     fetchPartnershipsError(state, action: PayloadAction<{ message: string }>) {
       fetchPartnershipsError(state.mapTree, action);
