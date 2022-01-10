@@ -3,8 +3,8 @@ import { FetchDataState } from 'utils/@reduxjs/fetchData';
 export enum Exchanges {
   binance = 'Binance',
   gdax = 'Coinbase',
-  huobi = 'Ftx',
-  ftx_spot = 'Huobi',
+  huobi = 'Huobi',
+  ftx_spot = 'Ftx',
   kucoin = 'Kucoin',
 }
 
