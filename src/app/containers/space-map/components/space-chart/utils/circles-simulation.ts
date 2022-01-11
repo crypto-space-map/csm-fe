@@ -4,7 +4,7 @@ import { CirclesSimulation } from '../types';
 
 const NODE = { PADDING: 10 };
 
-export const circlesSimulation = ({ nodes, width, height, links }: CirclesSimulation) => {
+export const circlesSimulation = ({ nodes, width, height }: CirclesSimulation) => {
   const simulation = forceSimulation(nodes)
     .force(
       'cx',
@@ -29,10 +29,6 @@ export const circlesSimulation = ({ nodes, width, height, links }: CirclesSimula
       forceY()
         .y(d => d.y as number)
         .strength(3)
-    )
-    .force(
-      'link',
-      forceLink(links).id(d => d.id)
     )
     .force('charge', forceManyBody().strength(-1))
     .force(

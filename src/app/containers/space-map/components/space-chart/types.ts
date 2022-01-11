@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 
-import { Selection, SimulationNodeDatum, PackCircle, Simulation } from 'd3';
+import { Selection, SimulationNodeDatum, PackCircle, HierarchyCircularNode } from 'd3';
 
 import { CSMMapCategory, Exchanges, Partnership } from 'app/containers/space-map/types';
 
@@ -60,32 +60,29 @@ export type CategoryPacksType = {
   exchanges?: Exchanges[];
   maxMarketCap: number;
   minMarketCap: number;
+  projectPartnerships: string[] | null;
   fetchPartnershipsData: (val: string) => void;
+  setProject: (val: HierarchyCircularNode<PackedCategories>) => void;
 };
 
 export type CirclesSimulation = Sizing & {
   nodes: PackedCategories[];
-  links: Partnership[] | null;
-};
-
-type CategoriesChild = {
-  data: CSMMapCategory;
-  r: number;
-  id: string;
-  name: string;
-  children: CSMMapCategory[];
-  marketCap: number;
 };
 
 export type PackedCategories = {
   key?: string;
-  children: Array<CategoriesChild & PackCircle>;
+  children: PackedCategories[];
   exchanges?: Exchanges[];
-  data: CSMMapCategory;
+  data: CSMMapCategory & {
+    r: number;
+    x: number;
+    y: number;
+  };
   id: string;
-  projectId?: string;
+  projectId: string;
   name: string;
   marketCap: number;
+  parent: PackedCategories | null;
   r: number;
   x: number;
   y: number;
@@ -94,6 +91,7 @@ export type PackedCategories = {
 //  Project links generator
 
 export type ProjectsLinksGeneratorProps = {
-  simulation: Simulation<PackedCategories, undefined>;
-  partnerships: Partnership[] | null;
+  svg: Selection<SVGSVGElement | null, unknown, null, undefined>;
+  nodes: HierarchyCircularNode<PackedCategories>[];
+  projectPartnerships: Partnership['projectId'][] | null;
 };

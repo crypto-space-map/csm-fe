@@ -22,7 +22,20 @@ const STROKE_DASHARRAY = '4,4';
 
 const scaled = scaleLinear();
 
-export const generateCategoryPacks = <T>({
+const projectsVsCords = (data: HierarchyCircularNode<PackedCategories>[]) => {
+  const parsed: HierarchyCircularNode<PackedCategories>[] = data.reduce((acc, item) => {
+    if (item.children?.length) {
+      return [...acc, ...projectsVsCords(item.children)];
+    }
+    if (item.x && item.y && item.data.projectId) {
+      acc.push(item);
+    }
+    return acc;
+  }, [] as HierarchyCircularNode<PackedCategories>[]);
+  return parsed;
+};
+
+export const generateCategoryPacks = ({
   svg,
   nodes,
   fundsTooltip,
@@ -31,23 +44,27 @@ export const generateCategoryPacks = <T>({
   exchanges = [],
   maxMarketCap,
   minMarketCap,
+  projectPartnerships,
   fetchPartnershipsData,
+  setProject,
 }: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
-  const isTransparent = (value: number, itemExchangesArr: typeof exchanges) => {
+  const isTransparent = ({ marketCap, projectId, exchanges: itemExchangesArr }: PackedCategories) => {
     let opacity = 1;
 
     const isLessThanCapFrom = mCapFrom || minMarketCap;
     const isMoreThanCapTo = mCapTo || maxMarketCap;
 
     if (mCapTo || mCapFrom) {
-      if (value < isLessThanCapFrom || value > isMoreThanCapTo) {
+      if (marketCap < isLessThanCapFrom || marketCap > isMoreThanCapTo) {
         opacity = 0.1;
       }
     }
     const registryArr = [...exchanges.map(item => item.toLowerCase())];
-    const isIncludes = itemExchangesArr.some(item => registryArr.includes(item));
-    if (!isIncludes) opacity = 0.1;
+    const isIncludes = itemExchangesArr?.some(item => registryArr.includes(item));
+    const isLinked = projectPartnerships?.includes(projectId);
+    if (!isIncludes || !isLinked) opacity = 0.1;
+    if (!projectPartnerships) opacity = 1;
     return opacity;
   };
 
@@ -64,8 +81,10 @@ export const generateCategoryPacks = <T>({
   const onMouseOut = () => fundsTooltip.style('opacity', 0).attr('class', CLASSNAMES.TOOLTIP.NORMAL);
 
   const onClick = (_event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) => {
+    console.log(_event, item);
     if (item.data.projectId) {
       fetchPartnershipsData(item.data.projectId);
+      setProject(item);
     }
   };
   /** Generate categories */
@@ -82,15 +101,12 @@ export const generateCategoryPacks = <T>({
 
   /** Generate funds */
 
-  categoryPacks
+  const circles = categoryPacks
     .selectAll(`.${CLASSNAMES.CATEGORY}`)
     .data(item => packedChild(item, item.r))
     .enter()
     .append('circle')
-    .attr(
-      'opacity',
-      ({ data, children }) => !!!children && isTransparent(data.marketCap, data.exchanges || [])
-    )
+    .attr('opacity', ({ data, children }) => !!!children && isTransparent(data))
     .attr('fill', item => (!!item.children && item.value ? 'none' : color(item?.value || 1)))
     .attr('stroke', item =>
       !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY
@@ -98,9 +114,9 @@ export const generateCategoryPacks = <T>({
     .attr('stroke-dasharray', item => (!!item.children ? STROKE_DASHARRAY : 'none'))
     .attr('stroke-width', 1)
     .classed(CLASSNAMES.FUND, item => !item.children)
-    .attr('r', item => (item.r < 2 ? 3 : item.r))
+    .attr('r', item => item.r)
     .attr('cx', item => scaled(item.x))
-    .attr('cy', item => item.y)
+    .attr('cy', item => scaled(item.y))
     .on('click', onClick)
     .on('mousemove', onMouseMove)
     .on('mouseover', onMouseOver)
@@ -108,7 +124,10 @@ export const generateCategoryPacks = <T>({
   // .style('filter', 'url(#drop-shadow)');
 
   /** Generate categories-child labels */
-  categoryPacks.exit().remove();
-
   generateChildLabels(categoryPacks);
+
+  /** Get data vs cords */
+  const circlesData = projectsVsCords(circles.data());
+
+  return circlesData;
 };

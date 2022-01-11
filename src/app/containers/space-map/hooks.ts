@@ -6,7 +6,7 @@ import { useActions } from 'hooks';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { spaceMapSaga } from './saga';
-import { selectMapData } from './selectors';
+import { selectMapData, selectPartnerships } from './selectors';
 import { actions, reducer } from './slice';
 import { sliceKey } from './utils';
 
@@ -22,9 +22,10 @@ export function useSpaceMap() {
   const {
     mapTree: { data: spaceMapData, loading: fetchingMapData, loadError: loadMapDataError },
     projects: { data: projects },
-    projectPartnerships,
     filters,
   } = useSelector(selectMapData);
+
+  const projectPartnerships = useSelector(selectPartnerships);
 
   const fetchPartnershipsData = useCallback((val: string) => fetchPartnerships(val), [fetchPartnerships]);
 
