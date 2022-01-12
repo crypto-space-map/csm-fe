@@ -22,8 +22,7 @@ export const products: PartnersProps[] = [
   {
     id: '1',
     partner: 'FioDeFi',
-    mcap: '13.4',
-    mcapInit: 'mln',
+    mcap: 13410123,
     date: '2021-10-16T19:20:42+03:00',
     ann: 'http://www.bluesmobifsdfsdfdsfl.ru',
     imgSrc:
@@ -32,8 +31,7 @@ export const products: PartnersProps[] = [
   {
     id: '2',
     partner: 'Chainlink',
-    mcap: '12.1',
-    mcapInit: 'mln',
+    mcap: 12410123,
     date: '2021-10-17T19:20:42+03:00',
     ann: 'http://www.bluesmobil.ru',
     imgSrc:
@@ -42,8 +40,7 @@ export const products: PartnersProps[] = [
   {
     id: '3',
     partner: 'Polkadot',
-    mcap: '28.4',
-    mcapInit: 'bln',
+    mcap: 28410123000,
     date: '2021-10-09T19:20:42+03:00',
     ann: 'http://www.bluesmobidasdasdasdl.ru',
     imgSrc:
@@ -52,8 +49,7 @@ export const products: PartnersProps[] = [
   {
     id: '4',
     partner: 'DATH',
-    mcap: '142.1',
-    mcapInit: 'mln',
+    mcap: 132410123,
     date: '2021-10-19T19:20:42+03:00',
     ann: 'http://www.bluesmobil.ru',
     imgSrc:
@@ -62,8 +58,7 @@ export const products: PartnersProps[] = [
   {
     id: '5',
     partner: 'Binear',
-    mcap: '163.1',
-    mcapInit: 'mln',
+    mcap: 163410123,
     date: '2021-10-25T19:20:42+03:00',
     ann: 'http://www.bluesmobil.ru',
     imgSrc:
@@ -72,8 +67,7 @@ export const products: PartnersProps[] = [
   {
     id: '6',
     partner: 'Akropolis',
-    mcap: '73.1',
-    mcapInit: 'mln',
+    mcap: 63410123,
     date: '2021-10-01T19:20:42+03:00',
     ann: 'http://www.bluesmobil.ru',
     imgSrc:

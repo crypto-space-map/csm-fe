@@ -18,6 +18,7 @@ import {
   StyledCategory,
   StylesShowMoreText,
   ContractsHeader,
+  TradingWidgetWrapper,
 } from './styles';
 
 export const Overview = memo(() => {
@@ -39,9 +40,9 @@ export const Overview = memo(() => {
 
   return (
     <OverviewWrapper>
-      <div>
+      <TradingWidgetWrapper>
         <TradingWidget symbol={`${overviewTradingStock}:CEREUSDT`} />
-      </div>
+      </TradingWidgetWrapper>
       <StyledProjectInfoWrapper>
         <StylesShowMoreText
           lines={3}

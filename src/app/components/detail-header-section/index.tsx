@@ -15,17 +15,9 @@ import {
   CloseIconWrapper,
   StyledRoundedButton,
 } from './styles';
+import { HeaderData } from './types';
 
-const data = {
-  company: {
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS89s6Jq3AQCRJM19NtW28glmVd7eT6bpjrTA&usqp=CAU',
-    name: 'Robonomics Network',
-    tiker: 'XRT',
-    rank: 652,
-  },
-};
-
-interface DetailHeaderSectionProps {
+interface DetailHeaderSectionProps extends HeaderData {
   showBackArrow?: boolean;
   showExtraInfo?: boolean;
   onClose: () => void;
@@ -33,7 +25,15 @@ interface DetailHeaderSectionProps {
 
 const liked = false;
 
-export const DetailHeaderSection = ({ showBackArrow, showExtraInfo, onClose }: DetailHeaderSectionProps) => (
+export const DetailHeaderSection = ({
+  name,
+  symbol,
+  icon,
+  rank,
+  showBackArrow,
+  showExtraInfo,
+  onClose,
+}: DetailHeaderSectionProps) => (
   <HeaderSectionWrapper>
     <CompanyInfo>
       {showBackArrow && (
@@ -41,14 +41,14 @@ export const DetailHeaderSection = ({ showBackArrow, showExtraInfo, onClose }: D
           <RoundedButton />
         </StyledRoundedButton>
       )}
-      <Icon src={data.company.logo} alt="logo" />
-      <CompanyName>{data.company.name}</CompanyName>
+      <Icon src={icon} alt="logo" />
+      <CompanyName>{name}</CompanyName>
       {showExtraInfo && (
         <>
-          <CompanyTiker>{data.company.tiker}</CompanyTiker>
+          <CompanyTiker>{symbol.toUpperCase()}</CompanyTiker>
           <RankWrapper>
             <StarIcon />
-            <RankText>{`Rank ${data.company.rank}`}</RankText>
+            <RankText>{`Rank ${rank}`}</RankText>
           </RankWrapper>
         </>
       )}

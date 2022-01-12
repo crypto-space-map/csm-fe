@@ -1,57 +1,31 @@
-import { StatisticItem } from './statistic-item';
+import { useMemo } from 'react';
+
+import { CommonStatisticItem } from './common-statistic-item';
+import { PercentageStatisticItem } from './percentage-statistic-item';
 import { StatisticsSectionWrapper } from './styles';
+import { GenerateDataProps, StatisticTypes, StatisticDetailDataDTO } from './types';
+import { generateOptions } from './utils';
+import { WebsiteStatisticItem } from './website-statistic-item';
 
-const data = [
-  {
-    id: 1,
-    title: 'Market Price',
-    increase: '0.0004 BTC',
-    rename: '$12.10',
-  },
-  {
-    id: 2,
-    title: 'Market Price',
-    increase: '0.0004 BTC',
-    rename: '$12.10',
-  },
-  {
-    id: 3,
-    title: 'Market Price',
-    increase: '0.0004 BTC',
-    rename: '$12.10',
-  },
-  {
-    id: 4,
-    title: 'Market Price',
-    increase: '0.0004 BTC',
-    rename: '$12.10',
-  },
-  {
-    id: 5,
-    title: 'Market Price',
-    increase: '0.0004 BTC',
-    rename: '$12.10',
-  },
-  {
-    id: 6,
-    title: 'Market Price',
-    increase: '0.0004 BTC',
-    rename: '$12.10',
-  },
-  {
-    id: 7,
-    title: 'Market Price',
-    increase: '0.0004 BTC',
-    rename: '$12.10',
-  },
-];
+const selectStatisticItem = (item: GenerateDataProps) => {
+  const { type, ...restData } = item;
+  switch (type) {
+    case StatisticTypes.COMMON:
+      return <CommonStatisticItem key={restData.title} {...restData} />;
+    case StatisticTypes.PERCENTAGE:
+      return <PercentageStatisticItem key={restData.title} {...restData} />;
+    case StatisticTypes.WEBSITE:
+      return <WebsiteStatisticItem key={restData.title} {...restData} />;
+    default:
+      return null;
+  }
+};
 
-// допилить, когда понятно будет как считается эта статистика
-
-export const DetailStatisticsSection = () => (
-  <StatisticsSectionWrapper>
-    {data.map(item => (
-      <StatisticItem key={item.id} {...item} />
-    ))}
-  </StatisticsSectionWrapper>
-);
+export const DetailStatisticsSection = ({ data }: { data: StatisticDetailDataDTO }) => {
+  const preparedData = useMemo(() => generateOptions(data), [data]);
+  return (
+    <StatisticsSectionWrapper>
+      {preparedData.map(item => selectStatisticItem(item))}
+    </StatisticsSectionWrapper>
+  );
+};

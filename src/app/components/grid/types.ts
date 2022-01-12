@@ -46,6 +46,7 @@ export interface GridProps<R> {
   loading?: boolean;
   infinite?: boolean;
   page?: number;
+  startedSortedField?: keyof R;
   fetchData: FetchDataType;
 }
 

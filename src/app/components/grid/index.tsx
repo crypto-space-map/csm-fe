@@ -13,11 +13,12 @@ export const Grid = <R extends { id: string }>({
   infinite,
   loading,
   page,
+  startedSortedField,
   fetchData,
 }: GridProps<R>) => {
-  const [sortedField, setSortedField] = useState(columns[0].field);
+  const [sortedField, setSortedField] = useState(startedSortedField || columns[0].field);
 
-  const [sortDirection, setSortDirection] = useState(SortingValues.ASC);
+  const [sortDirection, setSortDirection] = useState(SortingValues.DESC);
   const [sortedRows, setSortedRows] = useState<R[]>([]);
 
   const columnWidths = useMemo(() => columns.map(item => `${item.width}px`).join(' '), [columns]);
