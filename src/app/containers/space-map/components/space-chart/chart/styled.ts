@@ -20,6 +20,15 @@ const showAnimation = keyframes`
     }
 `;
 
+const lineAnimation = keyframes`
+   from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+`;
+
 export const ChartWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -88,5 +97,10 @@ export const RandomSvg = styled.svg`
   }
   & .legend-circle {
     cursor: pointer;
+  }
+  & .LINKS {
+    & line {
+      animation: ${lineAnimation} 0.3s linear alternate;
+    }
   }
 `;

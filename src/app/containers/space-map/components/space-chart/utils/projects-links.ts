@@ -1,6 +1,8 @@
-import { HierarchyCircularNode } from 'd3';
+import { HierarchyCircularNode, selection } from 'd3';
 
 import { PackedCategories, ProjectsLinksGeneratorProps } from '../types';
+
+const LINKS = 'LINKS';
 
 type IncludesProjects = {
   x: number;
@@ -32,15 +34,15 @@ export const generateProjectLinks = ({ svg, nodes, projectPartnerships }: Projec
   const foundedProjects = getIncludesProjects(nodes, [...new Set(projectPartnerships)]);
 
   const link = svg
-    .append('g')
-    .classed('TEST123', true)
-    .selectAll('TEST123')
+    .insert('g', ':first-child')
+    .classed(LINKS, true)
+    .selectAll(LINKS)
     .data(foundedProjects)
     .enter()
     .append('line')
-    .classed('TEST123', true)
     .join('line')
     .attr('stroke', '#ffffff')
-    .attr('stroke-width', 0.5);
+    .attr('stroke-width', 1)
+    .attr('stroke-dasharray', 1000);
   return link;
 };

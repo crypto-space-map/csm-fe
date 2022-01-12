@@ -80,7 +80,6 @@ export const generateCategoryPacks = ({
   const onMouseOut = () => fundsTooltip.style('opacity', 0).attr('class', CLASSNAMES.TOOLTIP.NORMAL);
 
   const onClick = (_event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) => {
-    console.log({ x: _event.x, y: _event.y }, item);
     if (item.data.projectId) {
       fetchPartnershipsData(item.data.projectId);
       setProject(item);
@@ -120,13 +119,14 @@ export const generateCategoryPacks = ({
     .on('mousemove', onMouseMove)
     .on('mouseover', onMouseOver)
     .on('mouseout', onMouseOut);
-  // .style('filter', 'url(#drop-shadow)');
 
   /** Generate categories-child labels */
   generateChildLabels(categoryPacks);
 
   /** Get data vs cords */
   const circlesData = projectsVsCords(circles.data());
+
+  circles.exit().remove();
 
   return circlesData;
 };

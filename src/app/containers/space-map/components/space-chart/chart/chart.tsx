@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { select } from 'd3';
+import { descending, forceCenter, forceLink, forceX, forceY, select } from 'd3';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 
@@ -37,6 +37,7 @@ export const SpaceChart = () => {
     fetchingMapData: loading,
     loadMapDataError,
     projectPartnerships,
+    projectPartnershipsLoading,
   } = useSpaceMap();
 
   useEffect(() => {
@@ -63,7 +64,7 @@ export const SpaceChart = () => {
         height,
       });
       const nodes = simulation.nodes();
-
+      simulation.stop();
       // clear for rerender
       svg.selectAll('g').remove();
       wrapper.selectAll('div').remove();
@@ -92,7 +93,12 @@ export const SpaceChart = () => {
 
       categoriesLabels({ ref: svgRef, nodes });
 
-      if (projectPartnerships && projectPartnerships.length && currentProject) {
+      if (
+        projectPartnerships &&
+        projectPartnerships.length &&
+        currentProject &&
+        !projectPartnershipsLoading
+      ) {
         const link = generateProjectLinks({
           svg,
           nodes: circles,
@@ -123,6 +129,7 @@ export const SpaceChart = () => {
     fetchPartnershipsData,
     setProject,
     currentProject,
+    projectPartnershipsLoading,
   ]);
 
   return (

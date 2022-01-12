@@ -1,4 +1,4 @@
-import { forceSimulation, forceX, forceY, forceManyBody, forceCollide, forceLink } from 'd3';
+import { forceSimulation, forceX, forceY, forceManyBody, forceCollide } from 'd3';
 
 import { CirclesSimulation } from '../types';
 
@@ -16,7 +16,7 @@ export const circlesSimulation = ({ nodes, width, height }: CirclesSimulation) =
       'cy',
       forceY()
         .y(height / 2)
-        .strength(0.0000000001)
+        .strength(0.0003)
     )
     .force(
       'x',
@@ -35,11 +35,11 @@ export const circlesSimulation = ({ nodes, width, height }: CirclesSimulation) =
       'collide',
       forceCollide()
         .radius(d => d.r + NODE.PADDING)
-        .strength(1)
+        .strength(1.5)
     )
     .stop();
 
-  while (simulation.alpha() > 0.01) {
+  while (simulation.alpha() > 0.001) {
     simulation.tick();
   }
 
