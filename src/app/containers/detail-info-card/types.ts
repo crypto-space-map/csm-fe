@@ -1,5 +1,6 @@
 export interface ExchangeRequest {
   page: number;
+  projectName: string;
 }
 export interface ExchangeDTO {
   exchange: string;

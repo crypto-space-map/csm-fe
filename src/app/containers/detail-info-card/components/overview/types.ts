@@ -1,13 +1,12 @@
-export interface InvestorsProps {
-  link: string;
-  title: string;
+export interface ContractProps {
+  id: number;
+  name: string;
+  address: string;
+  imgSrc: string;
 }
 
-export interface FundsProps {
-  id: string;
-  fundrasingRound: string;
-  investors: InvestorsProps[];
-  amount: number;
-  date: string;
-  ann: string;
+export interface OverviewProps {
+  description: string;
+  category: string;
+  contracts: ContractProps[];
 }

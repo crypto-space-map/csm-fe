@@ -48,7 +48,7 @@ const data = [
 
 // допилить, когда понятно будет как считается эта статистика
 
-export const StatisticsSection = () => (
+export const DetailStatisticsSection = () => (
   <StatisticsSectionWrapper>
     {data.map(item => (
       <StatisticItem key={item.id} {...item} />

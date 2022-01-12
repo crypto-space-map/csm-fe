@@ -1,8 +1,7 @@
 import { useActions } from 'hooks';
-import { fetchDataReducers, fetchDataInitialState } from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
-import type { ContainerState, ExchangeDTO } from './types';
+import type { ContainerState, ExchangeDTO, ExchangeRequest } from './types';
 import { sliceKey as name } from './utils';
 
 export const initialState: ContainerState = {
@@ -27,7 +26,7 @@ const providersListSlice = createSlice({
     fetchOverviewTradingStockFail(state) {
       state.overviewTradingStockLoading = false;
     },
-    fetchExchangesData(state, _action: PayloadAction<{ page: number }>) {
+    fetchExchangesData(state, _action: PayloadAction<ExchangeRequest>) {
       state.exchangesDataLoading = true;
     },
     fetchExchangesDataSuccess(state, action: PayloadAction<ExchangeDTO[]>) {

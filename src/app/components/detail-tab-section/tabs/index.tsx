@@ -17,6 +17,8 @@ const StyledTab = styled(MuiTab)`
 `;
 
 const StyledTabs = styled(MuiTabs)`
+  background-color: ${COLOR_PALLETTE.MAIN_BLACK};
+
   & .MuiTabs-indicator {
     display: none;
   }

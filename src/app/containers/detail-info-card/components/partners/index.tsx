@@ -5,11 +5,11 @@ import moment from 'moment';
 import { Grid, CryptoLogo } from 'app/components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
 import LinkIcon from 'assets/link.svg';
+import { cutLink } from 'utils/detail-info';
 
 import { headerNames, products } from './constants';
 import { AnnLink, PartnerWrapper } from './styles';
 import { PartnersProps } from './types';
-import { cutLink } from './utils';
 
 const decorateMcap = (row: PartnersProps) => {
   const { mcap, mcapInit } = row;
@@ -60,7 +60,7 @@ const columns: ColumnProps<PartnersProps>[] = [
   {
     field: 'mcap',
     headerName: headerNames.mcap,
-    width: 110,
+    width: 90,
     type: SortingTypes.NUMBER,
     valueFormatter: decorateMcap,
   },

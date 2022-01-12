@@ -1,4 +1,5 @@
 import { Card } from '../card';
+import { EventsContentWrapper } from './styles';
 
 const eventData = [
   {
@@ -49,9 +50,9 @@ const eventData = [
   },
 ];
 export const Events = () => (
-  <>
+  <EventsContentWrapper>
     {eventData.map(item => (
       <Card key={item.id} {...item} />
     ))}
-  </>
+  </EventsContentWrapper>
 );
