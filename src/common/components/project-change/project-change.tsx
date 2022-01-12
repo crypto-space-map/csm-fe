@@ -20,11 +20,14 @@ export const ProjectChange = ({
   lightVariant,
 }: ProjectChangeProps) => {
   const isTardeUp = isTradeUp(percentageChange);
-  const isPriceUp = priceChange && isTradeUp(priceChange) ? `+$${priceChange}` : `-$${priceChange}`;
+  const isPriceUp =
+    priceChange && isTradeUp(priceChange) ? `+$${priceChange}` : `-$${-1 * Number(priceChange)}`;
   return (
     <StyledProjectChange textAlign={textAlign}>
-      <ProjectChangeHeader lightVariant={lightVariant}>{changePeriod}</ProjectChangeHeader>
-      <TradingInfo isTardeUp={isTardeUp}>
+      <ProjectChangeHeader className="project-change-header" lightVariant={lightVariant}>
+        {changePeriod}
+      </ProjectChangeHeader>
+      <TradingInfo className="project-change-traiding-info" isTardeUp={isTardeUp}>
         {isTardeUp ? <TradingUpIcon /> : <TradingDownIcon />}
         <span>{percentageChange}%</span>
       </TradingInfo>

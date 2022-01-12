@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
+import { link } from 'global/styles';
 
 const secondFontOptions = css`
   font-size: 16px;
@@ -31,4 +32,27 @@ export const StatisticsSectionWrapper = styled.div`
   grid-gap: 36px 0;
   grid-template-columns: repeat(4, minmax(160px, 1fr));
   margin-bottom: 36px;
+`;
+
+export const ProjectChangeWrapper = styled.div`
+  width: max-content;
+
+  & .project-change-header {
+    ${secondFontOptions}
+    text-align: start;
+  }
+
+  & .project-change-traiding-info {
+    margin: 8px 0 4px 0;
+  }
+`;
+
+export const StyledLink = styled.a`
+  ${link(COLOR_PALLETTE.MAIN_WHITE)}
+`;
+
+export const StyledLinkWrapper = styled.div`
+  ${secondFontOptions}
+  color: ${COLOR_PALLETTE.MAIN_WHITE};
+  margin-top: 8px;
 `;

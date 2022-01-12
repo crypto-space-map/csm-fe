@@ -1,5 +1,6 @@
 import { ShareIcon, StarIcon, LikeIcon, CloseIcon } from 'assets';
 
+import { HeaderData } from '../../types';
 import {
   Icon,
   CompanyName,
@@ -12,28 +13,19 @@ import {
   CloseIconWrapper,
 } from './styles';
 
-const data = {
-  company: {
-    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS89s6Jq3AQCRJM19NtW28glmVd7eT6bpjrTA&usqp=CAU',
-    name: 'Robonomics Network',
-    tiker: 'XRT',
-    rank: 652,
-  },
-};
-
-interface HeaderSectionProps {
+interface HeaderSectionProps extends HeaderData {
   onClose: () => void;
 }
 
-export const HeaderSection = ({ onClose }: HeaderSectionProps) => (
+export const HeaderSection = ({ name, symbol, icon, rank, onClose }: HeaderSectionProps) => (
   <HeaderSectionWrapper>
     <CompanyInfo>
-      <Icon src={data.company.logo} alt="logo" />
-      <CompanyName>{data.company.name}</CompanyName>
-      <CompanyTiker>{data.company.tiker}</CompanyTiker>
+      <Icon src={icon} alt="logo" />
+      <CompanyName>{name}</CompanyName>
+      <CompanyTiker>{symbol.toUpperCase()}</CompanyTiker>
       <RankWrapper>
         <StarIcon />
-        <RankText>{`Rank ${data.company.rank}`}</RankText>
+        <RankText>{`Rank ${rank}`}</RankText>
       </RankWrapper>
     </CompanyInfo>
     <Controls>

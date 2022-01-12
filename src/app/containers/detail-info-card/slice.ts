@@ -2,7 +2,7 @@ import { useActions } from 'hooks';
 import { fetchDataReducers, fetchDataInitialState } from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
-import type { ContainerState, ExchangeDTO } from './types';
+import type { ContainerState, ExchangeDTO, ProjectDataResponseDTO } from './types';
 import { sliceKey as name } from './utils';
 
 export const initialState: ContainerState = {
@@ -11,6 +11,9 @@ export const initialState: ContainerState = {
   exchangesData: [],
   exchangesPage: 1,
   exchangesDataLoading: false,
+  projectLoading: false,
+  projectStatistic: null,
+  projectHeaderData: null,
 };
 
 const providersListSlice = createSlice({
@@ -43,6 +46,40 @@ const providersListSlice = createSlice({
     },
     setExchangesPage(state, action: PayloadAction<number>) {
       state.exchangesPage = action.payload;
+    },
+    fetchProjectData(state) {
+      state.projectLoading = true;
+    },
+    fetchProjectDataSuccess(state, action: PayloadAction<ProjectDataResponseDTO>) {
+      const {
+        payload: {
+          name: projectName,
+          symbol,
+          icon,
+          rank,
+          marketCap,
+          marketPrice,
+          priceChangePercentage,
+          website,
+          totalVolume,
+          supply,
+        },
+      } = action;
+      state.projectLoading = false;
+      state.projectHeaderData = { name: projectName, symbol, icon, rank };
+      state.projectStatistic = {
+        marketCap,
+        marketPrice,
+        website,
+        totalVolume,
+        priceChangePercentageDay: priceChangePercentage['24h'],
+        priceChangePercentageWeek: priceChangePercentage['7d'],
+        supplyCirculating: supply.circulating,
+        supplyTotal: supply.total,
+      };
+    },
+    fetchProjectDataFail(state) {
+      state.projectLoading = false;
     },
   },
 });

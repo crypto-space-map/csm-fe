@@ -2,6 +2,7 @@ import { memo, useState } from 'react';
 
 import { HeaderSection, StatisticsSection } from './components';
 import { TabsSection } from './components/tabs-section';
+import { statisticDetailData, headerDetailData } from './constants';
 import { useDetailInfoSlice } from './hooks';
 import { DetailWrapper, TopSection, TransitionWrapper } from './styles';
 
@@ -32,8 +33,8 @@ export const DetailInfoCard = memo(() => {
       <TransitionWrapper open={isShow}>
         <DetailWrapper>
           <TopSection>
-            <HeaderSection onClose={handleClick} />
-            <StatisticsSection />
+            <HeaderSection onClose={handleClick} {...headerDetailData} />
+            <StatisticsSection data={statisticDetailData} />
           </TopSection>
 
           <TabsSection />
