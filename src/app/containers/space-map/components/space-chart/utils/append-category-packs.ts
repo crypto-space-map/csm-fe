@@ -51,7 +51,6 @@ export const generateCategoryPacks = ({
   const elem = fundsTooltip.node() as HTMLDivElement;
   const isTransparent = ({ marketCap, projectId, exchanges: itemExchangesArr }: PackedCategories) => {
     let opacity = 1;
-
     const isLessThanCapFrom = mCapFrom || minMarketCap;
     const isMoreThanCapTo = mCapTo || maxMarketCap;
 
@@ -81,7 +80,7 @@ export const generateCategoryPacks = ({
   const onMouseOut = () => fundsTooltip.style('opacity', 0).attr('class', CLASSNAMES.TOOLTIP.NORMAL);
 
   const onClick = (_event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) => {
-    console.log(_event, item);
+    console.log({ x: _event.x, y: _event.y }, item);
     if (item.data.projectId) {
       fetchPartnershipsData(item.data.projectId);
       setProject(item);

@@ -62,7 +62,6 @@ export const SpaceChart = () => {
         width,
         height,
       });
-
       const nodes = simulation.nodes();
 
       // clear for rerender
@@ -83,7 +82,8 @@ export const SpaceChart = () => {
         exchanges,
         maxMarketCap,
         minMarketCap,
-        projectPartnerships,
+        projectPartnerships:
+          (projectPartnerships && [...projectPartnerships, currentProject?.data.projectId || '']) || null,
         fetchPartnershipsData,
         setProject,
       });
@@ -96,7 +96,7 @@ export const SpaceChart = () => {
         const link = generateProjectLinks({
           svg,
           nodes: circles,
-          projectPartnerships: [...projectPartnerships, currentProject.data.projectId],
+          projectPartnerships,
         });
 
         simulation.on('tick', () => {
