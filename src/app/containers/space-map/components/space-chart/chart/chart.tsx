@@ -1,26 +1,23 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { descending, forceCenter, forceLink, forceX, forceY, select } from 'd3';
+import { select } from 'd3';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 
 import { PackedCategories } from '../types';
-import {
-  circlesSimulation,
-  createBaseMap,
-  createCategoryPacks,
-  generateCategoryPacks,
-  categoriesLabels,
-  fundsTooltips,
-} from '../utils';
+import { createBaseMap, generateCategoryPacks, categoriesLabels, fundsTooltips } from '../utils';
 import { generateFundsLegend } from '../utils/circles-legend';
 import { getCircleCord } from '../utils/helpers';
 import { generateProjectLinks } from '../utils/projects-links';
+import { useChart } from '../utils/use-chart';
 import { ChartWrapper, RandomSvg } from './styled';
 
 export const SpaceChart = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+
+  const width = wrapperRef.current?.offsetWidth;
+  const height = wrapperRef.current?.offsetHeight;
 
   const [currentProject, setCurrentProject] = useState<PackedCategories | null>(null);
 
@@ -40,6 +37,8 @@ export const SpaceChart = () => {
     projectPartnershipsLoading,
   } = useSpaceMap();
 
+  const { packedCategories, simulation } = useChart({ width, height, tree, maxMarketCap });
+
   useEffect(() => {
     if (!tree && !loading && !loadMapDataError) {
       fetchSpaceMapData();
@@ -47,24 +46,14 @@ export const SpaceChart = () => {
   }, [fetchSpaceMapData, tree, loading, loadMapDataError]);
 
   useLayoutEffect(() => {
-    const width = wrapperRef.current?.offsetWidth;
-    const height = wrapperRef.current?.offsetHeight;
-
-    const IS_RENDER_PROPS_AVAILABLE =
-      width && height && svgRef.current && tree && maxMarketCap && minMarketCap;
+    const IS_RENDER_PROPS_AVAILABLE = width && height && maxMarketCap && minMarketCap;
 
     if (IS_RENDER_PROPS_AVAILABLE) {
       const map = createBaseMap({ width, height, ref: svgRef });
       const svg = select(map);
       const wrapper = select(wrapperRef.current);
-      const categoriesPacked = createCategoryPacks(tree, maxMarketCap, width, height);
-      const simulation = circlesSimulation({
-        nodes: categoriesPacked,
-        width,
-        height,
-      });
+
       const nodes = simulation.nodes();
-      simulation.stop();
       // clear for rerender
       svg.selectAll('g').remove();
       wrapper.selectAll('div').remove();
@@ -88,8 +77,6 @@ export const SpaceChart = () => {
         fetchPartnershipsData,
         setProject,
       });
-
-      // generateProjectLinks({ simulation, partnerships });
 
       categoriesLabels({ ref: svgRef, nodes });
 
@@ -116,10 +103,6 @@ export const SpaceChart = () => {
       }
     }
   }, [
-    wrapperRef.current?.offsetWidth,
-    wrapperRef.current?.offsetHeight,
-    svgRef,
-    tree,
     maxMarketCap,
     minMarketCap,
     mCapFrom,
@@ -130,6 +113,10 @@ export const SpaceChart = () => {
     setProject,
     currentProject,
     projectPartnershipsLoading,
+    packedCategories,
+    width,
+    height,
+    simulation,
   ]);
 
   return (

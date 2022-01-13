@@ -94,6 +94,7 @@ export const generateCategoryPacks = ({
     .data(nodes)
     .enter()
     .append('g')
+
     .classed(CLASSNAMES.CATEGORY, true)
     .attr('transform', item => `translate(${item.x - item.r}, ${item.y - item.r})`);
 

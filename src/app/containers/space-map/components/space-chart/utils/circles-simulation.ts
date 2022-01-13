@@ -4,31 +4,19 @@ import { CirclesSimulation } from '../types';
 
 const NODE = { PADDING: 10 };
 
-export const circlesSimulation = ({ nodes, width, height }: CirclesSimulation) => {
-  const simulation = forceSimulation(nodes)
-    .force(
-      'cx',
-      forceX()
-        .x(width / 2)
-        .strength(0.1)
-    )
-    .force(
-      'cy',
-      forceY()
-        .y(height / 2)
-        .strength(0.0003)
-    )
+export const circlesSimulation = ({ packedCategories }: CirclesSimulation) => {
+  const simulation = forceSimulation(packedCategories)
     .force(
       'x',
       forceX()
         .x(d => d.x as number)
-        .strength(0.19)
+        .strength(1)
     )
     .force(
       'y',
       forceY()
         .y(d => d.y as number)
-        .strength(3)
+        .strength(5)
     )
     .force('charge', forceManyBody().strength(-1))
     .force(
@@ -39,7 +27,7 @@ export const circlesSimulation = ({ nodes, width, height }: CirclesSimulation) =
     )
     .stop();
 
-  while (simulation.alpha() > 0.001) {
+  while (simulation.alpha() > 0.0001) {
     simulation.tick();
   }
 

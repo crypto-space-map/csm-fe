@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 
-import { Selection, SimulationNodeDatum, PackCircle, HierarchyCircularNode } from 'd3';
+import { Selection, SimulationNodeDatum, HierarchyCircularNode, PackCircle } from 'd3';
 
 import { CSMMapCategory, Exchanges, Partnership } from 'app/containers/space-map/types';
 
@@ -65,8 +65,8 @@ export type CategoryPacksType = {
   setProject: (val: HierarchyCircularNode<PackedCategories>) => void;
 };
 
-export type CirclesSimulation = Sizing & {
-  nodes: PackedCategories[];
+export type CirclesSimulation = {
+  packedCategories: PackedCategories[];
 };
 
 export type PackedCategories = {
@@ -94,4 +94,25 @@ export type ProjectsLinksGeneratorProps = {
   svg: Selection<SVGSVGElement | null, unknown, null, undefined>;
   nodes: HierarchyCircularNode<PackedCategories>[];
   projectPartnerships: Partnership['projectId'][] | null;
+};
+
+//  useChart
+
+export type UseChartProps = {
+  width?: number;
+  height?: number;
+  tree: CSMMapCategory[] | null;
+  maxMarketCap: number | null;
+};
+
+export type PackedNodes = PackCircle & {
+  key: string;
+  children: ({
+    data: CSMMapCategory;
+    r: number;
+    id: string;
+    name: string;
+    children: CSMMapCategory[];
+    marketCap: number;
+  } & PackCircle)[];
 };

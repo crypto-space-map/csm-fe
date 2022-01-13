@@ -1,4 +1,4 @@
-import { HierarchyCircularNode, selection } from 'd3';
+import { HierarchyCircularNode } from 'd3';
 
 import { PackedCategories, ProjectsLinksGeneratorProps } from '../types';
 

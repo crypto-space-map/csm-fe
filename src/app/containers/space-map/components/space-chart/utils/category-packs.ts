@@ -1,25 +1,10 @@
-import { packSiblings, extent, scaleSqrt, group, PackCircle } from 'd3';
+import { packSiblings, extent, scaleSqrt, group } from 'd3';
 
 import { CSMMapCategory } from 'app/containers/space-map/types';
 
-import { PackedCategories } from '../types';
+import { PackedCategories, PackedNodes } from '../types';
 import { mapCords } from './map-cords';
 /** TODO  need to understand where from we take circle coords data */
-
-type PackedNodes = {
-  key: string;
-  children: ({
-    data: CSMMapCategory;
-    r: number;
-    id: string;
-    name: string;
-    children: CSMMapCategory[];
-    marketCap: number;
-  } & PackCircle)[];
-  r: number;
-  x: number;
-  y: number;
-};
 
 /** Incoming categories values  from to  */
 const DOMAIN = {
