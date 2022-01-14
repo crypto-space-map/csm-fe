@@ -23,10 +23,9 @@ export function useSpaceMap() {
     mapTree: { data: spaceMapData, loading: fetchingMapData, loadError: loadMapDataError },
     projects: { data: projects },
     filters,
-    projectPartnerships: { loading },
   } = useSelector(selectMapData);
 
-  const projectPartnerships = useSelector(selectPartnerships);
+  const { projectPartnerships, projectPartnershipsLoading } = useSelector(selectPartnerships);
 
   const fetchPartnershipsData = useCallback((val: string) => fetchPartnerships(val), [fetchPartnerships]);
 
@@ -47,6 +46,6 @@ export function useSpaceMap() {
     filters,
     loadMapDataError,
     projectPartnerships,
-    projectPartnershipsLoading: loading,
+    projectPartnershipsLoading,
   };
 }

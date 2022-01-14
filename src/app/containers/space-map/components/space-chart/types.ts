@@ -65,7 +65,7 @@ export type CategoryPacksType = {
   setProject: (val: HierarchyCircularNode<PackedCategories>) => void;
 };
 
-export type CirclesSimulation = {
+export type CirclesSimulation = Sizing & {
   packedCategories: PackedCategories[];
 };
 

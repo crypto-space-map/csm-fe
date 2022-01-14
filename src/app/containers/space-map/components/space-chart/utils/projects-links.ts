@@ -4,29 +4,16 @@ import { PackedCategories, ProjectsLinksGeneratorProps } from '../types';
 
 const LINKS = 'LINKS';
 
-type IncludesProjects = {
-  x: number;
-  y: number;
-  projectId: string;
-  parent: HierarchyCircularNode<PackedCategories> | null;
-}[];
-
 const getIncludesProjects = (
   data: ProjectsLinksGeneratorProps['nodes'],
   projectPartnerships: ProjectsLinksGeneratorProps['projectPartnerships']
-): IncludesProjects => {
+): HierarchyCircularNode<PackedCategories>[] => {
   const parsed = data.reduce((acc, item) => {
     if (projectPartnerships?.includes(item.data.projectId)) {
-      const {
-        parent,
-        data: { projectId },
-        x,
-        y,
-      } = item;
-      acc.push({ projectId, x, y, parent });
+      acc.push(item);
     }
     return acc;
-  }, [] as IncludesProjects);
+  }, [] as HierarchyCircularNode<PackedCategories>[]);
   return parsed;
 };
 
@@ -43,6 +30,6 @@ export const generateProjectLinks = ({ svg, nodes, projectPartnerships }: Projec
     .join('line')
     .attr('stroke', '#ffffff')
     .attr('stroke-width', 1)
-    .attr('stroke-dasharray', 1000);
+    .attr('stroke-dasharray', 10000);
   return link;
 };

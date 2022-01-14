@@ -6,5 +6,7 @@ const selectDomain = (state: RootState) => state.spaceMapData || initialState;
 
 export const selectMapData = (state: RootState) => selectDomain(state) || null;
 
-export const selectPartnerships = (state: RootState) =>
-  selectDomain(state).projectPartnerships.data?.map(item => item.projectId) || null;
+export const selectPartnerships = (state: RootState) => ({
+  projectPartnerships: selectDomain(state).projectPartnerships.data?.map(item => item.projectId) || null,
+  projectPartnershipsLoading: selectDomain(state).projectPartnerships.loading,
+});

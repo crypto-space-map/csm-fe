@@ -22,7 +22,7 @@ const showAnimation = keyframes`
 
 const lineAnimation = keyframes`
    from {
-    stroke-dashoffset: 1000;
+    stroke-dashoffset: 10000;
   }
   to {
     stroke-dashoffset: 0;

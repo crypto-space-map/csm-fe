@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { select } from 'd3';
+import { HierarchyCircularNode, select } from 'd3';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 
@@ -12,14 +12,14 @@ import { generateProjectLinks } from '../utils/projects-links';
 import { useChart } from '../utils/use-chart';
 import { ChartWrapper, RandomSvg } from './styled';
 
-export const SpaceChart = () => {
+export const SpaceChart = memo(() => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
   const width = wrapperRef.current?.offsetWidth;
   const height = wrapperRef.current?.offsetHeight;
 
-  const [currentProject, setCurrentProject] = useState<PackedCategories | null>(null);
+  const [currentProject, setCurrentProject] = useState<HierarchyCircularNode<PackedCategories> | null>(null);
 
   const setProject = useCallback(val => setCurrentProject(val), []);
 
@@ -46,7 +46,7 @@ export const SpaceChart = () => {
   }, [fetchSpaceMapData, tree, loading, loadMapDataError]);
 
   useLayoutEffect(() => {
-    const IS_RENDER_PROPS_AVAILABLE = width && height && maxMarketCap && minMarketCap;
+    const IS_RENDER_PROPS_AVAILABLE = width && height && maxMarketCap && minMarketCap && simulation;
 
     if (IS_RENDER_PROPS_AVAILABLE) {
       const map = createBaseMap({ width, height, ref: svgRef });
@@ -124,4 +124,4 @@ export const SpaceChart = () => {
       <RandomSvg ref={svgRef} />
     </ChartWrapper>
   );
-};
+});

@@ -1,9 +1,10 @@
-import { scaleLinear, HierarchyCircularNode, select } from 'd3';
+import { scaleLinear, HierarchyCircularNode } from 'd3';
 import { COLOR_PALLETTE } from 'global/pallette';
 
 import { CategoryPacksType, PackedCategories } from '../types';
 import { packedChild } from './child-packer';
 import { color } from './colors';
+import { getProjectsVsCords } from './helpers';
 import { generateChildLabels } from './labels';
 
 const TOOLTIP_PADDING = 5;
@@ -21,19 +22,6 @@ const CLASSNAMES = {
 const STROKE_DASHARRAY = '4,4';
 
 const scaled = scaleLinear();
-
-const projectsVsCords = (data: HierarchyCircularNode<PackedCategories>[]) => {
-  const parsed: HierarchyCircularNode<PackedCategories>[] = data.reduce((acc, item) => {
-    if (item.children?.length) {
-      return [...acc, ...projectsVsCords(item.children)];
-    }
-    if (item.x && item.y && item.data.projectId) {
-      acc.push(item);
-    }
-    return acc;
-  }, [] as HierarchyCircularNode<PackedCategories>[]);
-  return parsed;
-};
 
 export const generateCategoryPacks = ({
   svg,
@@ -125,7 +113,7 @@ export const generateCategoryPacks = ({
   generateChildLabels(categoryPacks);
 
   /** Get data vs cords */
-  const circlesData = projectsVsCords(circles.data());
+  const circlesData = getProjectsVsCords(circles.data());
 
   circles.exit().remove();
 
