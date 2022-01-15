@@ -31,5 +31,8 @@ export const generateProjectLinks = ({ svg, nodes, projectPartnerships }: Projec
     .attr('stroke', '#ffffff')
     .attr('stroke-width', 1)
     .attr('stroke-dasharray', 10000);
+
+  link.merge(link);
+
   return link;
 };

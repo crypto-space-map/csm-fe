@@ -17,13 +17,13 @@ const CLASSNAMES = {
 };
 
 type CategoriesLabelsProps = {
-  ref: RefObject<SVGSVGElement>;
+  svg: Selection<SVGGElement | null, unknown, null, undefined>;
   nodes: PackedCategories[];
 };
 
-export const categoriesLabels = ({ ref, nodes }: CategoriesLabelsProps) => {
+export const categoriesLabels = ({ svg, nodes }: CategoriesLabelsProps) => {
   /** Root g */
-  const labelArea = select(ref.current)
+  const labelArea = svg
     .append('g')
     .classed(CLASSNAMES.CATEGORY_LABELS, true)
     .selectAll('text')

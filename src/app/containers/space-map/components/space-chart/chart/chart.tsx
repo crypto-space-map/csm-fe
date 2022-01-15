@@ -57,9 +57,6 @@ export const SpaceChart = memo(() => {
       const wrapper = select(wrapperRef.current);
 
       const nodes = simulation.nodes();
-      // clear for rerender
-      svg.selectAll('g').remove();
-      wrapper.selectAll('div').remove();
 
       const fundsTooltip = fundsTooltips({ ref: wrapperRef, nodes });
 
@@ -81,7 +78,7 @@ export const SpaceChart = memo(() => {
         setProject,
       });
 
-      categoriesLabels({ ref: svgRef, nodes });
+      categoriesLabels({ svg, nodes });
 
       if (
         projectPartnerships &&
@@ -101,6 +98,8 @@ export const SpaceChart = memo(() => {
             .attr('y1', getCircleCord(currentProject, 'y'))
             .attr('x2', d => getCircleCord(d, 'x'))
             .attr('y2', d => getCircleCord(d, 'y'));
+
+          link.exit().remove();
         });
         simulation.restart();
       }

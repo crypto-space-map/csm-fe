@@ -49,10 +49,9 @@ export const ChartWrapper = styled.div`
 `;
 
 export const RandomSvg = styled.svg`
-  margin-left: 174px;
-  /** место для списка партенрок */
   width: 100%;
   height: 100%;
+  /* overflow: visible; */
   & > circle {
     transition: 0.2s linear;
   }
@@ -61,7 +60,6 @@ export const RandomSvg = styled.svg`
     cursor: pointer;
     transition: 0.2s linear;
     /* animation: ${circleAnimation} 0.3s linear; */
-    pointer-events: all;
     &:hover {
       stroke-width: 3;
     }
@@ -72,7 +70,7 @@ export const RandomSvg = styled.svg`
       font-size: 16px;
       line-height: 22px;
       fill: ${COLOR_PALLETTE.MAP_LABELS};
-      /* pointer-events: none; */
+      pointer-events: none;
       text-anchor: middle;
       &.child {
         font-size: 12px;

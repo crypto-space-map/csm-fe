@@ -76,13 +76,12 @@ export const generateCategoryPacks = ({
   /** Generate categories */
 
   const categoryPacks = svg
-    .append('g')
+    .insert('g')
     .classed(CLASSNAMES.CATEGORY_PACKS, true)
     .selectAll(`.${CLASSNAMES.CENTROIDS}`)
     .data(nodes)
     .enter()
     .append('g')
-
     .classed(CLASSNAMES.CATEGORY, true)
     .attr('transform', item => `translate(${item.x - item.r}, ${item.y - item.r})`);
 
@@ -115,6 +114,9 @@ export const generateCategoryPacks = ({
   /** Get data vs cords */
   const circlesData = getProjectsVsCords(circles.data());
 
+  categoryPacks.merge(categoryPacks);
+  circles.merge(circles);
+  categoryPacks.exit().remove();
   circles.exit().remove();
 
   return circlesData;

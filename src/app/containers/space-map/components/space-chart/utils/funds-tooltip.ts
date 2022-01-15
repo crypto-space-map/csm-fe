@@ -16,5 +16,6 @@ export const fundsTooltips = ({ ref }: FundsTooltipProps) => {
 
   const tooltipArea = select(ref.current).append('div').attr('class', TOOLTIP);
 
+  tooltipArea.merge(tooltipArea);
   return tooltipArea;
 };

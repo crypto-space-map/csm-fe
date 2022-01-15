@@ -52,7 +52,7 @@ export type SimulationNodeDatumRadial = SimulationNodeDatum &
   };
 
 export type CategoryPacksType = {
-  svg: Selection<SVGSVGElement | null, unknown, null, undefined>;
+  svg: Selection<SVGGElement | null, unknown, null, undefined>;
   nodes: PackedCategories[];
   fundsTooltip: Selection<HTMLDivElement, unknown, null, undefined>;
   mCapFrom?: number | null;
@@ -91,7 +91,7 @@ export type PackedCategories = {
 //  Project links generator
 
 export type ProjectsLinksGeneratorProps = {
-  svg: Selection<SVGSVGElement | null, unknown, null, undefined>;
+  svg: Selection<SVGGElement | null, unknown, null, undefined>;
   nodes: HierarchyCircularNode<PackedCategories>[];
   projectPartnerships: Partnership['projectId'][] | null;
 };
