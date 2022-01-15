@@ -22,7 +22,7 @@ const showAnimation = keyframes`
 
 const lineAnimation = keyframes`
    from {
-    stroke-dashoffset: 10000;
+    stroke-dashoffset: 5000;
   }
   to {
     stroke-dashoffset: 0;
@@ -43,12 +43,14 @@ export const ChartWrapper = styled.div`
     opacity: 0;
     pointer-events: none;
     &.tooltip--hovered {
-      animation: ${showAnimation} 0.5s forwards;
+      animation: ${showAnimation} 1s forwards;
     }
   }
 `;
 
 export const RandomSvg = styled.svg`
+  margin-left: 174px;
+  /** место для списка партенрок */
   width: 100%;
   height: 100%;
   & > circle {
@@ -59,6 +61,7 @@ export const RandomSvg = styled.svg`
     cursor: pointer;
     transition: 0.2s linear;
     /* animation: ${circleAnimation} 0.3s linear; */
+    pointer-events: all;
     &:hover {
       stroke-width: 3;
     }
@@ -69,7 +72,7 @@ export const RandomSvg = styled.svg`
       font-size: 16px;
       line-height: 22px;
       fill: ${COLOR_PALLETTE.MAP_LABELS};
-      pointer-events: none;
+      /* pointer-events: none; */
       text-anchor: middle;
       &.child {
         font-size: 12px;

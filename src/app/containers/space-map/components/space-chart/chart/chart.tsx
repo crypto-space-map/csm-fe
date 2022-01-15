@@ -1,8 +1,9 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { HierarchyCircularNode, select } from 'd3';
+import { HierarchyCircularNode, select, zoom } from 'd3';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
+import { useWindowSize } from 'hooks/use-screen-size';
 
 import { PackedCategories } from '../types';
 import { createBaseMap, generateCategoryPacks, categoriesLabels, fundsTooltips } from '../utils';
@@ -22,6 +23,8 @@ export const SpaceChart = memo(() => {
   const [currentProject, setCurrentProject] = useState<HierarchyCircularNode<PackedCategories> | null>(null);
 
   const setProject = useCallback(val => setCurrentProject(val), []);
+
+  const windowSize = useWindowSize();
 
   const {
     filters: { mCapFrom, mCapTo, exchanges },
@@ -117,6 +120,7 @@ export const SpaceChart = memo(() => {
     width,
     height,
     simulation,
+    windowSize,
   ]);
 
   return (

@@ -10,21 +10,21 @@ export const circlesSimulation = ({ packedCategories, width, height }: CirclesSi
       'x',
       forceX()
         .x(d => d.x as number)
-        .strength(1.5)
+        .strength(height / width)
     )
     .force(
       'y',
       forceY()
         .y(d => d.y as number)
-        .strength(10)
+        .strength(width / height)
     )
-    .force('charge', forceManyBody().strength(-1))
+    // .force('charge', forceManyBody().strength(width / height))
     .force('center', forceCenter(width / 2, height / 2))
     .force(
       'collide',
       forceCollide()
         .radius(d => d.r + NODE.PADDING)
-        .strength(1.5)
+        .strength(1.6)
     )
     .stop();
 

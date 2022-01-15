@@ -37,7 +37,7 @@ export const createCategoryPacks = (
 
     const nodes = packSiblings<typeof circledChildren[number]>(circledChildren);
 
-    const maxCalculatedRadius = ((marketCap / maxMarketCap) * width) / 5;
+    const maxCalculatedRadius = ((marketCap / maxMarketCap) * width) / 6;
 
     const r = radius(maxCalculatedRadius);
 
