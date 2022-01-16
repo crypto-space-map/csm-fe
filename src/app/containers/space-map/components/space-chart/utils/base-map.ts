@@ -1,23 +1,27 @@
-import { select, zoom } from 'd3';
+import { select, zoom, Selection, D3ZoomEvent } from 'd3';
 
-import { BaseMapParams } from '../types';
+import { BaseMapParams, PackedCategories } from '../types';
 
-export const createBaseMap = ({ width = 0, height = 0, ref }: BaseMapParams) => {
-  const svg = select(ref.current as Element)
-    // .attr('viewBox', `0 0 ${width} ${height}`)
-    .call(
-      zoom()
-        .scaleExtent([0.8, 32])
-        .on('zoom', event => {
-          console.log(event);
-          svg.attr('transform', event.transform);
-        })
-    )
-    .append('g');
+export const createBaseMap = ({ ref }: BaseMapParams) => {
+  const update = select(ref.current as Element)
+    .selectAll('g')
+    .data([{} as PackedCategories]);
 
-  svg.merge(svg);
+  update
+    .enter()
+    .append('g')
+    .merge(update as unknown as Selection<SVGGElement, PackedCategories, Element, unknown>);
 
-  svg.exit().remove();
+  const handleZoom = (e: D3ZoomEvent<HTMLCanvasElement, unknown>) =>
+    /** TODO add correct type for event */
+    select(ref.current).select('g').attr('transform', e.transform);
 
-  return svg.node();
+  const initZoom = () =>
+    select(ref.current as Element).call(zoom().scaleExtent([0.8, 10]).on('zoom', handleZoom));
+
+  initZoom();
+
+  update.exit().remove();
+
+  return update;
 };

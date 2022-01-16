@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 
-import { Selection, SimulationNodeDatum, HierarchyCircularNode, PackCircle } from 'd3';
+import { Selection, SimulationNodeDatum, HierarchyCircularNode, PackCircle, BaseType } from 'd3';
 
 import { CSMMapCategory, Exchanges, Partnership } from 'app/containers/space-map/types';
 
@@ -13,7 +13,7 @@ export type PackType = Sizing & {
   data: CryptoObject /* Need to type it */;
 };
 
-export type BaseMapParams = Sizing & {
+export type BaseMapParams = {
   ref: RefObject<SVGSVGElement>;
 };
 
@@ -52,7 +52,7 @@ export type SimulationNodeDatumRadial = SimulationNodeDatum &
   };
 
 export type CategoryPacksType = {
-  svg: Selection<SVGGElement | null, unknown, null, undefined>;
+  svg: Selection<BaseType, unknown, null, undefined>;
   nodes: PackedCategories[];
   fundsTooltip: Selection<HTMLDivElement, unknown, null, undefined>;
   mCapFrom?: number | null;
@@ -91,7 +91,7 @@ export type PackedCategories = {
 //  Project links generator
 
 export type ProjectsLinksGeneratorProps = {
-  svg: Selection<SVGGElement | null, unknown, null, undefined>;
+  svg: Selection<BaseType, unknown, null, undefined>;
   nodes: HierarchyCircularNode<PackedCategories>[];
   projectPartnerships: Partnership['projectId'][] | null;
 };

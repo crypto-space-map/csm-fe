@@ -52,16 +52,16 @@ export const SpaceChart = memo(() => {
     const IS_RENDER_PROPS_AVAILABLE = width && height && maxMarketCap && minMarketCap && simulation;
 
     if (IS_RENDER_PROPS_AVAILABLE) {
-      const map = createBaseMap({ width, height, ref: svgRef });
-      const svg = select(map);
-      const wrapper = select(wrapperRef.current);
-
       const nodes = simulation.nodes();
+
+      const map = createBaseMap({ ref: svgRef });
+      const svg = select(map.node());
+      const wrapper = select(wrapperRef.current);
 
       const fundsTooltip = fundsTooltips({ ref: wrapperRef, nodes });
 
-      // TODO  убрал тк нет актуальных данных (выглядит не оч)
-      // generateFundsLegend({ svg, nodes });
+      // // TODO  убрал тк нет актуальных данных (выглядит не оч)
+      // // generateFundsLegend({ svg, nodes });
 
       const circles = generateCategoryPacks({
         svg,

@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 
-import { select, Selection } from 'd3';
+import { BaseType, select, Selection } from 'd3';
 
 import { PackedCategories } from '../types';
 import { packedChild } from './child-packer';
@@ -17,7 +17,7 @@ const CLASSNAMES = {
 };
 
 type CategoriesLabelsProps = {
-  svg: Selection<SVGGElement | null, unknown, null, undefined>;
+  svg: Selection<BaseType, unknown, null, undefined>;
   nodes: PackedCategories[];
 };
 

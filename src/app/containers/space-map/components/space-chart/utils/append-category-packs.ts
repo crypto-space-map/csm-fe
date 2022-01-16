@@ -38,20 +38,20 @@ export const generateCategoryPacks = ({
 }: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
   const isTransparent = ({ marketCap, projectId, exchanges: itemExchangesArr }: PackedCategories) => {
-    let opacity = 1;
+    let opacity = false;
     const isLessThanCapFrom = mCapFrom || minMarketCap;
     const isMoreThanCapTo = mCapTo || maxMarketCap;
 
     if (mCapTo || mCapFrom) {
       if (marketCap < isLessThanCapFrom || marketCap > isMoreThanCapTo) {
-        opacity = 0.1;
+        opacity = true;
       }
     }
     const registryArr = [...exchanges.map(item => item.toLowerCase())];
     const isIncludes = itemExchangesArr?.some(item => registryArr.includes(item));
     const isLinked = projectPartnerships?.includes(projectId);
-    if (!isIncludes || !isLinked) opacity = 0.1;
-    if (!projectPartnerships) opacity = 1;
+    if (!isIncludes || !isLinked) opacity = true;
+    if (!projectPartnerships) opacity = false;
     return opacity;
   };
 
@@ -92,8 +92,10 @@ export const generateCategoryPacks = ({
     .data(item => packedChild(item, item.r))
     .enter()
     .append('circle')
-    .attr('opacity', ({ data, children }) => !!!children && isTransparent(data))
-    .attr('fill', item => (!!item.children && item.value ? 'none' : color(item?.value || 1)))
+    .attr('fill', item =>
+      // TODO костыль что бы не лагало на время разарбаотки
+      !!item.children && item.value ? 'none' : isTransparent(item.data) ? '#383838' : color(item?.value || 1)
+    )
     .attr('stroke', item =>
       !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY
     )
@@ -113,11 +115,6 @@ export const generateCategoryPacks = ({
 
   /** Get data vs cords */
   const circlesData = getProjectsVsCords(circles.data());
-
-  categoryPacks.merge(categoryPacks);
-  circles.merge(circles);
-  categoryPacks.exit().remove();
-  circles.exit().remove();
 
   return circlesData;
 };
