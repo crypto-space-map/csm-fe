@@ -30,6 +30,10 @@ export const StyledCategoryWrapper = styled.div`
   }
 `;
 
+export const TradingWidgetWrapper = styled.div`
+  height: 400px;
+`;
+
 export const StylesShowMoreText = styled(ShowMoreText)`
   width: 490px;
   & .anchor-class {

@@ -5,16 +5,16 @@ import moment from 'moment';
 import { Grid, CryptoLogo } from 'app/components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
 import LinkIcon from 'assets/link.svg';
-import { cutLink } from 'utils/detail-info';
+import { cutLink, getTransformedPrice } from 'utils/detail-info';
 
 import { headerNames, products } from './constants';
 import { AnnLink, PartnerWrapper } from './styles';
 import { PartnersProps } from './types';
 
 const decorateMcap = (row: PartnersProps) => {
-  const { mcap, mcapInit } = row;
+  const { mcap } = row;
   if (!mcap) return null;
-  return `${mcap} ${mcapInit}`;
+  return getTransformedPrice(mcap, false, 1);
 };
 
 const decorateDate = (row: PartnersProps) => {

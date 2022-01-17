@@ -8,13 +8,17 @@ import { TopSection } from './styles';
 
 export const DetailInfoCard = memo(() => {
   useDetailInfoSlice();
-  const { isShow, handleClose } = useDetailInfo();
+  const { isShow, projectHeaderData, projectStatistic, handleClose } = useDetailInfo();
 
   return (
     <DetailCardWrapper show={isShow}>
       <TopSection>
-        <DetailHeaderSection onClose={handleClose} />
-        <DetailStatisticsSection />
+        {isShow && (
+          <>
+            {projectHeaderData && <DetailHeaderSection onClose={handleClose} {...projectHeaderData} />}
+            {projectStatistic && <DetailStatisticsSection data={projectStatistic} />}
+          </>
+        )}
       </TopSection>
 
       <TabsSection isShow={isShow} />

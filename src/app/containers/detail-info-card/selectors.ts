@@ -12,6 +12,8 @@ export const selectedOverviewTradingStockLoading = (state: RootState) =>
 
 export const selectedExchangesData = (state: RootState) => selectDomain(state).exchangesData;
 export const selectedExchangesDataLoading = (state: RootState) => selectDomain(state).exchangesDataLoading;
+export const selectedProjectHeaderData = (state: RootState) => selectDomain(state).projectHeaderData;
+export const selectedProjectStatistic = (state: RootState) => selectDomain(state).projectStatistic;
 
 export const selectedEnrichedExchangesData = createSelector([selectedExchangesData], data =>
   data.map((item, index) => ({

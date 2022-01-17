@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Grid } from 'app/components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
 import { selectedProjectName } from 'store/pageStore/selectors';
+import { getTransformedPrice } from 'utils/detail-info';
 
 import {
   selectedEnrichedExchangesData,
@@ -31,13 +32,13 @@ const decorateVolume = (row: EnrichedExchangeProps) => {
   const value = row.volume;
 
   if (!value) return null;
-  return `$ ${value}`;
+  return getTransformedPrice(value);
 };
 
 const decoratePersentVolume = (row: EnrichedExchangeProps) => {
   const value = row.persentVolume;
 
-  if (!value) return null;
+  if (!value) return '<0.1%';
   return `${value}%`;
 };
 
@@ -83,7 +84,6 @@ const columns: ColumnProps<EnrichedExchangeProps>[] = [
     headerName: headerNames.exchange,
     width: 120,
     renderCell: decorateExchange,
-    sortable: false,
   },
   {
     field: 'pair',
@@ -97,28 +97,28 @@ const columns: ColumnProps<EnrichedExchangeProps>[] = [
     headerName: headerNames.price,
     width: 80,
     valueFormatter: decoratePrice,
-    sortable: false,
+    type: SortingTypes.NUMBER,
   },
   {
     field: 'volume',
     headerName: headerNames.volume,
     width: 100,
     valueFormatter: decorateVolume,
-    sortable: false,
+    type: SortingTypes.NUMBER,
   },
   {
     field: 'persentVolume',
     renderCustomHeaderName: decorateHeaderPersentVolume,
     width: 100,
     valueFormatter: decoratePersentVolume,
-    sortable: false,
+    type: SortingTypes.NUMBER,
   },
   {
     field: 'updatedAt',
     headerName: headerNames.updated,
     width: 90,
     valueFormatter: decorateUpdatedAt,
-    sortable: false,
+    type: SortingTypes.DATE,
   },
 ];
 
@@ -149,6 +149,7 @@ export const Exchanges = memo(() => {
       fetchData={loadData}
       infinite
       page={exchangesPage}
+      startedSortedField="persentVolume"
     />
   );
 });

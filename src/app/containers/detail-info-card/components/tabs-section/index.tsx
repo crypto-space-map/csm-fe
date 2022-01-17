@@ -40,7 +40,7 @@ const selectComponentByTabValue = (value: string) => {
 };
 
 export const TabsSection = memo(({ isShow = false }: { isShow: boolean }) => {
-  const [activeTab, setActiveTab] = useState(detailInfoTabs.community);
+  const [activeTab, setActiveTab] = useState(detailInfoTabs.overview);
 
   const options = useMemo(
     () => ({
