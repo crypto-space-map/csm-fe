@@ -69,24 +69,13 @@ export type CirclesSimulation = Sizing & {
   packedCategories: PackedCategories[];
 };
 
-export type PackedCategories = {
-  key?: string;
-  children: PackedCategories[];
-  exchanges?: Exchanges[];
-  data: CSMMapCategory & {
-    r: number;
-    x: number;
-    y: number;
+export type PackedCategories = Omit<CSMMapCategory, 'children'> &
+  PackCircle & {
+    key?: string;
+    children: PackedCategories[];
+    data: CSMMapCategory & PackCircle;
+    parent: PackedCategories | null;
   };
-  id: string;
-  projectId: string;
-  name: string;
-  marketCap: number;
-  parent: PackedCategories | null;
-  r: number;
-  x: number;
-  y: number;
-};
 
 //  Project links generator
 

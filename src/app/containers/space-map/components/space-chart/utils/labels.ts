@@ -1,6 +1,4 @@
-import { RefObject } from 'react';
-
-import { BaseType, select, Selection } from 'd3';
+import { BaseType, Selection } from 'd3';
 
 import { PackedCategories } from '../types';
 import { packedChild } from './child-packer';

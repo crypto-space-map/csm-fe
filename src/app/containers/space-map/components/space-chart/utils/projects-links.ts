@@ -9,7 +9,7 @@ const getIncludesProjects = (
   projectPartnerships: ProjectsLinksGeneratorProps['projectPartnerships']
 ): HierarchyCircularNode<PackedCategories>[] => {
   const parsed = data.reduce((acc, item) => {
-    if (projectPartnerships?.includes(item.data.projectId)) {
+    if (item.data.projectId && projectPartnerships?.includes(item.data?.projectId)) {
       acc.push(item);
     }
     return acc;
@@ -30,7 +30,7 @@ export const generateProjectLinks = ({ svg, nodes, projectPartnerships }: Projec
     .join('line')
     .attr('stroke', '#ffffff')
     .attr('stroke-width', 1)
-    .attr('stroke-dasharray', 10000);
+    .attr('stroke-dasharray', 4000);
 
   link.merge(link);
 

@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { HierarchyCircularNode, select, zoom } from 'd3';
+import { HierarchyCircularNode, select } from 'd3';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import { useWindowSize } from 'hooks/use-screen-size';

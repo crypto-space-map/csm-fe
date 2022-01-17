@@ -3,8 +3,7 @@ import { COLOR_PALLETTE } from 'global/pallette';
 
 import { CategoryPacksType, PackedCategories } from '../types';
 import { packedChild } from './child-packer';
-import { color } from './colors';
-import { getProjectsVsCords } from './helpers';
+import { getCircleColor, getProjectsVsCords } from './helpers';
 import { generateChildLabels } from './labels';
 
 const TOOLTIP_PADDING = 5;
@@ -49,7 +48,7 @@ export const generateCategoryPacks = ({
     }
     const registryArr = [...exchanges.map(item => item.toLowerCase())];
     const isIncludes = itemExchangesArr?.some(item => registryArr.includes(item));
-    const isLinked = projectPartnerships?.includes(projectId);
+    const isLinked = projectId && projectPartnerships?.includes(projectId);
     if (!isIncludes || !isLinked) opacity = true;
     if (!projectPartnerships) opacity = false;
     return opacity;
@@ -94,14 +93,20 @@ export const generateCategoryPacks = ({
     .enter()
     .append('circle')
     .attr('fill', item =>
-      // TODO костыль что бы не лагало на время разарбаотки
-      !!item.children && item.value ? 'none' : isTransparent(item.data) ? '#383838' : color(item?.value || 1)
+      !!!item.children
+        ? (item.data.projectWeight &&
+            getCircleColor({
+              projectWeight: item.data.projectWeight,
+              isTransparent: isTransparent(item.data),
+            })) ||
+          '#383838'
+        : 'none'
     )
     .attr('stroke', item =>
       !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY
     )
     .attr('stroke-dasharray', item => (!!item.children ? STROKE_DASHARRAY : 'none'))
-    .attr('stroke-width', 1)
+    .attr('stroke-width', 0.5)
     .classed(CLASSNAMES.FUND, item => !item.children)
     .attr('r', item => item.r)
     .attr('cx', item => scaled(item.x))

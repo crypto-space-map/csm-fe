@@ -27,8 +27,10 @@ export type CSMMapCategory = {
   id: string;
   name: string;
   children: CSMMapCategory[];
+  exchanges?: Exchanges[];
   marketCap: number;
   projectId?: string;
+  projectWeight?: number;
 };
 
 export type ProjectData = {
