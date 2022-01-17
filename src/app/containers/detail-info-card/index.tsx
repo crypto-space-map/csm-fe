@@ -1,44 +1,27 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
-import { HeaderSection, StatisticsSection } from './components';
+import { DetailCardWrapper, DetailHeaderSection, DetailStatisticsSection } from 'app/components';
+
 import { TabsSection } from './components/tabs-section';
-import { useDetailInfoSlice } from './hooks';
-import { DetailWrapper, TopSection, TransitionWrapper } from './styles';
+import { useDetailInfoSlice, useDetailInfo } from './hooks';
+import { TopSection } from './styles';
 
-//  TODO потом удалить блок с центральным контентом
 export const DetailInfoCard = memo(() => {
   useDetailInfoSlice();
-  const [isShow, setIsShow] = useState(false);
+  const { isShow, projectHeaderData, projectStatistic, handleClose } = useDetailInfo();
 
-  const handleClick = () => {
-    setIsShow(!isShow);
-  };
   return (
-    <>
-      <div
-        style={{
-          color: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontWeight: 600,
-          fontSize: 40,
-          overflow: 'hidden',
-        }}>
-        <button onClick={handleClick}>ddd</button>
-        Crypto Space Map HERE
-      </div>
+    <DetailCardWrapper show={isShow}>
+      <TopSection>
+        {isShow && (
+          <>
+            {projectHeaderData && <DetailHeaderSection onClose={handleClose} {...projectHeaderData} />}
+            {projectStatistic && <DetailStatisticsSection data={projectStatistic} />}
+          </>
+        )}
+      </TopSection>
 
-      <TransitionWrapper open={isShow}>
-        <DetailWrapper>
-          <TopSection>
-            <HeaderSection onClose={handleClick} />
-            <StatisticsSection />
-          </TopSection>
-
-          <TabsSection />
-        </DetailWrapper>
-      </TransitionWrapper>
-    </>
+      <TabsSection isShow={isShow} />
+    </DetailCardWrapper>
   );
 });

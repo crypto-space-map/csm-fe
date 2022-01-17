@@ -5,6 +5,8 @@ import ArrowIcon from 'assets/arrow.svg';
 import { StyledHeaderItem, ArrowIconWrapper } from '../../styles';
 import { HeaderItemProps } from '../../types';
 
+const defaultFunc = () => {};
+
 export const HeaderItem = <T,>({
   field,
   headerName,
@@ -23,7 +25,7 @@ export const HeaderItem = <T,>({
     return '';
   }, [headerName, renderCustomHeaderName]);
   return (
-    <StyledHeaderItem sortable={sortable} onClick={handleClick}>
+    <StyledHeaderItem sortable={sortable} onClick={sortable ? handleClick : defaultFunc}>
       <span>{headerNameValue}</span>
       {sortable && (
         <ArrowIconWrapper selected={selected} sortDirection={sortDirection}>

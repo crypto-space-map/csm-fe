@@ -60,3 +60,8 @@ export const CloseIconWrapper = styled.div`
   right: 23px;
   cursor: pointer;
 `;
+
+export const StyledRoundedButton = styled.div`
+  margin-right: 24px;
+  cursor: pointer;
+`;

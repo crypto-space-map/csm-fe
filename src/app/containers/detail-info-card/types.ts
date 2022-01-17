@@ -1,5 +1,6 @@
 export interface ExchangeRequest {
   page: number;
+  projectName: string;
 }
 export interface ExchangeDTO {
   exchange: string;
@@ -7,8 +8,54 @@ export interface ExchangeDTO {
   pair: string;
   price: number;
   volume: number;
-  persentVolume?: string;
+  persentVolume: number | null;
   updatedAt: string;
+}
+
+interface CommonStatistic {
+  usd: number;
+  btc: number;
+}
+
+interface PercentageStatistic {
+  value: number;
+  percentage: number;
+}
+
+export interface HeaderData {
+  name: string;
+  symbol: string;
+  icon: string;
+  rank: number;
+}
+export interface StatisticDetailDataDTO {
+  marketPrice: CommonStatistic;
+  priceChangePercentageDay: PercentageStatistic;
+  priceChangePercentageWeek: PercentageStatistic;
+  website: string;
+  marketCap: CommonStatistic;
+  totalVolume: CommonStatistic;
+  supplyCirculating: PercentageStatistic;
+  supplyTotal: PercentageStatistic;
+}
+
+export interface ProjectDataResponseDTO {
+  name: string;
+  symbol: string;
+  icon: string;
+  rank: number;
+  marketPrice: CommonStatistic;
+  priceChangePercentage: {
+    '24h': PercentageStatistic;
+    '7d': PercentageStatistic;
+  };
+  website: string;
+  marketCap: CommonStatistic;
+  totalVolume: CommonStatistic;
+  supply: {
+    circulating: PercentageStatistic;
+    total: PercentageStatistic;
+  };
 }
 
 export interface DetailInfoState {
@@ -17,6 +64,9 @@ export interface DetailInfoState {
   overviewTradingStockLoading: boolean;
   overviewTradingStock: string;
   exchangesPage: number;
+  projectLoading: boolean;
+  projectStatistic: StatisticDetailDataDTO | null;
+  projectHeaderData: HeaderData | null;
 }
 
 export type ContainerState = DetailInfoState;

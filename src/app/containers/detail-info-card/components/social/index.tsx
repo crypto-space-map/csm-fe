@@ -1,4 +1,5 @@
 import { Card } from '../card';
+import { SocialContentWrapper } from './styles';
 
 const socialData = [
   {
@@ -24,9 +25,9 @@ const socialData = [
 ];
 
 export const Social = () => (
-  <>
+  <SocialContentWrapper>
     {socialData.map(item => (
       <Card key={item.id} {...item} />
     ))}
-  </>
+  </SocialContentWrapper>
 );
