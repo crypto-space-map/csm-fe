@@ -55,8 +55,9 @@ export const generateCategoryPacks = ({
     return opacity;
   };
 
-  const onMouseOver = (_event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) =>
+  const onMouseOver = (_event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) => {
     fundsTooltip.text(item.data.name).attr('class', CLASSNAMES.TOOLTIP.HOVERED);
+  };
 
   const onMouseMove = (event: MouseEvent) => {
     const { width, height } = elem.getBoundingClientRect();

@@ -56,7 +56,6 @@ export const SpaceChart = memo(() => {
 
       const map = createBaseMap({ ref: svgRef });
       const svg = select(map.node());
-      const wrapper = select(wrapperRef.current);
 
       const fundsTooltip = fundsTooltips({ ref: wrapperRef, nodes });
 

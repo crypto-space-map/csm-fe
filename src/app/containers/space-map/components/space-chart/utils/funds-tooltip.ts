@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 
-import { select, Selection, EnterElement } from 'd3';
+import { select, Selection } from 'd3';
 
 import { PackedCategories } from '../types';
 
@@ -14,9 +14,14 @@ type FundsTooltipProps = {
 export const fundsTooltips = ({ ref }: FundsTooltipProps) => {
   /** Root div */
 
-  const tooltipArea = select(ref.current).append('div').attr('class', TOOLTIP).data([]);
+  const tooltipArea = select(ref.current).selectAll('div').data(['']);
 
-  tooltipArea.enter().merge(tooltipArea as unknown as Selection<EnterElement, never, null, undefined>);
+  tooltipArea
+    .enter()
+    .append('div')
+    .merge(tooltipArea as unknown as Selection<HTMLDivElement, string, HTMLDivElement | null, unknown>)
+    .attr('class', TOOLTIP);
+
   tooltipArea.exit().remove();
 
   return tooltipArea;

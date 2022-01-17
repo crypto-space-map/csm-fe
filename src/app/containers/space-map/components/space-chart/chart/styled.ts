@@ -51,7 +51,6 @@ export const ChartWrapper = styled.div`
 export const RandomSvg = styled.svg`
   width: 100%;
   height: 100%;
-  /* overflow: visible; */
   & > circle {
     transition: 0.2s linear;
   }

@@ -3,14 +3,14 @@ import { select, zoom, Selection, D3ZoomEvent } from 'd3';
 import { BaseMapParams, PackedCategories } from '../types';
 
 export const createBaseMap = ({ ref }: BaseMapParams) => {
-  const update = select(ref.current as Element)
+  const svg = select(ref.current as Element)
     .selectAll('g')
     .data([{} as PackedCategories]);
 
-  update
+  svg
     .enter()
     .append('g')
-    .merge(update as unknown as Selection<SVGGElement, PackedCategories, Element, unknown>);
+    .merge(svg as unknown as Selection<SVGGElement, PackedCategories, Element, unknown>);
 
   const handleZoom = (e: D3ZoomEvent<HTMLCanvasElement, unknown>) =>
     /** TODO add correct type for event */
@@ -21,7 +21,7 @@ export const createBaseMap = ({ ref }: BaseMapParams) => {
 
   initZoom();
 
-  update.exit().remove();
+  svg.exit().remove();
 
-  return update;
+  return svg;
 };

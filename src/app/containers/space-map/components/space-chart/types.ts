@@ -54,7 +54,7 @@ export type SimulationNodeDatumRadial = SimulationNodeDatum &
 export type CategoryPacksType = {
   svg: Selection<BaseType, unknown, null, undefined>;
   nodes: PackedCategories[];
-  fundsTooltip: Selection<HTMLDivElement, unknown, null, undefined>;
+  fundsTooltip: Selection<BaseType, string, HTMLDivElement | null, unknown>;
   mCapFrom?: number | null;
   mCapTo?: number | null;
   exchanges?: Exchanges[];
