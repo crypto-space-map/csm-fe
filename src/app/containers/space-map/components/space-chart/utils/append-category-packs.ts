@@ -3,7 +3,7 @@ import { COLOR_PALLETTE } from 'global/pallette';
 
 import { CategoryPacksType, PackedCategories } from '../types';
 import { packedChild } from './child-packer';
-import { getCircleColor, getProjectsVsCords } from './helpers';
+import { getCircleColor, getProjectsVsCoords } from './helpers';
 import { generateChildLabels } from './labels';
 
 const TOOLTIP_PADDING = 5;
@@ -124,7 +124,7 @@ export const generateCategoryPacks = ({
   generateChildLabels(categoryPacks);
 
   /** Get data vs cords */
-  const circlesData = getProjectsVsCords(circles.data());
+  const circlesData = getProjectsVsCoords(circles.data());
 
   return circlesData;
 };

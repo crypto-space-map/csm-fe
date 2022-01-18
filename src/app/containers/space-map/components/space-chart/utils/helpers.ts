@@ -3,18 +3,17 @@ import { HierarchyCircularNode } from 'd3';
 import { PackedCategories } from '../types';
 import { color } from './colors';
 
-export const getCircleCord = (data: HierarchyCircularNode<PackedCategories>, key: 'x' | 'y') => {
-  const cord = data[key] + (data.parent?.data[key] || 0) - (data.parent?.data.r || 0) || 0;
-  const val: number = data.parent?.parent
-    ? data?.parent?.parent.data[key] - data?.parent?.parent.data.r || 0
-    : 0;
-  return cord + val;
+export const getCircleCoord = (data: HierarchyCircularNode<PackedCategories>, key: 'x' | 'y') => {
+  const coord = data[key] + (data.parent?.data[key] || 0) - (data.parent?.data.r || 0) || 0;
+  let dataParent = data.parent?.parent;
+  let value = dataParent ? dataParent.data[key] - dataParent.data.r || 0 : 0;
+  return coord + value;
 };
 
-export const getProjectsVsCords = (data: HierarchyCircularNode<PackedCategories>[]) => {
+export const getProjectsVsCoords = (data: HierarchyCircularNode<PackedCategories>[]) => {
   const parsed: HierarchyCircularNode<PackedCategories>[] = data.reduce((acc, item) => {
     if (item.children?.length) {
-      return [...acc, ...getProjectsVsCords(item.children)];
+      return [...acc, ...getProjectsVsCoords(item.children)];
     }
     if (item.x && item.y && item.data.projectId) {
       acc.push(item);

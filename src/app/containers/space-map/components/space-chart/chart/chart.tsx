@@ -8,7 +8,7 @@ import { useWindowSize } from 'hooks/use-screen-size';
 import { PackedCategories } from '../types';
 import { createBaseMap, generateCategoryPacks, categoriesLabels, fundsTooltips } from '../utils';
 import { generateFundsLegend } from '../utils/circles-legend';
-import { getCircleCord } from '../utils/helpers';
+import { getCircleCoord } from '../utils/helpers';
 import { generateProjectLinks } from '../utils/projects-links';
 import { useChart } from '../utils/use-chart';
 import { ChartWrapper, RandomSvg } from './styled';
@@ -95,10 +95,10 @@ export const SpaceChart = memo(() => {
 
         simulation.on('tick', () => {
           link
-            .attr('x1', getCircleCord(currentProject, 'x'))
-            .attr('y1', getCircleCord(currentProject, 'y'))
-            .attr('x2', d => getCircleCord(d, 'x'))
-            .attr('y2', d => getCircleCord(d, 'y'));
+            .attr('x1', getCircleCoord(currentProject, 'x'))
+            .attr('y1', getCircleCoord(currentProject, 'y'))
+            .attr('x2', d => getCircleCoord(d, 'x'))
+            .attr('y2', d => getCircleCoord(d, 'y'));
 
           link.exit().remove();
         });

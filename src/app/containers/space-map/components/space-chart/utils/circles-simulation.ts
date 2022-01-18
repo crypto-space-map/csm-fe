@@ -1,8 +1,10 @@
-import { forceSimulation, forceX, forceY, forceManyBody, forceCollide, forceCenter } from 'd3';
+import { forceSimulation, forceX, forceY, forceCollide, forceCenter } from 'd3';
 
 import { CirclesSimulation } from '../types';
 
 const NODE = { PADDING: 10 };
+
+const ALPHA_TICK = 0.0001;
 
 export const circlesSimulation = ({ packedCategories, width, height }: CirclesSimulation) => {
   const simulation = forceSimulation(packedCategories)
@@ -28,7 +30,7 @@ export const circlesSimulation = ({ packedCategories, width, height }: CirclesSi
     )
     .stop();
 
-  while (simulation.alpha() > 0.0001) {
+  while (simulation.alpha() > ALPHA_TICK) {
     simulation.tick();
   }
 
