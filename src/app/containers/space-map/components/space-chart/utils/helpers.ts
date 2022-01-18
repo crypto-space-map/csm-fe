@@ -30,4 +30,4 @@ type GetCircleColorProps = {
 };
 
 export const getCircleColor = ({ projectWeight, isTransparent }: GetCircleColorProps) =>
-  isTransparent ? '#383838' : color(projectWeight);
+  isTransparent ? '#383838' : color(projectWeight > 100 ? 1 : projectWeight / 100);
