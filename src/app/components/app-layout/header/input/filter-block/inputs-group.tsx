@@ -17,8 +17,13 @@ const inputs: InputProps[] = [
   { key: 'mCapTo', placeholder: 'To:' },
 ];
 
-const separatedValue = (val: string | null) =>
-  val ? `${val}`.replace(/\D/g, '').replace(/ /g, '').replace(NUMBER_SEPARATOR_REG_EXP, ' ') : '';
+const separatedValue = (val: string | null) => {
+  if (val && val !== '' && +val < 1) return 1;
+  const newVal = val
+    ? `${val}`.replace(/\D/g, '').replace(/ /g, '').replace(NUMBER_SEPARATOR_REG_EXP, ' ')
+    : '';
+  return newVal;
+};
 
 export const FilterInputs = <T,>({ control }: FilterInputsProps<T>) => (
   <InputsGroup>
