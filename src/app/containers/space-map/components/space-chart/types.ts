@@ -2,7 +2,7 @@ import { RefObject } from 'react';
 
 import { Selection, SimulationNodeDatum, HierarchyCircularNode, PackCircle, BaseType } from 'd3';
 
-import { CSMMapCategory, Exchanges, Partnership } from 'app/containers/space-map/types';
+import { MapCategory, Exchanges, Partnership } from 'app/containers/space-map/types';
 
 type Sizing = {
   width: number;
@@ -69,11 +69,11 @@ export type CirclesSimulation = Sizing & {
   packedCategories: PackedCategories[];
 };
 
-export type PackedCategories = Omit<CSMMapCategory, 'children'> &
+export type PackedCategories = Omit<MapCategory, 'children'> &
   PackCircle & {
     key?: string;
     children: PackedCategories[];
-    data: CSMMapCategory & PackCircle;
+    data: MapCategory & PackCircle;
     parent: PackedCategories | null;
   };
 
@@ -90,18 +90,18 @@ export type ProjectsLinksGeneratorProps = {
 export type UseChartProps = {
   width?: number;
   height?: number;
-  tree: CSMMapCategory[] | null;
+  tree: MapCategory[] | null;
   maxMarketCap: number | null;
 };
 
 export type PackedNodes = PackCircle & {
   key: string;
   children: ({
-    data: CSMMapCategory;
+    data: MapCategory;
     r: number;
     id: string;
     name: string;
-    children: CSMMapCategory[];
+    children: MapCategory[];
     marketCap: number;
   } & PackCircle)[];
 };

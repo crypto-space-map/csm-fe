@@ -38,11 +38,11 @@ export const generateCategoryPacks = ({
   const elem = fundsTooltip.node() as HTMLDivElement;
   const isTransparent = ({ marketCap, projectId, exchanges: itemExchangesArr }: PackedCategories) => {
     let opacity = false;
-    const isLessThanCapFrom = mCapFrom || minMarketCap;
-    const isMoreThanCapTo = mCapTo || maxMarketCap;
+    const lessCapFrom = mCapFrom || minMarketCap;
+    const moreCapTo = mCapTo || maxMarketCap;
 
     if (mCapTo || mCapFrom) {
-      if (marketCap < isLessThanCapFrom || marketCap > isMoreThanCapTo) {
+      if (marketCap < lessCapFrom || marketCap > moreCapTo) {
         opacity = true;
       }
     }
@@ -54,7 +54,7 @@ export const generateCategoryPacks = ({
     return opacity;
   };
 
-  const onMouseOver = (_event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) => {
+  const onMouseOver = (event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) => {
     fundsTooltip.text(item.data.name).attr('class', CLASSNAMES.TOOLTIP.HOVERED);
   };
 
@@ -73,6 +73,19 @@ export const generateCategoryPacks = ({
       setProject(item);
     }
   };
+
+  /** get sphere color */
+
+  const getSphereColor = (item: HierarchyCircularNode<PackedCategories>) =>
+    !item.children
+      ? (item.data.projectWeight &&
+          getCircleColor({
+            projectWeight: item.data.projectWeight,
+            isTransparent: isTransparent(item.data),
+          })) ||
+        '#383838'
+      : 'none';
+
   /** Generate categories */
 
   const categoryPacks = svg
@@ -92,16 +105,7 @@ export const generateCategoryPacks = ({
     .data(item => packedChild(item, item.r))
     .enter()
     .append('circle')
-    .attr('fill', item =>
-      !!!item.children
-        ? (item.data.projectWeight &&
-            getCircleColor({
-              projectWeight: item.data.projectWeight,
-              isTransparent: isTransparent(item.data),
-            })) ||
-          '#383838'
-        : 'none'
-    )
+    .attr('fill', item => getSphereColor(item))
     .attr('stroke', item =>
       !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY
     )

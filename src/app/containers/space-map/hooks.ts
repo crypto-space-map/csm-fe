@@ -25,7 +25,7 @@ export function useSpaceMap() {
     filters,
   } = useSelector(selectMapData);
 
-  const { projectPartnerships, projectPartnershipsLoading } = useSelector(selectPartnerships);
+  const { projectPartnerships = [], projectPartnershipsLoading } = useSelector(selectPartnerships);
 
   const fetchPartnershipsData = useCallback((val: string) => fetchPartnerships(val), [fetchPartnerships]);
 

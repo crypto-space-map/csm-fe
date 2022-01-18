@@ -1,6 +1,6 @@
 import { packSiblings, extent, scaleSqrt, group } from 'd3';
 
-import { CSMMapCategory } from 'app/containers/space-map/types';
+import { MapCategory } from 'app/containers/space-map/types';
 
 import { PackedCategories, PackedNodes } from '../types';
 /** TODO  need to understand where from we take circle coords data */
@@ -16,12 +16,7 @@ const RANGE = {
   MAX: 200,
 };
 
-export const createCategoryPacks = (
-  categories: CSMMapCategory[],
-  maxMarketCap = 100,
-  width = 0,
-  height = 0
-) => {
+export const createCategoryPacks = (categories: MapCategory[], maxMarketCap = 0, width = 0, height = 0) => {
   const mappedCategories = group(categories, d => d.name);
 
   const packedCategories = new Map<string, PackedNodes>();

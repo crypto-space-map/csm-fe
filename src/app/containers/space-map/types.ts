@@ -18,15 +18,15 @@ export type Partnership = {
 };
 
 export type MapDataResponse = {
-  tree: Array<CSMMapCategory>;
+  tree: Array<MapCategory>;
   maxMarketCap: number;
   minMarketCap: number;
 };
 
-export type CSMMapCategory = {
+export type MapCategory = {
   id: string;
   name: string;
-  children: CSMMapCategory[];
+  children: MapCategory[];
   exchanges?: Exchanges[];
   marketCap: number;
   projectId?: string;
@@ -50,7 +50,7 @@ export type FilterProps = {
 
 interface MapTree extends FetchDataState {
   data: {
-    tree: Array<CSMMapCategory> | null;
+    tree: Array<MapCategory> | null;
     maxMarketCap: number | null;
     minMarketCap: number | null;
   };

@@ -62,6 +62,11 @@ export const SpaceChart = memo(() => {
       // // TODO  убрал тк нет актуальных данных (выглядит не оч)
       // // generateFundsLegend({ svg, nodes });
 
+      const targetPartnerships = projectPartnerships && [
+        ...projectPartnerships,
+        currentProject?.data.projectId || '',
+      ];
+
       const circles = generateCategoryPacks({
         svg,
         nodes,
@@ -71,20 +76,17 @@ export const SpaceChart = memo(() => {
         exchanges,
         maxMarketCap,
         minMarketCap,
-        projectPartnerships:
-          (projectPartnerships && [...projectPartnerships, currentProject?.data.projectId || '']) || null,
+        projectPartnerships: targetPartnerships,
         fetchPartnershipsData,
         setProject,
       });
 
       categoriesLabels({ svg, nodes });
 
-      if (
-        projectPartnerships &&
-        projectPartnerships.length &&
-        currentProject &&
-        !projectPartnershipsLoading
-      ) {
+      const isLinksDataPresence =
+        projectPartnerships && projectPartnerships.length && currentProject && !projectPartnershipsLoading;
+
+      if (isLinksDataPresence) {
         const link = generateProjectLinks({
           svg,
           nodes: circles,
