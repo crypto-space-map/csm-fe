@@ -7,3 +7,4 @@ export const LETTERS_REG_EXP = /[a-zA-Za-яА-я]/g;
 export const ONLY_NUMBERS_REG_EXP = /^[\d ]*$/;
 
 export const NUMBER_SEPARATOR_REG_EXP = /\B(?=(\d{3})+(?!\d))/g;
+export const THOUSAND_REG_EXP = /(\d)(?=(\d\d\d)+([^\d]|$))/g;

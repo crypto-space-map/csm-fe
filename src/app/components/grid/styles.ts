@@ -15,7 +15,12 @@ const StyledGridRow = styled.div<{ columnWidths: string }>`
 `;
 
 export const StyledGridHeader = styled(StyledGridRow)`
-  margin-bottom: 24px;
+  padding: 24px 0 20px 0;
+  margin-bottom: 4px;
+  position: sticky;
+  top: 0;
+  background: ${COLOR_PALLETTE.MAIN_WHITE};
+  z-index: 1;
 `;
 
 export const StyledGridContentRow = styled(StyledGridRow)`

@@ -2,11 +2,14 @@ import { memo } from 'react';
 
 import moment from 'moment';
 
-import { Grid, SelectWithLink } from 'app/components';
+import { Grid } from 'app/components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
+import LinkIcon from 'assets/link.svg';
+import { cutLink } from 'utils/detail-info';
 
+import { InvestorsCell } from './components/investors-cell';
 import { headerNames, products } from './constants';
-import { StyledLink, InvestorsWrapper, InvestorLinkWrapper } from './styles';
+import { InvestorsWrapper, AnnLink } from './styles';
 import { FundsProps } from './types';
 
 const decorateAmount = (row: FundsProps) => {
@@ -28,47 +31,50 @@ const decorateInvestors = (row: FundsProps) => {
   return (
     <InvestorsWrapper>
       {value.map((item, i, array) => (
-        <InvestorLinkWrapper key={`investorLinkWrapper ${item.title}`}>
-          <StyledLink target="_blank" href={item.link}>
-            {item.title}
-          </StyledLink>
-          {array.length - 1 !== i ? <span>,</span> : null}
-        </InvestorLinkWrapper>
+        <InvestorsCell
+          key={`investorLinkWrapper ${item.title}`}
+          isLastElement={array.length - 1 !== i}
+          {...item}
+        />
       ))}
     </InvestorsWrapper>
   );
 };
 
 const decorateAnn = (row: FundsProps) => {
-  const options = row.ann;
-  if (!options) return null;
-  return <SelectWithLink options={options} />;
+  const value = row.ann;
+  if (!value) return null;
+  return (
+    <AnnLink target="_blank" href={value}>
+      <LinkIcon /> <span>{cutLink(value)}</span>
+    </AnnLink>
+  );
 };
 
 const columns: ColumnProps<FundsProps>[] = [
   {
     field: 'fundrasingRound',
     headerName: headerNames.fundrasingRound,
-    width: 105,
+    width: 95,
   },
   {
     field: 'investors',
     headerName: headerNames.investors,
-    width: 233,
+    width: 200,
     sortable: false,
     renderCell: decorateInvestors,
   },
   {
     field: 'amount',
     headerName: headerNames.amount,
-    width: 100,
+    width: 90,
     type: SortingTypes.NUMBER,
     valueFormatter: decorateAmount,
   },
   {
     field: 'date',
     headerName: headerNames.date,
-    width: 120,
+    width: 110,
     type: SortingTypes.DATE,
     valueFormatter: decorateDate,
   },
@@ -76,7 +82,7 @@ const columns: ColumnProps<FundsProps>[] = [
     field: 'ann',
     headerName: headerNames.ann,
     sortable: false,
-    width: 70,
+    width: 100,
     renderCell: decorateAnn,
   },
 ];

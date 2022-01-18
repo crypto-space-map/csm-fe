@@ -1,4 +1,5 @@
 import { Card } from './card';
+import { GithubCard } from './github-card';
 import { TabContentWrapper } from './styles';
 import { CardDataProps } from './types';
 
@@ -25,15 +26,21 @@ const cardsData: CardDataProps[] = [
     link: 'https://learn.javascript.ru/switch',
   },
   {
-    id: 5,
-    statCount: 567,
-    socialNetwork: 'facebook',
+    id: 6,
+    statCount: 167,
+    stats: [
+      { unit: 'Stars', count: 134 },
+      { unit: 'Contributors', count: 1340 },
+      { unit: 'Followers', count: 1340 },
+      { unit: 'Close Issues', count: 1340 },
+    ],
+    socialNetwork: 'github',
     link: 'https://learn.javascript.ru/switch',
   },
   {
-    id: 6,
-    statCount: 167,
-    socialNetwork: 'github',
+    id: 5,
+    statCount: 567,
+    socialNetwork: 'facebook',
     link: 'https://learn.javascript.ru/switch',
   },
   {
@@ -46,8 +53,11 @@ const cardsData: CardDataProps[] = [
 
 export const Community = () => (
   <TabContentWrapper>
-    {cardsData.map(item => (
-      <Card key={item.id} {...item} />
-    ))}
+    {cardsData.map(item => {
+      if (item.socialNetwork === 'github') {
+        return <GithubCard key={item.id} {...item} />;
+      }
+      return <Card key={item.id} {...item} />;
+    })}
   </TabContentWrapper>
 );

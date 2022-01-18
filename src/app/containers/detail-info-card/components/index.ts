@@ -3,8 +3,6 @@ export * from './community';
 export * from './events';
 export * from './exchanges';
 export * from './funds';
-export * from './header-section';
 export * from './overview';
 export * from './partners';
 export * from './social';
-export * from './statistics-section';

@@ -8,7 +8,6 @@ import {
   shouldDoRequestIfDataAlreadyExist,
   startedPage,
 } from '../../utils';
-import { EndMessage } from './end-message';
 import { Loader } from './loader';
 
 interface InfiniteScrollComponentProps {
@@ -44,8 +43,7 @@ export const InfiniteScrollComponent: React.FC<InfiniteScrollComponentProps> = (
       next={fetchAnotherPartOfData}
       hasMore={hasMore}
       loader={<Loader />}
-      scrollableTarget={infiniteScrollTarget}
-      endMessage={<EndMessage />}>
+      scrollableTarget={infiniteScrollTarget}>
       {children}
     </InfiniteScroll>
   );
