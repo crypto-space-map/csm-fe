@@ -9,19 +9,19 @@ import { Exchanges, FilterProps } from 'app/containers/space-map/types';
 import { ButtonsGroup } from './buttons-group';
 import { ExchangesGroup } from './exchanges-group';
 import { FilterInputs } from './inputs-group';
-import { StyledFilterBlock, StyledFilter, InputsGroup } from './styled';
+import { StyledFilterBlock, StyledFilter } from './styled';
 import { RangesGroup } from './suggest-group';
 
 interface StateProps {
   mCapFrom: string | null;
   mCapTo: string | null;
-  exchanges: Exchanges[];
+  exchanges: Array<keyof typeof Exchanges>;
 }
 
 const initialState: StateProps = {
   mCapFrom: null,
   mCapTo: null,
-  exchanges: Object.values(Exchanges).map(exch => exch),
+  exchanges: Object.keys(Exchanges).map(exch => exch as StateProps['exchanges'][number]),
 };
 
 type FilterBlockProps = ComponentProps<typeof StyledFilterBlock> & { setClose: () => void };

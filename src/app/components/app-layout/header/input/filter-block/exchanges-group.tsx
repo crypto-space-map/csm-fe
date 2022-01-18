@@ -9,11 +9,11 @@ import { CheckBoxGroup } from './styled';
 
 type FilterInputsProps<T> = {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  control: Control<T & { exchanges: Exchanges[] }, object>;
+  control: Control<T & { exchanges: Array<keyof typeof Exchanges> }, object>;
 };
 
 export const ExchangesGroup = <T,>({ control }: FilterInputsProps<T>) => {
-  const [checkboxes] = useState(control._defaultValues.exchanges as Exchanges[]);
+  const [checkboxes] = useState(control._defaultValues.exchanges as Array<keyof typeof Exchanges>);
   const [selectedExchanges, setSelectedExchanges] = useState(checkboxes);
 
   const handleSelect = useCallback(
@@ -35,10 +35,10 @@ export const ExchangesGroup = <T,>({ control }: FilterInputsProps<T>) => {
       <span>Exchanges</span>
       {checkboxes.map(name => (
         <Controller
-          name={'exchanges' as Path<T & { exchanges: Exchanges[] }>}
+          name={'exchanges' as Path<T & { exchanges: Array<keyof typeof Exchanges> }>}
           render={({ field: { onChange, value } }) => (
             <CheckBox
-              label={name}
+              label={Exchanges[name as unknown as keyof typeof Exchanges]}
               checked={value.includes(name)}
               onChange={() => onChange(handleSelect(name))}
             />
