@@ -12,16 +12,18 @@ import { FilterInputs } from './inputs-group';
 import { StyledFilterBlock, StyledFilter } from './styled';
 import { RangesGroup } from './suggest-group';
 
+type ExchangesType = keyof typeof Exchanges;
+
 interface StateProps {
   mCapFrom: string | null;
   mCapTo: string | null;
-  exchanges: Array<keyof typeof Exchanges>;
+  exchanges: ExchangesType[];
 }
 
 const initialState: StateProps = {
   mCapFrom: null,
   mCapTo: null,
-  exchanges: Object.keys(Exchanges).map(exch => exch as StateProps['exchanges'][number]),
+  exchanges: Object.keys(Exchanges).map(exch => exch as ExchangesType),
 };
 
 type FilterBlockProps = ComponentProps<typeof StyledFilterBlock> & { setClose: () => void };

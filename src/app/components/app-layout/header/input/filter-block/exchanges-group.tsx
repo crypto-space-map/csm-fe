@@ -7,13 +7,15 @@ import { CheckBox } from 'common/components/checkbox';
 
 import { CheckBoxGroup } from './styled';
 
+type ExchangesType = keyof typeof Exchanges;
+
 type FilterInputsProps<T> = {
   // eslint-disable-next-line @typescript-eslint/ban-types
-  control: Control<T & { exchanges: Array<keyof typeof Exchanges> }, object>;
+  control: Control<T & { exchanges: ExchangesType[] }, object>;
 };
 
 export const ExchangesGroup = <T,>({ control }: FilterInputsProps<T>) => {
-  const [checkboxes] = useState(control._defaultValues.exchanges as Array<keyof typeof Exchanges>);
+  const [checkboxes] = useState(control._defaultValues.exchanges as ExchangesType[]);
   const [selectedExchanges, setSelectedExchanges] = useState(checkboxes);
 
   const handleSelect = useCallback(
@@ -35,10 +37,10 @@ export const ExchangesGroup = <T,>({ control }: FilterInputsProps<T>) => {
       <span>Exchanges</span>
       {checkboxes.map(name => (
         <Controller
-          name={'exchanges' as Path<T & { exchanges: Array<keyof typeof Exchanges> }>}
+          name={'exchanges' as Path<T & { exchanges: ExchangesType[] }>}
           render={({ field: { onChange, value } }) => (
             <CheckBox
-              label={Exchanges[name as unknown as keyof typeof Exchanges]}
+              label={Exchanges[name as ExchangesType]}
               checked={value.includes(name)}
               onChange={() => onChange(handleSelect(name))}
             />
