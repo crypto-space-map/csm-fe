@@ -24,7 +24,7 @@ export const initialState: ContainerState = {
     exchanges: Object.values(Exchanges),
   },
   projectPartnerships: {
-    data: null,
+    data: [],
     ...fetchDataInitialState,
   },
 };

@@ -62,10 +62,12 @@ export const SpaceChart = memo(() => {
       // // TODO  убрал тк нет актуальных данных (выглядит не оч)
       // // generateFundsLegend({ svg, nodes });
 
-      const targetPartnerships = projectPartnerships && [
-        ...projectPartnerships,
-        currentProject?.data.projectId || '',
-      ];
+      const targetPartnerships =
+        ((projectPartnerships.length || currentProject) && [
+          ...projectPartnerships,
+          currentProject?.data.projectId || '',
+        ]) ||
+        null;
 
       const circles = generateCategoryPacks({
         svg,

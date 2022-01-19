@@ -61,7 +61,7 @@ interface Projects extends FetchDataState {
 }
 
 interface Partnerships extends FetchDataState {
-  data: Partnership[] | null;
+  data: Partnership[];
 }
 export interface SpaceMapPageState {
   mapTree: MapTree;
