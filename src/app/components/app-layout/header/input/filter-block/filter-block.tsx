@@ -4,15 +4,13 @@ import { Fade } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
-import { Exchanges, FilterProps } from 'app/containers/space-map/types';
+import { Exchanges, ExchangesType, FilterProps } from 'app/containers/space-map/types';
 
 import { ButtonsGroup } from './buttons-group';
 import { ExchangesGroup } from './exchanges-group';
 import { FilterInputs } from './inputs-group';
 import { StyledFilterBlock, StyledFilter } from './styled';
 import { RangesGroup } from './suggest-group';
-
-type ExchangesType = keyof typeof Exchanges;
 
 interface StateProps {
   mCapFrom: string | null;
