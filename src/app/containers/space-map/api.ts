@@ -1,6 +1,6 @@
 import { axios } from 'api';
 
-import { MapDataResponse, ProjectData } from './types';
+import { MapDataResponse, Partnership, ProjectData } from './types';
 
 const BASIC_EXCHANGES = ['binance', 'gdax', 'huobi', 'ftx_spot', 'kucoin'];
 
@@ -14,5 +14,11 @@ export async function apiFetchProjects() {
     params: {
       exchanges: BASIC_EXCHANGES.join(','),
     },
+  });
+}
+
+export async function apiFetchPartners(partnership: string) {
+  return axios.get<Partnership[]>(`project/partnerships/${partnership}`, {
+    withCredentials: true,
   });
 }

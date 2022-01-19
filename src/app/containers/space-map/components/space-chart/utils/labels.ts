@@ -1,6 +1,4 @@
-import { RefObject } from 'react';
-
-import { select, Selection } from 'd3';
+import { BaseType, Selection } from 'd3';
 
 import { PackedCategories } from '../types';
 import { packedChild } from './child-packer';
@@ -17,13 +15,13 @@ const CLASSNAMES = {
 };
 
 type CategoriesLabelsProps = {
-  ref: RefObject<SVGSVGElement>;
+  svg: Selection<BaseType, unknown, null, undefined>;
   nodes: PackedCategories[];
 };
 
-export const categoriesLabels = ({ ref, nodes }: CategoriesLabelsProps) => {
+export const categoriesLabels = ({ svg, nodes }: CategoriesLabelsProps) => {
   /** Root g */
-  const labelArea = select(ref.current)
+  const labelArea = svg
     .append('g')
     .classed(CLASSNAMES.CATEGORY_LABELS, true)
     .selectAll('text')
