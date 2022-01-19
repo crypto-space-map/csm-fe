@@ -8,6 +8,7 @@ import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { spaceMapSaga } from './saga';
 import { selectMapData, selectPartnerships } from './selectors';
 import { actions, reducer } from './slice';
+import { FilterProps } from './types';
 import { sliceKey } from './utils';
 
 export function useSpaceMapPageSlice() {
@@ -17,14 +18,31 @@ export function useSpaceMapPageSlice() {
 }
 
 export function useSpaceMap() {
-  const { fetchSpaceMapData, fetchProjects, setFilters, fetchPartnerships, clearData } =
-    useSpaceMapPageSlice();
+  const {
+    fetchSpaceMapData,
+    fetchProjects,
+    setFilters: setReducerFilters,
+    clearFilters,
+    fetchPartnerships,
+    clearData,
+  } = useSpaceMapPageSlice();
+
   const {
     mapTree: { data: spaceMapData, loading: fetchingMapData, loadError: loadMapDataError },
     projects: { data: projects },
     filters,
   } = useSelector(selectMapData);
 
+  const onClearFilters = useCallback(() => {
+    clearFilters();
+  }, [clearFilters]);
+
+  const submitFilters = useCallback(
+    (data: FilterProps) => {
+      setReducerFilters(data);
+    },
+    [setReducerFilters]
+  );
   const { projectPartnerships = [], projectPartnershipsLoading } = useSelector(selectPartnerships);
 
   const fetchPartnershipsData = useCallback((val: string) => fetchPartnerships(val), [fetchPartnerships]);
@@ -42,7 +60,8 @@ export function useSpaceMap() {
     spaceMapData,
     projects,
     fetchingMapData,
-    setFilters,
+    onClearFilters,
+    submitFilters,
     filters,
     loadMapDataError,
     projectPartnerships,

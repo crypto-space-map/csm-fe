@@ -2,7 +2,7 @@ import { RefObject } from 'react';
 
 import { Selection, SimulationNodeDatum, HierarchyCircularNode, PackCircle, BaseType } from 'd3';
 
-import { MapCategory, Exchanges, Partnership } from 'app/containers/space-map/types';
+import { MapCategory, Exchanges, Partnership, ExchangesType } from 'app/containers/space-map/types';
 
 type Sizing = {
   width: number;
@@ -57,7 +57,7 @@ export type CategoryPacksType = {
   fundsTooltip: Selection<BaseType, string, HTMLDivElement | null, unknown>;
   mCapFrom?: number | null;
   mCapTo?: number | null;
-  exchanges?: Exchanges[];
+  exchanges?: ExchangesType[];
   maxMarketCap: number;
   minMarketCap: number;
   projectPartnerships: string[];

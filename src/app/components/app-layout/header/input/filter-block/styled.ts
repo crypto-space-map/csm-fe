@@ -1,5 +1,14 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
+
+import { Button } from 'common/components';
+
+const actionsHeaders = css`
+  font-size: 16px;
+  line-height: 22px;
+  color: ${COLOR_PALLETTE.MAIN_GRAY};
+`;
 
 const REFERENCE_NUMBER = 9;
 
@@ -36,12 +45,36 @@ export const InputsGroup = styled.div`
   grid-template-columns: repeat(2, 1fr);
 `;
 
+export const StyledButtonsGroup = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  grid-gap: 24px;
+`;
+
+export const StyledRangesGroup = styled.div`
+  display: grid;
+  gap: 8px;
+  & > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    max-width: fit-content;
+  }
+  & > span {
+    ${actionsHeaders}
+  }
+`;
+
+export const RangeButton = styled(Button)`
+  padding: 3px 8px;
+  min-width: auto;
+`;
+
 export const CheckBoxGroup = styled.div`
   display: grid;
   grid-gap: 8px;
   & > span {
-    font-size: 16px;
-    line-height: 22px;
-    color: ${COLOR_PALLETTE.MAIN_WHITE};
+    ${actionsHeaders}
   }
 `;

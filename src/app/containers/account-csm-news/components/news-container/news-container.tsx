@@ -7,8 +7,8 @@ import { StyledNewsContainer } from './styled';
 export const AccountNewsContainer = () => (
   <StyledNewsContainer>
     <ContainerOverflow>
-      {newsMockData.map(item => (
-        <NewsCard key={item.header} {...item} />
+      {newsMockData.map((item, i) => (
+        <NewsCard key={item.header} {...item} open={i === 0} />
       ))}
     </ContainerOverflow>
   </StyledNewsContainer>

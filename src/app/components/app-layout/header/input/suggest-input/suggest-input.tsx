@@ -70,7 +70,7 @@ export const SuggestInput = () => {
       renderInput={params => (
         <StyledTextField
           {...params}
-          placeholder="Search by Project Name or Ticker"
+          placeholder="Search by project name or ticker"
           variant="standard"
           InputProps={{
             ...params.InputProps,

@@ -1,96 +1,77 @@
-import { forwardRef, ComponentProps, useState, useCallback } from 'react';
+import { forwardRef, ComponentProps, useCallback } from 'react';
 
 import { Fade } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
-import Dollar from 'assets/icons/dollar.svg';
-import { Button } from 'common/components/button';
-import { CheckBox } from 'common/components/checkbox';
-import { Input, InputProps } from 'common/components/input';
+import { Exchanges, ExchangesType, FilterProps } from 'app/containers/space-map/types';
 
-import { StyledFilterBlock, StyledFilter, InputsGroup, CheckBoxGroup } from './styled';
+import { ButtonsGroup } from './buttons-group';
+import { ExchangesGroup } from './exchanges-group';
+import { FilterInputs } from './inputs-group';
+import { StyledFilterBlock, StyledFilter } from './styled';
+import { RangesGroup } from './suggest-group';
 
-const inputs: InputProps[] = [
-  { key: 'mCapFrom', placeholder: 'From: 100 000', label: 'Mcap' },
-  { key: 'mCapTo', placeholder: '' },
-];
+interface StateProps {
+  mCapFrom: string | null;
+  mCapTo: string | null;
+  exchanges: ExchangesType[];
+}
 
-type FilterBlockProps = ComponentProps<typeof StyledFilterBlock>;
+const initialState: StateProps = {
+  mCapFrom: null,
+  mCapTo: null,
+  exchanges: Object.keys(Exchanges).map(exch => exch as ExchangesType),
+};
+
+type FilterBlockProps = ComponentProps<typeof StyledFilterBlock> & { setClose: () => void };
 
 export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, ref) => {
-  const { filters, setFilters } = useSpaceMap();
+  const { visible, setClose } = props;
 
-  const [checkboxes] = useState(filters.exchanges);
+  const { submitFilters, onClearFilters } = useSpaceMap();
 
-  const { control, handleSubmit, watch } = useForm<typeof filters>({
-    defaultValues: filters,
+  const { control, handleSubmit, reset, setValue } = useForm({
+    defaultValues: initialState,
     mode: 'all',
     criteriaMode: 'all',
   });
 
-  const { exchanges } = watch();
+  const handleSubmitFilters = useCallback(
+    (data: FilterProps) => {
+      const parsedData: FilterProps = {
+        ...data,
+        mCapFrom: data.mCapFrom && Number(`${data.mCapFrom}`.replace(/ /g, '')),
+        mCapTo: data.mCapTo && Number(`${data.mCapTo}`.replace(/ /g, '')),
+      };
+      submitFilters(parsedData);
+      setClose();
+    },
+    [submitFilters, setClose]
+  );
 
-  const onSubmit = (data: typeof filters) => {
-    const numberParsed: typeof filters = {
-      ...data,
-      mCapFrom: Number(data.mCapFrom) || 0,
-      mCapTo: Number(data.mCapTo) || 0,
-    };
-    return setFilters({ ...filters, ...numberParsed });
+  const handleClear = () => {
+    onClearFilters();
+    reset();
   };
 
-  const handleSelect = useCallback(
-    (checkedName: typeof exchanges[number]) => {
-      const newExchanges = exchanges?.includes(checkedName)
-        ? exchanges?.filter(name => name !== checkedName)
-        : [...(exchanges ?? []), checkedName];
-      return newExchanges;
+  const handleChangeRange = useCallback(
+    (data: Omit<typeof initialState, 'exchanges'>) => {
+      Object.keys(data).forEach(item =>
+        setValue(item as keyof typeof data, data[item as keyof typeof data])
+      );
     },
-    [exchanges]
+    [setValue]
   );
 
   return (
-    <Fade in={props.visible}>
+    <Fade in={visible}>
       <StyledFilterBlock {...props} ref={ref}>
-        <StyledFilter onSubmit={handleSubmit(onSubmit)}>
-          <InputsGroup>
-            {inputs.map(input => (
-              <Controller
-                name={input.key as keyof typeof filters}
-                control={control}
-                render={({ field: { value, ...rest } }) => (
-                  <Input
-                    {...input}
-                    {...rest}
-                    value={value || ''}
-                    type="number"
-                    InputProps={{
-                      inputProps: { min: 0 },
-                      endAdornment: <Dollar />,
-                    }}
-                  />
-                )}
-              />
-            ))}
-          </InputsGroup>
-          <CheckBoxGroup>
-            <span>Exchanges</span>
-            {checkboxes.map(name => (
-              <Controller
-                name="exchanges"
-                render={({ field: { onChange } }) => (
-                  <CheckBox
-                    label={name}
-                    checked={watch().exchanges.includes(name)}
-                    onChange={() => onChange(handleSelect(name))}
-                  />
-                )}
-                control={control}
-              />
-            ))}
-          </CheckBoxGroup>
-          <Button type="submit">Filter Data</Button>
+        <StyledFilter onSubmit={handleSubmit(handleSubmitFilters)}>
+          <FilterInputs<StateProps> control={control} />
+          <RangesGroup onChange={handleChangeRange} />
+          <ExchangesGroup control={control} />
+          <ButtonsGroup onClear={handleClear} />
         </StyledFilter>
       </StyledFilterBlock>
     </Fade>

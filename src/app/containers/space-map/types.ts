@@ -3,10 +3,12 @@ import { FetchDataState } from 'utils/@reduxjs/fetchData';
 export enum Exchanges {
   binance = 'Binance',
   gdax = 'Coinbase',
-  huobi = 'Ftx',
-  ftx_spot = 'Huobi',
+  huobi = 'Huobi',
+  ftx_spot = 'Ftx',
   kucoin = 'Kucoin',
 }
+
+export type ExchangesType = keyof typeof Exchanges;
 
 export type Partnership = {
   announcement: string;
@@ -27,7 +29,7 @@ export type MapCategory = {
   id: string;
   name: string;
   children: MapCategory[];
-  exchanges?: Exchanges[];
+  exchanges?: ExchangesType[];
   marketCap: number;
   projectId?: string;
   projectWeight?: number;
@@ -45,7 +47,7 @@ export type ProjectData = {
 export type FilterProps = {
   mCapFrom: number | null;
   mCapTo: number | null;
-  exchanges: Exchanges[];
+  exchanges: ExchangesType[];
 };
 
 interface MapTree extends FetchDataState {

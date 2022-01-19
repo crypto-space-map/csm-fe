@@ -26,8 +26,8 @@ export const generateCategoryPacks = ({
   svg,
   nodes,
   fundsTooltip,
-  mCapFrom = 0,
-  mCapTo = 0,
+  mCapFrom = null,
+  mCapTo = null,
   exchanges = [],
   maxMarketCap,
   minMarketCap,
@@ -46,11 +46,10 @@ export const generateCategoryPacks = ({
         opacity = true;
       }
     }
-    const registryArr = [...exchanges.map(item => item.toLowerCase())];
-    const isIncludes = itemExchangesArr?.some(item => registryArr.includes(item));
+    const isIncludes = itemExchangesArr?.some(item => exchanges.includes(item));
     const isLinked = projectId && projectPartnerships?.includes(projectId);
-    if (!isIncludes || !isLinked) opacity = true;
-    if (!projectPartnerships) opacity = false;
+    if (!isIncludes) opacity = true;
+    if (isIncludes && projectPartnerships.length && !isLinked) opacity = true;
     return opacity;
   };
 

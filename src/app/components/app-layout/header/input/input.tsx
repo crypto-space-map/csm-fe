@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 
 import FilterIcon from 'assets/icons/filter.svg';
-import { useOnClickOutside } from 'hooks';
+import { useBooleanState, useOnClickOutside } from 'hooks';
 
 import { FilterBlock } from './filter-block/filter-block';
 import { FilterButtonContainer, HeaderInputContainer, StyledIconButton } from './styled';
@@ -9,13 +9,10 @@ import { SuggestInput } from './suggest-input/suggest-input';
 
 const FilterButton = () => {
   const filterRef = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState(false);
-  const handleClick = () => {
-    setOpen(!open);
-  };
-  const handleClickOutside = () => {
-    setOpen(false);
-  };
+  const [open, setOpen, setClose] = useBooleanState();
+
+  const handleClick = useCallback(() => (open ? setClose() : setOpen()), [open, setClose, setOpen]);
+  const handleClickOutside = useCallback(() => setClose(), [setClose]);
 
   useOnClickOutside(filterRef, handleClickOutside);
 
@@ -24,7 +21,7 @@ const FilterButton = () => {
       <StyledIconButton onClick={handleClick}>
         <FilterIcon />
       </StyledIconButton>
-      <FilterBlock visible={open} />
+      <FilterBlock visible={open} setClose={setClose} />
     </FilterButtonContainer>
   );
 };
