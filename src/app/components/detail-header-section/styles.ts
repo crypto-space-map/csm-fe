@@ -14,8 +14,8 @@ export const CompanyInfo = styled.div`
 `;
 
 export const Icon = styled.img`
-  width: 43px;
-  height: fit-content;
+  width: 40px;
+  height: 40px;
   flex-shrink: inherit;
 `;
 

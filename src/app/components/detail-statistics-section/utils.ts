@@ -35,7 +35,7 @@ const options = {
 const supplyStatistic = [options.supplyCirculating, options.supplyTotal];
 const percentageStatistic = [options.priceChangePercentageDay, options.priceChangePercentageWeek];
 
-const getTransformedBtc = (value: number) => `${value} BTC`;
+const getTransformedBtc = (value: number | string) => `${value} BTC`;
 
 const getTransformedPercentage = (value: number) => `${roundNumber(value)}%`;
 
@@ -61,7 +61,7 @@ export const generateOptions = (data: StatisticDetailDataDTO): GenerateDataProps
       return {
         title: titles[item],
         mainValue: percentage ? String(roundNumber(percentage)) : null,
-        secondValue: value ? value.toFixed(4) : null,
+        secondValue: value ? String(roundNumber(value, 4)) : null,
         type: StatisticTypes.PERCENTAGE,
       };
     }
@@ -76,8 +76,8 @@ export const generateOptions = (data: StatisticDetailDataDTO): GenerateDataProps
 
     const { usd, btc } = data[item] as CommonStatistic;
     const btcValue = btc ?? 0;
-    const secondValue = Number(item === options.marketPrice ? btcValue.toFixed(4) : roundNumber(btcValue));
 
+    const secondValue = roundNumber(btcValue, 4);
     return {
       title: titles[item],
       mainValue: usd ? getTransformedPrice(usd) : null,

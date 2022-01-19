@@ -1,12 +1,13 @@
+import { SocialDataDTO } from '../../types';
 import { Button } from './button';
 import { Header } from './header';
-import { CardWrapper, TextSection, ButtonsContentWrapper } from './styles';
-import { CardProps } from './types';
+import { CardWrapper, ButtonsContentWrapper } from './styles';
+import { TextContent } from './text-content';
 
-export const Card = ({ company, text, date, buttons }: CardProps) => (
+export const Card = ({ text, buttons, ...restCardProps }: SocialDataDTO) => (
   <CardWrapper>
-    <Header company={company} postDate={date} />
-    <TextSection>{text}</TextSection>
+    <Header {...restCardProps} />
+    <TextContent text={text} />
     {buttons && (
       <ButtonsContentWrapper>
         {buttons.map(item => (

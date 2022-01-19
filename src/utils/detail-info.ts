@@ -1,4 +1,4 @@
-import { THOUSAND_REG_EXP } from './reg-exp';
+import { THOUSAND_REG_EXP, NUMBER_WITH_E, SMALL_NUMBER_WITH_ZERO } from './reg-exp';
 
 const http = 'http://';
 const https = 'https://';
@@ -17,10 +17,40 @@ export const getProductNameFromPath = (path: string, type: 'fund' | 'project') =
 export const cutLink = (link: string) =>
   link.includes('http://') ? link.replace(http, '') : link.replace(https, '');
 
-export const roundNumber = (value: number, countAfterPoint = 2) =>
+export const getFixedNumber = (value: number, countAfterPoint = 2) =>
   parseFloat((Math.round(value * 100) / 100).toFixed(countAfterPoint));
 
-const transformThousandNumber = (value: number) => String(value).replace(THOUSAND_REG_EXP, '$1,');
+const transformThousandNumber = (value: number | string) => String(value).replace(THOUSAND_REG_EXP, '$1');
+
+export const roundNumber = (value: number, countAfterPoint = 2) => {
+  const numberSign = value < 0 ? -1 : 1;
+  const positiveValue = value < 0 ? -1 * value : value;
+  const isFloatNumber = !!positiveValue && !Number.isInteger(positiveValue);
+
+  if (String(value).includes('e')) {
+    const [mainPartOfNumber, degree] = String(positiveValue).replace(NUMBER_WITH_E, '$1,$3').split(',');
+    const sign = numberSign === -1 ? '-' : '';
+    const zeros = String(10 ** +degree).slice(2); // получаем количество нулей без 2-х первых символов
+    const fixedNumber = getFixedNumber(+mainPartOfNumber, countAfterPoint) * 100; // получаем целое число
+
+    return `${sign}0.${zeros}${fixedNumber}`;
+  }
+
+  if ((positiveValue > 1 || positiveValue * 100 > 1) && isFloatNumber) {
+    return getFixedNumber(positiveValue, countAfterPoint) * numberSign;
+  }
+
+  if (isFloatNumber) {
+    const zeroCount = String(positiveValue).replace(SMALL_NUMBER_WITH_ZERO, '$2').length;
+    const factor = 10 ** zeroCount;
+    return (
+      parseFloat((getFixedNumber(positiveValue * factor, countAfterPoint) / factor).toFixed(zeroCount + 2)) *
+      numberSign
+    );
+  }
+
+  return value;
+};
 
 export const getTransformedPrice = (value: number, withUnit = true, countAfterPoint = 2) => {
   const negativePart = value < 0 ? '-' : '';

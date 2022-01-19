@@ -8,5 +8,5 @@ export const LoginPageLink = styled.a<{ fontSize?: number }>`
   text-decoration: none;
   color: ${COLOR_PALLETTE.MAIN_BLUE};
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : 'inherit')};
-  ${link(COLOR_PALLETTE.MAIN_BLUE)}
+  ${link(COLOR_PALLETTE.MAIN_BLUE, COLOR_PALLETTE.MAIN_BLUE)}
 `;
