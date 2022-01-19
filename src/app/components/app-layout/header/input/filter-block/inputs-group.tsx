@@ -18,10 +18,11 @@ const inputs: InputProps[] = [
 ];
 
 const separatedValue = (val: string | null) => {
-  if (val && val !== '' && +val < 1) return 1;
+  if (val && val !== '' && +val < 1) return '1';
   const newVal = val
     ? `${val}`.replace(/\D/g, '').replace(/ /g, '').replace(NUMBER_SEPARATOR_REG_EXP, ' ')
     : '';
+
   return newVal;
 };
 

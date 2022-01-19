@@ -46,11 +46,10 @@ export const generateCategoryPacks = ({
         opacity = true;
       }
     }
-    const registryArr = [...exchanges.map(item => item.toLowerCase())];
-    const isIncludes = itemExchangesArr?.some(item => registryArr.includes(item));
+    const isIncludes = itemExchangesArr?.some(item => exchanges.includes(item));
     const isLinked = projectId && projectPartnerships?.includes(projectId);
-    if (!isIncludes || !isLinked) opacity = true;
-    if (!projectPartnerships.length) opacity = false;
+    if (!isIncludes) opacity = true;
+    if (isIncludes && projectPartnerships.length && !isLinked) opacity = true;
     return opacity;
   };
 

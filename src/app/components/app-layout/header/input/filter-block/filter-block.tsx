@@ -43,8 +43,8 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
     (data: FilterProps) => {
       const parsedData: FilterProps = {
         ...data,
-        mCapFrom: data.mCapFrom && +data.mCapFrom,
-        mCapTo: data.mCapTo && +data.mCapTo,
+        mCapFrom: data.mCapFrom && Number(`${data.mCapFrom}`.replace(/ /g, '')),
+        mCapTo: data.mCapTo && Number(`${data.mCapTo}`.replace(/ /g, '')),
       };
       submitFilters(parsedData);
       setClose();

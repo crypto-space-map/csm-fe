@@ -8,6 +8,8 @@ export enum Exchanges {
   kucoin = 'Kucoin',
 }
 
+export type ExchangesType = keyof typeof Exchanges;
+
 export type Partnership = {
   announcement: string;
   date: string;
@@ -27,7 +29,7 @@ export type MapCategory = {
   id: string;
   name: string;
   children: MapCategory[];
-  exchanges?: Exchanges[];
+  exchanges?: ExchangesType[];
   marketCap: number;
   projectId?: string;
   projectWeight?: number;
@@ -45,7 +47,7 @@ export type ProjectData = {
 export type FilterProps = {
   mCapFrom: number | null;
   mCapTo: number | null;
-  exchanges: Exchanges[];
+  exchanges: ExchangesType[];
 };
 
 interface MapTree extends FetchDataState {

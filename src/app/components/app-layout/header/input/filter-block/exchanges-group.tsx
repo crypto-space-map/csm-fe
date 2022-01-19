@@ -2,12 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { Control, Controller, Path } from 'react-hook-form';
 
-import { Exchanges } from 'app/containers/space-map/types';
+import { ExchangesType, Exchanges } from 'app/containers/space-map/types';
 import { CheckBox } from 'common/components/checkbox';
 
 import { CheckBoxGroup } from './styled';
-
-type ExchangesType = keyof typeof Exchanges;
 
 type FilterInputsProps<T> = {
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -17,7 +15,6 @@ type FilterInputsProps<T> = {
 export const ExchangesGroup = <T,>({ control }: FilterInputsProps<T>) => {
   const [checkboxes] = useState(control._defaultValues.exchanges as ExchangesType[]);
   const [selectedExchanges, setSelectedExchanges] = useState(checkboxes);
-
   const handleSelect = useCallback(
     (checkedName: typeof selectedExchanges[number]) => {
       const newExchanges = selectedExchanges?.includes(checkedName)
@@ -40,7 +37,7 @@ export const ExchangesGroup = <T,>({ control }: FilterInputsProps<T>) => {
           name={'exchanges' as Path<T & { exchanges: ExchangesType[] }>}
           render={({ field: { onChange, value } }) => (
             <CheckBox
-              label={Exchanges[name as ExchangesType]}
+              label={Exchanges[name]}
               checked={value.includes(name)}
               onChange={() => onChange(handleSelect(name))}
             />
