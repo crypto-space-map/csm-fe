@@ -19,7 +19,7 @@ module.exports = require('./webpack.init.config')({
         errors: true,
         warnings: false,
       },
-      logging: 'info',
+      logging: 'none',
       progress: true,
     },
   },

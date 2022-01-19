@@ -2,9 +2,11 @@ import { RefObject, useEffect, useCallback } from 'react';
 
 type Handler = (event: MouseEvent) => void;
 
+const actions: Array<keyof DocumentEventMap> = ['mousedown', 'click'];
+
 export function useOnClickOutside(ref: RefObject<HTMLElement>, handler: Handler): void {
   const handleClick = useCallback(
-    (event: MouseEvent) => {
+    (event: UIEvent | Event) => {
       const el = ref?.current;
       if (!el || el.contains(event.target as Node)) {
         return;
@@ -15,9 +17,10 @@ export function useOnClickOutside(ref: RefObject<HTMLElement>, handler: Handler)
   );
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClick);
+    actions.forEach(evt => document.addEventListener(evt, handleClick));
+
     return () => {
-      document.addEventListener('mousedown', handleClick);
+      actions.forEach(evt => document.addEventListener(evt, handleClick));
     };
   }, [handleClick]);
 }

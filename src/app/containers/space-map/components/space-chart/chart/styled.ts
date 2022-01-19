@@ -20,6 +20,15 @@ const showAnimation = keyframes`
     }
 `;
 
+const lineAnimation = keyframes`
+   from {
+    stroke-dashoffset: 5000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+`;
+
 export const ChartWrapper = styled.div`
   display: flex;
   width: 100%;
@@ -36,7 +45,7 @@ export const ChartWrapper = styled.div`
     z-index: 2;
     overflow: hidden;
     &.tooltip--hovered {
-      animation: ${showAnimation} 0.5s forwards;
+      animation: ${showAnimation} 1s forwards;
     }
   }
 `;
@@ -44,7 +53,10 @@ export const ChartWrapper = styled.div`
 export const RandomSvg = styled.svg`
   width: 100%;
   height: 100%;
-  overflow: overlay;
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
   & > circle {
     transition: 0.2s linear;
   }
@@ -54,7 +66,7 @@ export const RandomSvg = styled.svg`
     transition: 0.2s linear;
     /* animation: ${circleAnimation} 0.3s linear; */
     &:hover {
-      stroke-width: 3;
+      stroke-width: 1;
     }
   }
   & .category {
@@ -91,5 +103,10 @@ export const RandomSvg = styled.svg`
   }
   & .legend-circle {
     cursor: pointer;
+  }
+  & .LINKS {
+    & line {
+      animation: ${lineAnimation} 0.3s linear alternate;
+    }
   }
 `;

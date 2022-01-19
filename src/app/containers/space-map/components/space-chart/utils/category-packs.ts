@@ -1,25 +1,9 @@
-import { packSiblings, extent, scaleSqrt, group, PackCircle } from 'd3';
+import { packSiblings, extent, scaleSqrt, group } from 'd3';
 
-import { CSMMapCategory } from 'app/containers/space-map/types';
+import { MapCategory } from 'app/containers/space-map/types';
 
-import { PackedCategories } from '../types';
-import { mapCords } from './map-cords';
+import { PackedCategories, PackedNodes } from '../types';
 /** TODO  need to understand where from we take circle coords data */
-
-type PackedNodes = {
-  key: string;
-  children: ({
-    data: CSMMapCategory;
-    r: number;
-    id: string;
-    name: string;
-    children: CSMMapCategory[];
-    marketCap: number;
-  } & PackCircle)[];
-  r: number;
-  x: number;
-  y: number;
-};
 
 /** Incoming categories values  from to  */
 const DOMAIN = {
@@ -32,7 +16,7 @@ const RANGE = {
   MAX: 200,
 };
 
-export const createCategoryPacks = (categories: CSMMapCategory[], maxMarketCap = 100) => {
+export const createCategoryPacks = (categories: MapCategory[], maxMarketCap = 0, width = 0, height = 0) => {
   const mappedCategories = group(categories, d => d.name);
 
   const packedCategories = new Map<string, PackedNodes>();
@@ -48,14 +32,11 @@ export const createCategoryPacks = (categories: CSMMapCategory[], maxMarketCap =
 
     const nodes = packSiblings<typeof circledChildren[number]>(circledChildren);
 
-    // TODO мок значение битка убрать
-    const maxCalculatedRadius = (marketCap / maxMarketCap) * 100 * 2;
+    const maxCalculatedRadius = ((marketCap / maxMarketCap) * width) / 6;
 
     const r = radius(maxCalculatedRadius);
 
-    /** TODO create function to find page center instead properties { x: 600, y: 350 } */
-
-    const state = mapCords.find(d => d.name === key) || { properties: { x: 600, y: 350 } };
+    const state = { properties: { x: width / 2, y: height / 2 } };
     const { x, y } = state.properties;
     packedCategories.set(key, { key, children: nodes, r, x, y });
   }

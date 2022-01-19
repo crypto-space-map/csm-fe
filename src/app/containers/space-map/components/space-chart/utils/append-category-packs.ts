@@ -3,7 +3,7 @@ import { COLOR_PALLETTE } from 'global/pallette';
 
 import { CategoryPacksType, PackedCategories } from '../types';
 import { packedChild } from './child-packer';
-import { color } from './colors';
+import { getCircleColor, getProjectsVsCoords } from './helpers';
 import { generateChildLabels } from './labels';
 
 const TOOLTIP_PADDING = 5;
@@ -31,26 +31,32 @@ export const generateCategoryPacks = ({
   exchanges = [],
   maxMarketCap,
   minMarketCap,
+  projectPartnerships,
+  fetchPartnershipsData,
+  setProject,
 }: CategoryPacksType) => {
   const elem = fundsTooltip.node() as HTMLDivElement;
-  const isTransparent = (value: number, itemExchangesArr: typeof exchanges) => {
-    let opacity = 1;
-    const isLessThanCapFrom = mCapFrom || minMarketCap;
-    const isMoreThanCapTo = mCapTo || maxMarketCap;
+  const isTransparent = ({ marketCap, projectId, exchanges: itemExchangesArr }: PackedCategories) => {
+    let opacity = false;
+    const lessCapFrom = mCapFrom || minMarketCap;
+    const moreCapTo = mCapTo || maxMarketCap;
 
     if (mCapTo || mCapFrom) {
-      if (value < +isLessThanCapFrom || value > +isMoreThanCapTo) {
-        opacity = 0.1;
+      if (marketCap < lessCapFrom || marketCap > moreCapTo) {
+        opacity = true;
       }
     }
     const registryArr = [...exchanges.map(item => item.toLowerCase())];
-    const isIncludes = itemExchangesArr.some(item => registryArr.includes(item));
-    if (!isIncludes) opacity = 0.1;
+    const isIncludes = itemExchangesArr?.some(item => registryArr.includes(item));
+    const isLinked = projectId && projectPartnerships?.includes(projectId);
+    if (!isIncludes || !isLinked) opacity = true;
+    if (!projectPartnerships.length) opacity = false;
     return opacity;
   };
 
-  const onMouseOver = (event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) =>
+  const onMouseOver = (event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) => {
     fundsTooltip.text(item.data.name).attr('class', CLASSNAMES.TOOLTIP.HOVERED);
+  };
 
   const onMouseMove = (event: MouseEvent) => {
     const { width, height } = elem.getBoundingClientRect();
@@ -61,10 +67,29 @@ export const generateCategoryPacks = ({
   };
   const onMouseOut = () => fundsTooltip.style('opacity', 0).attr('class', CLASSNAMES.TOOLTIP.NORMAL);
 
+  const onClick = (_event: MouseEvent, item: HierarchyCircularNode<PackedCategories>) => {
+    if (item.data.projectId) {
+      fetchPartnershipsData(item.data.projectId);
+      setProject(item);
+    }
+  };
+
+  /** get sphere color */
+
+  const getSphereColor = (item: HierarchyCircularNode<PackedCategories>) =>
+    !item.children
+      ? (item.data.projectWeight &&
+          getCircleColor({
+            projectWeight: item.data.projectWeight,
+            isTransparent: isTransparent(item.data),
+          })) ||
+        '#383838'
+      : 'none';
+
   /** Generate categories */
 
   const categoryPacks = svg
-    .append('g')
+    .insert('g')
     .classed(CLASSNAMES.CATEGORY_PACKS, true)
     .selectAll(`.${CLASSNAMES.CENTROIDS}`)
     .data(nodes)
@@ -75,34 +100,31 @@ export const generateCategoryPacks = ({
 
   /** Generate funds */
 
-  categoryPacks
+  const circles = categoryPacks
     .selectAll(`.${CLASSNAMES.CATEGORY}`)
     .data(item => packedChild(item, item.r))
     .enter()
     .append('circle')
-    .attr(
-      'opacity',
-      ({ data, children }) => !!!children && isTransparent(data.marketCap, data.exchanges || [])
-    )
-    .attr('fill', item => (!!item.children && item.value ? 'none' : color(item?.value || 1)))
+    .attr('fill', item => getSphereColor(item))
     .attr('stroke', item =>
       !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY
     )
     .attr('stroke-dasharray', item => (!!item.children ? STROKE_DASHARRAY : 'none'))
-    .attr('stroke-width', 1)
+    .attr('stroke-width', 0.5)
     .classed(CLASSNAMES.FUND, item => !item.children)
-    .attr('r', item => (item.r < 2 ? 3 : item.r))
+    .attr('r', item => item.r)
     .attr('cx', item => scaled(item.x))
-    .attr('cy', item => item.y)
-    .on('click', event => console.log(event.target.__data__))
-    /** TODO навесить экшн онклик */
+    .attr('cy', item => scaled(item.y))
+    .on('click', onClick)
     .on('mousemove', onMouseMove)
     .on('mouseover', onMouseOver)
     .on('mouseout', onMouseOut);
-  // .style('filter', 'url(#drop-shadow)');
 
   /** Generate categories-child labels */
-  categoryPacks.exit().remove();
-
   generateChildLabels(categoryPacks);
+
+  /** Get data vs cords */
+  const circlesData = getProjectsVsCoords(circles.data());
+
+  return circlesData;
 };
