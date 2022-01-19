@@ -18,4 +18,5 @@ export const COLOR_PALLETTE = {
   DARK_GREEN: '#78BD4D',
   ICO_COMMON_COLOR: '#bdbdbd',
   PROJECT_CATEGORY: '#d1f1ff',
+  POST_DATE_COLOR: '#4f4f4f',
 };

@@ -1,33 +1,34 @@
+import { useEffect } from 'react';
+
+import { useSelector } from 'react-redux';
+
+import { Loader as CommonLoader } from 'common/components/loader';
+import { selectedProjectName } from 'store/pageStore/selectors';
+
+import { selectedEnrichedSocialData, selectedSocialDataLoading } from '../../selectors';
+import { useDispatchAction } from '../../slice';
 import { Card } from '../card';
-import { SocialContentWrapper } from './styles';
+import { SocialContentWrapper, LoaderWrapper } from './styles';
 
-const socialData = [
-  {
-    id: 1,
-    company: {
-      title: 'Robonomics Twitter',
-      linkText: '@AIRA_Robonomics',
-      link: 'https://cryptospacemap.atlassian.net/browse/CSM-3',
-      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS89s6Jq3AQCRJM19NtW28glmVd7eT6bpjrTA&usqp=CAU',
-    },
-    text: "Robonomics Software Architect @EnsRationis will host a tech AMA in the Robonomics telegram community. We'll cover the following topics: - XRT rewards for KSM bonders ...",
-  },
-  {
-    id: 2,
-    company: {
-      title: 'Robonomics Announcements',
-      linkText: 'https://t.me/Robonomics_ann',
-      link: 'https://cryptospacemap.atlassian.net/browse/CSM-3',
-      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS89s6Jq3AQCRJM19NtW28glmVd7eT6bpjrTA&usqp=CAU',
-    },
-    text: "Robonomics Software Architect @EnsRationis will host a tech AMA in the Robonomics telegram community. We'll cover the following topics: - XRT rewards for KSM bonders ...",
-  },
-];
+export const Social = () => {
+  const projectName = useSelector(selectedProjectName);
+  const socialDataLoading = useSelector(selectedSocialDataLoading);
+  const socialData = useSelector(selectedEnrichedSocialData);
+  const { fetchSocialData } = useDispatchAction();
 
-export const Social = () => (
-  <SocialContentWrapper>
-    {socialData.map(item => (
-      <Card key={item.id} {...item} />
-    ))}
-  </SocialContentWrapper>
-);
+  useEffect(() => {
+    if (projectName) fetchSocialData(projectName);
+  }, [projectName, fetchSocialData]);
+
+  if (socialDataLoading)
+    return (
+      <LoaderWrapper>
+        <CommonLoader />
+      </LoaderWrapper>
+    );
+  return (
+    <SocialContentWrapper>
+      {socialData && socialData.map(item => <Card key={item.id} {...item} />)}
+    </SocialContentWrapper>
+  );
+};

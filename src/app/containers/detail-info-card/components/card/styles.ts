@@ -12,24 +12,45 @@ export const CardWrapper = styled.article`
   padding: 19px;
   font-size: 16px;
   line-height: 22px;
-  & a {
-    ${link()}
-  }
 `;
 
 export const TitleSection = styled.section`
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: ${COLOR_PALLETTE.MAIN_BLACK};
 `;
 
 export const CompanyInfo = styled.section`
   display: flex;
 `;
 
+export const IconWrapper = styled.div`
+  & > img {
+    border-radius: 26px;
+  }
+`;
+
+export const StyledAccountName = styled.span`
+  font-size: 16px;
+  line-height: 22px;
+  color: ${COLOR_PALLETTE.MAIN_BLACK};
+`;
+
+export const StyledAccountLink = styled.a`
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  ${link()}
+`;
+
 export const PostDate = styled.section`
   font-size: 14px;
-  line-height: 19px;
+  line-height: 18px;
+  color: ${COLOR_PALLETTE.POST_DATE_COLOR};
 `;
 
 export const TitleTextContent = styled.div`
@@ -48,7 +69,11 @@ export const Icon = styled.img`
   height: fit-content;
 `;
 
-export const TextSection = styled.section``;
+export const TextSection = styled.section`
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+`;
 
 export const ButtonsContentWrapper = styled.section`
   margin-top: 12px;
