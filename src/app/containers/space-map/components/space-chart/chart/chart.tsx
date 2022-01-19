@@ -27,17 +27,14 @@ export const SpaceChart = memo(() => {
   const windowSize = useWindowSize();
 
   const {
-    filters: { mCapFrom, mCapTo, exchanges },
-  } = useSpaceMap();
-
-  const {
     fetchSpaceMapData,
-    fetchPartnershipsData,
     spaceMapData: { tree, maxMarketCap, minMarketCap },
+    filters: { mCapFrom, mCapTo, exchanges, currentProject: reducerCurrentProject },
     fetchingMapData: loading,
     loadMapDataError,
     projectPartnerships,
     projectPartnershipsLoading,
+    fetchPartnershipsData,
   } = useSpaceMap();
 
   const { packedCategories, simulation } = useChart({ width, height, tree, maxMarketCap });
@@ -83,6 +80,11 @@ export const SpaceChart = memo(() => {
         setProject,
       });
 
+      if (reducerCurrentProject !== currentProject?.data.projectId) {
+        const foundedProject = circles.find(item => item.data.projectId === reducerCurrentProject) || null;
+        setCurrentProject(foundedProject);
+      }
+
       categoriesLabels({ svg, nodes });
 
       const isLinksDataPresence =
@@ -123,6 +125,7 @@ export const SpaceChart = memo(() => {
     height,
     simulation,
     windowSize,
+    reducerCurrentProject,
   ]);
 
   return (

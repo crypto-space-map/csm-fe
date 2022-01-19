@@ -27,6 +27,7 @@ export const initialState: ContainerState = {
     ...fetchDataInitialState,
   },
   filters: {
+    currentProject: null,
     mCapFrom: null,
     mCapTo: null,
     exchanges: Object.keys(Exchanges).map(item => item as ExchangesType),
@@ -90,6 +91,9 @@ const spaceMapPageSlice = createSlice({
     },
     setFilters(state, action: PayloadAction<FilterProps>) {
       state.filters = { ...action.payload };
+    },
+    setCurrentProject(state, action: PayloadAction<string>) {
+      state.filters.currentProject = action.payload;
     },
     clearFilters(state) {
       state.filters = initialState.filters;

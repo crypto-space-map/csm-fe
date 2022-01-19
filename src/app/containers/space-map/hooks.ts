@@ -21,10 +21,11 @@ export function useSpaceMap() {
   const {
     fetchSpaceMapData,
     fetchProjects,
-    setFilters: setReducerFilters,
     clearFilters,
     fetchPartnerships,
     clearData,
+    setFilters: setReducerFilters,
+    setCurrentProject: setReducerCurrentProject,
   } = useSpaceMapPageSlice();
 
   const {
@@ -52,19 +53,25 @@ export function useSpaceMap() {
     [clearData]
   );
 
+  const setCurrentInputProject = useCallback(
+    (value: string) => setReducerCurrentProject(value),
+    [setReducerCurrentProject]
+  );
+
   return {
     fetchProjects,
     fetchSpaceMapData,
-    fetchPartnershipsData,
-    clearReducerObjectData,
     spaceMapData,
     projects,
     fetchingMapData,
-    onClearFilters,
-    submitFilters,
     filters,
     loadMapDataError,
     projectPartnerships,
     projectPartnershipsLoading,
+    fetchPartnershipsData,
+    clearReducerObjectData,
+    onClearFilters,
+    submitFilters,
+    setCurrentInputProject,
   };
 }
