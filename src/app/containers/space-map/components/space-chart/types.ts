@@ -60,7 +60,7 @@ export type CategoryPacksType = {
   exchanges?: Exchanges[];
   maxMarketCap: number;
   minMarketCap: number;
-  projectPartnerships: string[] | null;
+  projectPartnerships: string[];
   fetchPartnershipsData: (val: string) => void;
   setProject: (val: HierarchyCircularNode<PackedCategories>) => void;
 };

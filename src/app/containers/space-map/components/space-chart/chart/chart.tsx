@@ -67,7 +67,7 @@ export const SpaceChart = memo(() => {
           ...projectPartnerships,
           currentProject?.data.projectId || '',
         ]) ||
-        null;
+        [];
 
       const circles = generateCategoryPacks({
         svg,
