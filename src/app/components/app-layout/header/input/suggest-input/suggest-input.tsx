@@ -25,7 +25,7 @@ export const SuggestInput = () => {
   });
 
   const onChange = (e: Event, value: typeof projects[number]) => {
-    if (typeof value === 'object' && value.projectId) {
+    if (typeof value === 'object' && value?.projectId) {
       setCurrentInputProject(value?.projectId);
       fetchPartnershipsData(value?.projectId);
     }

@@ -1,45 +1,39 @@
+import { RefObject } from 'react';
+
 import { select, BaseType } from 'd3';
 
-import { CategoryPacksType, PackedCategories } from '../types';
 import { color } from './colors';
 
-type MapLegend = Omit<CategoryPacksType, 'fundsTooltip'>;
+type MapLegend = {
+  ref: RefObject<SVGElement>;
+  width: number;
+};
 
 const CIRCLE = {
   OFFSET: 80,
   RADIUS: 12,
 };
 export const generateFundsLegend = ({
-  svg,
-  nodes,
+  ref,
+  width = 0,
 }: //  width will use with screen-size-hook to centroid elem
 MapLegend) => {
-  const getCirclesValues = (data: PackedCategories[]) => {
-    const values = data.reduce((acc, node) => {
-      if (node.children) {
-        acc.concat(getCirclesValues(node.children as PackedCategories[]));
-        node.children.map(item => acc.push(item.marketCap));
-      }
-      return acc;
-    }, [] as number[]);
+  const circleData = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
-    return values;
-  };
+  const legendWidth = CIRCLE.OFFSET * circleData.length + CIRCLE.OFFSET * circleData.length;
 
-  const circleData = [...new Set(getCirclesValues(nodes))].sort((a, b) => a - b);
+  const xLegendPos = width / 2 - legendWidth / 4;
 
-  const width = parseInt(svg.style('width'), 10);
-
-  const legend = svg
+  const legend = select(ref.current)
     .append('g')
-    .attr('transform', `translate(${width / 10}, 0)`)
+    .attr('transform', `translate(${xLegendPos}, -20)`)
     .selectAll(`g`)
     .data(circleData)
     .enter();
 
   legend
     .append('circle')
-    .attr('fill', item => color(item / 6))
+    .attr('fill', item => color(item / 100))
     .attr('transform', `translate(0, 20)`)
     .attr('cx', (d, i) => i * CIRCLE.OFFSET)
     .attr('r', CIRCLE.RADIUS)
@@ -56,7 +50,7 @@ MapLegend) => {
     .append('text')
     .attr('transform', `translate(0, ${CIRCLE.RADIUS * 2})`)
     .attr('x', (d, i) => i * CIRCLE.OFFSET + 14)
-    .text((d, i) => `${circleData[i - 1] || 0}0-${circleData[i] || ''}0`)
+    .text((d, i) => `${circleData[i - 1] || 0}-${circleData[i] || ''}`)
     .classed('legend-label', true)
     .style('font-size', 14);
 };

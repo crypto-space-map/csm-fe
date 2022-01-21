@@ -20,9 +20,9 @@ export const SpaceChart = memo(() => {
   const width = wrapperRef.current?.offsetWidth;
   const height = wrapperRef.current?.offsetHeight;
 
-  const [currentProject, setCurrentProject] = useState<HierarchyCircularNode<PackedCategories> | null>(null);
-
-  const setProject = useCallback(val => setCurrentProject(val), []);
+  const [currentProject, setMapCurrentProject] = useState<HierarchyCircularNode<PackedCategories> | null>(
+    null
+  );
 
   const windowSize = useWindowSize();
 
@@ -35,7 +35,16 @@ export const SpaceChart = memo(() => {
     projectPartnerships,
     projectPartnershipsLoading,
     fetchPartnershipsData,
+    setCurrentInputProject,
   } = useSpaceMap();
+
+  const setProject = useCallback(
+    val => {
+      setMapCurrentProject(val);
+      setCurrentInputProject(val.data?.projectId);
+    },
+    [setCurrentInputProject]
+  );
 
   const { packedCategories, simulation } = useChart({ width, height, tree, maxMarketCap });
 
@@ -56,8 +65,7 @@ export const SpaceChart = memo(() => {
 
       const fundsTooltip = fundsTooltips({ ref: wrapperRef, nodes });
 
-      // // TODO  убрал тк нет актуальных данных (выглядит не оч)
-      // // generateFundsLegend({ svg, nodes });
+      generateFundsLegend({ ref: svgRef, width });
 
       const targetPartnerships =
         ((projectPartnerships.length || currentProject) && [
@@ -80,12 +88,12 @@ export const SpaceChart = memo(() => {
         setProject,
       });
 
+      categoriesLabels({ svg, nodes });
+
       if (reducerCurrentProject !== currentProject?.data.projectId) {
         const foundedProject = circles.find(item => item.data.projectId === reducerCurrentProject) || null;
-        setCurrentProject(foundedProject);
+        setMapCurrentProject(foundedProject);
       }
-
-      categoriesLabels({ svg, nodes });
 
       const isLinksDataPresence =
         projectPartnerships && projectPartnerships.length && currentProject && !projectPartnershipsLoading;
