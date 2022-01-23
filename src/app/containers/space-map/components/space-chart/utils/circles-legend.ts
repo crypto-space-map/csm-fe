@@ -53,4 +53,6 @@ MapLegend) => {
     .text((d, i) => `${circleData[i - 1] || 0}-${circleData[i] || ''}`)
     .classed('legend-label', true)
     .style('font-size', 14);
+
+  legend.merge(legend);
 };

@@ -8,8 +8,9 @@ import { useWindowSize } from 'hooks/use-screen-size';
 import { PackedCategories } from '../types';
 import { createBaseMap, generateCategoryPacks, categoriesLabels, fundsTooltips } from '../utils';
 import { generateFundsLegend } from '../utils/circles-legend';
-import { getCircleCoord } from '../utils/helpers';
+import { getCircleCoord, getIncludesProjects } from '../utils/helpers';
 import { generateProjectLinks } from '../utils/projects-links';
+import { generateProjectTooltips } from '../utils/projects-titles';
 import { useChart } from '../utils/use-chart';
 import { ChartWrapper, RandomSvg } from './styled';
 
@@ -99,11 +100,14 @@ export const SpaceChart = memo(() => {
         projectPartnerships && projectPartnerships.length && currentProject && !projectPartnershipsLoading;
 
       if (isLinksDataPresence) {
+        const foundedProjects = getIncludesProjects(circles, [...new Set(projectPartnerships)]);
+
         const link = generateProjectLinks({
           svg,
-          nodes: circles,
-          projectPartnerships,
+          foundedProjects,
         });
+
+        const tooltip = generateProjectTooltips({ svg, foundedProjects });
 
         simulation.on('tick', () => {
           link
@@ -113,6 +117,12 @@ export const SpaceChart = memo(() => {
             .attr('y2', d => getCircleCoord(d, 'y'));
 
           link.exit().remove();
+
+          tooltip
+            .attr('x', d => getCircleCoord(d, 'x'))
+            .attr('y', d => getCircleCoord(d, 'y'))
+            .html(item => `<span>${item.data?.name || ''}</span>`)
+            .style('font-size', 3);
         });
         simulation.restart();
       }

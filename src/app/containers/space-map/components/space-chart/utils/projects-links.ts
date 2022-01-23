@@ -1,25 +1,8 @@
-import { HierarchyCircularNode } from 'd3';
-
-import { PackedCategories, ProjectsLinksGeneratorProps } from '../types';
+import { ProjectsLinksGeneratorProps } from '../types';
 
 const LINKS = 'LINKS';
 
-const getIncludesProjects = (
-  data: ProjectsLinksGeneratorProps['nodes'],
-  projectPartnerships: ProjectsLinksGeneratorProps['projectPartnerships']
-): HierarchyCircularNode<PackedCategories>[] => {
-  const parsed = data.reduce((acc, item) => {
-    if (item.data.projectId && projectPartnerships?.includes(item.data?.projectId)) {
-      acc.push(item);
-    }
-    return acc;
-  }, [] as HierarchyCircularNode<PackedCategories>[]);
-  return parsed;
-};
-
-export const generateProjectLinks = ({ svg, nodes, projectPartnerships }: ProjectsLinksGeneratorProps) => {
-  const foundedProjects = getIncludesProjects(nodes, [...new Set(projectPartnerships)]);
-
+export const generateProjectLinks = ({ svg, foundedProjects }: ProjectsLinksGeneratorProps) => {
   const link = svg
     .insert('g', ':first-child')
     .classed(LINKS, true)

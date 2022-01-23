@@ -28,5 +28,18 @@ type GetCircleColorProps = {
   isTransparent: boolean;
 };
 
+export const getIncludesProjects = (
+  data: HierarchyCircularNode<PackedCategories>[],
+  projectPartnerships: string[]
+): HierarchyCircularNode<PackedCategories>[] => {
+  const parsed = data.reduce((acc, item) => {
+    if (item.data.projectId && projectPartnerships?.includes(item.data?.projectId)) {
+      acc.push(item);
+    }
+    return acc;
+  }, [] as HierarchyCircularNode<PackedCategories>[]);
+  return parsed;
+};
+
 export const getCircleColor = ({ projectWeight, isTransparent }: GetCircleColorProps) =>
   isTransparent ? '#383838' : color(projectWeight > 100 ? 1 : projectWeight / 100);

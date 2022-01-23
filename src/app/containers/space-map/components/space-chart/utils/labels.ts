@@ -44,7 +44,8 @@ export const generateChildLabels = (elem: Selection<SVGGElement, PackedCategorie
     .join('foreignObject')
     .attr('x', ({ x, r }) => x - r) /** place at centre of circle */
     .attr('y', ({ y, r }) => y - r - PADDING.CHILD) /** top position */
-    .attr('height', ({ r }) => r * 2) /** circle radius height */
+    .attr('height', ({ r }) => r) /** circle radius height */
     .attr('width', ({ r }) => r * 2) /** circle size width */
+    .style('font-size', ({ r }) => (r / 3 > 12 ? 12 : r / 3))
     .html(item => `${(item.children && item.data?.name) || ''}`)
     .classed(`${CLASSNAMES.LABEL_TEXT} ${CLASSNAMES.CHILD}`, true);

@@ -2,7 +2,7 @@ import { RefObject } from 'react';
 
 import { Selection, SimulationNodeDatum, HierarchyCircularNode, PackCircle, BaseType } from 'd3';
 
-import { MapCategory, Exchanges, Partnership, ExchangesType } from 'app/containers/space-map/types';
+import { MapCategory, ExchangesType } from 'app/containers/space-map/types';
 
 type Sizing = {
   width: number;
@@ -81,8 +81,7 @@ export type PackedCategories = Omit<MapCategory, 'children'> &
 
 export type ProjectsLinksGeneratorProps = {
   svg: Selection<BaseType, unknown, null, undefined>;
-  nodes: HierarchyCircularNode<PackedCategories>[];
-  projectPartnerships: Partnership['projectId'][] | null;
+  foundedProjects: HierarchyCircularNode<PackedCategories>[];
 };
 
 //  useChart

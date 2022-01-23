@@ -73,26 +73,44 @@ export const RandomSvg = styled.svg`
   }
   & .category {
     & .label-text {
+      width: 100%;
+      height: 100%;
       font-weight: bold;
       font-size: 16px;
       line-height: 22px;
       fill: ${COLOR_PALLETTE.MAP_LABELS};
       pointer-events: none;
-      text-anchor: middle;
+      /* text-anchor: middle; */
       &.child {
-        font-size: 12px;
         line-height: 16px;
         color: ${COLOR_PALLETTE.MAP_LABELS};
-        text-align: center;
+        /* text-align: center; */
+        transition: 0.2s linear;
       }
+    }
+  }
+  & .project-tooltip {
+    pointer-events: none;
+    & > span {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1% 1%;
+      background-color: ${COLOR_PALLETTE.MAIN_WHITE};
+      border-radius: 18px;
+      /* font-size: 12px; */
+      font-weight: normal;
+      transition: 0.2s linear;
     }
   }
   & .category-labels {
     pointer-events: none;
     & .label-text {
+      width: auto;
       font-weight: bold;
       font-size: 16px;
-      line-height: 22px;
+      line-height: inherit;
       fill: ${COLOR_PALLETTE.MAP_LABELS};
       pointer-events: none;
       text-anchor: middle;
