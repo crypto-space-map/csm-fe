@@ -14,7 +14,11 @@ import { generateProjectTooltips } from '../utils/projects-titles';
 import { useChart } from '../utils/use-chart';
 import { ChartWrapper, RandomSvg } from './styled';
 
-export const SpaceChart = memo(() => {
+type SpaceChartProps = {
+  handleClick: (val: string) => void;
+};
+
+export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -43,8 +47,9 @@ export const SpaceChart = memo(() => {
     val => {
       setMapCurrentProject(val);
       setCurrentInputProject(val.data?.projectId);
+      handleClick(val.data?.projectId);
     },
-    [setCurrentInputProject]
+    [setCurrentInputProject, handleClick]
   );
 
   const { packedCategories, simulation } = useChart({ width, height, tree, maxMarketCap });
@@ -94,6 +99,7 @@ export const SpaceChart = memo(() => {
       if (reducerCurrentProject !== currentProject?.data.projectId) {
         const foundedProject = circles.find(item => item.data.projectId === reducerCurrentProject) || null;
         setMapCurrentProject(foundedProject);
+        handleClick(foundedProject?.data.projectId || '');
       }
 
       const isLinksDataPresence =
@@ -144,6 +150,7 @@ export const SpaceChart = memo(() => {
     simulation,
     windowSize,
     reducerCurrentProject,
+    handleClick,
   ]);
 
   return (
