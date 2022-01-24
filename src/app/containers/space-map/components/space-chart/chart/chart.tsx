@@ -96,7 +96,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
 
       categoriesLabels({ svg, nodes });
 
-      if (reducerCurrentProject !== currentProject?.data.projectId) {
+      if (reducerCurrentProject !== currentProject?.data.projectId && handleClick) {
         const foundedProject = circles.find(item => item.data.projectId === reducerCurrentProject) || null;
         setMapCurrentProject(foundedProject);
         handleClick(foundedProject?.data.projectId || '');
