@@ -28,10 +28,10 @@ export const MainPage = memo(() => {
 
   const handleClick = useCallback(
     (project: string) => {
-      history.push(`${url}/project/${project}`);
+      history.push(`/project/${project}`);
       setProjectName(project);
     },
-    [setProjectName, history, url]
+    [setProjectName, history]
   );
 
   // Инициализация выставления нейма продукта или фонда в стор
@@ -52,7 +52,7 @@ export const MainPage = memo(() => {
   const handleSelectFund = useCallback(
     name => {
       const newFundName = name === fundName ? null : name;
-      const newPath = newFundName ? `${url}/fund/${newFundName}` : url;
+      const newPath = newFundName ? `$/fund/${newFundName}` : url;
 
       history.replace(newPath);
       setFundName(newFundName);
