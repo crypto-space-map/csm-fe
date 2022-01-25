@@ -3,6 +3,8 @@ import { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useActions } from 'hooks';
+import { selectedProjectName } from 'store/pageStore/selectors';
+import { useDispatchAction } from 'store/pageStore/slice';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { spaceMapSaga } from './saga';
@@ -25,7 +27,6 @@ export function useSpaceMap() {
     fetchPartnerships,
     clearData,
     setFilters: setReducerFilters,
-    setCurrentProject: setReducerCurrentProject,
   } = useSpaceMapPageSlice();
 
   const {
@@ -33,6 +34,10 @@ export function useSpaceMap() {
     projects: { data: projects },
     filters,
   } = useSelector(selectMapData);
+
+  const { setProjectName } = useDispatchAction();
+
+  const selectedProject = useSelector(selectedProjectName);
 
   const onClearFilters = useCallback(() => {
     clearFilters();
@@ -53,11 +58,6 @@ export function useSpaceMap() {
     [clearData]
   );
 
-  const setCurrentInputProject = useCallback(
-    (value: string) => setReducerCurrentProject(value),
-    [setReducerCurrentProject]
-  );
-
   return {
     fetchProjects,
     fetchSpaceMapData,
@@ -72,6 +72,7 @@ export function useSpaceMap() {
     clearReducerObjectData,
     onClearFilters,
     submitFilters,
-    setCurrentInputProject,
+    setProjectName,
+    selectedProject,
   };
 }

@@ -1,3 +1,4 @@
+import { useActions } from 'hooks';
 import { fetchDataInitialState, fetchDataReducers } from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
@@ -92,9 +93,6 @@ const spaceMapPageSlice = createSlice({
     setFilters(state, action: PayloadAction<FilterProps>) {
       state.filters = { ...action.payload };
     },
-    setCurrentProject(state, action: PayloadAction<string>) {
-      state.filters.currentProject = action.payload;
-    },
     clearFilters(state) {
       state.filters = initialState.filters;
     },
@@ -102,3 +100,4 @@ const spaceMapPageSlice = createSlice({
 });
 
 export const { actions, reducer, name: sliceKey } = spaceMapPageSlice;
+export const useDispatchAction = () => useActions(actions);

@@ -77,7 +77,7 @@ export const generateCategoryPacks = ({
 
   const getSphereColor = (item: HierarchyCircularNode<PackedCategories>) =>
     !item.children
-      ? (item.data.projectWeight &&
+      ? (typeof item.data.projectWeight !== 'undefined' &&
           getCircleColor({
             projectWeight: item.data.projectWeight,
             isTransparent: isTransparent(item.data),

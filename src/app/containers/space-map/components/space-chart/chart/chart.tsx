@@ -34,22 +34,23 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
   const {
     fetchSpaceMapData,
     spaceMapData: { tree, maxMarketCap, minMarketCap },
-    filters: { mCapFrom, mCapTo, exchanges, currentProject: reducerCurrentProject },
+    filters: { mCapFrom, mCapTo, exchanges },
     fetchingMapData: loading,
     loadMapDataError,
     projectPartnerships,
     projectPartnershipsLoading,
     fetchPartnershipsData,
-    setCurrentInputProject,
+    setProjectName,
+    selectedProject,
   } = useSpaceMap();
 
   const setProject = useCallback(
     val => {
       setMapCurrentProject(val);
-      setCurrentInputProject(val.data?.projectId);
+      setProjectName(val.data?.projectId);
       handleClick(val.data?.projectId);
     },
-    [setCurrentInputProject, handleClick]
+    [setProjectName, handleClick]
   );
 
   const { packedCategories, simulation } = useChart({ width, height, tree, maxMarketCap });
@@ -59,6 +60,12 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
       fetchSpaceMapData();
     }
   }, [fetchSpaceMapData, tree, loading, loadMapDataError]);
+
+  useEffect(() => {
+    if (!selectedProject) {
+      setMapCurrentProject(null);
+    }
+  }, [selectedProject]);
 
   useLayoutEffect(() => {
     const IS_RENDER_PROPS_AVAILABLE = width && height && maxMarketCap && minMarketCap && simulation;
@@ -96,14 +103,13 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
 
       categoriesLabels({ svg, nodes });
 
-      if (reducerCurrentProject !== currentProject?.data.projectId && handleClick) {
-        const foundedProject = circles.find(item => item.data.projectId === reducerCurrentProject) || null;
+      if (selectedProject !== currentProject?.data.projectId && handleClick) {
+        const foundedProject = circles.find(item => item.data.projectId === selectedProject) || null;
         setMapCurrentProject(foundedProject);
         handleClick(foundedProject?.data.projectId || '');
       }
 
-      const isLinksDataPresence =
-        projectPartnerships && projectPartnerships.length && currentProject && !projectPartnershipsLoading;
+      const isLinksDataPresence = projectPartnerships && currentProject && !projectPartnershipsLoading;
 
       if (isLinksDataPresence) {
         const foundedProjects = getIncludesProjects(circles, [...new Set(projectPartnerships)]);
@@ -149,7 +155,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     height,
     simulation,
     windowSize,
-    reducerCurrentProject,
+    selectedProject,
     handleClick,
   ]);
 
