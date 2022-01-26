@@ -12,6 +12,7 @@ import { getCircleCoord, getIncludesProjects } from '../utils/helpers';
 import { generateProjectLinks } from '../utils/projects-links';
 import { generateProjectTooltips } from '../utils/projects-titles';
 import { useChart } from '../utils/use-chart';
+import { GCircles } from './g-circles';
 import { ChartWrapper, RandomSvg } from './styled';
 
 type SpaceChartProps = {
@@ -53,13 +54,11 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     [setProjectName, handleClick]
   );
 
-  const { packedCategories, simulation } = useChart({ width, height, tree, maxMarketCap });
+  const { packedCategories, simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap });
 
   useEffect(() => {
-    if (!tree && !loading && !loadMapDataError) {
-      fetchSpaceMapData();
-    }
-  }, [fetchSpaceMapData, tree, loading, loadMapDataError]);
+    fetchSpaceMapData();
+  }, [fetchSpaceMapData]);
 
   useEffect(() => {
     if (!selectedProject) {
@@ -73,8 +72,8 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     if (IS_RENDER_PROPS_AVAILABLE) {
       const nodes = simulation.nodes();
 
-      const map = createBaseMap({ ref: svgRef });
-      const svg = select(map.node());
+      // const map = createBaseMap({ ref: svgRef });
+      // const svg = select(map.node());
 
       const fundsTooltip = fundsTooltips({ ref: wrapperRef, nodes });
 
@@ -87,57 +86,57 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
         ]) ||
         [];
 
-      const circles = generateCategoryPacks({
-        svg,
-        nodes,
-        fundsTooltip,
-        mCapFrom,
-        mCapTo,
-        exchanges,
-        maxMarketCap,
-        minMarketCap,
-        projectPartnerships: targetPartnerships,
-        fetchPartnershipsData,
-        setProject,
-      });
+      // const circles = generateCategoryPacks({
+      //   svg,
+      //   nodes,
+      //   fundsTooltip,
+      //   mCapFrom,
+      //   mCapTo,
+      //   exchanges,
+      //   maxMarketCap,
+      //   minMarketCap,
+      //   projectPartnerships: targetPartnerships,
+      //   fetchPartnershipsData,
+      //   setProject,
+      // });
 
-      categoriesLabels({ svg, nodes });
+      // categoriesLabels({ svg, nodes });
 
-      if (selectedProject !== currentProject?.data.projectId && handleClick) {
-        const foundedProject = circles.find(item => item.data.projectId === selectedProject) || null;
-        setMapCurrentProject(foundedProject);
-        handleClick(foundedProject?.data.projectId || '');
-      }
+      // if (selectedProject !== currentProject?.data.projectId && handleClick) {
+      //   const foundedProject = circles.find(item => item.data.projectId === selectedProject) || null;
+      //   setMapCurrentProject(foundedProject);
+      //   handleClick(foundedProject?.data.projectId || '');
+      // }
 
       const isLinksDataPresence = projectPartnerships && currentProject && !projectPartnershipsLoading;
 
-      if (isLinksDataPresence) {
-        const foundedProjects = getIncludesProjects(circles, [...new Set(projectPartnerships)]);
+      // if (isLinksDataPresence) {
+      //   const foundedProjects = getIncludesProjects(circles, [...new Set(projectPartnerships)]);
 
-        const link = generateProjectLinks({
-          svg,
-          foundedProjects,
-        });
+      //   const link = generateProjectLinks({
+      //     svg,
+      //     foundedProjects,
+      //   });
 
-        const tooltip = generateProjectTooltips({ svg, foundedProjects });
+      //   const tooltip = generateProjectTooltips({ svg, foundedProjects });
 
-        simulation.on('tick', () => {
-          link
-            .attr('x1', getCircleCoord(currentProject, 'x'))
-            .attr('y1', getCircleCoord(currentProject, 'y'))
-            .attr('x2', d => getCircleCoord(d, 'x'))
-            .attr('y2', d => getCircleCoord(d, 'y'));
+      //   simulation.on('tick', () => {
+      //     link
+      //       .attr('x1', getCircleCoord(currentProject, 'x'))
+      //       .attr('y1', getCircleCoord(currentProject, 'y'))
+      //       .attr('x2', d => getCircleCoord(d, 'x'))
+      //       .attr('y2', d => getCircleCoord(d, 'y'));
 
-          link.exit().remove();
+      //     link.exit().remove();
 
-          tooltip
-            .attr('x', d => getCircleCoord(d, 'x'))
-            .attr('y', d => getCircleCoord(d, 'y'))
-            .html(item => `<span>${item.data?.name || ''}</span>`)
-            .style('font-size', 3);
-        });
-        simulation.restart();
-      }
+      //     tooltip
+      //       .attr('x', d => getCircleCoord(d, 'x'))
+      //       .attr('y', d => getCircleCoord(d, 'y'))
+      //       .html(item => `<span>${item.data?.name || ''}</span>`)
+      //       .style('font-size', 3);
+      //   });
+      //   simulation.restart();
+      // }
     }
   }, [
     maxMarketCap,
@@ -161,7 +160,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
 
   return (
     <ChartWrapper ref={wrapperRef}>
-      <RandomSvg ref={svgRef} />
+      <RandomSvg ref={svgRef}>{simulatedCircles && <GCircles nodes={simulatedCircles} />}</RandomSvg>
     </ChartWrapper>
   );
 });
