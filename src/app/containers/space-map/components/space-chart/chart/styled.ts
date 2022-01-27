@@ -59,8 +59,9 @@ export const RandomSvg = styled.svg`
   &:active {
     cursor: grabbing;
   }
-  & > circle {
+  & circle:not(:active) {
     transition: 0.2s linear;
+    cursor: pointer;
   }
 
   & .fund {
@@ -71,24 +72,23 @@ export const RandomSvg = styled.svg`
       stroke-width: 1;
     }
   }
-  & .category {
-    & .label-text {
-      width: 100%;
-      height: 100%;
-      font-weight: bold;
-      font-size: 16px;
-      line-height: 22px;
-      fill: ${COLOR_PALLETTE.MAP_LABELS};
-      pointer-events: none;
-      /* text-anchor: middle; */
-      &.child {
-        line-height: 16px;
-        color: ${COLOR_PALLETTE.MAP_LABELS};
-        /* text-align: center; */
-        transition: 0.2s linear;
-      }
+  & .label-text {
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+    fill: ${COLOR_PALLETTE.MAP_LABELS};
+    pointer-events: none;
+    /* text-anchor: middle; */
+    &.child {
+      line-height: 16px;
+      color: ${COLOR_PALLETTE.MAP_LABELS};
+      /* text-align: center; */
+      transition: 0.2s linear;
     }
   }
+
   & .project-tooltip {
     pointer-events: none;
     & > span {
@@ -114,6 +114,7 @@ export const RandomSvg = styled.svg`
       fill: ${COLOR_PALLETTE.MAP_LABELS};
       pointer-events: none;
       text-anchor: middle;
+      text-shadow: -7px 0px 18px #4a4a4a;
     }
   }
   & .legend-label {

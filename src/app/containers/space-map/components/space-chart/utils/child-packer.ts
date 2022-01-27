@@ -4,11 +4,11 @@ import { PackedCategories } from '../types';
 
 const CIRCLES_PADDING = 5;
 
-export const packedChild = (data: PackedCategories, r = 0) =>
+export const packedChild = (data: HierarchyCircularNode<PackedCategories> | PackedCategories, r = 0) =>
   pack()
     .size([r * 2, r * 2]) /** Set pack size by parent radius */
     .padding(CIRCLES_PADDING)(
-    hierarchy<PackedCategories>(data)
+    hierarchy<PackedCategories>(data as PackedCategories)
       .sum(d => d.marketCap)
       .sort(
         (a, b) => (b.value || 1) - (a?.value || 0)

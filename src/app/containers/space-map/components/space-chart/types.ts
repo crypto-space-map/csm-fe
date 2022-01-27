@@ -1,4 +1,4 @@
-import { RefObject } from 'react';
+import { Dispatch, RefObject } from 'react';
 
 import { Selection, SimulationNodeDatum, HierarchyCircularNode, PackCircle, BaseType } from 'd3';
 
@@ -69,13 +69,13 @@ export type CirclesSimulation = Sizing & {
   packedCategories: PackedCategories[];
 };
 
-export type PackedCategories = Omit<MapCategory, 'children'> &
-  PackCircle & {
-    key?: string;
-    children: PackedCategories[];
-    data: MapCategory & PackCircle;
-    parent: PackedCategories | null;
-  };
+export type PackedCategories = PackCircle & {
+  key?: string;
+  children: PackedCategories[];
+  data: MapCategory & PackCircle;
+  parent: PackedCategories | null;
+  marketCap: number;
+} & Omit<MapCategory, 'children'>;
 
 //  Project links generator
 
@@ -103,4 +103,10 @@ export type PackedNodes = PackCircle & {
     children: MapCategory[];
     marketCap: number;
   } & PackCircle)[];
+};
+
+export type GAreaProps = {
+  nodes: HierarchyCircularNode<PackedCategories>[] | undefined;
+  currentProject?: HierarchyCircularNode<PackedCategories> | null;
+  setCurrentProject?: (value: HierarchyCircularNode<PackedCategories>) => void;
 };

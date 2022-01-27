@@ -1,18 +1,21 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { HierarchyCircularNode, select } from 'd3';
+import { HierarchyCircularNode } from 'd3';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import { useWindowSize } from 'hooks/use-screen-size';
 
 import { PackedCategories } from '../types';
-import { createBaseMap, generateCategoryPacks, categoriesLabels, fundsTooltips } from '../utils';
+import { fundsTooltips } from '../utils';
 import { generateFundsLegend } from '../utils/circles-legend';
 import { getCircleCoord, getIncludesProjects } from '../utils/helpers';
 import { generateProjectLinks } from '../utils/projects-links';
 import { generateProjectTooltips } from '../utils/projects-titles';
 import { useChart } from '../utils/use-chart';
+import { initZoomedElement } from '../utils/zoom';
 import { GCircles } from './g-circles';
+import { GLabels } from './g-labels';
+import { GLinks } from './g-links';
 import { ChartWrapper, RandomSvg } from './styled';
 
 type SpaceChartProps = {
@@ -66,101 +69,27 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     }
   }, [selectedProject]);
 
-  useLayoutEffect(() => {
-    const IS_RENDER_PROPS_AVAILABLE = width && height && maxMarketCap && minMarketCap && simulation;
+  initZoomedElement(svgRef);
 
-    if (IS_RENDER_PROPS_AVAILABLE) {
-      const nodes = simulation.nodes();
+  useEffect(() => {
+    simulation?.restart();
+  }, [simulation, windowSize]);
 
-      // const map = createBaseMap({ ref: svgRef });
-      // const svg = select(map.node());
+  const handleChange = (value: typeof currentProject) => setMapCurrentProject(value);
 
-      const fundsTooltip = fundsTooltips({ ref: wrapperRef, nodes });
-
-      generateFundsLegend({ ref: svgRef, width });
-
-      const targetPartnerships =
-        ((projectPartnerships.length || currentProject) && [
-          ...projectPartnerships,
-          currentProject?.data.projectId || '',
-        ]) ||
-        [];
-
-      // const circles = generateCategoryPacks({
-      //   svg,
-      //   nodes,
-      //   fundsTooltip,
-      //   mCapFrom,
-      //   mCapTo,
-      //   exchanges,
-      //   maxMarketCap,
-      //   minMarketCap,
-      //   projectPartnerships: targetPartnerships,
-      //   fetchPartnershipsData,
-      //   setProject,
-      // });
-
-      // categoriesLabels({ svg, nodes });
-
-      // if (selectedProject !== currentProject?.data.projectId && handleClick) {
-      //   const foundedProject = circles.find(item => item.data.projectId === selectedProject) || null;
-      //   setMapCurrentProject(foundedProject);
-      //   handleClick(foundedProject?.data.projectId || '');
-      // }
-
-      const isLinksDataPresence = projectPartnerships && currentProject && !projectPartnershipsLoading;
-
-      // if (isLinksDataPresence) {
-      //   const foundedProjects = getIncludesProjects(circles, [...new Set(projectPartnerships)]);
-
-      //   const link = generateProjectLinks({
-      //     svg,
-      //     foundedProjects,
-      //   });
-
-      //   const tooltip = generateProjectTooltips({ svg, foundedProjects });
-
-      //   simulation.on('tick', () => {
-      //     link
-      //       .attr('x1', getCircleCoord(currentProject, 'x'))
-      //       .attr('y1', getCircleCoord(currentProject, 'y'))
-      //       .attr('x2', d => getCircleCoord(d, 'x'))
-      //       .attr('y2', d => getCircleCoord(d, 'y'));
-
-      //     link.exit().remove();
-
-      //     tooltip
-      //       .attr('x', d => getCircleCoord(d, 'x'))
-      //       .attr('y', d => getCircleCoord(d, 'y'))
-      //       .html(item => `<span>${item.data?.name || ''}</span>`)
-      //       .style('font-size', 3);
-      //   });
-      //   simulation.restart();
-      // }
-    }
-  }, [
-    maxMarketCap,
-    minMarketCap,
-    mCapFrom,
-    mCapTo,
-    exchanges,
-    projectPartnerships,
-    fetchPartnershipsData,
-    setProject,
-    currentProject,
-    projectPartnershipsLoading,
-    packedCategories,
-    width,
-    height,
-    simulation,
-    windowSize,
-    selectedProject,
-    handleClick,
-  ]);
+  console.log({ currentProject });
 
   return (
     <ChartWrapper ref={wrapperRef}>
-      <RandomSvg ref={svgRef}>{simulatedCircles && <GCircles nodes={simulatedCircles} />}</RandomSvg>
+      <RandomSvg ref={svgRef}>
+        <g>
+          {currentProject && (
+            <GLinks nodes={simulatedCircles} simulation={simulation} currentProject={currentProject} />
+          )}
+          <GCircles nodes={simulatedCircles} setCurrentProject={handleChange} />
+          <GLabels nodes={simulatedCircles} />
+        </g>
+      </RandomSvg>
     </ChartWrapper>
   );
 });

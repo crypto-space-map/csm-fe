@@ -8,7 +8,7 @@ import { packedChild } from './child-packer';
 
 export function useChart({ width, height, maxMarketCap, tree }: UseChartProps) {
   const [packedCategories, setPackedCategories] = useState<PackedCategories[]>([]);
-  const [simulation, setSimulation] = useState<Simulation<PackedCategories, undefined>>();
+  const [simulation, setSimulation] = useState<Simulation<PackedCategories, undefined> | null>(null);
   useEffect(() => {
     if (width && height && tree && maxMarketCap) {
       setPackedCategories(createCategoryPacks(tree, maxMarketCap, width, height));
