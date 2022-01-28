@@ -1,37 +1,31 @@
-import { memo, useLayoutEffect, useRef } from 'react';
+import { memo } from 'react';
 
-import { css } from '@emotion/react';
+import { HierarchyCircularNode } from 'd3';
 
-import { GAreaProps } from '../types';
-import { containerCreator } from '../utils/container-creator';
+import { GAreaProps, PackedCategories } from '../types';
+import { ParentLabelsText } from './styled';
 
 const PADDING = {
   PARENT: 10,
   CHILD: 12,
 };
 
-const labels = css({ display: 'inherit' }).name;
+const Label = memo<{ elem: HierarchyCircularNode<PackedCategories> }>(
+  ({
+    elem: {
+      data: { key, x, y, r },
+    },
+  }) => (
+    <ParentLabelsText x={x} y={y - r - PADDING.PARENT}>
+      {key}
+    </ParentLabelsText>
+  )
+);
 
-export const GLabels = memo<GAreaProps>(({ nodes }) => {
-  const labelsRef = useRef<SVGGElement>(null);
-
-  useLayoutEffect(() => {
-    if (nodes?.length) {
-      const { component } = containerCreator<SVGGElement, typeof nodes>({
-        ref: labelsRef,
-        data: nodes,
-        className: labels,
-      });
-
-      component
-        .data(component.data())
-        .append('text')
-        .text(item => item.data.key || '')
-        .classed('label-text', true)
-        .attr('x', ({ data }) => data.x)
-        .attr('y', ({ data: { y, r } }) => y - r - PADDING.PARENT);
-    }
-  }, [nodes]);
-
-  return <g ref={labelsRef} className="category-labels" />;
-});
+export const GLabels = memo<GAreaProps>(({ data }) => (
+  <g className="category-labels">
+    {data?.map(elem => (
+      <Label elem={elem} key={elem.data.key} />
+    ))}
+  </g>
+));

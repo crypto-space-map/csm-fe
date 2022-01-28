@@ -27,6 +27,7 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject }) => {
   // TODO надо подумать куда это дело вынести
   const isTransparent = useCallback(
     ({ marketCap, projectId, exchanges: itemExchangesArr }: PackedCategories) => {
+      console.log(projectId, projectPartnerships);
       let opacity = false;
       const lessCapFrom = mCapFrom || minMarketCap || 0;
       const moreCapTo = mCapTo || maxMarketCap || 0;

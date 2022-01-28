@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import { HierarchyCircularNode } from 'd3';
 
@@ -6,12 +6,6 @@ import { useSpaceMap } from 'app/containers/space-map/hooks';
 import { useWindowSize } from 'hooks/use-screen-size';
 
 import { PackedCategories } from '../types';
-import { fundsTooltips } from '../utils';
-import { packedChild } from '../utils/child-packer';
-import { generateFundsLegend } from '../utils/circles-legend';
-import { getCircleCoord, getIncludesProjects } from '../utils/helpers';
-import { generateProjectLinks } from '../utils/projects-links';
-import { generateProjectTooltips } from '../utils/projects-titles';
 import { useChart } from '../utils/use-chart';
 import { initZoomedElement } from '../utils/zoom';
 import { GCircles } from './g-circles';
@@ -41,6 +35,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     spaceMapData: { tree, maxMarketCap },
     setProjectName,
     selectedProject,
+    fetchPartnershipsData,
   } = useSpaceMap();
 
   const setProject = useCallback(
@@ -48,8 +43,9 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
       setMapCurrentProject(val);
       setProjectName(val.data?.projectId);
       handleClick(val.data?.projectId);
+      fetchPartnershipsData(val.data?.projectId);
     },
-    [setProjectName, handleClick]
+    [setProjectName, handleClick, fetchPartnershipsData]
   );
 
   const { simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap });
@@ -70,15 +66,12 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     simulation?.restart();
   }, [simulation, windowSize]);
 
-  const handleChange = (value: typeof currentProject) => setMapCurrentProject(value);
-
-  console.log(currentProject);
-
   return (
     <ChartWrapper ref={wrapperRef}>
       <RandomSvg ref={svgRef}>
         <g>
-          <GCircles data={simulatedCircles} setCurrentProject={handleChange} />
+          <GCircles data={simulatedCircles} setCurrentProject={setProject} />
+          <GLabels data={simulatedCircles} />
         </g>
       </RandomSvg>
     </ChartWrapper>

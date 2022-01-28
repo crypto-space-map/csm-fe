@@ -50,6 +50,18 @@ export const ChartWrapper = styled.div`
   }
 `;
 
+export const ParentLabelsText = styled.text`
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+  fill: ${COLOR_PALLETTE.MAP_LABELS};
+  pointer-events: none;
+  text-anchor: middle;
+  text-shadow: -7px 0px 18px #4a4a4a;
+`;
+
 export const RandomSvg = styled.svg`
   width: 100%;
   height: 100%;
@@ -81,7 +93,7 @@ export const RandomSvg = styled.svg`
     line-height: 22px;
     fill: ${COLOR_PALLETTE.MAP_LABELS};
     pointer-events: none;
-    /* text-anchor: middle; */
+    text-anchor: middle;
     &.child {
       line-height: 16px;
       color: ${COLOR_PALLETTE.MAP_LABELS};
