@@ -114,6 +114,7 @@ export const RandomSvg = styled.svg`
       fill: ${COLOR_PALLETTE.MAP_LABELS};
       pointer-events: none;
       text-anchor: middle;
+      text-shadow: -7px 0px 18px #4a4a4a;
     }
   }
   & .legend-label {

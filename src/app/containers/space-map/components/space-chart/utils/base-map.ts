@@ -6,16 +6,18 @@ import { BaseMapParams, PackedCategories } from '../types';
 const ZOOM_RANGE: [number, number] = [0.8, 10];
 
 export const createBaseMap = ({ ref }: BaseMapParams) => {
-  const svg = select(ref.current as Element)
+  const map = select(ref.current as Element)
     .selectAll('g')
     .data([{} as PackedCategories]);
 
-  svg.enter().append('g');
+  map.enter().append('g');
 
-  svg.merge(svg);
+  map.merge(map);
 
   const handleZoom = (e: D3ZoomEvent<SVGGElement, unknown>) => {
     /** TODO add correct type for event */
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     select(ref.current).select('g').attr('transform', e.transform);
   };
   const initZoom = () =>
@@ -23,7 +25,7 @@ export const createBaseMap = ({ ref }: BaseMapParams) => {
 
   initZoom();
 
-  svg.exit().remove();
+  map.exit().remove();
 
-  return svg;
+  return map;
 };

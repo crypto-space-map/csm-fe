@@ -35,6 +35,8 @@ export const categoriesLabels = ({ svg, nodes }: CategoriesLabelsProps) => {
     .classed('label-text', true)
     .attr('x', ({ x }) => x)
     .attr('y', ({ y, r }) => y - r - PADDING.PARENT);
+  labelArea.merge(labelArea);
+  labelArea.exit().remove();
 };
 
 export const generateChildLabels = (elem: Selection<SVGGElement, PackedCategories, SVGGElement, unknown>) =>

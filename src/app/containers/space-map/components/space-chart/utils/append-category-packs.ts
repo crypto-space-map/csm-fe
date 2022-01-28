@@ -97,6 +97,8 @@ export const generateCategoryPacks = ({
     .classed(CLASSNAMES.CATEGORY, true)
     .attr('transform', item => `translate(${item.x - item.r}, ${item.y - item.r})`);
 
+  categoryPacks.merge(categoryPacks);
+  categoryPacks.exit().remove();
   /** Generate funds */
 
   const circles = categoryPacks
@@ -118,6 +120,8 @@ export const generateCategoryPacks = ({
     .on('mousemove', onMouseMove)
     .on('mouseover', onMouseOver)
     .on('mouseout', onMouseOut);
+
+  circles.exit().remove();
 
   /** Generate categories-child labels */
   generateChildLabels(categoryPacks);
