@@ -1,4 +1,12 @@
-import { interpolateRgbBasis } from 'd3';
+import { HierarchyCircularNode, interpolateRgbBasis } from 'd3';
+import { COLOR_PALLETTE } from 'global/pallette';
+
+import { PackedCategories } from '../types';
+
+type GetCircleColorProps = {
+  projectWeight: number;
+  isTransparent: boolean;
+};
 
 const colorArray = [
   '#78939C',
@@ -14,4 +22,27 @@ const colorArray = [
   '#B02727',
 ];
 
-export const color = interpolateRgbBasis(colorArray);
+const color = interpolateRgbBasis(colorArray);
+
+const getCircleColor = ({ projectWeight, isTransparent }: GetCircleColorProps) =>
+  isTransparent ? '#383838' : color(projectWeight > 100 ? 1 : projectWeight / 100);
+
+export const getSphereColorParams = (
+  item: HierarchyCircularNode<PackedCategories>,
+  isTransparent: boolean
+) => {
+  const colorParams = {
+    fill: !item.children
+      ? (typeof item.data.projectWeight !== 'undefined' &&
+          getCircleColor({
+            projectWeight: item.data.projectWeight,
+            isTransparent,
+          })) ||
+        '#383838'
+      : 'none',
+    stroke: !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY,
+    strokeWidth: !!item.children ? 0.5 : 0.2,
+    strokeDasharray: !!item.children ? '4,4' : 'none',
+  };
+  return colorParams;
+};

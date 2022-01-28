@@ -7,6 +7,7 @@ import { useWindowSize } from 'hooks/use-screen-size';
 
 import { PackedCategories } from '../types';
 import { fundsTooltips } from '../utils';
+import { packedChild } from '../utils/child-packer';
 import { generateFundsLegend } from '../utils/circles-legend';
 import { getCircleCoord, getIncludesProjects } from '../utils/helpers';
 import { generateProjectLinks } from '../utils/projects-links';
@@ -37,13 +38,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
 
   const {
     fetchSpaceMapData,
-    spaceMapData: { tree, maxMarketCap, minMarketCap },
-    filters: { mCapFrom, mCapTo, exchanges },
-    fetchingMapData: loading,
-    loadMapDataError,
-    projectPartnerships,
-    projectPartnershipsLoading,
-    fetchPartnershipsData,
+    spaceMapData: { tree, maxMarketCap },
     setProjectName,
     selectedProject,
   } = useSpaceMap();
@@ -57,7 +52,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     [setProjectName, handleClick]
   );
 
-  const { packedCategories, simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap });
+  const { simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap });
 
   useEffect(() => {
     fetchSpaceMapData();
@@ -77,17 +72,13 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
 
   const handleChange = (value: typeof currentProject) => setMapCurrentProject(value);
 
-  console.log({ currentProject });
+  console.log(currentProject);
 
   return (
     <ChartWrapper ref={wrapperRef}>
       <RandomSvg ref={svgRef}>
         <g>
-          {currentProject && (
-            <GLinks nodes={simulatedCircles} simulation={simulation} currentProject={currentProject} />
-          )}
-          <GCircles nodes={simulatedCircles} setCurrentProject={handleChange} />
-          <GLabels nodes={simulatedCircles} />
+          <GCircles data={simulatedCircles} setCurrentProject={handleChange} />
         </g>
       </RandomSvg>
     </ChartWrapper>

@@ -71,7 +71,7 @@ export type CirclesSimulation = Sizing & {
 
 export type PackedCategories = PackCircle & {
   key?: string;
-  children: PackedCategories[];
+  children: HierarchyCircularNode<PackedCategories>[];
   data: MapCategory & PackCircle;
   parent: PackedCategories | null;
   marketCap: number;
@@ -106,7 +106,7 @@ export type PackedNodes = PackCircle & {
 };
 
 export type GAreaProps = {
-  nodes: HierarchyCircularNode<PackedCategories>[] | undefined;
+  data: HierarchyCircularNode<PackedCategories>[] | undefined;
   currentProject?: HierarchyCircularNode<PackedCategories> | null;
   setCurrentProject?: (value: HierarchyCircularNode<PackedCategories>) => void;
 };

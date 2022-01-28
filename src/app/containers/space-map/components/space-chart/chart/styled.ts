@@ -56,6 +56,7 @@ export const RandomSvg = styled.svg`
   padding-top: 20px;
   cursor: grab;
   overflow: visible;
+  transition: all 0.2s linear;
   &:active {
     cursor: grabbing;
   }
