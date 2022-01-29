@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { HierarchyCircularNode } from 'd3';
 
@@ -6,6 +6,7 @@ import { useSpaceMap } from 'app/containers/space-map/hooks';
 import { useWindowSize } from 'hooks/use-screen-size';
 
 import { PackedCategories } from '../types';
+import { getAllProjects, getIncludesProjects } from '../utils/helpers';
 import { useChart } from '../utils/use-chart';
 import { initZoomedElement } from '../utils/zoom';
 import { GCircles } from './g-circles';
@@ -35,6 +36,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     spaceMapData: { tree, maxMarketCap },
     setProjectName,
     selectedProject,
+    projectPartnerships,
     fetchPartnershipsData,
   } = useSpaceMap();
 
@@ -50,6 +52,10 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
 
   const { simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap });
 
+  const allProjects = useMemo(() => getAllProjects(simulatedCircles || []), [simulatedCircles]);
+
+  const foundedProjects = getIncludesProjects(allProjects, [...new Set(projectPartnerships)]);
+
   useEffect(() => {
     fetchSpaceMapData();
   }, [fetchSpaceMapData]);
@@ -58,21 +64,23 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     if (!selectedProject) {
       setMapCurrentProject(null);
     }
-  }, [selectedProject]);
-
-  initZoomedElement(svgRef);
+    if (selectedProject !== currentProject?.data.projectId) {
+      const target = allProjects.find(({ data: { projectId } }) => projectId === selectedProject);
+      setMapCurrentProject(target || null);
+    }
+  }, [allProjects, currentProject?.data.projectId, selectedProject]);
 
   useEffect(() => {
     simulation?.restart();
   }, [simulation, windowSize]);
 
-  // console.log(currentProject);
+  initZoomedElement(svgRef);
 
   return (
     <ChartWrapper ref={wrapperRef}>
       <RandomSvg ref={svgRef}>
         <g>
-          {currentProject && <GLinks data={simulatedCircles} currentProject={currentProject} />}
+          {currentProject && <GLinks data={foundedProjects} currentProject={currentProject} />}
           <GCircles data={simulatedCircles} setCurrentProject={setProject} />
           <GLabels data={simulatedCircles} />
         </g>

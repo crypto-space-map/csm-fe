@@ -1,25 +1,22 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 
 import { COLOR_PALLETTE } from 'global/pallette';
 
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 
 import { GAreaProps } from '../types';
-import { getCircleCoord, getIncludesProjects, getAllProjects } from '../utils/helpers';
+import { getCircleCoord } from '../utils/helpers';
+import { ProjectLink } from './styled';
 
 export const GLinks = memo<GAreaProps>(({ data, currentProject }) => {
-  const { projectPartnerships, projectPartnershipsLoading } = useSpaceMap();
-
-  const allProjects = useMemo(() => getAllProjects(data || []), [data]);
-
-  const foundedProjects = getIncludesProjects(allProjects, [...new Set(projectPartnerships)]);
+  const { projectPartnershipsLoading } = useSpaceMap();
 
   if (!currentProject || projectPartnershipsLoading) return null;
 
   return (
     <g className="links">
-      {foundedProjects?.map(elem => (
-        <line
+      {data?.map(elem => (
+        <ProjectLink
           stroke={COLOR_PALLETTE.MAIN_WHITE}
           key={`${elem.x}${elem.y}`}
           strokeWidth={1}
