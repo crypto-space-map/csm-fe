@@ -138,9 +138,9 @@ export const RandomSvg = styled.svg`
   & .legend-circle {
     cursor: pointer;
   }
-  & .LINKS {
+  /* & .LINKS {
     & line {
       animation: ${lineAnimation} 0.3s linear alternate;
     }
-  }
+  } */
 `;

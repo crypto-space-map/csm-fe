@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -49,13 +49,18 @@ export function useSpaceMap() {
     },
     [setReducerFilters]
   );
-  const { projectPartnerships = [], projectPartnershipsLoading } = useSelector(selectPartnerships);
+  const { projectPartnerships: reducerPartnerShips = [], projectPartnershipsLoading } =
+    useSelector(selectPartnerships);
 
   const fetchPartnershipsData = useCallback((val: string) => fetchPartnerships(val), [fetchPartnerships]);
 
   const clearReducerObjectData = useCallback(
     (payload: ReturnType<typeof clearData>['payload']) => clearData(payload),
     [clearData]
+  );
+  const projectPartnerships = useMemo(
+    () => (selectedProject ? [...reducerPartnerShips, selectedProject] : []),
+    [reducerPartnerShips, selectedProject]
   );
 
   return {

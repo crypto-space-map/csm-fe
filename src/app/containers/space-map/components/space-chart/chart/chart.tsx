@@ -66,10 +66,13 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     simulation?.restart();
   }, [simulation, windowSize]);
 
+  // console.log(currentProject);
+
   return (
     <ChartWrapper ref={wrapperRef}>
       <RandomSvg ref={svgRef}>
         <g>
+          {currentProject && <GLinks data={simulatedCircles} currentProject={currentProject} />}
           <GCircles data={simulatedCircles} setCurrentProject={setProject} />
           <GLabels data={simulatedCircles} />
         </g>

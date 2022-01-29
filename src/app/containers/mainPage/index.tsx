@@ -63,9 +63,9 @@ export const MainPage = memo(() => {
   return (
     <>
       <SpaceChart handleClick={handleClick} />
-      <FundsList handleSelectFund={handleSelectFund} selectedFund={fundName} />
+      {/* <FundsList handleSelectFund={handleSelectFund} selectedFund={fundName} />
       <DetailInfoCard />
-      <DetailFundCard />
+      <DetailFundCard /> */}
     </>
   );
 });

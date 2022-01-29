@@ -1,7 +1,6 @@
 import { HierarchyCircularNode } from 'd3';
 
 import { PackedCategories } from '../types';
-import { color } from './colors';
 
 export const getCircleCoord = (data: HierarchyCircularNode<PackedCategories>, key: 'x' | 'y') => {
   const coord = data[key] + (data.parent?.data[key] || 0) - (data.parent?.data.r || 0) || 0;
@@ -23,11 +22,6 @@ export const getProjectsVsCoords = (data: HierarchyCircularNode<PackedCategories
   return parsed;
 };
 
-type GetCircleColorProps = {
-  projectWeight: number;
-  isTransparent: boolean;
-};
-
 export const getIncludesProjects = (
   data: HierarchyCircularNode<PackedCategories>[],
   projectPartnerships: string[]
@@ -41,5 +35,15 @@ export const getIncludesProjects = (
   return parsed;
 };
 
-export const getCircleColor = ({ projectWeight, isTransparent }: GetCircleColorProps) =>
-  isTransparent ? '#383838' : color(projectWeight > 100 ? 1 : projectWeight / 100);
+export const getAllProjects = (data: HierarchyCircularNode<PackedCategories>[]) => {
+  const result = data.reduce((acc, item) => {
+    if (!item.children?.length) {
+      acc.push(item);
+    }
+    if (item.children?.length) {
+      acc = [...acc, ...getAllProjects(item.children)];
+    }
+    return acc;
+  }, [] as HierarchyCircularNode<PackedCategories>[]);
+  return result;
+};
