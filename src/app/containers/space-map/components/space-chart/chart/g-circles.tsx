@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { Fragment, memo, useCallback } from 'react';
 
 import { HierarchyCircularNode, scaleLinear } from 'd3';
 
@@ -60,10 +60,10 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject }) => {
 const Circles = memo<GAreaProps>(({ data, setCurrentProject = () => false }) => (
   <>
     {data?.map(elem => (
-      <>
+      <Fragment key={`${elem.data.projectId}${elem.x}${elem.y}`}>
         <Circle elem={elem} setCurrentProject={setCurrentProject} />
         <Circles data={elem.children} setCurrentProject={setCurrentProject} />
-      </>
+      </Fragment>
     ))}
   </>
 ));
@@ -74,7 +74,9 @@ export const GCircles = memo(({ data, setCurrentProject = () => false }: GAreaPr
   return (
     <g className="circles-map">
       {data.map(item => (
-        <g transform={`translate(${item.data.x - item.r}, ${item.data.y - item.r})`} key={item.value}>
+        <g
+          transform={`translate(${item.data.x - item.r}, ${item.data.y - item.r})`}
+          key={`${item.x}${item.y}${item.data.projectId}`}>
           <Circle elem={item} setCurrentProject={setCurrentProject} />
           <Circles data={item.children} setCurrentProject={setCurrentProject} />
         </g>
