@@ -19,13 +19,13 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false }) => 
 
   const {
     spaceMapData: { maxMarketCap, minMarketCap },
-    filters: { mCapFrom, mCapTo, exchanges },
+    filters: { mCapFrom, mCapTo, exchanges, partnersWeight },
     projectPartnerships,
   } = useSpaceMap();
 
   // TODO надо подумать куда это дело вынести
   const isTransparent = useCallback(
-    ({ marketCap, projectId, exchanges: itemExchangesArr }: PackedCategories) => {
+    ({ marketCap, projectId, projectWeight = 0, exchanges: itemExchangesArr }: PackedCategories) => {
       let opacity = false;
       const lessCapFrom = mCapFrom || minMarketCap || 0;
       const moreCapTo = mCapTo || maxMarketCap || 0;
@@ -36,11 +36,16 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false }) => 
       }
       const isIncludes = itemExchangesArr?.some(item => exchanges.includes(item));
       const isLinked = projectId && projectPartnerships?.includes(projectId);
+      // разобарться с фильтрацией по кол-ву партенрок
+      const isPartnerWeightFiltered = !!partnersWeight.filter(
+        item => item - 9 > projectWeight && projectWeight < item
+      ).length;
       if (!isIncludes) opacity = true;
       if (isIncludes && projectPartnerships.length && !isLinked) opacity = true;
+      if (partnersWeight.length && !isPartnerWeightFiltered) opacity = true;
       return opacity;
     },
-    [exchanges, mCapFrom, mCapTo, maxMarketCap, minMarketCap, projectPartnerships]
+    [exchanges, mCapFrom, mCapTo, maxMarketCap, minMarketCap, projectPartnerships, partnersWeight]
   );
 
   return (

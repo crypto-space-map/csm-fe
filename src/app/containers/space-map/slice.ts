@@ -90,7 +90,7 @@ const spaceMapPageSlice = createSlice({
       );
       return clearedState;
     },
-    setFilters(state, action: PayloadAction<FilterProps>) {
+    setFilters(state, action: PayloadAction<Partial<FilterProps>>) {
       state.filters = { ...state.filters, ...action.payload };
     },
     clearFilters(state) {
