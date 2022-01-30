@@ -1,4 +1,4 @@
-import { Fragment, memo, useCallback } from 'react';
+import { Fragment, memo, useCallback, MouseEvent } from 'react';
 
 import { HierarchyCircularNode, scaleLinear } from 'd3';
 
@@ -9,14 +9,13 @@ import { getSphereColorParams } from '../utils/colors';
 
 const scaled = scaleLinear();
 
-type CircleProps = {
+type CircleProps = Omit<GAreaProps, 'data'> & {
   elem: HierarchyCircularNode<PackedCategories>;
-  setCurrentProject: (elem: HierarchyCircularNode<PackedCategories>) => void;
 };
 
-const Circle = memo<CircleProps>(({ elem, setCurrentProject }) => {
+const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false }) => {
   const handleClick = () => setCurrentProject(elem);
-  const handleMouseOver = () => false;
+  const handleMouseOver = (event: MouseEvent) => false;
 
   const {
     spaceMapData: { maxMarketCap, minMarketCap },
@@ -51,7 +50,7 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject }) => {
       cx={scaled(elem.x)}
       cy={scaled(elem.y)}
       onClick={handleClick}
-      onMouseOver={handleMouseOver}
+      onMouseMove={handleMouseOver}
       {...getSphereColorParams(elem, isTransparent(elem.data))}
     />
   );

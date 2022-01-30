@@ -22,7 +22,7 @@ const colorArray = [
   '#B02727',
 ];
 
-const color = interpolateRgbBasis(colorArray);
+export const color = interpolateRgbBasis(colorArray);
 
 const getCircleColor = ({ projectWeight, isTransparent }: GetCircleColorProps) =>
   isTransparent ? '#383838' : color(projectWeight > 100 ? 1 : projectWeight / 100);

@@ -2,19 +2,14 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
 
-const circleAnimation = keyframes`
-   0% {
-      opacity: 0;
-    }
+import { ChartTooltipProps } from './types';
 
-    100% {
-      -webkit-transform: matrix(1, 0, 0, 0, 0);
-      opacity: 1;
-    }
-`;
+const TOOLTIP_PADDING = 5;
+
 const showAnimation = keyframes`
     0% ,99% {
-      opacity: 0;}
+      opacity: 0;
+    }
     100% {
       opacity: 1;
     }
@@ -40,7 +35,7 @@ export const ChartWrapper = styled.div`
     background-color: ${COLOR_PALLETTE.MAIN_WHITE};
     font-size: 12px;
     line-height: 17px;
-    opacity: 0;
+    /* opacity: 0; */
     pointer-events: none;
     z-index: 2;
     overflow: hidden;
@@ -62,6 +57,11 @@ export const ParentLabelsText = styled.text`
   text-shadow: -7px 0px 18px #4a4a4a;
 `;
 
+export const ChildLabelsText = styled(ParentLabelsText)<{ fontSize?: number }>`
+  font-size: ${({ fontSize = 5 }) => `${fontSize}px`};
+  word-wrap: break-word;
+`;
+
 export const ProjectLink = styled.line`
   animation: ${lineAnimation} 1s linear alternate;
 `;
@@ -73,6 +73,7 @@ export const RandomSvg = styled.svg`
   cursor: grab;
   overflow: visible;
   transition: all 0.2s linear;
+
   &:active {
     cursor: grabbing;
   }
@@ -80,4 +81,16 @@ export const RandomSvg = styled.svg`
     transition: 0.2s linear;
     cursor: pointer;
   }
+`;
+
+export const StyledChartTooltip = styled.div<Omit<ChartTooltipProps, 'text'>>`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 9px;
+  background-color: ${COLOR_PALLETTE.MAIN_WHITE};
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: normal;
 `;

@@ -1,10 +1,10 @@
-import { Dispatch, RefObject } from 'react';
+import { RefObject } from 'react';
 
 import { Selection, SimulationNodeDatum, HierarchyCircularNode, PackCircle, BaseType } from 'd3';
 
 import { MapCategory, ExchangesType } from 'app/containers/space-map/types';
 
-type Sizing = {
+export type Sizing = {
   width: number;
   height: number;
 };

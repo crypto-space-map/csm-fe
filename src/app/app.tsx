@@ -6,13 +6,11 @@ import { AppLayout } from './containers/app-layout';
 import { Layout } from './containers/layout';
 import { Login } from './containers/login';
 import { MainPage } from './containers/mainPage';
-import { SpaceMapPage } from './containers/space-map';
 
 export const App = () => (
   <AppLayout>
     <Switch>
       <Route exact path="/login" component={Login} />
-      {/* <Route exact path="/" component={SpaceMapPage} /> */}
       <Route path="/" component={MainPage} />
       <Route path="/layout" component={Layout} />
       <Route path="/account" component={Account} />

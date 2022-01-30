@@ -3,22 +3,35 @@ import { memo } from 'react';
 import { HierarchyCircularNode } from 'd3';
 
 import { GAreaProps, PackedCategories } from '../types';
-import { ParentLabelsText } from './styled';
+import { getCircleCoord } from '../utils/helpers';
+import { ChildLabelsText, ParentLabelsText } from './styled';
 
 const PADDING = {
   PARENT: 10,
-  CHILD: 12,
+  CHILD: 2,
 };
 
 const Label = memo<{ elem: HierarchyCircularNode<PackedCategories> }>(
   ({
     elem: {
       data: { key, x, y, r },
+      children,
     },
   }) => (
-    <ParentLabelsText x={x} y={y - r - PADDING.PARENT}>
-      {key}
-    </ParentLabelsText>
+    <>
+      <ParentLabelsText x={x} y={y - r - PADDING.PARENT} key={`${x}${y}${r}${key}`}>
+        {key}
+      </ParentLabelsText>
+      {children?.map(item => (
+        <ChildLabelsText
+          key={`${item.x}${item.y}${item.data.name}`}
+          x={getCircleCoord(item, 'x')}
+          y={getCircleCoord(item, 'y') - item.r - PADDING.CHILD}
+          fontSize={4}>
+          {item.children && item.data?.name}
+        </ChildLabelsText>
+      ))}
+    </>
   )
 );
 

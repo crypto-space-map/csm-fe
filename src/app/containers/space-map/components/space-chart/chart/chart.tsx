@@ -12,6 +12,7 @@ import { initZoomedElement } from '../utils/zoom';
 import { GCircles } from './g-circles';
 import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
+import { GPartnersLegend } from './g-partners-legend';
 import { ChartWrapper, RandomSvg } from './styled';
 
 type SpaceChartProps = {
@@ -22,8 +23,8 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
-  const width = wrapperRef.current?.offsetWidth;
-  const height = wrapperRef.current?.offsetHeight;
+  const width = wrapperRef.current?.offsetWidth || 0;
+  const height = wrapperRef.current?.offsetHeight || 0;
 
   const [currentProject, setMapCurrentProject] = useState<HierarchyCircularNode<PackedCategories> | null>(
     null
@@ -84,6 +85,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
           <GCircles data={simulatedCircles} setCurrentProject={setProject} />
           <GLabels data={simulatedCircles} />
         </g>
+        <GPartnersLegend width={width} />
       </RandomSvg>
     </ChartWrapper>
   );

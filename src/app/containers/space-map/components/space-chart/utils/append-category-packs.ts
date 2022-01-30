@@ -4,7 +4,6 @@ import { COLOR_PALLETTE } from 'global/pallette';
 import { CategoryPacksType, PackedCategories } from '../types';
 import { packedChild } from './child-packer';
 import { getProjectsVsCoords } from './helpers';
-import { generateChildLabels } from './labels';
 
 const TOOLTIP_PADDING = 5;
 
