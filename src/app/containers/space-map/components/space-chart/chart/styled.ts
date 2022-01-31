@@ -4,17 +4,6 @@ import { COLOR_PALLETTE } from 'global/pallette';
 
 import { ChartTooltipProps } from './types';
 
-const TOOLTIP_PADDING = 5;
-
-const showAnimation = keyframes`
-    0% ,99% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-`;
-
 const lineAnimation = keyframes`
    from {
     stroke-dashoffset: 4000;
@@ -24,24 +13,32 @@ const lineAnimation = keyframes`
   }
 `;
 
+export const ProjectTooltip = styled.div`
+  position: fixed;
+  padding: 4px 10px;
+  border-radius: 18px;
+  background-color: ${COLOR_PALLETTE.MAIN_WHITE};
+  font-size: 12px;
+  line-height: 17px;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+
+  @keyframes tooltipShowAnimation {
+    0%,
+    99% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+`;
+
 export const ChartWrapper = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  & .tooltip {
-    position: fixed;
-    padding: 4px 10px;
-    border-radius: 18px;
-    background-color: ${COLOR_PALLETTE.MAIN_WHITE};
-    font-size: 12px;
-    line-height: 17px;
-    pointer-events: none;
-    z-index: 2;
-    overflow: hidden;
-    &.tooltip--hovered {
-      animation: ${showAnimation} 1s forwards;
-    }
-  }
 `;
 
 export const ParentLabelsText = styled.text`

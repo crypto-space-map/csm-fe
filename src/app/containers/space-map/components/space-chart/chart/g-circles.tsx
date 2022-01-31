@@ -1,6 +1,6 @@
-import { Fragment, memo, MouseEvent, useRef } from 'react';
+import { Fragment, memo, MouseEvent, RefObject, useRef } from 'react';
 
-import { BaseType, HierarchyCircularNode, scaleLinear, Selection } from 'd3';
+import { HierarchyCircularNode, scaleLinear } from 'd3';
 
 import { GAreaProps, PackedCategories } from '../types';
 import { getSphereColorParams } from '../utils/colors';
@@ -11,7 +11,7 @@ const TOOLTIP_PADDING = 5;
 const scaled = scaleLinear();
 
 type TooltipProps = {
-  tooltip: Selection<BaseType, string, HTMLDivElement | null, unknown>;
+  tooltipRef: RefObject<HTMLDivElement>;
 };
 
 type CircleProps = Omit<GAreaProps, 'data'> &
@@ -19,23 +19,34 @@ type CircleProps = Omit<GAreaProps, 'data'> &
     elem: HierarchyCircularNode<PackedCategories>;
   };
 
-const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, tooltip }) => {
+const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, tooltipRef }) => {
   const ref = useRef<SVGCircleElement>(null);
   const handleClick = () => setCurrentProject(elem);
 
-  const handleMouseOver = () =>
-    tooltip.text(elem.data.name).style('opacity', 1).attr('class', 'tooltip tooltip--hovered');
-
-  const onMouseMove = (event: MouseEvent) => {
-    const element = tooltip.node() as Element;
-    const { width, height } = element.getBoundingClientRect();
-    tooltip
-      .style('top', `${event.pageY}px`)
-      .style('left', `${event.pageX}px`)
-      .style('transform', `translate(-${width / 2}px, -${height + TOOLTIP_PADDING}px)`);
+  const onMouseOver = () => {
+    if (tooltipRef.current) {
+      tooltipRef.current.style.visibility = 'visible';
+    }
   };
 
-  const onMouseOut = () => tooltip.style('opacity', 0).attr('class', 'tooltip');
+  const onMouseMove = (event: MouseEvent) => {
+    if (tooltipRef.current) {
+      const { width, height } = tooltipRef.current.getBoundingClientRect();
+      const styles = `top: ${event.pageY}px;
+        left: ${event.pageX}px;
+        transform: translate(-${width / 2}px, -${height + TOOLTIP_PADDING}px);`;
+
+      tooltipRef.current.setAttribute('style', styles);
+      tooltipRef.current.textContent = elem.data.name;
+    }
+  };
+
+  const onMouseOut = () => {
+    if (tooltipRef.current) {
+      tooltipRef.current.style.visibility = 'hidden';
+      tooltipRef.current.style.animation = 'none';
+    }
+  };
 
   const isTransparent = useCircleOpacity(elem.data);
 
@@ -48,7 +59,7 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, toolt
       cy={scaled(elem.y)}
       onClick={handleClick}
       onMouseMove={onMouseMove}
-      onMouseOver={handleMouseOver}
+      onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
       {...getSphereColorParams(elem, isTransparent)}
     />

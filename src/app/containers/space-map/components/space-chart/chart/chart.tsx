@@ -13,8 +13,7 @@ import { GCircles } from './g-circles';
 import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
 import { GPartnersLegend } from './g-partners-legend';
-import { ChartWrapper, RandomSvg } from './styled';
-import { circlesTooltips } from './tooltip';
+import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
 
 type SpaceChartProps = {
   handleClick: (val: string) => void;
@@ -23,6 +22,7 @@ type SpaceChartProps = {
 export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   const width = wrapperRef.current?.offsetWidth || 0;
   const height = wrapperRef.current?.offsetHeight || 0;
@@ -78,14 +78,13 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
 
   initZoomedElement(svgRef);
 
-  const tooltip = circlesTooltips({ ref: wrapperRef });
-
   return (
     <ChartWrapper ref={wrapperRef}>
+      <ProjectTooltip ref={tooltipRef} />
       <RandomSvg ref={svgRef}>
         <g>
           {currentProject && <GLinks data={foundedProjects} currentProject={currentProject} />}
-          <GCircles data={simulatedCircles} setCurrentProject={setProject} tooltip={tooltip} />
+          <GCircles data={simulatedCircles} setCurrentProject={setProject} tooltipRef={tooltipRef} />
           <GLabels data={simulatedCircles} />
         </g>
         <GPartnersLegend width={width} />
