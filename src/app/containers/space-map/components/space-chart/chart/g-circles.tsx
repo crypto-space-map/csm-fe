@@ -1,78 +1,72 @@
-import { Fragment, memo, useCallback, MouseEvent } from 'react';
+import { Fragment, memo, MouseEvent, useRef } from 'react';
 
-import { HierarchyCircularNode, scaleLinear } from 'd3';
-
-import { useSpaceMap } from 'app/containers/space-map/hooks';
+import { BaseType, HierarchyCircularNode, scaleLinear, Selection } from 'd3';
 
 import { GAreaProps, PackedCategories } from '../types';
 import { getSphereColorParams } from '../utils/colors';
+import { useCircleOpacity } from '../utils/use-circle-opacity';
+
+const TOOLTIP_PADDING = 5;
 
 const scaled = scaleLinear();
 
-type CircleProps = Omit<GAreaProps, 'data'> & {
-  elem: HierarchyCircularNode<PackedCategories>;
+type TooltipProps = {
+  tooltip: Selection<BaseType, string, HTMLDivElement | null, unknown>;
 };
 
-const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false }) => {
+type CircleProps = Omit<GAreaProps, 'data'> &
+  TooltipProps & {
+    elem: HierarchyCircularNode<PackedCategories>;
+  };
+
+const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, tooltip }) => {
+  const ref = useRef<SVGCircleElement>(null);
   const handleClick = () => setCurrentProject(elem);
-  const handleMouseOver = (event: MouseEvent) => false;
 
-  const {
-    spaceMapData: { maxMarketCap, minMarketCap },
-    filters: { mCapFrom, mCapTo, exchanges, partnersWeight },
-    projectPartnerships,
-  } = useSpaceMap();
+  const handleMouseOver = () =>
+    tooltip.text(elem.data.name).style('opacity', 1).attr('class', 'tooltip tooltip--hovered');
 
-  // TODO надо подумать куда это дело вынести
-  const isTransparent = useCallback(
-    ({ marketCap, projectId, projectWeight = 0, exchanges: itemExchangesArr }: PackedCategories) => {
-      let opacity = false;
-      const lessCapFrom = mCapFrom || minMarketCap || 0;
-      const moreCapTo = mCapTo || maxMarketCap || 0;
-      if (mCapTo || mCapFrom) {
-        if (marketCap < lessCapFrom || marketCap > moreCapTo) {
-          opacity = true;
-        }
-      }
-      const isIncludes = itemExchangesArr?.some(item => exchanges.includes(item));
-      const isLinked = projectId && projectPartnerships?.includes(projectId);
-      // разобарться с фильтрацией по кол-ву партенрок
-      const isPartnerWeightFiltered = !!partnersWeight.filter(
-        item => item - 9 > projectWeight && projectWeight < item
-      ).length;
-      if (!isIncludes) opacity = true;
-      if (isIncludes && projectPartnerships.length && !isLinked) opacity = true;
-      if (partnersWeight.length && !isPartnerWeightFiltered) opacity = true;
-      return opacity;
-    },
-    [exchanges, mCapFrom, mCapTo, maxMarketCap, minMarketCap, projectPartnerships, partnersWeight]
-  );
+  const onMouseMove = (event: MouseEvent) => {
+    const element = tooltip.node() as Element;
+    const { width, height } = element.getBoundingClientRect();
+    tooltip
+      .style('top', `${event.pageY}px`)
+      .style('left', `${event.pageX}px`)
+      .style('transform', `translate(-${width / 2}px, -${height + TOOLTIP_PADDING}px)`);
+  };
+
+  const onMouseOut = () => tooltip.style('opacity', 0).attr('class', 'tooltip');
+
+  const isTransparent = useCircleOpacity(elem.data);
 
   return (
     <circle
+      ref={ref}
       key={elem.data.key || elem.data.projectId}
       r={elem.r}
       cx={scaled(elem.x)}
       cy={scaled(elem.y)}
       onClick={handleClick}
-      onMouseMove={handleMouseOver}
-      {...getSphereColorParams(elem, isTransparent(elem.data))}
+      onMouseMove={onMouseMove}
+      onMouseOver={handleMouseOver}
+      onMouseOut={onMouseOut}
+      {...getSphereColorParams(elem, isTransparent)}
     />
   );
 });
 
-const Circles = memo<GAreaProps>(({ data, setCurrentProject = () => false }) => (
+const Circles = memo<GAreaProps & TooltipProps>(({ data, ...rest }) => (
   <>
     {data?.map(elem => (
       <Fragment key={`${elem.data.projectId}${elem.x}${elem.y}`}>
-        <Circle elem={elem} setCurrentProject={setCurrentProject} />
-        <Circles data={elem.children} setCurrentProject={setCurrentProject} />
+        <Circle elem={elem} {...rest} />
+        <Circles data={elem.children} {...rest} />
       </Fragment>
     ))}
   </>
 ));
 
-export const GCircles = memo(({ data, setCurrentProject = () => false }: GAreaProps) => {
+export const GCircles = memo(({ data, ...rest }: GAreaProps & TooltipProps) => {
   if (!data) return null;
 
   return (
@@ -81,8 +75,8 @@ export const GCircles = memo(({ data, setCurrentProject = () => false }: GAreaPr
         <g
           transform={`translate(${item.data.x - item.r}, ${item.data.y - item.r})`}
           key={`${item.x}${item.y}${item.data.projectId}`}>
-          <Circle elem={item} setCurrentProject={setCurrentProject} />
-          <Circles data={item.children} setCurrentProject={setCurrentProject} />
+          <Circle elem={item} {...rest} />
+          <Circles data={item.children} {...rest} />
         </g>
       ))}
     </g>

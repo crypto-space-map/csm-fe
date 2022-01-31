@@ -35,7 +35,6 @@ export const ChartWrapper = styled.div`
     background-color: ${COLOR_PALLETTE.MAIN_WHITE};
     font-size: 12px;
     line-height: 17px;
-    /* opacity: 0; */
     pointer-events: none;
     z-index: 2;
     overflow: hidden;

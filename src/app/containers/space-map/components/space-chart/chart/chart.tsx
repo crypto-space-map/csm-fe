@@ -14,6 +14,7 @@ import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
 import { GPartnersLegend } from './g-partners-legend';
 import { ChartWrapper, RandomSvg } from './styled';
+import { circlesTooltips } from './tooltip';
 
 type SpaceChartProps = {
   handleClick: (val: string) => void;
@@ -77,12 +78,14 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
 
   initZoomedElement(svgRef);
 
+  const tooltip = circlesTooltips({ ref: wrapperRef });
+
   return (
     <ChartWrapper ref={wrapperRef}>
       <RandomSvg ref={svgRef}>
         <g>
           {currentProject && <GLinks data={foundedProjects} currentProject={currentProject} />}
-          <GCircles data={simulatedCircles} setCurrentProject={setProject} />
+          <GCircles data={simulatedCircles} setCurrentProject={setProject} tooltip={tooltip} />
           <GLabels data={simulatedCircles} />
         </g>
         <GPartnersLegend width={width} />
