@@ -15,7 +15,6 @@ export const useCircleOpacity = ({
     filters: { mCapFrom, mCapTo, exchanges, partnersWeight },
     projectPartnerships,
   } = useSpaceMap();
-
   const isHidden = useMemo(() => {
     let opacity = false;
     const lessCapFrom = mCapFrom || minMarketCap || 0;
@@ -28,7 +27,7 @@ export const useCircleOpacity = ({
     const isIncludes = itemExchangesArr?.some(item => exchanges.includes(item));
     const isLinked = projectId && projectPartnerships?.includes(projectId);
     const isPartnerWeightFiltered = !!partnersWeight.filter(
-      item => projectWeight > item && (projectWeight < item + 10 || (item === 100 && projectWeight > 100))
+      item => projectWeight >= item && (projectWeight <= item + 9 || (item === 100 && projectWeight > 100))
     ).length;
     if (!isIncludes) opacity = true;
     if (isIncludes && projectPartnerships.length && !isLinked) opacity = true;

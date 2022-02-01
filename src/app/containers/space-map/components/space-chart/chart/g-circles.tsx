@@ -1,9 +1,10 @@
-import { Fragment, memo, MouseEvent, RefObject, useRef } from 'react';
+import { Fragment, memo, MouseEvent, RefObject, useCallback, useRef } from 'react';
 
 import { HierarchyCircularNode, scaleLinear } from 'd3';
 
 import { GAreaProps, PackedCategories } from '../types';
 import { getSphereColorParams } from '../utils/colors';
+import { transformStylesToString } from '../utils/helpers';
 import { useCircleOpacity } from '../utils/use-circle-opacity';
 
 const TOOLTIP_PADDING = 5;
@@ -21,8 +22,7 @@ type CircleProps = Omit<GAreaProps, 'data'> &
 
 const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, tooltipRef }) => {
   const ref = useRef<SVGCircleElement>(null);
-  const handleClick = () => setCurrentProject(elem);
-
+  const handleClick = useCallback(() => setCurrentProject(elem), [elem, setCurrentProject]);
   const onMouseOver = () => {
     if (tooltipRef.current) {
       tooltipRef.current.style.visibility = 'visible';
@@ -32,10 +32,12 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, toolt
   const onMouseMove = (event: MouseEvent) => {
     if (tooltipRef.current) {
       const { width, height } = tooltipRef.current.getBoundingClientRect();
-      const styles = `top: ${event.pageY}px;
-        left: ${event.pageX}px;
-        transform: translate(-${width / 2}px, -${height + TOOLTIP_PADDING}px);`;
-
+      const styles = transformStylesToString({
+        top: `${event.pageY}px`,
+        left: `${event.pageX}px`,
+        visibility: 'visible',
+        transform: `translate(-${width / 2}px, -${height + TOOLTIP_PADDING}px)`,
+      });
       tooltipRef.current.setAttribute('style', styles);
       tooltipRef.current.textContent = elem.data.name;
     }

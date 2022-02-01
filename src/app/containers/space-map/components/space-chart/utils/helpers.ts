@@ -1,3 +1,5 @@
+import { CSSProperties } from 'react';
+
 import { HierarchyCircularNode } from 'd3';
 
 import { PackedCategories } from '../types';
@@ -47,3 +49,9 @@ export const getAllProjects = (data: HierarchyCircularNode<PackedCategories>[]) 
   }, [] as HierarchyCircularNode<PackedCategories>[]);
   return result;
 };
+
+export const transformStylesToString = (styles: CSSProperties) =>
+  Object.keys(styles).reduce((styleString, name) => {
+    styleString += `${name}:${styles[name as keyof typeof styles]};`;
+    return styleString;
+  }, '');

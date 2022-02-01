@@ -16,7 +16,7 @@ const CIRCLE = {
 
 const circleData = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
-const Circle = ({ value = 10, label = '', index = 0 }) => {
+const Circle = ({ value = 0, label = '', index = 0 }) => {
   const { partnersWeight } = useSelector(selectFilters);
   const { setFilters } = chartDispatchActions();
   const isIncludesFilter = partnersWeight.includes(value);
@@ -57,7 +57,7 @@ export const GPartnersLegend = memo<Omit<Sizing, 'height'>>(({ width }) => {
           key={`legend${item}`}
           value={item}
           index={i}
-          label={`${circleData[i] || 0}${circleData[i + 1] ? '-' : '+'}${circleData[i + 1] || ''}`}
+          label={`${circleData[i] || 0}${circleData[i + 1] ? '-' : '+'}${circleData[i + 1] - 1 || ''}`}
         />
       ))}
     </g>

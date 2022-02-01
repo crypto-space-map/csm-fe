@@ -20,7 +20,8 @@ export const GLinks = memo<GAreaProps>(({ data, currentProject }) => {
           stroke={COLOR_PALLETTE.MAIN_WHITE}
           key={`${elem.x}${elem.y}`}
           strokeWidth={1}
-          strokeDasharray={4000}
+          stroke-dasharray="4000 4000"
+          vectorEffect="non-scaling-stroke"
           x1={getCircleCoord(currentProject, 'x')}
           y1={getCircleCoord(currentProject, 'y')}
           x2={getCircleCoord(elem, 'x')}

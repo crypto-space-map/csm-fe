@@ -21,8 +21,10 @@ export const ProjectTooltip = styled.div`
   font-size: 12px;
   line-height: 17px;
   pointer-events: none;
+  visibility: hidden;
   z-index: 2;
   overflow: hidden;
+  animation: tooltipShowAnimation 1s linear;
 
   @keyframes tooltipShowAnimation {
     0%,
@@ -60,6 +62,7 @@ export const ChildLabelsText = styled(ParentLabelsText)<{ fontSize?: number }>`
 
 export const ProjectLink = styled.line`
   animation: ${lineAnimation} 1s linear alternate;
+  stroke-dasharray: 0;
 `;
 
 export const RandomSvg = styled.svg`
