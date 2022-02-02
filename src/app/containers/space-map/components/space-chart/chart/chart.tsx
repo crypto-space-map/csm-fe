@@ -35,7 +35,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
 
   const {
     fetchSpaceMapData,
-    spaceMapData: { tree, maxMarketCap },
+    spaceMapData: { tree, maxMarketCap, minMarketCap },
     setProjectName,
     selectedProject,
     projectPartnerships,
@@ -52,7 +52,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
     [setProjectName, handleClick, fetchPartnershipsData]
   );
 
-  const { simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap });
+  const { simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap, minMarketCap });
 
   const allProjects = useMemo(() => getAllProjects(simulatedCircles || []), [simulatedCircles]);
 

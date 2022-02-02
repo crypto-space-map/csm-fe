@@ -59,6 +59,7 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, toolt
       r={elem.r}
       cx={scaled(elem.x)}
       cy={scaled(elem.y)}
+      vectorEffect="non-scaling-stroke"
       onClick={handleClick}
       onMouseMove={onMouseMove}
       onMouseOver={onMouseOver}

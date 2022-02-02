@@ -66,7 +66,7 @@ export type CategoryPacksType = {
 };
 
 export type CirclesSimulation = Sizing & {
-  packedCategories: PackedCategories[];
+  packedCategories: PackedNodes[];
 };
 
 export type PackedCategories = PackCircle & {
@@ -91,6 +91,7 @@ export type UseChartProps = {
   height?: number;
   tree: MapCategory[] | null;
   maxMarketCap: number | null;
+  minMarketCap: number | null;
 };
 
 export type PackedNodes = PackCircle & {

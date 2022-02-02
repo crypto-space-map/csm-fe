@@ -19,7 +19,11 @@ const Label = memo<{ elem: HierarchyCircularNode<PackedCategories> }>(
     },
   }) => (
     <>
-      <ParentLabelsText x={x} y={y - r - PADDING.PARENT} key={`${x}${y}${r}${key}`}>
+      <ParentLabelsText
+        vectorEffect="non-scaling-stroke"
+        x={x}
+        y={y - r - PADDING.PARENT}
+        key={`${x}${y}${r}${key}`}>
         {key}
       </ParentLabelsText>
       {children?.map(item => (
@@ -27,6 +31,7 @@ const Label = memo<{ elem: HierarchyCircularNode<PackedCategories> }>(
           key={`${item.x}${item.y}${item.data.name}`}
           x={getCircleCoord(item, 'x')}
           y={getCircleCoord(item, 'y') - item.r - PADDING.CHILD}
+          vectorEffect="non-scaling-stroke"
           fontSize={4}>
           {item.children && item.data?.name}
         </ChildLabelsText>

@@ -1,12 +1,12 @@
 import { pack, hierarchy, HierarchyCircularNode } from 'd3';
 
-import { PackedCategories } from '../types';
+import { PackedCategories, PackedNodes } from '../types';
 
 const CIRCLES_PADDING = 5;
 
-export const packedChild = (data: HierarchyCircularNode<PackedCategories> | PackedCategories, r = 0) =>
+export const packedChild = (data: PackedNodes | PackedCategories) =>
   pack()
-    .size([r * 2, r * 2]) /** Set pack size by parent radius */
+    .size([data.r * 2, data.r * 2]) /** Set pack size by parent radius */
     .padding(CIRCLES_PADDING)(
     hierarchy<PackedCategories>(data as PackedCategories)
       .sum(d => d.marketCap)
