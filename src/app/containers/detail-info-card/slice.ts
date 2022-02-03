@@ -91,6 +91,10 @@ const providersListSlice = createSlice({
     fetchProjectDataFail(state) {
       state.projectLoading = false;
     },
+    clearDataAfterChangeProject(state) {
+      state.exchangesData = initialState.exchangesData;
+      state.exchangesPage = initialState.exchangesPage;
+    },
   },
 });
 

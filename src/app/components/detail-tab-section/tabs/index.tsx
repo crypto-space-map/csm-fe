@@ -6,9 +6,11 @@ const StyledTab = styled(MuiTab)`
   color: ${COLOR_PALLETTE.MAIN_WHITE};
   background-color: ${COLOR_PALLETTE.MAIN_BLACK};
   font-size: 16px;
+  font-weight: 600;
   text-transform: capitalize;
-  padding: 12px 16px;
+  padding: 12px 14px;
   line-height: 22px;
+  min-width: 80px;
 
   &.Mui-selected {
     color: ${COLOR_PALLETTE.MAIN_BLACK};

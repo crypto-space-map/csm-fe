@@ -5,7 +5,7 @@ export const DetailWrapper = styled.article`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  width: 700px;
+  width: 662px;
   position: absolute;
   right: 0;
   overflow: hidden;
@@ -16,7 +16,7 @@ export const TransitionWrapper = styled.div<{ open: boolean }>`
   position: absolute;
   right: 0;
   top: 0;
-  width: ${props => (props.open ? '700px' : '0px')};
+  width: ${props => (props.open ? '662px' : '0px')};
   height: 100%;
   background-color: black;
   z-index: 999;

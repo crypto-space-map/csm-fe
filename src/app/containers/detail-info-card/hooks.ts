@@ -20,6 +20,15 @@ export function useDetailInfoSlice() {
   return useActions(actions);
 }
 
+export function useClearDataAfterChangeNewProject() {
+  const projectName = useSelector(selectedProjectName);
+  const { clearDataAfterChangeProject } = useDispatchAction();
+
+  useEffect(() => {
+    clearDataAfterChangeProject();
+  }, [projectName, clearDataAfterChangeProject]);
+}
+
 export function useDetailInfo() {
   const history = useHistory();
   const { url } = useRouteMatch();
