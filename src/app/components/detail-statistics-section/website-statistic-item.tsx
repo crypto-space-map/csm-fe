@@ -7,8 +7,8 @@ export const WebsiteStatisticItem = ({ title, mainValue }: StatisticItemProps) =
   <StatisticItemWrapper>
     <StatistiсTitle>{title}</StatistiсTitle>
     <StyledLinkWrapper>
-      <StyledLink target="_blank" href={mainValue}>
-        {cutLink(mainValue)}
+      <StyledLink target="_blank" href={mainValue ?? ''}>
+        {cutLink(mainValue ?? '')}
       </StyledLink>
     </StyledLinkWrapper>
   </StatisticItemWrapper>
