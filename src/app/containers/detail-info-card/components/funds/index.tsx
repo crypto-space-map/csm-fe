@@ -60,14 +60,14 @@ const columns: ColumnProps<FundsProps>[] = [
   {
     field: 'investors',
     headerName: headerNames.investors,
-    width: 200,
+    width: 190,
     sortable: false,
     renderCell: decorateInvestors,
   },
   {
     field: 'amount',
     headerName: headerNames.amount,
-    width: 90,
+    width: 100,
     type: SortingTypes.NUMBER,
     valueFormatter: decorateAmount,
   },

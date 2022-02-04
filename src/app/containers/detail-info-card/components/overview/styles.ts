@@ -5,7 +5,6 @@ import { link } from 'global/styles';
 import ShowMoreText from 'react-show-more-text';
 
 export const OverviewWrapper = styled.div`
-  width: 655px;
   height: 400px;
   margin-top: 24px;
 `;

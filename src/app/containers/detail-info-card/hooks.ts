@@ -8,6 +8,7 @@ import { selectedProjectName } from 'store/pageStore/selectors';
 import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/slice';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
+import { useDispatchAction as mapDispatchAction } from '../space-map/slice';
 import { detailInfoSaga } from './saga';
 import { selectedProjectHeaderData, selectedProjectStatistic } from './selectors';
 import { actions, reducer, useDispatchAction } from './slice';
@@ -19,6 +20,15 @@ export function useDetailInfoSlice() {
   return useActions(actions);
 }
 
+export function useClearDataAfterChangeNewProject() {
+  const projectName = useSelector(selectedProjectName);
+  const { clearDataAfterChangeProject } = useDispatchAction();
+
+  useEffect(() => {
+    clearDataAfterChangeProject();
+  }, [projectName, clearDataAfterChangeProject]);
+}
+
 export function useDetailInfo() {
   const history = useHistory();
   const { url } = useRouteMatch();
@@ -26,7 +36,7 @@ export function useDetailInfo() {
   const projectName = useSelector(selectedProjectName);
   const projectHeaderData = useSelector(selectedProjectHeaderData);
   const projectStatistic = useSelector(selectedProjectStatistic);
-
+  const { clearData } = mapDispatchAction();
   const { fetchProjectData } = useDispatchAction();
   const { setProjectName } = pageStoreDispatchAction();
 
@@ -36,8 +46,9 @@ export function useDetailInfo() {
 
   const handleClose = useCallback(() => {
     setProjectName(null);
+    clearData(['projectPartnerships']);
     history.push(url);
-  }, [setProjectName, history, url]);
+  }, [setProjectName, history, url, clearData]);
 
   return {
     isShow: !!projectName,

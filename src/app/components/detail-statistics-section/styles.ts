@@ -47,6 +47,11 @@ export const ProjectChangeWrapper = styled.div`
 
 export const StyledLink = styled.a`
   ${link(COLOR_PALLETTE.MAIN_WHITE)}
+  width: 130px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
 `;
 
 export const StyledLinkWrapper = styled.div`

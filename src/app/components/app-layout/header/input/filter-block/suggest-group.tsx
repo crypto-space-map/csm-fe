@@ -1,7 +1,5 @@
 import { memo, useCallback } from 'react';
 
-import { Button } from 'common/components';
-
 import { RangeButton, StyledRangesGroup } from './styled';
 
 type Range = { btnText: string; mCapFrom: string | null; mCapTo: string | null };

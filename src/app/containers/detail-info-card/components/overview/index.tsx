@@ -3,15 +3,13 @@ import { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { TradingWidget } from 'app/components';
-import { Loader } from 'common/components/loader';
 
-import { selectedOverviewTradingStock, selectedOverviewTradingStockLoading } from '../../selectors';
+import { selectedProjectTicker } from '../../selectors';
 import { useDispatchAction } from '../../slice';
 import { overviewData } from './constants';
 import { ContractItem } from './contract-item';
 import {
   OverviewWrapper,
-  LoaderWrapper,
   StyledProjectInfoWrapper,
   StyledCategoryWrapper,
   ContractsWrapper,
@@ -22,26 +20,17 @@ import {
 } from './styles';
 
 export const Overview = memo(() => {
-  const overviewTradingStock = useSelector(selectedOverviewTradingStock);
-  const overviewTradingStockLoading = useSelector(selectedOverviewTradingStockLoading);
+  const ticker = useSelector(selectedProjectTicker);
 
   const { fetchOverviewTradingStock } = useDispatchAction();
   useEffect(() => {
     fetchOverviewTradingStock();
   }, [fetchOverviewTradingStock]);
 
-  if (overviewTradingStockLoading) {
-    return (
-      <LoaderWrapper>
-        <Loader />
-      </LoaderWrapper>
-    );
-  }
-
   return (
     <OverviewWrapper>
       <TradingWidgetWrapper>
-        <TradingWidget symbol={`${overviewTradingStock}:CEREUSDT`} />
+        <TradingWidget symbol={`${ticker}USDT`} />
       </TradingWidgetWrapper>
       <StyledProjectInfoWrapper>
         <StylesShowMoreText
@@ -50,7 +39,7 @@ export const Overview = memo(() => {
           less="Less"
           anchorClass="anchor-class"
           expanded={false}
-          width={490}
+          width={460}
           truncatedEndingComponent="... ">
           {overviewData.description}
         </StylesShowMoreText>

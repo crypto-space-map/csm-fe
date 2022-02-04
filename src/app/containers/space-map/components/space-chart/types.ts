@@ -2,9 +2,9 @@ import { RefObject } from 'react';
 
 import { Selection, SimulationNodeDatum, HierarchyCircularNode, PackCircle, BaseType } from 'd3';
 
-import { MapCategory, Exchanges, Partnership, ExchangesType } from 'app/containers/space-map/types';
+import { MapCategory, ExchangesType } from 'app/containers/space-map/types';
 
-type Sizing = {
+export type Sizing = {
   width: number;
   height: number;
 };
@@ -66,23 +66,22 @@ export type CategoryPacksType = {
 };
 
 export type CirclesSimulation = Sizing & {
-  packedCategories: PackedCategories[];
+  packedCategories: PackedNodes[];
 };
 
-export type PackedCategories = Omit<MapCategory, 'children'> &
-  PackCircle & {
-    key?: string;
-    children: PackedCategories[];
-    data: MapCategory & PackCircle;
-    parent: PackedCategories | null;
-  };
+export type PackedCategories = PackCircle & {
+  key?: string;
+  children: HierarchyCircularNode<PackedCategories>[];
+  data: MapCategory & PackCircle;
+  parent: PackedCategories | null;
+  marketCap: number;
+} & Omit<MapCategory, 'children'>;
 
 //  Project links generator
 
 export type ProjectsLinksGeneratorProps = {
   svg: Selection<BaseType, unknown, null, undefined>;
-  nodes: HierarchyCircularNode<PackedCategories>[];
-  projectPartnerships: Partnership['projectId'][] | null;
+  foundedProjects: HierarchyCircularNode<PackedCategories>[];
 };
 
 //  useChart
@@ -92,6 +91,7 @@ export type UseChartProps = {
   height?: number;
   tree: MapCategory[] | null;
   maxMarketCap: number | null;
+  minMarketCap: number | null;
 };
 
 export type PackedNodes = PackCircle & {
@@ -104,4 +104,10 @@ export type PackedNodes = PackCircle & {
     children: MapCategory[];
     marketCap: number;
   } & PackCircle)[];
+};
+
+export type GAreaProps = {
+  data: HierarchyCircularNode<PackedCategories>[] | undefined;
+  currentProject?: HierarchyCircularNode<PackedCategories> | null;
+  setCurrentProject?: (value: HierarchyCircularNode<PackedCategories>) => void;
 };

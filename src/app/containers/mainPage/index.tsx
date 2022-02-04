@@ -10,6 +10,7 @@ import { getProductNameFromPath } from 'utils/detail-info';
 
 import { DetailFundCard } from '../detail-fund-card';
 import { DetailInfoCard } from '../detail-info-card';
+import { SpaceChart } from '../space-map/components/space-chart';
 
 const types: { [key: string]: 'fund' | 'project' } = {
   fund: 'fund',
@@ -25,10 +26,13 @@ export const MainPage = memo(() => {
 
   const { pathname } = history.location;
 
-  const handleClick = useCallback(() => {
-    history.push(`${url}/project/solana`);
-    setProjectName('solana');
-  }, [setProjectName, history, url]);
+  const handleClick = useCallback(
+    (project: string) => {
+      history.push(`/project/${project}`);
+      setProjectName(project);
+    },
+    [setProjectName, history]
+  );
 
   // Инициализация выставления нейма продукта или фонда в стор
   useEffect(() => {
@@ -48,7 +52,7 @@ export const MainPage = memo(() => {
   const handleSelectFund = useCallback(
     name => {
       const newFundName = name === fundName ? null : name;
-      const newPath = newFundName ? `${url}/fund/${newFundName}` : url;
+      const newPath = newFundName ? `$/fund/${newFundName}` : url;
 
       history.replace(newPath);
       setFundName(newFundName);
@@ -58,20 +62,7 @@ export const MainPage = memo(() => {
 
   return (
     <>
-      <div
-        style={{
-          color: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontWeight: 600,
-          fontSize: 40,
-          overflow: 'hidden',
-          width: '100%',
-        }}>
-        <button onClick={handleClick}>ddd</button>
-        Crypto Space Map HERE
-      </div>
+      <SpaceChart handleClick={handleClick} />
       <FundsList handleSelectFund={handleSelectFund} selectedFund={fundName} />
       <DetailInfoCard />
       <DetailFundCard />

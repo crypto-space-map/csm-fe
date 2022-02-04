@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 
 import { scriptSRC, widgetOptions, containerId } from './constants';
 import { TradingWidgetProps } from './types';
@@ -7,6 +7,7 @@ declare const TradingView: { widget: new (arg0: TradingWidgetProps) => void };
 
 export const TradingWidget = ({ symbol }: { symbol: string }): JSX.Element => {
   const [scriptElement, setScriptElement] = useState<HTMLScriptElement | null>(null);
+  const [scriptIsLoaded, setScriptIsLoaded] = useState(false);
   const ref: { current: HTMLDivElement | null } = useRef(null);
 
   useEffect(() => {
@@ -19,17 +20,31 @@ export const TradingWidget = ({ symbol }: { symbol: string }): JSX.Element => {
     }
   }, [ref]);
 
+  const setWidget = useCallback(
+    (newSymbol: string) => {
+      if (scriptElement) {
+        scriptElement.innerHTML = JSON.stringify(
+          // eslint-disable-next-line new-cap
+          new TradingView.widget({ ...widgetOptions, container_id: containerId, symbol: newSymbol })
+        );
+      }
+    },
+    [scriptElement]
+  );
+
   useEffect(() => {
     let refValue: HTMLDivElement;
 
     if (ref.current && scriptElement) {
       if (typeof TradingView !== undefined) {
-        scriptElement.onload = () => {
-          scriptElement.innerHTML = JSON.stringify(
-            // eslint-disable-next-line new-cap
-            new TradingView.widget({ ...widgetOptions, container_id: containerId, symbol })
-          );
-        };
+        if (!scriptIsLoaded) {
+          scriptElement.onload = () => {
+            setWidget(symbol);
+            setScriptIsLoaded(true);
+          };
+        } else {
+          setWidget(symbol);
+        }
       } else {
         scriptElement.innerHTML = JSON.stringify(widgetOptions);
       }
@@ -43,6 +58,7 @@ export const TradingWidget = ({ symbol }: { symbol: string }): JSX.Element => {
         }
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref, scriptElement, symbol]);
 
   return <div ref={ref} id={containerId} />;

@@ -6,13 +6,13 @@ export enum StatisticTypes {
 }
 
 export interface CommonStatistic {
-  usd: number;
-  btc: number;
+  usd: number | null;
+  btc: number | null;
 }
 
 export interface PercentageStatistic {
-  value: number;
-  percentage: number;
+  value: number | null;
+  percentage: number | null;
 }
 
 export interface StatisticDetailDataDTO {
@@ -28,13 +28,13 @@ export interface StatisticDetailDataDTO {
 
 export interface GenerateDataProps {
   title: string;
-  mainValue: string;
-  secondValue?: string;
+  mainValue: string | null;
+  secondValue?: string | null;
   type: StatisticTypes;
 }
 
 export interface StatisticItemProps {
   title: string;
-  mainValue: string;
-  secondValue?: string;
+  mainValue: string | null;
+  secondValue?: string | null;
 }
