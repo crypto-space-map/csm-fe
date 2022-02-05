@@ -25,10 +25,7 @@ export const createCategoryPacks = (
 
   const sumAllCaps = (data: MapCategory[]) =>
     data.reduce((acc, item) => {
-      acc += item.marketCap;
-      if (item.children.length) {
-        acc += sumAllCaps(item.children) + item.marketCap;
-      }
+      acc += sumAllCaps(item.children) + item.marketCap;
       return acc;
     }, 0);
 
