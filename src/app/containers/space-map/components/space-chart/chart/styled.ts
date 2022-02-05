@@ -93,3 +93,14 @@ export const StyledChartTooltip = styled.div<Omit<ChartTooltipProps, 'text'>>`
   font-size: 12px;
   font-weight: normal;
 `;
+
+export const StyledLabel = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  background-color: ${COLOR_PALLETTE.MAIN_WHITE};
+  width: fit-content;
+  padding: 0.1em;
+  border-radius: 1em;
+`;

@@ -22,7 +22,10 @@ type CircleProps = Omit<GAreaProps, 'data'> &
 
 const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, tooltipRef }) => {
   const ref = useRef<SVGCircleElement>(null);
-  const handleClick = useCallback(() => setCurrentProject(elem), [elem, setCurrentProject]);
+  const handleClick = useCallback(() => {
+    console.log(elem);
+    setCurrentProject(elem);
+  }, [elem, setCurrentProject]);
   const onMouseOver = () => {
     if (tooltipRef.current) {
       tooltipRef.current.style.visibility = 'visible';
