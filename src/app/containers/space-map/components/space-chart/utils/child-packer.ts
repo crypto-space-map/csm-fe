@@ -2,7 +2,7 @@ import { pack, hierarchy, HierarchyCircularNode } from 'd3';
 
 import { PackedCategories, PackedNodes } from '../types';
 
-const CIRCLES_PADDING = 5;
+const CIRCLES_PADDING = 0;
 
 export const packedChild = (data: PackedNodes | PackedCategories) =>
   pack()
