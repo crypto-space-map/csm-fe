@@ -13,6 +13,7 @@ import { GCircles } from './g-circles';
 import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
 import { GPartnersLegend } from './g-partners-legend';
+import { GTooltips } from './g-tooltips';
 import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
 
 type SpaceChartProps = {
@@ -86,6 +87,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
           {currentProject && <GLinks data={foundedProjects} currentProject={currentProject} />}
           <GCircles data={simulatedCircles} setCurrentProject={setProject} tooltipRef={tooltipRef} />
           <GLabels data={simulatedCircles} />
+          <GTooltips data={foundedProjects} currentProject={currentProject} />
         </g>
         <GPartnersLegend width={width} />
       </RandomSvg>

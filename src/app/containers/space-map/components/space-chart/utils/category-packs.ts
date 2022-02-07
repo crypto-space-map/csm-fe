@@ -1,18 +1,8 @@
-import { packSiblings, scaleSqrt, group } from 'd3';
+import { packSiblings, group } from 'd3';
 
 import { MapCategory } from 'app/containers/space-map/types';
 
 import { PackedNodes } from '../types';
-
-const DOMAIN = {
-  RADIUS_FROM: 0,
-  RADIUS_TO: 100,
-};
-/** At this interval, the function will place incoming values from the DOMAIN and exactly set relative to each other */
-const RANGE = {
-  MIN: 0,
-  MAX: 0.0002,
-};
 
 export const createCategoryPacks = (
   categories: MapCategory[],
@@ -29,19 +19,23 @@ export const createCategoryPacks = (
       return acc;
     }, 0);
 
+  const allCAp = categories.reduce((acc, item) => {
+    acc += item.marketCap;
+    return acc;
+  }, 0);
+
   const packedCategories = new Map<string, PackedNodes>();
 
   for (let [key, value] of mappedCategories) {
     const { children, marketCap } = value[0];
-    const radius = scaleSqrt().domain([0, 1]).range([RANGE.MIN, RANGE.MAX]);
 
     const circledChildren = children.map(data => ({ ...data, data, r: 0 }));
 
     const nodes = packSiblings<typeof circledChildren[number]>(circledChildren);
 
-    const maxCalculatedRadius = sumAllCaps(children) + marketCap;
+    const maxCalculatedRadius = (marketCap / allCAp) * 100;
 
-    const r = radius(maxCalculatedRadius);
+    const r = maxCalculatedRadius * 10;
 
     const state = { properties: { x: width / 2, y: height / 2 } };
     const { x, y } = state.properties;
