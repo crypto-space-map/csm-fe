@@ -3,11 +3,12 @@ import { memo } from 'react';
 import { DetailCardWrapper, DetailHeaderSection, DetailStatisticsSection } from 'app/components';
 
 import { TabsSection } from './components/tabs-section';
-import { useDetailInfoSlice, useDetailInfo } from './hooks';
+import { useDetailInfoSlice, useDetailInfo, useClearDataAfterChangeNewProject } from './hooks';
 import { TopSection } from './styles';
 
 export const DetailInfoCard = memo(() => {
   useDetailInfoSlice();
+  useClearDataAfterChangeNewProject();
   const { isShow, projectHeaderData, projectStatistic, handleClose } = useDetailInfo();
 
   return (

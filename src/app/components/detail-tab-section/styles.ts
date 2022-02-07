@@ -18,6 +18,6 @@ export const TabContentWrapper = styled.div`
 `;
 
 export const StyledTabContent = styled.div<{ show?: boolean }>`
-  width: calc(100% - 48px);
+  width: calc(100% - 32px);
   display: ${props => (props.show ? 'block' : 'none')};
 `;

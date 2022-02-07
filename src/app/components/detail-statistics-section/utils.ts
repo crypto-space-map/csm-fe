@@ -8,6 +8,8 @@ import {
   PercentageStatistic,
 } from './types';
 
+export const emptyValue = '--';
+
 const titles = {
   marketPrice: 'Market Price',
   priceChangePercentageDay: '24H Change',
@@ -45,12 +47,12 @@ export const generateOptions = (data: StatisticDetailDataDTO): GenerateDataProps
       const { value, percentage } = data[item] as PercentageStatistic;
       const secondValue =
         item === options.supplyTotal
-          ? getTransformedPrice(percentage)
-          : getTransformedPercentage(percentage);
+          ? getTransformedPrice(percentage ?? 0)
+          : getTransformedPercentage(percentage ?? 0);
       return {
         title: titles[item],
-        mainValue: getTransformedPrice(value, false),
-        secondValue,
+        mainValue: value ? getTransformedPrice(value, false) : null,
+        secondValue: percentage ? secondValue : null,
         type: StatisticTypes.COMMON,
       };
     }
@@ -58,8 +60,8 @@ export const generateOptions = (data: StatisticDetailDataDTO): GenerateDataProps
       const { value, percentage } = data[item] as PercentageStatistic;
       return {
         title: titles[item],
-        mainValue: String(roundNumber(percentage)),
-        secondValue: value.toFixed(4),
+        mainValue: percentage ? String(roundNumber(percentage)) : null,
+        secondValue: value ? value.toFixed(4) : null,
         type: StatisticTypes.PERCENTAGE,
       };
     }
@@ -73,12 +75,13 @@ export const generateOptions = (data: StatisticDetailDataDTO): GenerateDataProps
     }
 
     const { usd, btc } = data[item] as CommonStatistic;
-    const secondValue = Number(item === options.marketPrice ? btc.toFixed(4) : roundNumber(btc));
+    const btcValue = btc ?? 0;
+    const secondValue = Number(item === options.marketPrice ? btcValue.toFixed(4) : roundNumber(btcValue));
 
     return {
       title: titles[item],
-      mainValue: getTransformedPrice(usd),
-      secondValue: getTransformedBtc(secondValue),
+      mainValue: usd ? getTransformedPrice(usd) : null,
+      secondValue: btc ? getTransformedBtc(secondValue) : null,
       type: StatisticTypes.COMMON,
     };
   });

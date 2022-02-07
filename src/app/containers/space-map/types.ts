@@ -48,6 +48,7 @@ export type FilterProps = {
   mCapFrom: number | null;
   mCapTo: number | null;
   exchanges: ExchangesType[];
+  partnersWeight: number[];
 };
 
 interface MapTree extends FetchDataState {

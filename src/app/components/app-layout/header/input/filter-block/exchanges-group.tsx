@@ -34,6 +34,7 @@ export const ExchangesGroup = <T,>({ control }: FilterInputsProps<T>) => {
       <span>Exchanges</span>
       {checkboxes.map(name => (
         <Controller
+          key={name}
           name={'exchanges' as Path<T & { exchanges: ExchangesType[] }>}
           render={({ field: { onChange, value } }) => (
             <CheckBox

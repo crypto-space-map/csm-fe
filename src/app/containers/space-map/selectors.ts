@@ -10,3 +10,5 @@ export const selectPartnerships = (state: RootState) => ({
   projectPartnerships: selectDomain(state).projectPartnerships.data?.map(item => item.projectId) || [],
   projectPartnershipsLoading: selectDomain(state).projectPartnerships.loading,
 });
+
+export const selectFilters = (state: RootState) => selectDomain(state).filters;

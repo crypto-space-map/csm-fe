@@ -1,3 +1,4 @@
+import { useActions } from 'hooks';
 import { fetchDataInitialState, fetchDataReducers } from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
@@ -27,6 +28,7 @@ export const initialState: ContainerState = {
     ...fetchDataInitialState,
   },
   filters: {
+    partnersWeight: [],
     mCapFrom: null,
     mCapTo: null,
     exchanges: Object.keys(Exchanges).map(item => item as ExchangesType),
@@ -88,8 +90,8 @@ const spaceMapPageSlice = createSlice({
       );
       return clearedState;
     },
-    setFilters(state, action: PayloadAction<FilterProps>) {
-      state.filters = { ...action.payload };
+    setFilters(state, action: PayloadAction<Partial<FilterProps>>) {
+      state.filters = { ...state.filters, ...action.payload };
     },
     clearFilters(state) {
       state.filters = initialState.filters;
@@ -98,3 +100,4 @@ const spaceMapPageSlice = createSlice({
 });
 
 export const { actions, reducer, name: sliceKey } = spaceMapPageSlice;
+export const useDispatchAction = () => useActions(actions);

@@ -25,7 +25,7 @@ interface EnrichedExchangeProps extends ExchangeDTO {
 const decoratePrice = (row: EnrichedExchangeProps) => {
   const value = row.price;
   if (!value) return null;
-  return `$ ${value}`;
+  return getTransformedPrice(value);
 };
 
 const decorateVolume = (row: EnrichedExchangeProps) => {
@@ -38,7 +38,7 @@ const decorateVolume = (row: EnrichedExchangeProps) => {
 const decoratePersentVolume = (row: EnrichedExchangeProps) => {
   const value = row.persentVolume;
 
-  if (!value) return '<0.1%';
+  if (!value) return value === null ? '--' : '<0.1%';
   return `${value}%`;
 };
 
@@ -82,7 +82,7 @@ const columns: ColumnProps<EnrichedExchangeProps>[] = [
   {
     field: 'exchange',
     headerName: headerNames.exchange,
-    width: 120,
+    width: 110,
     renderCell: decorateExchange,
   },
   {
@@ -95,7 +95,7 @@ const columns: ColumnProps<EnrichedExchangeProps>[] = [
   {
     field: 'price',
     headerName: headerNames.price,
-    width: 80,
+    width: 75,
     valueFormatter: decoratePrice,
     type: SortingTypes.NUMBER,
   },
