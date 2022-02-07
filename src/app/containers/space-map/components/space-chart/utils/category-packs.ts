@@ -1,8 +1,10 @@
-import { packSiblings, group } from 'd3';
+import { packSiblings, group, scaleSqrt } from 'd3';
 
 import { MapCategory } from 'app/containers/space-map/types';
 
 import { PackedNodes } from '../types';
+
+const radius = scaleSqrt().domain([0, 1]).range([0, 100]);
 
 export const createCategoryPacks = (
   categories: MapCategory[],
@@ -35,7 +37,7 @@ export const createCategoryPacks = (
 
     const maxCalculatedRadius = (marketCap / allCAp) * 100;
 
-    const r = maxCalculatedRadius * 10;
+    const r = radius(maxCalculatedRadius);
 
     const state = { properties: { x: width / 2, y: height / 2 } };
     const { x, y } = state.properties;

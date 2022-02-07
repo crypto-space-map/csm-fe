@@ -5,7 +5,7 @@ import { MapDataResponse, Partnership, ProjectData } from './types';
 const BASIC_EXCHANGES = ['binance', 'gdax', 'huobi', 'ftx_spot', 'kucoin'];
 
 export async function apiFetchMapData() {
-  return axios.get<MapDataResponse>('http://49.12.13.50/api/v0/category/tree', { withCredentials: true });
+  return axios.get<MapDataResponse>('http://49.12.13.50/api/v1/category/tree', { withCredentials: true });
 }
 
 export async function apiFetchProjects() {

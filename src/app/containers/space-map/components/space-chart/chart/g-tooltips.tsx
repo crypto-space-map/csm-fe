@@ -16,35 +16,36 @@ export const GTooltips = memo<GAreaProps>(({ data, currentProject }) => {
       {data?.map(elem => (
         <>
           <line
+            key={`${elem.data.projectId}${elem.data.marketCap}`}
             x1={getCircleCoord(elem, 'x')}
             y1={getCircleCoord(elem, 'x') - elem.r}
             x2={getCircleCoord(elem, 'x')}
             y2={getCircleCoord(elem, 'y') - elem.r}
             strokeWidth={1}
-            // strokeDasharray="4000 4000"
+            strokeDasharray="1 1"
             vectorEffect="non-scaling-stroke"
             markerEnd={`url(#${TOOLTIP_MARKER}${elem.data.projectId})`}
           />
           <marker
+            key={`${elem.data.projectId}${elem.data.marketCap}`}
             id={`${TOOLTIP_MARKER}${elem.data.projectId}`}
-            viewBox="0 0 80 80"
+            viewBox={`0 0 ${elem.data.name.length * 10} 50`}
             x={getCircleCoord(elem, 'x')}
             y={getCircleCoord(elem, 'y')}
             markerUnits="strokeWidth"
-            markerWidth="100"
-            markerHeight="80">
-            <rect
-              x="0"
-              y="0"
-              width="50"
-              height="24"
-              rx="12.3767"
-              fill="white"
-              vectorEffect="non-scaling-size"
-            />
-            <text x="0" y="12" fontSize={8}>
-              {elem.data.projectId}
-            </text>
+            markerWidth={elem.data.name.length * 10}
+            markerHeight="50">
+            <svg>
+              <rect width={elem.data.name.length * 10} height="24" rx="12.3767" fill="white" />
+              <text
+                y="12"
+                x={elem.data.name.length * 5}
+                fontSize={12}
+                textAnchor="middle"
+                alignmentBaseline="central">
+                {elem.data.projectId}
+              </text>
+            </svg>
           </marker>
         </>
       ))}
