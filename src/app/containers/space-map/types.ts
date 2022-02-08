@@ -34,6 +34,7 @@ export type MapCategory = {
   projectId?: string;
   projectWeight?: number;
   svgPathData: string;
+  parent: string | null;
 };
 
 export type ProjectData = {

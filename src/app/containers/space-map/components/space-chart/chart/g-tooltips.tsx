@@ -36,10 +36,10 @@ export const GTooltips = memo<GAreaProps>(({ data, currentProject }) => {
             markerWidth={elem.data.name.length * 10}
             markerHeight="50">
             <svg>
-              <rect width={elem.data.name.length * 10} height="24" rx="12.3767" fill="white" />
+              <rect width={elem.data.name.length * 9} height="24" rx="12.3767" fill="white" />
               <path
                 fill="black"
-                transform="translate(8, 16) scale(0.2)"
+                transform="translate(6, 17) scale(0.2)"
                 strokeWidth={1}
                 stroke="#000000"
                 d={elem.data.svgPathData}

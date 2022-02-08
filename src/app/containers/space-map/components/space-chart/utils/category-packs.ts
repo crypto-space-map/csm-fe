@@ -13,15 +13,15 @@ export const createCategoryPacks = (
   width = 0,
   height = 0
 ) => {
+  const sortedCategories = [...categories].sort((a, b) => {
+    if (!a.parent) return -1;
+    if (!b.parent) return 1;
+    return a.parent.toString().localeCompare(b.parent);
+  });
+
   const mappedCategories = group(categories, d => d.name);
 
-  const sumAllCaps = (data: MapCategory[]) =>
-    data.reduce((acc, item) => {
-      acc += sumAllCaps(item.children) + item.marketCap;
-      return acc;
-    }, 0);
-
-  const allCAp = categories.reduce((acc, item) => {
+  const allCap = categories.reduce((acc, item) => {
     acc += item.marketCap;
     return acc;
   }, 0);
@@ -35,13 +35,13 @@ export const createCategoryPacks = (
 
     const nodes = packSiblings<typeof circledChildren[number]>(circledChildren);
 
-    const maxCalculatedRadius = (marketCap / allCAp) * 100;
+    const maxCalculatedRadius = (marketCap / allCap) * 100;
 
     const r = radius(maxCalculatedRadius);
 
     const state = { properties: { x: width / 2, y: height / 2 } };
     const { x, y } = state.properties;
-    packedCategories.set(key, { key, children: nodes, r, x, y });
+    packedCategories.set(key, { key, children: nodes, r, x, y, groupName: value[0].parent });
   }
   const categoriesMapValues = [...new Map(packedCategories).values()] as PackedNodes[];
   return categoriesMapValues;
