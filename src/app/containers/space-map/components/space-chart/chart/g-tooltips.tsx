@@ -37,14 +37,13 @@ export const GTooltips = memo<GAreaProps>(({ data, currentProject }) => {
             markerHeight="50">
             <svg>
               <rect width={elem.data.name.length * 10} height="24" rx="12.3767" fill="white" />
-              <text
-                y="12"
-                x={elem.data.name.length * 5}
-                fontSize={12}
-                textAnchor="middle"
-                alignmentBaseline="central">
-                {elem.data.projectId}
-              </text>
+              <path
+                fill="black"
+                transform="translate(8, 16) scale(0.2)"
+                strokeWidth={1}
+                stroke="#000000"
+                d={elem.data.svgPathData}
+              />
             </svg>
           </marker>
         </>

@@ -33,6 +33,7 @@ export type MapCategory = {
   marketCap: number;
   projectId?: string;
   projectWeight?: number;
+  svgPathData: string;
 };
 
 export type ProjectData = {
