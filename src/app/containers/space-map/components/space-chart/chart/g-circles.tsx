@@ -59,7 +59,7 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, toolt
     <circle
       ref={ref}
       key={`project-circle${elem.data.parent || elem.data.projectId}`}
-      r={elem.r || 1}
+      r={elem.r || 0.1}
       cx={scaled(elem.x)}
       cy={scaled(elem.y)}
       vectorEffect="non-scaling-stroke"

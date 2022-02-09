@@ -2,7 +2,7 @@ import { forceSimulation, forceX, forceY, forceCollide, forceCenter, forceManyBo
 
 import { CirclesSimulation } from '../types';
 
-const NODE = { PADDING: 100 };
+const NODE = { PADDING: 50 };
 
 const ALPHA_TICK = 0.0001;
 

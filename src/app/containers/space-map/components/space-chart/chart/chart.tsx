@@ -68,10 +68,12 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
       setMapCurrentProject(null);
     }
     if (selectedProject !== currentProject?.data.projectId) {
-      const target = allProjects.find(({ data: { projectId } }) => projectId === selectedProject);
-      setMapCurrentProject(target || null);
+      const target = allProjects.find(({ data: { projectId } }) => projectId === selectedProject) || null;
+      if (target) {
+        setProject(target);
+      }
     }
-  }, [allProjects, currentProject?.data.projectId, selectedProject]);
+  }, [allProjects, currentProject?.data.projectId, selectedProject, setProject]);
 
   useEffect(() => {
     simulation?.restart();
