@@ -19,7 +19,7 @@ export const GLinks = memo<GAreaProps>(({ data, currentProject }) => {
         <>
           <ProjectLink
             stroke={COLOR_PALLETTE.MAIN_WHITE}
-            key={`${elem.x}${elem.y}`}
+            key={`links-g-area-${elem.data.key || elem.data.projectId}${elem.data.marketCap}`}
             strokeWidth={1}
             strokeDasharray="4000 4000"
             vectorEffect="non-scaling-stroke"
