@@ -4,7 +4,7 @@ import { MapCategory } from 'app/containers/space-map/types';
 
 import { PackedNodes } from '../types';
 
-const radius = scaleSqrt().domain([0, 1]).range([0, 100]);
+const radius = scaleSqrt().domain([0, 1]).range([0, 40]);
 
 export const createCategoryPacks = (
   categories: MapCategory[],
@@ -13,12 +13,6 @@ export const createCategoryPacks = (
   width = 0,
   height = 0
 ) => {
-  const sortedCategories = [...categories].sort((a, b) => {
-    if (!a.parent) return -1;
-    if (!b.parent) return 1;
-    return a.parent.toString().localeCompare(b.parent);
-  });
-
   const mappedCategories = group(categories, d => d.name);
 
   const allCap = categories.reduce((acc, item) => {

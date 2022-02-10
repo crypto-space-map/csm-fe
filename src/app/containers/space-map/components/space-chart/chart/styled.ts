@@ -104,3 +104,7 @@ export const StyledLabel = styled.span`
   padding: 0.1em;
   border-radius: 1em;
 `;
+
+export const CursorGTag = styled.g`
+  cursor: pointer;
+`;
