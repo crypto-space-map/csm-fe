@@ -24,7 +24,7 @@ export const AnnLink = styled.a`
   ${link()}
 
   & > span {
-    margin-left: 5px;
+    margin-left: 4px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -33,6 +33,6 @@ export const AnnLink = styled.a`
   & > svg {
     color: #000;
     opacity: 0.54;
-    width: 34px;
+    width: -webkit-fill-available;
   }
 `;

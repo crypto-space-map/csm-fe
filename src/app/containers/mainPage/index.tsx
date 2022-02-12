@@ -52,9 +52,9 @@ export const MainPage = memo(() => {
   const handleSelectFund = useCallback(
     name => {
       const newFundName = name === fundName ? null : name;
-      const newPath = newFundName ? `$/fund/${newFundName}` : url;
+      const newPath = newFundName ? `/fund/${newFundName}` : url;
 
-      history.replace(newPath);
+      history.push(newPath);
       setFundName(newFundName);
     },
     [fundName, url, history, setFundName]
