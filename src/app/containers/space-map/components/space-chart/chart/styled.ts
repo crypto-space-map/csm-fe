@@ -47,7 +47,7 @@ export const ParentLabelsText = styled.text`
   width: 100%;
   height: 100%;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 10px;
   line-height: 22px;
   fill: ${COLOR_PALLETTE.MAP_LABELS};
   pointer-events: none;

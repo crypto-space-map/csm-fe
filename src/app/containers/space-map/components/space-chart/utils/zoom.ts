@@ -11,8 +11,7 @@ export const initZoomedElement = <T extends Element>(ref: RefObject<T>) => {
     // @ts-ignore
     select(ref.current).select('g').attr('transform', e.transform);
   };
-  const initZoom = () =>
-    select(ref.current as Element).call(zoom().scaleExtent(ZOOM_RANGE).on('zoom', handleZoom));
+  const initZoom = () => select(ref.current as Element).call(zoom().on('zoom', handleZoom));
 
   initZoom();
 };
