@@ -38,6 +38,5 @@ export const createCategoryPacks = (categories: MapCategory[], width = 0, height
     packedCategories.set(key, { key, children: nodes, r, x, y, sortingNumber });
   }
   const categoriesMapValues = [...new Map(packedCategories).values()] as PackedNodes[];
-  console.log(categoriesMapValues);
   return categoriesMapValues;
 };
