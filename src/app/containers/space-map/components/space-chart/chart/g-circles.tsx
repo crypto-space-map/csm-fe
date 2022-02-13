@@ -23,6 +23,7 @@ type CircleProps = Omit<GAreaProps, 'data'> &
 const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, tooltipRef }) => {
   const ref = useRef<SVGCircleElement>(null);
   const handleClick = useCallback(() => {
+    // TODO выпилить когда ДИма заапрувит размер сфер
     console.log(elem);
     setCurrentProject(elem);
   }, [elem, setCurrentProject]);

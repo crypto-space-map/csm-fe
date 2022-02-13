@@ -11,7 +11,8 @@ export function useChart({ width, height, maxMarketCap, minMarketCap, tree }: Us
   const [simulation, setSimulation] = useState<Simulation<PackedNodes, undefined> | null>(null);
   useEffect(() => {
     if (width && height && tree && maxMarketCap && minMarketCap) {
-      setPackedCategories(createCategoryPacks(tree, maxMarketCap, minMarketCap));
+      const createdPacks = createCategoryPacks(tree, maxMarketCap, minMarketCap);
+      setPackedCategories(createdPacks);
     }
   }, [width, height, maxMarketCap, minMarketCap, tree]);
 
