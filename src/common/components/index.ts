@@ -10,3 +10,6 @@ export * from './status';
 export * from './svg-gradient';
 export * from './svg-wrapper';
 export * from './tabs';
+export * from './show-more-text';
+export * from './mark-down';
+export * from './icon-plug';

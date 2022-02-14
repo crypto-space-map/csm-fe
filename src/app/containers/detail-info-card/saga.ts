@@ -1,35 +1,34 @@
 import { put, takeLatest, call } from 'typed-redux-saga';
 
+import { toast } from 'app/components';
+
 import { getExchangesData, getProjectData, getSocialData, getFundsData } from './api';
 import { actions } from './slice';
-
-export function* overviewTradingStockWorker() {
-  try {
-    // TODO сделать реальный запрос
-    // const { data } = yield* call(getDetailInfoCard);
-    const data = 'HUOBI';
-    yield* put(actions.fetchOverviewTradingStockSuccess(data));
-  } catch {
-    yield* put(actions.fetchOverviewTradingStockFail());
-  }
-}
 
 export function* exchangesDataWorker(action: ReturnType<typeof actions.fetchExchangesData>) {
   try {
     const { data } = yield* call(getExchangesData, action.payload);
     yield* put(actions.setExchangesPage(action.payload.page));
-    yield* put(actions.fetchExchangesDataSuccess(data));
-  } catch {
-    yield* put(actions.fetchExchangesDataFail());
+    yield* put(actions.fetchExchangesDataSuccess({ data }));
+  } catch (error) {
+    if (error instanceof Error) {
+      const { message } = error;
+      toast(message, 'error');
+      yield* put(actions.fetchExchangesDataError({ message }));
+    }
   }
 }
 
 export function* fundsDataWorker(action: ReturnType<typeof actions.fetchFundsData>) {
   try {
     const { data } = yield* call(getFundsData, action.payload);
-    yield* put(actions.fetchFundsDataSuccess(data));
-  } catch {
-    yield* put(actions.fetchFundsDataFail());
+    yield* put(actions.fetchFundsDataSuccess({ data }));
+  } catch (error) {
+    if (error instanceof Error) {
+      const { message } = error;
+      toast(message, 'error');
+      yield* put(actions.fetchFundsDataError({ message }));
+    }
   }
 }
 
@@ -37,22 +36,29 @@ export function* projectDataWorker(action: ReturnType<typeof actions.fetchProjec
   try {
     const { data } = yield* call(getProjectData, action.payload);
     yield* put(actions.fetchProjectDataSuccess(data));
-  } catch {
-    yield* put(actions.fetchProjectDataFail());
+  } catch (error) {
+    if (error instanceof Error) {
+      const { message } = error;
+      toast(message, 'error');
+      yield* put(actions.fetchProjectDataError());
+    }
   }
 }
 
 export function* fetchSocialDataWorker(action: ReturnType<typeof actions.fetchSocialData>) {
   try {
     const { data } = yield* call(getSocialData, action.payload);
-    yield* put(actions.fetchSocialDataSuccess(data));
-  } catch {
-    yield* put(actions.fetchSocialDataFail());
+    yield* put(actions.fetchSocialDataSuccess({ data }));
+  } catch (error) {
+    if (error instanceof Error) {
+      const { message } = error;
+      toast(message, 'error');
+      yield* put(actions.fetchSocialDataError({ message }));
+    }
   }
 }
 
 export function* detailInfoSaga() {
-  yield* takeLatest(actions.fetchOverviewTradingStock, overviewTradingStockWorker);
   yield* takeLatest(actions.fetchExchangesData, exchangesDataWorker);
   yield* takeLatest(actions.fetchProjectData, projectDataWorker);
   yield* takeLatest(actions.fetchSocialData, fetchSocialDataWorker);

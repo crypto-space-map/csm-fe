@@ -1,8 +1,25 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import Chip from '@mui/material/Chip';
 import { COLOR_PALLETTE } from 'global/pallette';
 import { link } from 'global/styles';
-import ShowMoreText from 'react-show-more-text';
+
+export const linkStyles = css`
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  text-decoration: none;
+  ${link()}
+`;
+
+export const StyledTextLink = styled.a`
+  ${linkStyles}
+  width: 350px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+`;
 
 export const OverviewWrapper = styled.div`
   height: 400px;
@@ -33,14 +50,6 @@ export const TradingWidgetWrapper = styled.div`
   height: 400px;
 `;
 
-export const StylesShowMoreText = styled(ShowMoreText)`
-  width: 490px;
-  & .anchor-class {
-    text-decoration: none;
-    ${link()};
-  }
-`;
-
 export const StyledCategory = styled(Chip)`
   &.MuiChip-root {
     background-color: ${COLOR_PALLETTE.PROJECT_CATEGORY};
@@ -62,7 +71,11 @@ export const ContractItemWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 30px;
-  & > span {
-    margin-left: 4px;
-  }
+`;
+
+export const Point = styled.div`
+  margin-right: 4px;
+  border: 3px solid ${COLOR_PALLETTE.MAIN_BLACK};
+  border-radius: 20px;
+  background-color: ${COLOR_PALLETTE.MAIN_BLACK};
 `;

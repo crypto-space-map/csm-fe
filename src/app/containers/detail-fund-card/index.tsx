@@ -1,27 +1,27 @@
 import { memo } from 'react';
 
-import { DetailCardWrapper, DetailHeaderSection, DetailStatisticsSection } from 'app/components';
+import { DetailHeaderSection, DetailStatisticsSection } from 'app/components';
 
-import { headerDetailData } from '../detail-info-card/constants';
 import { TabsSection } from './components/tabs-section';
-import { useDetailFund } from './hooks';
+import { useDetailFundSlice, useDetailFund, useClearDataAfterChangeNewFund } from './hooks';
 import { TopSection } from './styles';
 
 export const DetailFundCard = memo(() => {
-  const { isShow, isShowBackArrow, handleClose } = useDetailFund();
+  useDetailFundSlice();
+  useClearDataAfterChangeNewFund();
+  const { fundOptions } = useDetailFund();
+  // TODO выпилить после появления апишки
+  const statisticsData = { website: fundOptions?.website ?? 'cms.com' };
+  const fundName = fundOptions?.name ?? 'DefaultFond';
+
   return (
-    <DetailCardWrapper show={isShow}>
+    <>
       <TopSection>
-        <DetailHeaderSection
-          showBackArrow={isShowBackArrow}
-          showExtraInfo={false}
-          onClose={handleClose}
-          {...headerDetailData}
-        />
-        <DetailStatisticsSection data={{ website: 'https://ffff.com' }} />
+        <DetailHeaderSection showExtraInfo={false} name={fundName} />
+        <DetailStatisticsSection data={statisticsData} />
       </TopSection>
 
       <TabsSection />
-    </DetailCardWrapper>
+    </>
   );
 });

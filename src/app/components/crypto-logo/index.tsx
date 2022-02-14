@@ -5,5 +5,9 @@ interface CryptoLogoProps {
   size?: number;
 }
 export const CryptoLogo = ({ path, size = 24 }: CryptoLogoProps) => (
-  <StyledImg size={size} src={path} alt="small_logo" />
+  <StyledImg size={size} src={path} alt="Logo" />
 );
+
+CryptoLogo.defaultProps = {
+  size: 24,
+};

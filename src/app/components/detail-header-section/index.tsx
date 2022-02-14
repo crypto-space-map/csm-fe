@@ -1,8 +1,9 @@
 import { COLOR_PALLETTE } from 'global/pallette';
 
 import { ShareIcon, StarIcon, LikeIcon, CloseIcon, RoundedButton } from 'assets';
-import { SVGWrapper } from 'common/components/svg-wrapper';
+import { IconPlug, SVGWrapper } from 'common/components';
 
+import { useDetailHeader } from './hooks';
 import {
   Icon,
   CompanyName,
@@ -14,61 +15,69 @@ import {
   Controls,
   CloseIconWrapper,
   StyledRoundedButton,
+  StyledDefaultLogo,
 } from './styles';
 import { HeaderData } from './types';
 
 interface DetailHeaderSectionProps extends HeaderData {
-  showBackArrow?: boolean;
   showExtraInfo?: boolean;
-  onClose: () => void;
 }
 
-const liked = false;
+const getLogo = (name: string, icon?: string) =>
+  icon ? (
+    <Icon src={icon} alt="logo" />
+  ) : (
+    <StyledDefaultLogo>
+      <IconPlug text={name} />
+    </StyledDefaultLogo>
+  );
 
 export const DetailHeaderSection = ({
   name,
   symbol,
   icon,
   rank,
-  showBackArrow,
   showExtraInfo,
-  onClose,
-}: DetailHeaderSectionProps) => (
-  <HeaderSectionWrapper>
-    <CompanyInfo>
-      {showBackArrow && (
-        <StyledRoundedButton onClick={onClose}>
-          <RoundedButton />
-        </StyledRoundedButton>
-      )}
-      <Icon src={icon} alt="logo" />
-      <CompanyName>{name}</CompanyName>
-      {showExtraInfo && (
-        <>
-          <CompanyTiker>{symbol.toUpperCase()}</CompanyTiker>
-          <RankWrapper>
-            <StarIcon />
-            <RankText>{`Rank ${rank}`}</RankText>
-          </RankWrapper>
-        </>
-      )}
-    </CompanyInfo>
-    <Controls>
-      <SVGWrapper fill={liked ? COLOR_PALLETTE.MAIN_GRAY : 'none'} stroke={COLOR_PALLETTE.MAIN_GRAY}>
-        <LikeIcon />
-      </SVGWrapper>
-      <SVGWrapper fill={COLOR_PALLETTE.MAIN_GRAY}>
-        <ShareIcon />
-      </SVGWrapper>
+}: DetailHeaderSectionProps) => {
+  const { isShowArrowBack, handleArrowBack, handleClose } = useDetailHeader();
+  return (
+    <HeaderSectionWrapper>
+      <CompanyInfo>
+        {isShowArrowBack && (
+          <StyledRoundedButton onClick={handleArrowBack}>
+            <RoundedButton />
+          </StyledRoundedButton>
+        )}
 
-      <CloseIconWrapper onClick={onClose}>
-        <CloseIcon />
-      </CloseIconWrapper>
-    </Controls>
-  </HeaderSectionWrapper>
-);
+        {getLogo(name, icon)}
+
+        <CompanyName>{name}</CompanyName>
+        {showExtraInfo && (
+          <>
+            <CompanyTiker>{symbol?.toUpperCase() ?? ''}</CompanyTiker>
+            <RankWrapper>
+              <StarIcon />
+              <RankText>{`Rank ${rank}`}</RankText>
+            </RankWrapper>
+          </>
+        )}
+      </CompanyInfo>
+      <Controls>
+        <SVGWrapper fill="none" stroke={COLOR_PALLETTE.MAIN_GRAY}>
+          <LikeIcon />
+        </SVGWrapper>
+        <SVGWrapper fill={COLOR_PALLETTE.MAIN_GRAY}>
+          <ShareIcon />
+        </SVGWrapper>
+
+        <CloseIconWrapper onClick={handleClose}>
+          <CloseIcon />
+        </CloseIconWrapper>
+      </Controls>
+    </HeaderSectionWrapper>
+  );
+};
 
 DetailHeaderSection.defaultProps = {
-  showBackArrow: false,
   showExtraInfo: true,
 };

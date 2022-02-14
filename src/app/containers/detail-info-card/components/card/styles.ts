@@ -92,16 +92,6 @@ export const TextSection = styled.section`
   font-weight: 400;
   font-size: 16px;
   line-height: 22px;
-
-  & > h3 {
-    margin: 0;
-  }
-  & > p {
-    margin-top: 0;
-  }
-  & > p:last-of-type {
-    margin-bottom: 0;
-  }
 `;
 
 export const ButtonsContentWrapper = styled.section`
