@@ -62,7 +62,8 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
   const foundProjects = getIncludesProjects(allProjects, [...new Set(projectPartnerships)]);
 
   useEffect(() => {
-    fetchSpaceMapData({ withoutCategories: NEEDLES_CATEGORIES.join(',') });
+    fetchSpaceMapData({});
+    // { withoutCategories: NEEDLES_CATEGORIES.join(',') }
   }, [fetchSpaceMapData]);
 
   useEffect(() => {
