@@ -18,6 +18,8 @@ export const selectedProjectHeaderData = (state: RootState) => selectDomain(stat
 export const selectedProjectTicker = (state: RootState) => selectDomain(state).projectHeaderData?.symbol;
 export const selectedProjectStatistic = (state: RootState) => selectDomain(state).projectStatistic;
 export const selectedProjectLoading = (state: RootState) => selectDomain(state).projectLoading;
+export const selectedSocialData = (state: RootState) => selectDomain(state).socialData;
+export const selectedSocialDataLoading = (state: RootState) => selectDomain(state).socialDataLoading;
 
 export const selectedEnrichedExchangesData = createSelector([selectedExchangesData], data =>
   [...data]
@@ -33,6 +35,15 @@ export const selectedEnrichedExchangesData = createSelector([selectedExchangesDa
       id: String(index + 1),
       ...item,
     }))
+);
+
+export const selectedEnrichedSocialData = createSelector(
+  [selectedSocialData],
+  data =>
+    data?.map((item, index) => ({
+      id: String(index + 1),
+      ...item,
+    })) ?? null
 );
 
 export const selectedExchangesPage = (state: RootState) => selectDomain(state).exchangesPage;

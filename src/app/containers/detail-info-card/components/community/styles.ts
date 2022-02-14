@@ -18,7 +18,7 @@ export const CardWrapper = styled.a`
   position: relative;
   text-decoration: none;
   ${gradientBorder({ borderRadius: 10 })}
-  ${link(COLOR_PALLETTE.MAIN_BLACK)}
+  ${link(COLOR_PALLETTE.MAIN_BLACK, COLOR_PALLETTE.MAIN_BLACK)}
 `;
 
 export const CardContent = styled.div`

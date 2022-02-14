@@ -1,7 +1,16 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button as MuiButton, ButtonProps } from '@mui/material';
 import { COLOR_PALLETTE } from 'global/pallette';
 import { link } from 'global/styles';
+
+export const linkStyles = css`
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  text-decoration: none;
+  ${link()}
+`;
 
 export const CardWrapper = styled.article`
   display: flex;
@@ -12,24 +21,55 @@ export const CardWrapper = styled.article`
   padding: 19px;
   font-size: 16px;
   line-height: 22px;
-  & a {
-    ${link()}
-  }
 `;
 
 export const TitleSection = styled.section`
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: ${COLOR_PALLETTE.MAIN_BLACK};
 `;
 
 export const CompanyInfo = styled.section`
   display: flex;
 `;
 
+export const IconWrapper = styled.div`
+  & > img {
+    border-radius: 26px;
+  }
+`;
+
+export const StyledAccountName = styled.a`
+  font-size: 16px;
+  line-height: 22px;
+  text-decoration: none;
+  ${link(COLOR_PALLETTE.MAIN_BLACK)}
+  &:hover {
+    color: ${COLOR_PALLETTE.LINK_COLOR};
+  }
+`;
+
+export const StyledAccountLink = styled.a`
+  ${linkStyles}
+  width: 350px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+`;
+
+export const StyledTextLink = styled.a`
+  ${linkStyles}
+`;
+
 export const PostDate = styled.section`
   font-size: 14px;
-  line-height: 19px;
+  line-height: 18px;
+  color: ${COLOR_PALLETTE.POST_DATE_COLOR};
 `;
 
 export const TitleTextContent = styled.div`
@@ -48,7 +88,21 @@ export const Icon = styled.img`
   height: fit-content;
 `;
 
-export const TextSection = styled.section``;
+export const TextSection = styled.section`
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+
+  & > h3 {
+    margin: 0;
+  }
+  & > p {
+    margin-top: 0;
+  }
+  & > p:last-of-type {
+    margin-bottom: 0;
+  }
+`;
 
 export const ButtonsContentWrapper = styled.section`
   margin-top: 12px;
@@ -76,5 +130,5 @@ export const StyledButton = styled(MuiButton)<ButtonProps>`
 
 export const StyledButtonWrapper = styled.a`
   text-decoration: none;
-  ${link(COLOR_PALLETTE.MAIN_BLACK)}
+  ${link(COLOR_PALLETTE.MAIN_BLACK, COLOR_PALLETTE.MAIN_BLACK)}
 `;
