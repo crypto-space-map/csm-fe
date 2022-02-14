@@ -2,7 +2,13 @@ import { useActions } from 'hooks';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 import { getPersentageVolume } from 'utils/detail-info';
 
-import type { ContainerState, ExchangeDTO, ExchangeRequest, ProjectDataResponseDTO } from './types';
+import type {
+  ContainerState,
+  ExchangeDTO,
+  ExchangeRequest,
+  ProjectDataResponseDTO,
+  SocialDataDTO,
+} from './types';
 import { sliceKey as name } from './utils';
 
 export const initialState: ContainerState = {
@@ -14,6 +20,8 @@ export const initialState: ContainerState = {
   projectLoading: false,
   projectStatistic: null,
   projectHeaderData: null,
+  socialData: null,
+  socialDataLoading: false,
 };
 
 const providersListSlice = createSlice({
@@ -30,6 +38,18 @@ const providersListSlice = createSlice({
     fetchOverviewTradingStockFail(state) {
       state.overviewTradingStockLoading = false;
     },
+
+    fetchSocialData(state, _action: PayloadAction<string>) {
+      state.socialDataLoading = true;
+    },
+    fetchSocialDataSuccess(state, action: PayloadAction<SocialDataDTO[]>) {
+      state.socialDataLoading = false;
+      state.socialData = action.payload;
+    },
+    fetchSocialDataFail(state) {
+      state.socialDataLoading = false;
+    },
+
     fetchExchangesData(state, _action: PayloadAction<ExchangeRequest>) {
       state.exchangesDataLoading = true;
     },
@@ -94,6 +114,7 @@ const providersListSlice = createSlice({
     clearDataAfterChangeProject(state) {
       state.exchangesData = initialState.exchangesData;
       state.exchangesPage = initialState.exchangesPage;
+      state.socialData = initialState.socialData;
     },
   },
 });

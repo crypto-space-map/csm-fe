@@ -31,7 +31,7 @@ const makePlugins = (isDev, minify) => {
     new StylelintPlugin({ files: '**/*.css', cache: true }),
     new Dotenv({ systemvars: true, systemvars: true }),
     new webpack.ProvidePlugin({
-      process: 'process/browser',
+      process: 'process/browser.js',
     }),
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}/${isDev ? '[fullhash].css' : '[contenthash].css'}`,

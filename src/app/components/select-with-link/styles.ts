@@ -13,7 +13,7 @@ export const StyledLink = styled.a`
   width: 95%;
   height: 16px;
   padding: 8px 0 8px 8px;
-  ${link(MAIN_BLACK)}
+  ${link(MAIN_BLACK, MAIN_BLACK)}
 
   &:hover {
     background-color: ${LIGHT_GRAY};

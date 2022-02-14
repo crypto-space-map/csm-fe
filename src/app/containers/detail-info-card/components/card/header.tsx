@@ -1,30 +1,41 @@
 import moment from 'moment';
 
-import { CompanyInfo, PostDate, TitleSection, Icon, TitleTextContent } from './styles';
-import { CompanyProps } from './types';
+import { SocialDataDTO } from '../../types';
+import {
+  CompanyInfo,
+  PostDate,
+  TitleSection,
+  Icon,
+  TitleTextContent,
+  StyledAccountName,
+  StyledAccountLink,
+  IconWrapper,
+} from './styles';
 
-interface HeaderProps {
-  company: CompanyProps;
-  postDate?: string;
-}
-
-export const Header = ({ company, postDate }: HeaderProps) => {
-  const { title, link, logo, linkText } = company;
-  return (
-    <TitleSection>
-      <CompanyInfo>
-        <Icon src={logo} alt="logo" />
-        <TitleTextContent>
-          <h5>{title}</h5>
-          <a href={link} target="_blank" rel="noreferrer">
-            {linkText}
-          </a>
-        </TitleTextContent>
-      </CompanyInfo>
-      {postDate && <PostDate>{moment(postDate).format('DD MMMM YYYY')}</PostDate>}
-    </TitleSection>
-  );
-};
+export const Header = ({
+  accountImageUrl,
+  accountName,
+  accountUrl,
+  createdAt,
+  url,
+}: Omit<SocialDataDTO, 'text' | 'buttons'>) => (
+  <TitleSection>
+    <CompanyInfo>
+      <IconWrapper>
+        <Icon src={accountImageUrl} alt="logo" />
+      </IconWrapper>
+      <TitleTextContent>
+        <StyledAccountName href={accountUrl} target="_blank" rel="noreferrer">
+          {accountName}
+        </StyledAccountName>
+        <StyledAccountLink href={url} target="_blank" rel="noreferrer">
+          {url}
+        </StyledAccountLink>
+      </TitleTextContent>
+    </CompanyInfo>
+    {createdAt && <PostDate>{moment(createdAt).format('DD MMMM YYYY')}</PostDate>}
+  </TitleSection>
+);
 
 Header.defaultProps = {
   postDate: '',

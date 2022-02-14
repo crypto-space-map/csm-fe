@@ -28,6 +28,23 @@ export interface HeaderData {
   icon: string;
   rank: number;
 }
+
+export interface ButtonsProps {
+  id: string;
+  text: string;
+  link: string;
+}
+
+export interface SocialDataDTO {
+  socialMediaType: number;
+  accountName: string;
+  accountUrl: string;
+  accountImageUrl: string;
+  createdAt: string;
+  text: string;
+  url: string;
+  buttons?: ButtonsProps[];
+}
 export interface StatisticDetailDataDTO {
   marketPrice: CommonStatistic;
   priceChangePercentageDay: PercentageStatistic;
@@ -67,6 +84,8 @@ export interface DetailInfoState {
   projectLoading: boolean;
   projectStatistic: StatisticDetailDataDTO | null;
   projectHeaderData: HeaderData | null;
+  socialData: SocialDataDTO[] | null;
+  socialDataLoading: boolean;
 }
 
 export type ContainerState = DetailInfoState;

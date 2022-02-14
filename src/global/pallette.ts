@@ -11,6 +11,7 @@ export const COLOR_PALLETTE = {
   MAIN_BLACK: '#1d1c1c',
   MAIN_GRAY: '#b2b2b2',
   LINK_COLOR: '#41aacc',
+  HOVER_LINK_COLOR: '#83d9f5',
   HEADER: {
     INPUT: { BACKGROUND: '#444444', BACKGROUND_FOCUSED: '#e5e5e5' },
   },
@@ -18,4 +19,5 @@ export const COLOR_PALLETTE = {
   DARK_GREEN: '#78BD4D',
   ICO_COMMON_COLOR: '#bdbdbd',
   PROJECT_CATEGORY: '#d1f1ff',
+  POST_DATE_COLOR: '#4f4f4f',
 };

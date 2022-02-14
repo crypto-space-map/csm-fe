@@ -46,7 +46,7 @@ export const ProjectChangeWrapper = styled.div`
 `;
 
 export const StyledLink = styled.a`
-  ${link(COLOR_PALLETTE.MAIN_WHITE)}
+  ${link(COLOR_PALLETTE.MAIN_WHITE, COLOR_PALLETTE.MAIN_WHITE)}
   width: 130px;
   text-overflow: ellipsis;
   overflow: hidden;
