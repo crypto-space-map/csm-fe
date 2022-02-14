@@ -1,20 +1,17 @@
 import { useCallback } from 'react';
 
-import { useRouteMatch } from 'react-router-dom';
-
 import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/slice';
 
 import { InvestorWrapper, StyledLink } from '../styles';
 
 interface InvestorsCellProps {
   id: string;
-  title: string;
+  name: string;
   isLastElement: boolean;
 }
 
-export const InvestorsCell = ({ id, title, isLastElement }: InvestorsCellProps) => {
+export const InvestorsCell = ({ id, name, isLastElement }: InvestorsCellProps) => {
   const { setFundName } = pageStoreDispatchAction();
-  const { url } = useRouteMatch();
 
   const handleClick = useCallback(() => {
     setFundName(id);
@@ -22,7 +19,7 @@ export const InvestorsCell = ({ id, title, isLastElement }: InvestorsCellProps) 
 
   return (
     <InvestorWrapper onClick={handleClick}>
-      <StyledLink to={`${url}/fund/${id}`}>{title}</StyledLink>
+      {id ? <StyledLink to={`/fund/${id}`}>{name}</StyledLink> : <span>{name}</span>}
       {isLastElement ? <span>,</span> : null}
     </InvestorWrapper>
   );

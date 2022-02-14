@@ -8,6 +8,7 @@ import type {
   ExchangeRequest,
   ProjectDataResponseDTO,
   SocialDataDTO,
+  FundsDTO,
 } from './types';
 import { sliceKey as name } from './utils';
 
@@ -22,6 +23,8 @@ export const initialState: ContainerState = {
   projectHeaderData: null,
   socialData: null,
   socialDataLoading: false,
+  fundsData: [],
+  fundsDataLoading: false,
 };
 
 const providersListSlice = createSlice({
@@ -70,6 +73,16 @@ const providersListSlice = createSlice({
     fetchExchangesDataFail(state) {
       state.exchangesDataLoading = false;
     },
+    fetchFundsData(state, _action: PayloadAction<string>) {
+      state.fundsDataLoading = true;
+    },
+    fetchFundsDataSuccess(state, action: PayloadAction<FundsDTO[]>) {
+      state.fundsDataLoading = false;
+      state.fundsData = action.payload.length ? action.payload : initialState.fundsData;
+    },
+    fetchFundsDataFail(state) {
+      state.fundsDataLoading = false;
+    },
     clearExchangesData(state) {
       state.exchangesData = initialState.exchangesData;
     },
@@ -115,6 +128,7 @@ const providersListSlice = createSlice({
       state.exchangesData = initialState.exchangesData;
       state.exchangesPage = initialState.exchangesPage;
       state.socialData = initialState.socialData;
+      state.fundsData = initialState.fundsData;
     },
   },
 });

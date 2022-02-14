@@ -14,7 +14,9 @@ export const TextContent = ({ text }: TextContentProps) => (
       remarkPlugins={[remarkGfm]}
       rehypePlugins={[rehypeRaw]}
       components={{
-        h1: 'h3',
+        h1: 'p',
+        h2: 'p',
+        h3: 'p',
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         a: ({ node, ...props }) => <StyledTextLink target="_blank" rel="noreferrer" {...props} />,
       }}>
