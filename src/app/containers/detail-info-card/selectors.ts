@@ -20,6 +20,15 @@ export const selectedProjectStatistic = (state: RootState) => selectDomain(state
 export const selectedProjectLoading = (state: RootState) => selectDomain(state).projectLoading;
 export const selectedSocialData = (state: RootState) => selectDomain(state).socialData;
 export const selectedSocialDataLoading = (state: RootState) => selectDomain(state).socialDataLoading;
+export const selectedFundsData = (state: RootState) => selectDomain(state).fundsData;
+export const selectedFundsDataLoading = (state: RootState) => selectDomain(state).fundsDataLoading;
+
+export const selectedEnrichedFundsData = createSelector([selectedFundsData], data =>
+  data.map((item, index) => ({
+    id: String(index + 1),
+    ...item,
+  }))
+);
 
 export const selectedEnrichedExchangesData = createSelector([selectedExchangesData], data =>
   [...data]

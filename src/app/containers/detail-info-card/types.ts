@@ -12,6 +12,19 @@ export interface ExchangeDTO {
   updatedAt: string;
 }
 
+export interface InvestorsProps {
+  id: string;
+  name: string;
+}
+
+export interface FundsDTO {
+  type: string;
+  investors: InvestorsProps[];
+  amount: number;
+  date: string;
+  announcement: string;
+}
+
 interface CommonStatistic {
   usd: number;
   btc: number;
@@ -86,6 +99,8 @@ export interface DetailInfoState {
   projectHeaderData: HeaderData | null;
   socialData: SocialDataDTO[] | null;
   socialDataLoading: boolean;
+  fundsData: FundsDTO[];
+  fundsDataLoading: boolean;
 }
 
 export type ContainerState = DetailInfoState;
