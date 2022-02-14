@@ -10,3 +10,4 @@ export * from './status';
 export * from './svg-gradient';
 export * from './svg-wrapper';
 export * from './tabs';
+export * from './show-more-text';

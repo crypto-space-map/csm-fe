@@ -15,7 +15,7 @@ import { sliceKey as name } from './utils';
 export const initialState: ContainerState = {
   overviewTradingStock: '',
   overviewTradingStockLoading: false,
-  exchangesData: [],
+  exchangesData: null,
   exchangesPage: 1,
   exchangesDataLoading: false,
   projectLoading: false,
@@ -23,7 +23,7 @@ export const initialState: ContainerState = {
   projectHeaderData: null,
   socialData: null,
   socialDataLoading: false,
-  fundsData: [],
+  fundsData: null,
   fundsDataLoading: false,
 };
 
@@ -59,9 +59,10 @@ const providersListSlice = createSlice({
     fetchExchangesDataSuccess(state, action: PayloadAction<ExchangeDTO[]>) {
       state.exchangesDataLoading = false;
       const totalVolume = state.projectStatistic?.totalVolume?.usd || 0;
+      const startedValue = state.exchangesData ? state.exchangesData : [];
 
       // TODO сделать фильтрацию дублей
-      const newExchangesData = state.exchangesData.concat(action.payload).map(item => {
+      const newExchangesData = startedValue.concat(action.payload).map(item => {
         if (!item?.persentVolume) {
           return { ...item, persentVolume: getPersentageVolume(item.volume, totalVolume) };
         }
@@ -78,7 +79,7 @@ const providersListSlice = createSlice({
     },
     fetchFundsDataSuccess(state, action: PayloadAction<FundsDTO[]>) {
       state.fundsDataLoading = false;
-      state.fundsData = action.payload.length ? action.payload : initialState.fundsData;
+      state.fundsData = action.payload;
     },
     fetchFundsDataFail(state) {
       state.fundsDataLoading = false;

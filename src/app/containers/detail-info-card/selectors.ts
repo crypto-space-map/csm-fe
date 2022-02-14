@@ -6,7 +6,7 @@ import type { RootState } from 'types/root-state';
 
 import { initialState } from './slice';
 
-const selectDomain = (state: RootState) => state.datailInfo || initialState;
+const selectDomain = (state: RootState) => state.detailInfo || initialState;
 
 export const selectedOverviewTradingStock = (state: RootState) => selectDomain(state).overviewTradingStock;
 export const selectedOverviewTradingStockLoading = (state: RootState) =>
@@ -24,26 +24,30 @@ export const selectedFundsData = (state: RootState) => selectDomain(state).funds
 export const selectedFundsDataLoading = (state: RootState) => selectDomain(state).fundsDataLoading;
 
 export const selectedEnrichedFundsData = createSelector([selectedFundsData], data =>
-  data.map((item, index) => ({
-    id: String(index + 1),
-    ...item,
-  }))
+  data
+    ? data.map((item, index) => ({
+        id: String(index + 1),
+        ...item,
+      }))
+    : null
 );
 
 export const selectedEnrichedExchangesData = createSelector([selectedExchangesData], data =>
-  [...data]
-    .sort((...args) =>
-      numberSortFunc({
-        a: args[0],
-        b: args[1],
-        fieldName: 'persentVolume',
-        sortDirection: SortingValues.DESC,
-      })
-    )
-    .map((item, index) => ({
-      id: String(index + 1),
-      ...item,
-    }))
+  data
+    ? [...data]
+        .sort((...args) =>
+          numberSortFunc({
+            a: args[0],
+            b: args[1],
+            fieldName: 'persentVolume',
+            sortDirection: SortingValues.DESC,
+          })
+        )
+        .map((item, index) => ({
+          id: String(index + 1),
+          ...item,
+        }))
+    : null
 );
 
 export const selectedEnrichedSocialData = createSelector(

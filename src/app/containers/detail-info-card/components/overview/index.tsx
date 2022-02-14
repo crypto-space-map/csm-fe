@@ -3,6 +3,7 @@ import { memo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { TradingWidget } from 'app/components';
+import { ShowMoreText } from 'common/components';
 
 import { selectedProjectTicker } from '../../selectors';
 import { useDispatchAction } from '../../slice';
@@ -14,7 +15,6 @@ import {
   StyledCategoryWrapper,
   ContractsWrapper,
   StyledCategory,
-  StylesShowMoreText,
   ContractsHeader,
   TradingWidgetWrapper,
 } from './styles';
@@ -33,16 +33,7 @@ export const Overview = memo(() => {
         <TradingWidget symbol={`${ticker}USDT`} />
       </TradingWidgetWrapper>
       <StyledProjectInfoWrapper>
-        <StylesShowMoreText
-          lines={3}
-          more="More"
-          less="Less"
-          anchorClass="anchor-class"
-          expanded={false}
-          width={460}
-          truncatedEndingComponent="... ">
-          {overviewData.description}
-        </StylesShowMoreText>
+        <ShowMoreText width={460}>{overviewData.description}</ShowMoreText>
         <StyledCategoryWrapper>
           <span>Category:</span>
           <div>

@@ -1,6 +1,7 @@
 import { COLOR_PALLETTE } from 'global/pallette';
 
 import { ShareIcon, StarIcon, LikeIcon, CloseIcon, RoundedButton } from 'assets';
+import { DefaultFirstLetterLogo } from 'common/components/default-first-letter-logo';
 import { SVGWrapper } from 'common/components/svg-wrapper';
 
 import {
@@ -14,6 +15,7 @@ import {
   Controls,
   CloseIconWrapper,
   StyledRoundedButton,
+  StyledDefaultLogo,
 } from './styles';
 import { HeaderData } from './types';
 
@@ -22,6 +24,15 @@ interface DetailHeaderSectionProps extends HeaderData {
   showExtraInfo?: boolean;
   onClose: () => void;
 }
+
+const getLogo = (name: string, icon?: string) =>
+  icon ? (
+    <Icon src={icon} alt="logo" />
+  ) : (
+    <StyledDefaultLogo>
+      <DefaultFirstLetterLogo name={name} />
+    </StyledDefaultLogo>
+  );
 
 const liked = false;
 
@@ -41,11 +52,13 @@ export const DetailHeaderSection = ({
           <RoundedButton />
         </StyledRoundedButton>
       )}
-      <Icon src={icon} alt="logo" />
+
+      {getLogo(name, icon)}
+
       <CompanyName>{name}</CompanyName>
       {showExtraInfo && (
         <>
-          <CompanyTiker>{symbol.toUpperCase()}</CompanyTiker>
+          <CompanyTiker>{symbol?.toUpperCase() ?? ''}</CompanyTiker>
           <RankWrapper>
             <StarIcon />
             <RankText>{`Rank ${rank}`}</RankText>

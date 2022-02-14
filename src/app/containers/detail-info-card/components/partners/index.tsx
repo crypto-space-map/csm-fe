@@ -3,12 +3,12 @@ import { memo } from 'react';
 import moment from 'moment';
 
 import { Grid, CryptoLogo } from 'app/components';
+import { AnnLink } from 'app/components/detail-common-components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
-import LinkIcon from 'assets/link.svg';
 import { cutLink, getTransformedPrice } from 'utils/detail-info';
 
 import { headerNames, products } from './constants';
-import { AnnLink, PartnerWrapper } from './styles';
+import { PartnerWrapper } from './styles';
 import { PartnersProps } from './types';
 
 const decorateMcap = (row: PartnersProps) => {
@@ -20,17 +20,13 @@ const decorateMcap = (row: PartnersProps) => {
 const decorateDate = (row: PartnersProps) => {
   const value = row.date;
   if (!value) return null;
-  return moment(value).format('DD MMMM YYYY');
+  return moment(value).format('DD MMM YYYY');
 };
 
 const decorateAnn = (row: PartnersProps) => {
   const value = row.ann;
   if (!value) return null;
-  return (
-    <AnnLink target="_blank" href={value}>
-      <LinkIcon /> <span>{cutLink(value)}</span>
-    </AnnLink>
-  );
+  return <AnnLink link={value} />;
 };
 
 const decoratePartner = (row: PartnersProps) => {
@@ -75,7 +71,7 @@ const columns: ColumnProps<PartnersProps>[] = [
     field: 'ann',
     headerName: headerNames.ann,
     sortable: false,
-    width: 184,
+    width: 100,
     renderCell: decorateAnn,
   },
 ];

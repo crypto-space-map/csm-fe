@@ -1,10 +1,31 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
-import { selectedProjectName, selectedFundName } from 'store/pageStore/selectors';
+import { useActions } from 'hooks';
+import { selectedProjectName, selectedFundName, selectedFundOptions } from 'store/pageStore/selectors';
 import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/slice';
+import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
+
+import { detailFundSaga } from './saga';
+import { actions, reducer, useDispatchAction } from './slice';
+import { sliceKey } from './utils';
+
+export function useDetailFundSlice() {
+  useInjectReducer({ key: sliceKey, reducer });
+  useInjectSaga({ key: sliceKey, saga: detailFundSaga });
+  return useActions(actions);
+}
+
+export function useClearDataAfterChangeNewFund() {
+  const fundName = useSelector(selectedFundName);
+  const { clearDataAfterChangeFund } = useDispatchAction();
+
+  useEffect(() => {
+    clearDataAfterChangeFund();
+  }, [fundName, clearDataAfterChangeFund]);
+}
 
 export function useDetailFund() {
   const history = useHistory();
@@ -12,6 +33,7 @@ export function useDetailFund() {
 
   const fundName = useSelector(selectedFundName);
   const projectName = useSelector(selectedProjectName);
+  const fundOptions = useSelector(selectedFundOptions);
 
   const { setFundName } = pageStoreDispatchAction();
 
@@ -29,5 +51,6 @@ export function useDetailFund() {
     isShow: !!fundName,
     isShowBackArrow: !!projectName,
     handleClose,
+    fundOptions,
   };
 }

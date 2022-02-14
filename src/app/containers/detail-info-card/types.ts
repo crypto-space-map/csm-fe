@@ -15,6 +15,7 @@ export interface ExchangeDTO {
 export interface InvestorsProps {
   id: string;
   name: string;
+  website: string;
 }
 
 export interface FundsDTO {
@@ -89,7 +90,7 @@ export interface ProjectDataResponseDTO {
 }
 
 export interface DetailInfoState {
-  exchangesData: ExchangeDTO[];
+  exchangesData: ExchangeDTO[] | null;
   exchangesDataLoading: boolean;
   overviewTradingStockLoading: boolean;
   overviewTradingStock: string;
@@ -99,7 +100,7 @@ export interface DetailInfoState {
   projectHeaderData: HeaderData | null;
   socialData: SocialDataDTO[] | null;
   socialDataLoading: boolean;
-  fundsData: FundsDTO[];
+  fundsData: FundsDTO[] | null;
   fundsDataLoading: boolean;
 }
 

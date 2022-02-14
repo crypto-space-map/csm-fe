@@ -24,7 +24,7 @@ export const products: PartnersProps[] = [
     partner: 'FioDeFi',
     mcap: 13410123,
     date: '2021-10-16T19:20:42+03:00',
-    ann: 'http://www.bluesmobifsdfsdfdsfl.ru',
+    ann: 'http://www.blockchange.vc',
     imgSrc:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaYZPDQVIqIgehcwk1NuZ7OMFzIMTc26H1dg&usqp=CAU',
   },

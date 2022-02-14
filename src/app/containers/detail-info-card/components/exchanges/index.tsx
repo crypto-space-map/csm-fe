@@ -138,7 +138,7 @@ export const Exchanges = memo(() => {
   );
 
   useEffect(() => {
-    if (enrichedExchangesData.length === 0) loadData(exchangesPage);
+    if (!enrichedExchangesData) loadData(exchangesPage);
   }, [enrichedExchangesData, exchangesPage, loadData]);
 
   return (

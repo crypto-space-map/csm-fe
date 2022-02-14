@@ -42,7 +42,7 @@ export type RowObjProps<R> = {
 
 export interface GridProps<R> {
   columns: Array<ColumnProps<R>>;
-  rows: Array<R>;
+  rows: Array<R> | null;
   loading?: boolean;
   infinite?: boolean;
   page?: number;

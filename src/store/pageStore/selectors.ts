@@ -8,3 +8,4 @@ const selectDomain = (state: RootState) => state.pageStore || initialState;
 
 export const selectedProjectName = (state: RootState) => selectDomain(state).projectName;
 export const selectedFundName = (state: RootState) => selectDomain(state).fundName;
+export const selectedFundOptions = (state: RootState) => selectDomain(state).fundOptions;
