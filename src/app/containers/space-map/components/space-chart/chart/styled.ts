@@ -47,7 +47,7 @@ export const ParentLabelsText = styled.text`
   width: 100%;
   height: 100%;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 10px;
   line-height: 22px;
   fill: ${COLOR_PALLETTE.MAP_LABELS};
   pointer-events: none;
@@ -92,4 +92,19 @@ export const StyledChartTooltip = styled.div<Omit<ChartTooltipProps, 'text'>>`
   border-radius: 18px;
   font-size: 12px;
   font-weight: normal;
+`;
+
+export const StyledLabel = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  background-color: ${COLOR_PALLETTE.MAIN_WHITE};
+  width: fit-content;
+  padding: 0.1em;
+  border-radius: 1em;
+`;
+
+export const CursorGTag = styled.g`
+  cursor: pointer;
 `;

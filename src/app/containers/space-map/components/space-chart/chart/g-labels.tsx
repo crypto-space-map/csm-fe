@@ -32,7 +32,7 @@ const Label = memo<{ elem: HierarchyCircularNode<PackedCategories> }>(
           x={getCircleCoord(item, 'x')}
           y={getCircleCoord(item, 'y') - item.r - PADDING.CHILD}
           vectorEffect="non-scaling-stroke"
-          fontSize={4}>
+          fontSize={3}>
           {item.children && item.data?.name}
         </ChildLabelsText>
       ))}
