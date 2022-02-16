@@ -23,8 +23,6 @@ interface DetailHeaderSectionProps extends HeaderData {
   onClose: () => void;
 }
 
-const liked = false;
-
 export const DetailHeaderSection = ({
   name,
   symbol,
@@ -54,7 +52,7 @@ export const DetailHeaderSection = ({
       )}
     </CompanyInfo>
     <Controls>
-      <SVGWrapper fill={liked ? COLOR_PALLETTE.MAIN_GRAY : 'none'} stroke={COLOR_PALLETTE.MAIN_GRAY}>
+      <SVGWrapper fill="none" stroke={COLOR_PALLETTE.MAIN_GRAY}>
         <LikeIcon />
       </SVGWrapper>
       <SVGWrapper fill={COLOR_PALLETTE.MAIN_GRAY}>
