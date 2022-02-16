@@ -67,6 +67,8 @@ export const StyledRoundedButton = styled.div`
 `;
 
 export const StyledDefaultLogo = styled.div`
-  width: 40px;
-  height: 40px;
+  & > svg {
+    width: 40px;
+    height: 40px;
+  }
 `;

@@ -9,6 +9,9 @@ interface AnnLinkProps {
 
 export const AnnLink = ({ link }: AnnLinkProps) => (
   <StyledAnnLink target="_blank" href={link}>
-    <LinkIcon /> <span>{cutLink(link)}</span>
+    <div>
+      <LinkIcon />
+    </div>
+    <span>{cutLink(link)}</span>
   </StyledAnnLink>
 );

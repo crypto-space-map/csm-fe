@@ -15,6 +15,7 @@ import { sliceKey as name } from './utils';
 export const initialState: ContainerState = {
   overviewTradingStock: '',
   overviewTradingStockLoading: false,
+  overviewExtraData: null,
   exchangesData: null,
   exchangesPage: 1,
   exchangesDataLoading: false,
@@ -106,11 +107,16 @@ const providersListSlice = createSlice({
           website,
           totalVolume,
           supply,
+          category,
+          description,
+          explorers,
         },
       } = action;
 
       state.projectLoading = false;
       state.projectHeaderData = { name: projectName, symbol, icon, rank };
+      state.overviewExtraData = { category, description, explorers };
+
       state.projectStatistic = {
         marketPrice,
         priceChangePercentageDay,

@@ -16,6 +16,5 @@ export const StyledAnnLink = styled.a`
   & > svg {
     color: #000;
     opacity: 0.54;
-    width: -webkit-fill-available;
   }
 `;

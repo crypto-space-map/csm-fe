@@ -71,6 +71,9 @@ export interface StatisticDetailDataDTO {
 }
 
 export interface ProjectDataResponseDTO {
+  category: string;
+  description: string;
+  explorers: string[];
   name: string;
   symbol: string;
   icon: string;
@@ -89,9 +92,16 @@ export interface ProjectDataResponseDTO {
   };
 }
 
+export interface OverviewExtraDataProps {
+  category: string;
+  description: string;
+  explorers: string[];
+}
+
 export interface DetailInfoState {
   exchangesData: ExchangeDTO[] | null;
   exchangesDataLoading: boolean;
+  overviewExtraData: OverviewExtraDataProps | null;
   overviewTradingStockLoading: boolean;
   overviewTradingStock: string;
   exchangesPage: number;

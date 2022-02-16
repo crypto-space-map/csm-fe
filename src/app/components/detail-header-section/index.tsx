@@ -1,8 +1,7 @@
 import { COLOR_PALLETTE } from 'global/pallette';
 
 import { ShareIcon, StarIcon, LikeIcon, CloseIcon, RoundedButton } from 'assets';
-import { DefaultFirstLetterLogo } from 'common/components/default-first-letter-logo';
-import { SVGWrapper } from 'common/components/svg-wrapper';
+import { IconPlug, SVGWrapper } from 'common/components';
 
 import { useDetailHeader } from './hooks';
 import {
@@ -29,11 +28,9 @@ const getLogo = (name: string, icon?: string) =>
     <Icon src={icon} alt="logo" />
   ) : (
     <StyledDefaultLogo>
-      <DefaultFirstLetterLogo name={name} />
+      <IconPlug text={name} />
     </StyledDefaultLogo>
   );
-
-const liked = false;
 
 export const DetailHeaderSection = ({
   name,
@@ -66,7 +63,7 @@ export const DetailHeaderSection = ({
         )}
       </CompanyInfo>
       <Controls>
-        <SVGWrapper fill={liked ? COLOR_PALLETTE.MAIN_GRAY : 'none'} stroke={COLOR_PALLETTE.MAIN_GRAY}>
+        <SVGWrapper fill="none" stroke={COLOR_PALLETTE.MAIN_GRAY}>
           <LikeIcon />
         </SVGWrapper>
         <SVGWrapper fill={COLOR_PALLETTE.MAIN_GRAY}>

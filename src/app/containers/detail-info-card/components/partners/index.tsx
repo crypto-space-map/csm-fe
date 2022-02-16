@@ -1,46 +1,48 @@
 import { memo } from 'react';
 
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
-import { Grid, CryptoLogo } from 'app/components';
-import { AnnLink } from 'app/components/detail-common-components';
+import { Grid } from 'app/components';
+import { AnnLink, StyledLoader, ProjectCell } from 'app/components/detail-common-components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
-import { cutLink, getTransformedPrice } from 'utils/detail-info';
+import { selectPartnerships } from 'app/containers/space-map/selectors';
+import { Partnership } from 'app/containers/space-map/types';
+import { getTransformedPrice } from 'utils/detail-info';
 
-import { headerNames, products } from './constants';
-import { PartnerWrapper } from './styles';
-import { PartnersProps } from './types';
+import { selectedEnrichedPartnerships } from '../../selectors';
+import { headerNames } from './constants';
 
-const decorateMcap = (row: PartnersProps) => {
-  const { mcap } = row;
-  if (!mcap) return null;
-  return getTransformedPrice(mcap, false, 1);
+interface EnrichedPartnership extends Partnership {
+  id: string;
+}
+
+const decorateMcap = (row: EnrichedPartnership) => {
+  const { marketCap } = row;
+  if (!marketCap) return null;
+  return getTransformedPrice(marketCap, true);
 };
 
-const decorateDate = (row: PartnersProps) => {
+const decorateDate = (row: EnrichedPartnership) => {
   const value = row.date;
   if (!value) return null;
   return moment(value).format('DD MMM YYYY');
 };
 
-const decorateAnn = (row: PartnersProps) => {
-  const value = row.ann;
+const decorateAnn = (row: EnrichedPartnership) => {
+  const value = row.announcement;
   if (!value) return null;
   return <AnnLink link={value} />;
 };
 
-const decoratePartner = (row: PartnersProps) => {
-  const { partner: partnerName, imgSrc } = row;
-  if (!partnerName) return null;
-  return (
-    <PartnerWrapper>
-      <CryptoLogo path={imgSrc} />
-      <span>{cutLink(partnerName)}</span>
-    </PartnerWrapper>
-  );
+const decoratePartner = (row: EnrichedPartnership) => {
+  const { name, icon, projectId } = row;
+  if (!name) return null;
+
+  return <ProjectCell id={projectId} name={name} icon={icon} />;
 };
 
-const columns: ColumnProps<PartnersProps>[] = [
+const columns: ColumnProps<EnrichedPartnership>[] = [
   {
     field: 'id',
     headerName: headerNames.id,
@@ -48,14 +50,14 @@ const columns: ColumnProps<PartnersProps>[] = [
     sortable: false,
   },
   {
-    field: 'partner',
-    headerName: headerNames.partner,
+    field: 'name',
+    headerName: headerNames.name,
     width: 150,
     renderCell: decoratePartner,
   },
   {
-    field: 'mcap',
-    headerName: headerNames.mcap,
+    field: 'marketCap',
+    headerName: headerNames.marketCap,
     width: 90,
     type: SortingTypes.NUMBER,
     valueFormatter: decorateMcap,
@@ -68,15 +70,27 @@ const columns: ColumnProps<PartnersProps>[] = [
     valueFormatter: decorateDate,
   },
   {
-    field: 'ann',
-    headerName: headerNames.ann,
+    field: 'announcement',
+    headerName: headerNames.announcement,
     sortable: false,
-    width: 100,
+    width: 180,
     renderCell: decorateAnn,
   },
 ];
 
 export const Partners = memo(() => {
+  const { projectPartnershipsLoading } = useSelector(selectPartnerships);
+  const enrichedPartnerships = useSelector(selectedEnrichedPartnerships);
+
   const loadData = () => {};
-  return <Grid columns={columns} rows={products} fetchData={loadData} />;
+
+  if (projectPartnershipsLoading) return <StyledLoader />;
+  return (
+    <Grid
+      columns={columns}
+      rows={enrichedPartnerships}
+      fetchData={loadData}
+      startedSortedField="marketCap"
+    />
+  );
 });
