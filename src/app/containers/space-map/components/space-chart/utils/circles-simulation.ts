@@ -5,14 +5,15 @@ import forceInABox from 'force-in-a-box';
 
 import { CirclesSimulation } from '../types';
 
-const ALPHA_TICK = 0.0001;
+const ALPHA_TICK = 0.001;
 
 export const circlesSimulation = ({ packedCategories, width, height }: CirclesSimulation) => {
+  packedCategories.sort((a, b) => b.sortingNumber - a.sortingNumber);
   const groupingForce = forceInABox()
-    .strength(0.1) // Strength to foci
-    .groupBy('sortingNumber') // Node attribute to group
-    .size([width * 0.8, height * 0.9]); // Size of the chart
-  // .forceCharge(1)
+    .size([width * 0.8, height * 0.8]) // Size of the chart
+    .strength(0.4) // Strength to foci
+    .template('treemap') // treemap | force
+    .groupBy('sortingNumber'); // Node attribute to group
 
   const simulation = forceSimulation(packedCategories)
     .force('group', groupingForce)
@@ -21,9 +22,8 @@ export const circlesSimulation = ({ packedCategories, width, height }: CirclesSi
     .force(
       'collide',
       forceCollide()
-        .strength(-2)
-        .radius(d => d.r)
-        .iterations(1)
+        .strength(1)
+        .radius(d => d.r + 15)
     )
     .stop();
 
