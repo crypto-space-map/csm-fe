@@ -12,8 +12,6 @@ export const createCategoryPacks = (categories: MapCategory[], width = 0, height
     return acc;
   }, 0);
 
-  console.log(width, height);
-
   const radius = scaleSqrt()
     .domain([0, 1])
     .range([0, (width / height) * 10]);

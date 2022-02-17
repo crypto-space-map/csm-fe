@@ -35,7 +35,7 @@ export const getSphereColorParams = (
     fill: !item.children
       ? (typeof item.data.projectWeight !== 'undefined' &&
           getCircleColor({
-            projectWeight: item.data.projectWeight,
+            projectWeight: Math.round(item.data.projectWeight / 10) * 10,
             isTransparent,
           })) ||
         '#383838'

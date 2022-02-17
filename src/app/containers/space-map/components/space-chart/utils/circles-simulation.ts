@@ -11,7 +11,7 @@ export const circlesSimulation = ({ packedCategories, width, height }: CirclesSi
   packedCategories.sort((a, b) => b.sortingNumber - a.sortingNumber);
   const groupingForce = forceInABox()
     .size([width * 0.8, height * 0.8]) // Size of the chart
-    .strength(0.4) // Strength to foci
+    .strength(0.039) // Strength to foci
     .template('treemap') // treemap | force
     .groupBy('sortingNumber'); // Node attribute to group
 
@@ -23,7 +23,7 @@ export const circlesSimulation = ({ packedCategories, width, height }: CirclesSi
       'collide',
       forceCollide()
         .strength(1)
-        .radius(d => d.r + 15)
+        .radius(d => d.r + 5)
     )
     .stop();
 
