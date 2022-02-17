@@ -79,7 +79,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
   }, [allProjects, currentProject?.data.projectId, selectedProject, setProject]);
 
   useEffect(() => {
-    simulation?.restart();
+    simulation?.tick();
   }, [simulation, windowSize]);
 
   initZoomedElement(svgRef);

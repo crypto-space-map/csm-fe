@@ -24,7 +24,6 @@ export const useCircleOpacity = ({
         opacity = true;
       }
     }
-    console.log(partnersWeight);
     const isIncludes = itemExchangesArr?.some(item => exchanges.includes(item));
     const isLinked = projectId && projectPartnerships?.includes(projectId);
     const isPartnerWeightFiltered = !!partnersWeight.filter(
