@@ -42,7 +42,7 @@ export default function forceInABox() {
     }
     if (templateForce && template === 'force') {
       // Do the tick of the template force and get the new focis
-      // templateForce.tick();
+      templateForce.tick();
       getFocisFromTemplate();
     }
 
@@ -266,24 +266,13 @@ export default function forceInABox() {
     checkLinksAsObjects();
 
     net = getGroupsGraph();
+
     templateForce = d3
       .forceSimulation(net.nodes)
       .force('x', d3.forceX(size[0] / 2).strength(0.1))
-      .force('y', d3.forceY(size[1] / 2).strength(0.1))
+      .force('y', d3.forceY(size[1] / 2).strength(0.3))
       .force('collide', d3.forceCollide(d => d.r).iterations(4))
-      .force('charge', d3.forceManyBody().strength(forceCharge))
-      .force(
-        'links',
-        d3
-          .forceLink(net.nodes.length ? net.links : [])
-          .distance(forceLinkDistance)
-          .strength(forceLinkStrength)
-      );
-
-    // console.log("Initialize with force ", templateForce.nodes().length, " ", templateForce.force("links").links().length);
-
-    // let i = 0;
-    // while (i++ < 500) templateForce.tick();
+      .force('charge', d3.forceManyBody().strength(forceCharge));
 
     templateNodes = templateForce.nodes();
 
@@ -291,7 +280,6 @@ export default function forceInABox() {
   }
 
   function drawTreemap(container) {
-    // Delete the circle Template if it exists
     container.selectAll('circle.cell').remove();
     container.selectAll('line.cell').remove();
     container
