@@ -33,7 +33,7 @@ const decorateDate = (row: EnrichedFundsProps) => {
 
 const decorateInvestors = (row: EnrichedFundsProps) => {
   const value = row.investors;
-  if (!value) return null;
+  if (!value?.length) return null;
 
   return (
     <InvestorsWrapper>
