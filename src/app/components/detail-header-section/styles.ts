@@ -65,3 +65,10 @@ export const StyledRoundedButton = styled.div`
   margin-right: 24px;
   cursor: pointer;
 `;
+
+export const StyledDefaultLogo = styled.div`
+  & > svg {
+    width: 40px;
+    height: 40px;
+  }
+`;

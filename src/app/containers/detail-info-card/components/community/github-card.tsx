@@ -23,7 +23,7 @@ export const GithubCard = ({ stats, link }: CardProps) => (
       </IconWrapper>
       <InfoWrapper>
         {stats?.map(item => (
-          <StyledInfo>
+          <StyledInfo key={item.unit}>
             <StyledCount>{item.count.toLocaleString()}</StyledCount>
             <span>{item.unit}</span>
           </StyledInfo>
@@ -32,3 +32,7 @@ export const GithubCard = ({ stats, link }: CardProps) => (
     </DoubleCardContent>
   </DoubleCardWrapper>
 );
+
+GithubCard.defaultProps = {
+  stats: [],
+};

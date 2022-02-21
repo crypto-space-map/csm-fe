@@ -1,3 +1,5 @@
+import { FetchDataState } from 'utils/@reduxjs/fetchData';
+
 export interface ExchangeRequest {
   page: number;
   projectName: string;
@@ -15,6 +17,7 @@ export interface ExchangeDTO {
 export interface InvestorsProps {
   id: string;
   name: string;
+  website: string;
 }
 
 export interface FundsDTO {
@@ -70,6 +73,9 @@ export interface StatisticDetailDataDTO {
 }
 
 export interface ProjectDataResponseDTO {
+  category: string;
+  description: string;
+  explorers: string[];
   name: string;
   symbol: string;
   icon: string;
@@ -88,19 +94,33 @@ export interface ProjectDataResponseDTO {
   };
 }
 
+export interface OverviewExtraDataProps {
+  category: string;
+  description: string;
+  explorers: string[];
+}
+
+interface SocialData extends FetchDataState {
+  data: SocialDataDTO[] | null;
+}
+
+interface FundsData extends FetchDataState {
+  data: FundsDTO[] | null;
+}
+
+interface ExchangesData extends FetchDataState {
+  data: ExchangeDTO[] | null;
+}
+
 export interface DetailInfoState {
-  exchangesData: ExchangeDTO[];
-  exchangesDataLoading: boolean;
-  overviewTradingStockLoading: boolean;
-  overviewTradingStock: string;
+  exchangesData: ExchangesData;
+  overviewExtraData: OverviewExtraDataProps | null;
   exchangesPage: number;
   projectLoading: boolean;
   projectStatistic: StatisticDetailDataDTO | null;
   projectHeaderData: HeaderData | null;
-  socialData: SocialDataDTO[] | null;
-  socialDataLoading: boolean;
-  fundsData: FundsDTO[];
-  fundsDataLoading: boolean;
+  socialData: SocialData;
+  fundsData: FundsData;
 }
 
 export type ContainerState = DetailInfoState;
