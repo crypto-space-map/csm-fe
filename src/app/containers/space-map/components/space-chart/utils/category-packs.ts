@@ -14,7 +14,7 @@ export const createCategoryPacks = (categories: MapCategory[], width = 0, height
 
   const radius = scaleSqrt()
     .domain([0, 1])
-    .range([0, (width / height) * 10]);
+    .range([0, height * 0.04]);
 
   const packedCategories = new Map<string, PackedNodes>();
 

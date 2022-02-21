@@ -270,7 +270,7 @@ export default function forceInABox() {
     templateForce = d3
       .forceSimulation(net.nodes)
       .force('x', d3.forceX(size[0] / 2).strength(0.1))
-      .force('y', d3.forceY(size[1] / 2).strength(0.3))
+      .force('y', d3.forceY(size[1] / 2).strength(0.25))
       .force('collide', d3.forceCollide(d => d.r).iterations(4))
       .force('charge', d3.forceManyBody().strength(forceCharge));
 
