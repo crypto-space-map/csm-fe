@@ -1,11 +1,9 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import { useActions } from 'hooks';
-import { selectedProjectName, selectedFundName, selectedFundOptions } from 'store/pageStore/selectors';
-import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/slice';
+import { selectedFundName, selectedFundOptions } from 'store/pageStore/selectors';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { detailFundSaga } from './saga';
@@ -28,29 +26,11 @@ export function useClearDataAfterChangeNewFund() {
 }
 
 export function useDetailFund() {
-  const history = useHistory();
-  const { url } = useRouteMatch();
-
   const fundName = useSelector(selectedFundName);
-  const projectName = useSelector(selectedProjectName);
   const fundOptions = useSelector(selectedFundOptions);
-
-  const { setFundName } = pageStoreDispatchAction();
-
-  const handleClose = useCallback(() => {
-    if (projectName) {
-      history.goBack();
-    } else {
-      history.replace(url);
-    }
-
-    setFundName(null);
-  }, [setFundName, history, projectName, url]);
 
   return {
     isShow: !!fundName,
-    isShowBackArrow: !!projectName,
-    handleClose,
     fundOptions,
   };
 }

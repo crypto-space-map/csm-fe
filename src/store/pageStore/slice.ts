@@ -5,14 +5,14 @@ import { createSlice } from 'utils/@reduxjs/toolkit';
 
 import { ContainerState, FundOptionsProps } from './types';
 
-// The initial state of the ZoneTypes container
+// The initial state of the PageStoreTypes container
 export const initialState: ContainerState = {
   projectName: null,
   fundName: null,
   fundOptions: null,
 };
 
-const zoneTypesSlice = createSlice({
+const pageStoreTypesSlice = createSlice({
   name: 'pageStore',
   initialState,
   reducers: {
@@ -25,8 +25,13 @@ const zoneTypesSlice = createSlice({
     setFundOptions(state, action: PayloadAction<FundOptionsProps>) {
       state.fundOptions = action.payload;
     },
+    clearData(state) {
+      state.fundName = initialState.fundName;
+      state.projectName = initialState.projectName;
+      state.fundOptions = initialState.fundOptions;
+    },
   },
 });
 
-export const { actions, reducer, name: sliceKey } = zoneTypesSlice;
+export const { actions, reducer, name: sliceKey } = pageStoreTypesSlice;
 export const useDispatchAction = () => useDispatchActionHook(actions);
