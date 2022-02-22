@@ -26,8 +26,9 @@ export const useCircleOpacity = ({
     }
     const isIncludes = itemExchangesArr?.some(item => exchanges.includes(item));
     const isLinked = projectId && projectPartnerships?.includes(projectId);
+    const roundedWeight = Math.round(projectWeight / 10) * 10;
     const isPartnerWeightFiltered = !!partnersWeight.filter(
-      item => projectWeight >= item && (projectWeight <= item + 9 || (item === 100 && projectWeight > 100))
+      item => roundedWeight >= item && (roundedWeight <= item + 9 || (item === 100 && roundedWeight > 100))
     ).length;
     if (!isIncludes) opacity = true;
     if (isIncludes && projectPartnerships.length && !isLinked) opacity = true;

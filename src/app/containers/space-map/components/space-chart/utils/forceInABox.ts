@@ -98,7 +98,6 @@ export default function forceInABox() {
       tmpCount.sumforceNodeSize += Math.PI * (forceNodeSize(d) * forceNodeSize(d)) * 1.3;
       clustersCounts.set(groupBy(d), tmpCount);
     });
-
     return clustersCounts;
   }
 
