@@ -1,4 +1,4 @@
-import { forceSimulation, forceCollide, forceCenter, forceManyBody, forceX, forceY } from 'd3';
+import { forceSimulation, forceCollide, forceCenter } from 'd3';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -14,7 +14,7 @@ export const circlesSimulation = ({ packedCategories, width, height }: CirclesSi
     .groupBy('sortingNumber') // Nodes' attribute to group
     .strength(height / 1000) // Strength to foci
     .forceCharge(-3000) // Charge between the meta-nodes (Force template only)
-    .forceNodeSize(1);
+    .forceNodeSize(10);
 
   const simulation = forceSimulation(packedCategories)
     .force('group', groupingForce)
