@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { link } from 'global/styles';
 
-export const StyledAnnLink = styled.a`
+export const StyledAnnLink = styled.a<{ width: number }>`
   display: flex;
   text-decoration: none;
   ${link()}
@@ -11,6 +11,8 @@ export const StyledAnnLink = styled.a`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    display: block;
+    width: ${props => `${props.width}px`};
   }
 
   & > svg {

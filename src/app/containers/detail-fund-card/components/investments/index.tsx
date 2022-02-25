@@ -3,10 +3,9 @@ import { memo, useEffect, useCallback } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 
-import { Grid, CryptoLogo } from 'app/components';
-import { InvestorsCell, StyledLoader, AnnLink } from 'app/components/detail-common-components';
+import { Grid } from 'app/components';
+import { ProjectCell, InvestorsCell, StyledLoader, AnnLink } from 'app/components/detail-common-components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
-import { ShowMoreText } from 'common/components';
 import { selectedFundName } from 'store/pageStore/selectors';
 import { getTransformedPrice } from 'utils/detail-info';
 
@@ -14,7 +13,7 @@ import { selectedEnrichedInvestorsData, selectedInvestorsDataLoading } from '../
 import { useDispatchAction } from '../../slice';
 import { TransformedInvestorDTO } from '../../types';
 import { headerNames } from './constants';
-import { ProjectWrapper, InvestorsWrapper } from './styles';
+import { InvestorsWrapper } from './styles';
 
 interface EnrichedInvestorsProps extends TransformedInvestorDTO {
   id: string;
@@ -35,18 +34,13 @@ const decorateDate = (row: EnrichedInvestorsProps) => {
 const decorateAnn = (row: EnrichedInvestorsProps) => {
   const value = row.announcement;
   if (!value) return null;
-  return <AnnLink link={value} />;
+  return <AnnLink link={value} width={70} />;
 };
 
 const decorateProject = (row: EnrichedInvestorsProps) => {
-  const { projectLogo, projectName } = row;
-  if (!projectName) return null;
-  return (
-    <ProjectWrapper>
-      {projectLogo && <CryptoLogo path={projectLogo} />}
-      <span>{projectName}</span>
-    </ProjectWrapper>
-  );
+  const { projectId, projectLogo, projectName } = row;
+  if (!projectName || !projectId) return null;
+  return <ProjectCell id={projectId} name={projectName} icon={projectLogo} />;
 };
 
 const decorateInvestors = (row: EnrichedInvestorsProps) => {

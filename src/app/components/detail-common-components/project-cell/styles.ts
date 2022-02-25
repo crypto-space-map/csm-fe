@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 export const text = () => css`
   font-weight: normal;
   font-size: 16px;
-  line-height: 22px;
   margin-left: 4px;
 `;
 
@@ -24,5 +23,5 @@ export const StyledLink = styled(Link)`
 export const ProjectWrapper = styled.div`
   margin-right: 5px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 `;
