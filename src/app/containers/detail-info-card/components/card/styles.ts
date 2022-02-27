@@ -44,7 +44,7 @@ export const IconWrapper = styled.div`
   }
 `;
 
-export const StyledAccountName = styled.a`
+export const StyledTitleLink = styled.a`
   font-size: 16px;
   line-height: 22px;
   text-decoration: none;
@@ -54,7 +54,12 @@ export const StyledAccountName = styled.a`
   }
 `;
 
-export const StyledAccountLink = styled.a`
+export const StyledTitle = styled.a`
+  font-size: 16px;
+  line-height: 22px;
+`;
+
+export const StyledSubTitleLink = styled.a`
   ${linkStyles}
   width: 350px;
   text-overflow: ellipsis;

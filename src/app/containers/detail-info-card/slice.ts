@@ -150,17 +150,15 @@ const providersListSlice = createSlice({
     fetchProjectDataError(state) {
       state.projectLoading = false;
     },
-    clearExchangesData(state) {
-      state.exchangesData = initialState.exchangesData;
-    },
     setExchangesPage(state, action: PayloadAction<number>) {
       state.exchangesPage = action.payload;
     },
     clearDataAfterChangeProject(state) {
-      state.exchangesData = initialState.exchangesData;
+      state.exchangesData.data = initialState.exchangesData.data;
       state.exchangesPage = initialState.exchangesPage;
-      state.socialData = initialState.socialData;
-      state.fundsData = initialState.fundsData;
+      state.socialData.data = initialState.socialData.data;
+      state.fundsData.data = initialState.fundsData.data;
+      state.eventsData.data = initialState.eventsData.data;
     },
   },
 });

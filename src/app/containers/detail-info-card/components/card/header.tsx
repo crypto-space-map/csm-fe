@@ -7,8 +7,9 @@ import {
   TitleSection,
   Icon,
   TitleTextContent,
-  StyledAccountName,
-  StyledAccountLink,
+  StyledTitleLink,
+  StyledSubTitleLink,
+  StyledTitle,
   IconWrapper,
 } from './styles';
 
@@ -28,17 +29,17 @@ export const Header = ({
       )}
       <TitleTextContent>
         {titleUrl ? (
-          <StyledAccountName href={titleUrl} target="_blank" rel="noreferrer">
+          <StyledTitleLink href={titleUrl} target="_blank" rel="noreferrer">
             {title}
-          </StyledAccountName>
+          </StyledTitleLink>
         ) : (
-          <span>{title}</span>
+          <StyledTitle>{title}</StyledTitle>
         )}
 
         {subTitleUrl && (
-          <StyledAccountLink href={subTitleUrl} target="_blank" rel="noreferrer">
+          <StyledSubTitleLink href={subTitleUrl} target="_blank" rel="noreferrer">
             {subTitleUrl}
-          </StyledAccountLink>
+          </StyledSubTitleLink>
         )}
       </TitleTextContent>
     </CompanyInfo>
