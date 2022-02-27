@@ -10,6 +10,7 @@ import type {
   ProjectDataResponseDTO,
   SocialDataDTO,
   FundsDTO,
+  EventsDTO,
 } from './types';
 import { sliceKey as name } from './utils';
 
@@ -20,6 +21,10 @@ export const initialState: ContainerState = {
   projectStatistic: null,
   projectHeaderData: null,
   exchangesData: {
+    data: null,
+    ...fetchDataInitialState,
+  },
+  eventsData: {
     data: null,
     ...fetchDataInitialState,
   },
@@ -36,6 +41,10 @@ export const initialState: ContainerState = {
 const { fetchDataError: fetchExchangesDataError } = fetchDataReducers<
   ContainerState['exchangesData']['data']
 >(initialState.exchangesData);
+
+const { fetchDataSuccess: fetchEventsDataSuccess, fetchDataError: fetchEventsDataError } = fetchDataReducers<
+  ContainerState['eventsData']['data']
+>(initialState.eventsData);
 
 const { fetchDataSuccess: fetchSocialDataSuccess, fetchDataError: fetchSocialDataError } = fetchDataReducers<
   ContainerState['socialData']['data']
@@ -67,6 +76,16 @@ const providersListSlice = createSlice({
     },
     fetchFundsDataError(state, action: PayloadAction<{ message: string }>) {
       fetchFundsDataError(state.fundsData, action);
+    },
+
+    fetchEventsData(state, _action: PayloadAction<string>) {
+      state.eventsData.loading = true;
+    },
+    fetchEventsDataSuccess(state, action: PayloadAction<{ data: EventsDTO[] }>) {
+      fetchEventsDataSuccess(state.eventsData, action);
+    },
+    fetchEventsDataError(state, action: PayloadAction<{ message: string }>) {
+      fetchEventsDataError(state.eventsData, action);
     },
 
     fetchExchangesData(state, _action: PayloadAction<ExchangeRequest>) {

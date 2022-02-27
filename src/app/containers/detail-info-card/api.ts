@@ -1,6 +1,13 @@
 import { axios } from 'api';
 
-import type { ExchangeDTO, ExchangeRequest, ProjectDataResponseDTO, SocialDataDTO, FundsDTO } from './types';
+import type {
+  ExchangeDTO,
+  ExchangeRequest,
+  ProjectDataResponseDTO,
+  SocialDataDTO,
+  FundsDTO,
+  EventsDTO,
+} from './types';
 
 export async function getExchangesData({ projectName, page }: ExchangeRequest) {
   return axios.get<ExchangeDTO[]>(`project/tickers/${projectName}`, { params: { page } });
@@ -16,4 +23,8 @@ export async function getProjectData(projectId: string) {
 
 export async function getSocialData(projectId: string) {
   return axios.get<SocialDataDTO[]>(`project/social/${projectId}`);
+}
+
+export async function getEventsData(projectId: string) {
+  return axios.get<EventsDTO[]>(`project/events/${projectId}`);
 }

@@ -38,6 +38,7 @@ export const CompanyInfo = styled.section`
 `;
 
 export const IconWrapper = styled.div`
+  margin-right: 16px;
   & > img {
     border-radius: 26px;
   }
@@ -77,7 +78,6 @@ export const TitleTextContent = styled.div`
   flex-direction: column;
   font-weight: 600;
 
-  margin-left: 16px;
   & > h5 {
     margin: 0;
   }
@@ -96,9 +96,8 @@ export const TextSection = styled.section`
 
 export const ButtonsContentWrapper = styled.section`
   margin-top: 12px;
-  & > button:not(:first-of-type) {
-    margin-left: 8px;
-  }
+  display: flex;
+  grid-gap: 8px;
 `;
 
 export const StyledButton = styled(MuiButton)<ButtonProps>`
