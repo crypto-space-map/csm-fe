@@ -33,14 +33,17 @@ export const selectedEnrichedFundsData = createSelector([selectedFundsData], dat
 });
 
 export const selectedEnrichedEventsData = createSelector([selectedEventsData], data => {
-  if (!data) return null;
+  const events = data?.events;
+  const icon = data?.icon;
+  if (!events) return null;
 
-  return data.map((item, index) => {
+  return events.map((item, index) => {
     const { description, date, ...restItem } = item;
     return {
       id: String(index + 1),
       text: description,
       createdAt: date,
+      imageUrl: icon,
       ...restItem,
     };
   });

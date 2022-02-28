@@ -14,12 +14,16 @@ export interface ExchangeDTO {
   updatedAt: string;
 }
 
-export interface EventsDTO {
+export interface EventsProps {
   title: string;
   description: string;
   date: string;
   proof: string;
   source: string;
+}
+export interface EventsDTO {
+  events: EventsProps[];
+  icon: string;
 }
 
 export interface InvestorsProps {
@@ -131,7 +135,7 @@ interface ExchangesData extends FetchDataState {
 }
 
 interface EventsData extends FetchDataState {
-  data: EventsDTO[] | null;
+  data: EventsDTO | null;
 }
 
 export interface DetailInfoState {

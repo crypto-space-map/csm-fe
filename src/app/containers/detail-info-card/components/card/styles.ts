@@ -39,6 +39,8 @@ export const CompanyInfo = styled.section`
 
 export const IconWrapper = styled.div`
   margin-right: 16px;
+  width: 43px;
+  height: 43px;
   & > img {
     border-radius: 26px;
   }
@@ -55,6 +57,7 @@ export const StyledTitleLink = styled.a`
 `;
 
 export const StyledTitle = styled.a`
+  font-weight: 600;
   font-size: 16px;
   line-height: 22px;
 `;
@@ -81,6 +84,7 @@ export const PostDate = styled.section`
 export const TitleTextContent = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   font-weight: 600;
 
   & > h5 {
@@ -89,8 +93,8 @@ export const TitleTextContent = styled.div`
 `;
 
 export const Icon = styled.img`
-  width: 49px;
-  height: fit-content;
+  width: 100%;
+  height: 100%;
 `;
 
 export const TextSection = styled.section`

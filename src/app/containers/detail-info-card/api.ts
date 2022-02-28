@@ -26,5 +26,5 @@ export async function getSocialData(projectId: string) {
 }
 
 export async function getEventsData(projectId: string) {
-  return axios.get<EventsDTO[]>(`project/events/${projectId}`);
+  return axios.get<EventsDTO>(`project/events/${projectId}`);
 }

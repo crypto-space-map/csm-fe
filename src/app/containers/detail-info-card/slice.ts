@@ -81,7 +81,7 @@ const providersListSlice = createSlice({
     fetchEventsData(state, _action: PayloadAction<string>) {
       state.eventsData.loading = true;
     },
-    fetchEventsDataSuccess(state, action: PayloadAction<{ data: EventsDTO[] }>) {
+    fetchEventsDataSuccess(state, action: PayloadAction<{ data: EventsDTO }>) {
       fetchEventsDataSuccess(state.eventsData, action);
     },
     fetchEventsDataError(state, action: PayloadAction<{ message: string }>) {
