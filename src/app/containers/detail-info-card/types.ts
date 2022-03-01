@@ -14,6 +14,18 @@ export interface ExchangeDTO {
   updatedAt: string;
 }
 
+export interface EventsProps {
+  title: string;
+  description: string;
+  date: string;
+  proof: string;
+  source: string;
+}
+export interface EventsDTO {
+  events: EventsProps[];
+  icon: string;
+}
+
 export interface InvestorsProps {
   id: string;
   name: string;
@@ -46,9 +58,20 @@ export interface HeaderData {
 }
 
 export interface ButtonsProps {
-  id: string;
   text: string;
   link: string;
+}
+
+export interface CardProps {
+  socialMediaType?: number;
+  title?: string;
+  titleUrl?: string;
+  imageUrl?: string;
+  createdAt: string;
+  text: string;
+  subTitleUrl?: string;
+  proof?: string;
+  source?: string;
 }
 
 export interface SocialDataDTO {
@@ -59,7 +82,6 @@ export interface SocialDataDTO {
   createdAt: string;
   text: string;
   url: string;
-  buttons?: ButtonsProps[];
 }
 export interface StatisticDetailDataDTO {
   marketPrice: CommonStatistic;
@@ -112,6 +134,10 @@ interface ExchangesData extends FetchDataState {
   data: ExchangeDTO[] | null;
 }
 
+interface EventsData extends FetchDataState {
+  data: EventsDTO | null;
+}
+
 export interface DetailInfoState {
   exchangesData: ExchangesData;
   overviewExtraData: OverviewExtraDataProps | null;
@@ -121,6 +147,7 @@ export interface DetailInfoState {
   projectHeaderData: HeaderData | null;
   socialData: SocialData;
   fundsData: FundsData;
+  eventsData: EventsData;
 }
 
 export type ContainerState = DetailInfoState;

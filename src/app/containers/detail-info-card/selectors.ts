@@ -19,6 +19,8 @@ export const selectedSocialData = (state: RootState) => selectDomain(state).soci
 export const selectedSocialDataLoading = (state: RootState) => selectDomain(state).socialData.loading;
 export const selectedFundsData = (state: RootState) => selectDomain(state).fundsData.data;
 export const selectedFundsDataLoading = (state: RootState) => selectDomain(state).fundsData.loading;
+export const selectedEventsData = (state: RootState) => selectDomain(state).eventsData.data;
+export const selectedEventsDataLoading = (state: RootState) => selectDomain(state).eventsData.loading;
 export const selectedProjectPartnerships = (state: RootState) => state.spaceMapData.projectPartnerships.data;
 
 export const selectedEnrichedFundsData = createSelector([selectedFundsData], data => {
@@ -28,6 +30,23 @@ export const selectedEnrichedFundsData = createSelector([selectedFundsData], dat
     id: String(index + 1),
     ...item,
   }));
+});
+
+export const selectedEnrichedEventsData = createSelector([selectedEventsData], data => {
+  const events = data?.events;
+  const icon = data?.icon;
+  if (!events) return null;
+
+  return events.map((item, index) => {
+    const { description, date, ...restItem } = item;
+    return {
+      id: String(index + 1),
+      text: description,
+      createdAt: date,
+      imageUrl: icon,
+      ...restItem,
+    };
+  });
 });
 
 export const selectedEnrichedPartnerships = createSelector([selectedProjectPartnerships], data => {
@@ -68,13 +87,20 @@ export const selectedEnrichedExchangesData = createSelector([selectedExchangesDa
   return transformedData;
 });
 
-export const selectedEnrichedSocialData = createSelector(
-  [selectedSocialData],
-  data =>
-    data?.map((item, index) => ({
+export const selectedEnrichedSocialData = createSelector([selectedSocialData], data => {
+  if (!data) return null;
+
+  return data.map((item, index) => {
+    const { accountName, accountUrl, accountImageUrl, url, ...restItem } = item;
+    return {
       id: String(index + 1),
-      ...item,
-    })) ?? null
-);
+      title: accountName,
+      titleUrl: accountUrl,
+      imageUrl: accountImageUrl,
+      subTitleUrl: url,
+      ...restItem,
+    };
+  });
+});
 
 export const selectedExchangesPage = (state: RootState) => selectDomain(state).exchangesPage;
