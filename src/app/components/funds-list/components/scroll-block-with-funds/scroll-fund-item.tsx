@@ -1,32 +1,28 @@
 import { useCallback } from 'react';
 
-import { CryptoLogo } from '../crypto-logo';
-import { ContentItem } from './styles';
+import { StyledScrollFundItem } from './styles';
 
 interface FundListItemProps {
   id: string;
-  imgSrc: string;
   name: string;
   selected: boolean;
+  isShow: boolean;
   handleSelectFund: (arg0: string) => void;
 }
 
-const iconSize = 16;
-
-export const FundListItem = ({
+export const ScrollFundItem = ({
   id,
-  imgSrc,
   name,
   selected = false,
+  isShow = false,
   handleSelectFund,
 }: FundListItemProps) => {
   const handleClick = useCallback(() => {
     handleSelectFund(id);
   }, [handleSelectFund, id]);
   return (
-    <ContentItem key={id} onClick={handleClick} selected={selected}>
-      <CryptoLogo size={iconSize} path={imgSrc} />
+    <StyledScrollFundItem onClick={handleClick} selected={selected} isShow={isShow}>
       <span>{name}</span>
-    </ContentItem>
+    </StyledScrollFundItem>
   );
 };

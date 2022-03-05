@@ -1,9 +1,10 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
 import { useActions } from 'hooks';
 import { selectedProjectName } from 'store/pageStore/selectors';
+import { useDispatchAction as pageStoreUseDispatchAction } from 'store/pageStore/slice';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { detailInfoSaga } from './saga';
@@ -20,10 +21,12 @@ export function useDetailInfoSlice() {
 export function useClearDataAfterChangeNewProject() {
   const projectName = useSelector(selectedProjectName);
   const { clearDataAfterChangeProject } = useDispatchAction();
+  const { clearFundsData } = pageStoreUseDispatchAction();
 
   useEffect(() => {
     clearDataAfterChangeProject();
-  }, [projectName, clearDataAfterChangeProject]);
+    clearFundsData();
+  }, [projectName, clearFundsData, clearDataAfterChangeProject]);
 }
 
 export function useDetailInfo() {

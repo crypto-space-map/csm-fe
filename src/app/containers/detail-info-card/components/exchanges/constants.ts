@@ -5,7 +5,7 @@ export const fieldNames = {
   pair: 'Pair',
   price: 'Price',
   volume: 'Volume',
-  persentVolume: 'PersentVolume',
+  volumePercentage: 'VolumePercentage',
   updated: 'Updated',
 };
 
@@ -15,6 +15,6 @@ export const headerNames = {
   pair: fieldNames.pair,
   price: fieldNames.price,
   volume: fieldNames.volume,
-  persentVolume: 'Volume %',
+  volumePercentage: 'Volume %',
   updated: fieldNames.updated,
 };

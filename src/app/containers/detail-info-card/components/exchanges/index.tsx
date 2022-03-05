@@ -36,7 +36,7 @@ const decorateVolume = (row: EnrichedExchangeProps) => {
 };
 
 const decoratePersentVolume = (row: EnrichedExchangeProps) => {
-  const value = row.persentVolume;
+  const value = row.volumePercentage;
 
   if (!value) return value === null ? '--' : '<0.1%';
   return `${value}%`;
@@ -62,7 +62,7 @@ const decoratePair = (row: EnrichedExchangeProps) => {
   );
 };
 
-const decorateHeaderPersentVolume = () => <DecorateHeader>{headerNames.persentVolume}</DecorateHeader>;
+const decorateHeaderPersentVolume = () => <DecorateHeader>{headerNames.volumePercentage}</DecorateHeader>;
 
 const decorateExchange = (row: EnrichedExchangeProps) => {
   const value = row.exchange;
@@ -109,7 +109,7 @@ const columns: ColumnProps<EnrichedExchangeProps>[] = [
     textAlign: 'right',
   },
   {
-    field: 'persentVolume',
+    field: 'volumePercentage',
     renderCustomHeaderName: decorateHeaderPersentVolume,
     width: 90,
     valueFormatter: decoratePersentVolume,
@@ -153,7 +153,7 @@ export const Exchanges = memo(() => {
       fetchData={loadData}
       infinite
       page={exchangesPage}
-      startedSortedField="persentVolume"
+      startedSortedField="volumePercentage"
     />
   );
 });
