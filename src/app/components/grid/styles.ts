@@ -60,13 +60,23 @@ export const StyledEndMessage = styled.p`
   margin: 0;
 `;
 
-export const StyledHeaderItem = styled.div<{ sortable: boolean }>`
-  cursor: ${props => (props.sortable ? 'pointer' : 'default')};
+export const cellItem = css`
   font-size: 14px;
   line-height: 16px;
   display: flex;
-  width: min-content;
   user-select: none;
+  width: 100%;
+`;
+
+export const StyledHeaderItem = styled.div<{ sortable: boolean; textAlign?: string }>`
+  cursor: ${props => (props.sortable ? 'pointer' : 'default')};
+  justify-content: ${props => (props.textAlign === 'right' ? 'flex-end' : 'flex-start')};
+  ${cellItem}
+`;
+
+export const StyledCellItem = styled.div<{ textAlign?: string }>`
+  justify-content: ${props => (props.textAlign === 'right' ? 'flex-end' : 'flex-start')};
+  ${cellItem}
 `;
 
 export const ArrowIconWrapper = styled.div<{ selected: boolean; sortDirection: string }>`

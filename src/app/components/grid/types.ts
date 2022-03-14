@@ -23,6 +23,7 @@ export interface ColumnProps<T> {
   width: number;
   sortable?: boolean;
   type?: string;
+  textAlign?: string; // задает направление выравнивания текста, изначально flex-start
   renderCell?: (row: T) => JSX.Element | null;
   valueFormatter?: (row: T) => string | null;
   customSortRules?: (row: CompareFuncProps<T>) => number;

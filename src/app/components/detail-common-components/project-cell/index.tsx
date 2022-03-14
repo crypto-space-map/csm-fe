@@ -12,6 +12,8 @@ interface InvestorsCellProps {
   icon: string;
 }
 
+const iconSize = 16;
+
 export const ProjectCell = ({ id, name, icon }: InvestorsCellProps) => {
   const { setFundName, setProjectName } = pageStoreDispatchAction();
   const pathName = `/project/${id}`;
@@ -24,7 +26,7 @@ export const ProjectCell = ({ id, name, icon }: InvestorsCellProps) => {
 
   return (
     <ProjectWrapper onClick={handleClick}>
-      <CryptoLogo path={icon} />
+      {icon && <CryptoLogo path={icon} size={iconSize} />}
       {id ? <StyledLink to={`/project/${id}`}>{name}</StyledLink> : <StyledText>{name}</StyledText>}
     </ProjectWrapper>
   );

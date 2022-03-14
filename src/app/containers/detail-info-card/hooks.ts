@@ -38,7 +38,6 @@ export function useDetailInfo() {
 
   return {
     isShow: !!projectName,
-
     projectHeaderData,
     projectStatistic,
   };

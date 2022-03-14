@@ -1,18 +1,36 @@
 import { useActions } from 'hooks';
+import { fetchDataInitialState, fetchDataReducers } from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 
-import type { ContainerState, InvestorDTO } from './types';
+import type { ContainerState, InvestorDTO, FundDataDTO } from './types';
 import { sliceKey as name } from './utils';
 
 export const initialState: ContainerState = {
   investorsData: null,
   investorsDataLoading: false,
+  fundData: {
+    data: null,
+    ...fetchDataInitialState,
+  },
 };
+
+const { fetchDataSuccess: fetchFundDataSuccess, fetchDataError: fetchFundDataError } = fetchDataReducers<
+  ContainerState['fundData']['data']
+>(initialState.fundData);
 
 const providersListSlice = createSlice({
   name,
   initialState,
   reducers: {
+    fetchFundData(state, _action: PayloadAction<string>) {
+      state.fundData.loading = true;
+    },
+    fetchFundDataSuccess(state, action: PayloadAction<{ data: FundDataDTO }>) {
+      fetchFundDataSuccess(state.fundData, action);
+    },
+    fetchFundDataError(state, action: PayloadAction<{ message: string }>) {
+      fetchFundDataError(state.fundData, action);
+    },
     fetchInvestorsData(state, _action: PayloadAction<string>) {
       state.investorsDataLoading = true;
     },

@@ -51,7 +51,7 @@ const decorateInvestors = (row: EnrichedFundsProps) => {
 const decorateAnn = (row: EnrichedFundsProps) => {
   const value = row.announcement;
   if (!value) return null;
-  return <AnnLink link={value} />;
+  return <AnnLink link={value} width={75} />;
 };
 
 const columns: ColumnProps<EnrichedFundsProps>[] = [
@@ -73,6 +73,7 @@ const columns: ColumnProps<EnrichedFundsProps>[] = [
     width: 100,
     type: SortingTypes.NUMBER,
     valueFormatter: decorateAmount,
+    textAlign: 'right',
   },
   {
     field: 'date',
@@ -80,6 +81,7 @@ const columns: ColumnProps<EnrichedFundsProps>[] = [
     width: 100,
     type: SortingTypes.DATE,
     valueFormatter: decorateDate,
+    textAlign: 'right',
   },
   {
     field: 'announcement',
@@ -87,6 +89,7 @@ const columns: ColumnProps<EnrichedFundsProps>[] = [
     sortable: false,
     width: 100,
     renderCell: decorateAnn,
+    textAlign: 'right',
   },
 ];
 

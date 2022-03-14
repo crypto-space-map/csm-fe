@@ -7,7 +7,7 @@ export const NoFoundContent = () => (
     <IconWrapper>
       <NoFoundIcon />
     </IconWrapper>
-    <MainAdditionalText>No Data to Show</MainAdditionalText>
-    <SecondAdditionalText>It will be uploaded as soon as they appear in database</SecondAdditionalText>
+    <MainAdditionalText>No data to display</MainAdditionalText>
+    <SecondAdditionalText>We will post information as soon as it becomes available</SecondAdditionalText>
   </StyledNoFoundContent>
 );

@@ -6,13 +6,15 @@ import { TabsSection } from './components/tabs-section';
 import { useDetailFundSlice, useDetailFund, useClearDataAfterChangeNewFund } from './hooks';
 import { TopSection } from './styles';
 
+const defaultValue = 'default';
+
 export const DetailFundCard = memo(() => {
   useDetailFundSlice();
   useClearDataAfterChangeNewFund();
-  const { fundOptions } = useDetailFund();
-  // TODO выпилить после появления апишки
-  const statisticsData = { website: fundOptions?.website ?? 'cms.com' };
-  const fundName = fundOptions?.name ?? 'DefaultFond';
+  const { fundData } = useDetailFund();
+
+  const statisticsData = { website: fundData?.website ?? defaultValue };
+  const fundName = fundData?.name ?? defaultValue;
 
   return (
     <>

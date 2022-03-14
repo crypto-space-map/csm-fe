@@ -1,3 +1,5 @@
+import { Components } from 'react-markdown';
+
 import { ShowMoreText, MarkDown } from 'common/components';
 
 import { OverviewExtraDataProps } from '../../types';
@@ -10,11 +12,13 @@ import {
   ContractsHeader,
 } from './styles';
 
+const customComponents: Components = { a: 'span' };
+
 export const ExtraInfo = ({ description = '', category = '', explorers }: OverviewExtraDataProps) => (
   <>
     <StyledProjectInfoWrapper>
       <ShowMoreText width={440}>
-        <MarkDown text={description} />
+        <MarkDown text={description} customComponents={customComponents} />
       </ShowMoreText>
       <StyledCategoryWrapper>
         <span>Category:</span>
