@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { selectedProjectName, selectedFundName } from 'store/pageStore/selectors';
 import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/slice';
@@ -66,40 +66,11 @@ export function useMainPageHistory() {
 
 export function useMainPage() {
   const history = useHistory();
-  const { url } = useRouteMatch();
   const fundName = useSelector(selectedFundName);
   const projectName = useSelector(selectedProjectName);
   const { setProjectName, setFundName } = pageStoreDispatchAction();
 
   const { pathname } = history.location;
-
-  const handleClick = useCallback(
-    (project: string) => {
-      const newPath = `/project/${project}`;
-      const lastPath = getTheLastPath();
-
-      if (lastPath !== newPath) {
-        history.push(newPath);
-        addNewPath(newPath);
-        setProjectName(project);
-        if (fundName) setFundName(null); // нужно для того, чтобы убрать уже открытую карточку инвестора
-      }
-    },
-    [history, setProjectName, fundName, setFundName]
-  );
-
-  const handleSelectFund = useCallback(
-    name => {
-      const newFundName = name === fundName ? null : name;
-      const newPath = newFundName ? `/fund/${newFundName}` : url;
-
-      addNewPath(newPath);
-      history.push(newPath);
-      setFundName(newFundName);
-      if (projectName) setProjectName(null); // нужно для того, чтобы убрать уже открытую карточку проекта
-    },
-    [fundName, url, history, setFundName, projectName, setProjectName]
-  );
 
   // Инициализация выставления нейма продукта или фонда в стор
   useEffect(() => {
@@ -118,7 +89,7 @@ export function useMainPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { fundName, handleClick, handleSelectFund };
+  return { fundName };
 }
 
 export function useDetailCard() {

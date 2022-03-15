@@ -4,7 +4,7 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import { Grid } from 'app/components';
-import { ProjectCell, InvestorsCell, StyledLoader, AnnLink } from 'app/components/detail-common-components';
+import { ProjectCell, InvestorsBlock, StyledLoader, AnnLink } from 'app/components/detail-common-components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
 import { selectedFundName } from 'store/pageStore/selectors';
 import { getTransformedPrice } from 'utils/detail-info';
@@ -13,7 +13,6 @@ import { selectedEnrichedInvestorsData, selectedInvestorsDataLoading } from '../
 import { useDispatchAction } from '../../slice';
 import { TransformedInvestorDTO } from '../../types';
 import { headerNames } from './constants';
-import { InvestorsWrapper } from './styles';
 
 interface EnrichedInvestorsProps extends TransformedInvestorDTO {
   id: string;
@@ -46,18 +45,7 @@ const decorateProject = (row: EnrichedInvestorsProps) => {
 const decorateInvestors = (row: EnrichedInvestorsProps) => {
   const value = row.investors;
   if (!value) return null;
-
-  return (
-    <InvestorsWrapper>
-      {value.map((item, i, array) => (
-        <InvestorsCell
-          key={`investorLinkWrapper ${item.id}`}
-          isLastElement={array.length - 1 !== i}
-          {...item}
-        />
-      ))}
-    </InvestorsWrapper>
-  );
+  return <InvestorsBlock investors={value} />;
 };
 
 const columns: ColumnProps<EnrichedInvestorsProps>[] = [
@@ -70,13 +58,13 @@ const columns: ColumnProps<EnrichedInvestorsProps>[] = [
   {
     field: 'type',
     headerName: headerNames.type,
-    width: 75,
+    width: 70,
     sortable: false,
   },
   {
     field: 'projectName',
     headerName: headerNames.projectName,
-    width: 100,
+    width: 105,
     renderCell: decorateProject,
   },
   {

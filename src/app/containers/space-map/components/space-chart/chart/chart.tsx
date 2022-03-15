@@ -19,10 +19,10 @@ import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
 const NEEDLES_CATEGORIES = ['619b3ca2064df399fced84b1'];
 
 type SpaceChartProps = {
-  handleClick: (val: string) => void;
+  handleSelectProduct: (val: string) => void;
 };
 
-export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
+export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -39,7 +39,6 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
   const {
     fetchSpaceMapData,
     spaceMapData: { tree, maxMarketCap, minMarketCap },
-    setProjectName,
     selectedProject,
     projectPartnerships,
     fetchPartnershipsData,
@@ -48,11 +47,10 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
   const setProject = useCallback(
     val => {
       setMapCurrentProject(val);
-      setProjectName(val.data?.projectId);
-      handleClick(val.data?.projectId);
+      handleSelectProduct(val.data?.projectId);
       fetchPartnershipsData(val.data?.projectId);
     },
-    [setProjectName, handleClick, fetchPartnershipsData]
+    [handleSelectProduct, fetchPartnershipsData]
   );
 
   const { simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap, minMarketCap });
