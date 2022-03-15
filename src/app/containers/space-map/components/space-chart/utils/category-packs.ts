@@ -3,6 +3,7 @@ import { packSiblings, group, scaleSqrt } from 'd3';
 import { MapCategory } from 'app/containers/space-map/types';
 
 import { PackedNodes } from '../types';
+import { getCategoriesCords } from './categories-cords';
 
 export const createCategoryPacks = (categories: MapCategory[], width = 0, height = 0) => {
   const mappedCategories = group(categories, d => d.name);
@@ -29,8 +30,8 @@ export const createCategoryPacks = (categories: MapCategory[], width = 0, height
 
     const r = radius(maxCalculatedRadius);
 
-    const state = { properties: { x: width / 2, y: height / 2 } };
-    const { x, y } = state.properties;
+    const state = getCategoriesCords(sortingNumber, width, height);
+    const { x, y } = state;
     packedCategories.set(key, { key, children: nodes, r, x, y, sortingNumber });
   }
   const categoriesMapValues = [...new Map(packedCategories).values()] as PackedNodes[];
