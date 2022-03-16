@@ -37,6 +37,7 @@ export type MapCategory = {
   parent: string | null;
   sortingNumber: number;
   symbol: string;
+  namePathData: string;
 };
 
 export type ProjectData = {

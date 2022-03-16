@@ -20,7 +20,7 @@ export const createCategoryPacks = (categories: MapCategory[], width = 0, height
   const packedCategories = new Map<string, PackedNodes>();
 
   for (let [key, value] of mappedCategories) {
-    const { children, marketCap, sortingNumber } = value[0];
+    const { children, marketCap, sortingNumber, namePathData } = value[0];
 
     const circledChildren = children.map(data => ({ ...data, data, r: 0 }));
 
@@ -32,7 +32,7 @@ export const createCategoryPacks = (categories: MapCategory[], width = 0, height
 
     const state = getCategoriesCords(sortingNumber, width, height);
     const { x, y } = state;
-    packedCategories.set(key, { key, children: nodes, r, x, y, sortingNumber });
+    packedCategories.set(key, { key, children: nodes, r, x, y, sortingNumber, namePathData });
   }
   const categoriesMapValues = [...new Map(packedCategories).values()] as PackedNodes[];
   return categoriesMapValues;

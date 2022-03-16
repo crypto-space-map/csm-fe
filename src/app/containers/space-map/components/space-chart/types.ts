@@ -75,6 +75,7 @@ export type PackedCategories = PackCircle & {
   data: MapCategory & PackCircle;
   parent: PackedCategories | null;
   marketCap: number;
+  namePathData: string;
 } & Omit<MapCategory, 'children'>;
 
 //  Project links generator
@@ -98,6 +99,7 @@ export type PackedNodes = PackCircle & {
   key: string;
   r: number;
   sortingNumber: number;
+  namePathData: string;
   children: ({
     data: MapCategory;
     r: number;
