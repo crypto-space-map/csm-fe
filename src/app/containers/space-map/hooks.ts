@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 import { useActions } from 'hooks';
 import { selectedProjectName } from 'store/pageStore/selectors';
-import { useDispatchAction } from 'store/pageStore/slice';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { spaceMapSaga } from './saga';
@@ -34,8 +33,6 @@ export function useSpaceMap() {
     projects: { data: projects },
     filters,
   } = useSelector(selectMapData);
-
-  const { setProjectName } = useDispatchAction();
 
   const selectedProject = useSelector(selectedProjectName);
 
@@ -77,7 +74,6 @@ export function useSpaceMap() {
     clearReducerObjectData,
     onClearFilters,
     submitFilters,
-    setProjectName,
     selectedProject,
   };
 }

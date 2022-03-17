@@ -13,3 +13,4 @@ export * from './tabs';
 export * from './show-more-text';
 export * from './mark-down';
 export * from './icon-plug';
+export * from './more-less';

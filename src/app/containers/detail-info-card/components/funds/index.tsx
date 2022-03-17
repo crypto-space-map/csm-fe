@@ -4,7 +4,7 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import { Grid } from 'app/components';
-import { InvestorsCell, StyledLoader, AnnLink } from 'app/components/detail-common-components';
+import { InvestorsBlock, StyledLoader, AnnLink } from 'app/components/detail-common-components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
 import { selectedProjectName } from 'store/pageStore/selectors';
 import { getTransformedPrice } from 'utils/detail-info';
@@ -13,7 +13,6 @@ import { selectedEnrichedFundsData, selectedFundsDataLoading } from '../../selec
 import { useDispatchAction } from '../../slice';
 import { FundsDTO } from '../../types';
 import { headerNames } from './constants';
-import { InvestorsWrapper } from './styles';
 
 interface EnrichedFundsProps extends FundsDTO {
   id: string;
@@ -35,17 +34,7 @@ const decorateInvestors = (row: EnrichedFundsProps) => {
   const value = row.investors;
   if (!value?.length) return null;
 
-  return (
-    <InvestorsWrapper>
-      {value.map((item, i, array) => (
-        <InvestorsCell
-          key={`investorLinkWrapper ${item.id}`}
-          isLastElement={array.length - 1 !== i}
-          {...item}
-        />
-      ))}
-    </InvestorsWrapper>
-  );
+  return <InvestorsBlock investors={value} />;
 };
 
 const decorateAnn = (row: EnrichedFundsProps) => {

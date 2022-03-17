@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { DetailHeaderSection, DetailStatisticsSection } from 'app/components';
 
@@ -13,7 +13,10 @@ export const DetailFundCard = memo(() => {
   useClearDataAfterChangeNewFund();
   const { fundData } = useDetailFund();
 
-  const statisticsData = { website: fundData?.website ?? defaultValue };
+  const statisticsData = useMemo(() => {
+    if (fundData?.website) return { website: fundData.website };
+    return null;
+  }, [fundData?.website]);
   const fundName = fundData?.name ?? defaultValue;
 
   return (

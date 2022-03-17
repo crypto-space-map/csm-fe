@@ -4,11 +4,9 @@ import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/sl
 import { addNewPath } from 'utils/router-history';
 
 import { InvestorWrapper, StyledLink } from './styles';
+import { InvestorProps } from './types';
 
-interface InvestorsCellProps {
-  id: string;
-  name: string;
-  website: string;
+interface InvestorsCellProps extends InvestorProps {
   isLastElement: boolean;
 }
 

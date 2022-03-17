@@ -1,5 +1,6 @@
 export enum ItemNames {
   PATHS_HISTORY = 'PATHS_HISTORY',
+  SELECTED_TAB = 'SELECTED_TAB',
 }
 
 export const setSessionStorageItem = (name: string, value: unknown) => {

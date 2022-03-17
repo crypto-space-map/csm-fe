@@ -5,7 +5,7 @@ import { createFilterOptions } from '@mui/material';
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import CloseIcon from 'assets/icons/close-ico.svg';
 import SearchIcon from 'assets/icons/search.svg';
-import { useDispatchAction } from 'store/pageStore/slice';
+import { useSetNewProject } from 'hooks/use-set-new-project';
 
 import { lowerCaseTransform } from './helpers';
 import { ListItem } from './list-item';
@@ -16,8 +16,7 @@ import { StyledAutocomplete, StyledTextField, SuggestionList } from './styled';
 export const SuggestInput = () => {
   const [inputValue, setInputValue] = useState('');
   const { projects, fetchProjects, fetchPartnershipsData } = useSpaceMap();
-
-  const { setProjectName } = useDispatchAction();
+  const { handleSelectProduct } = useSetNewProject();
 
   // after emotion styling missed some types
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -29,7 +28,7 @@ export const SuggestInput = () => {
 
   const onChange = (e: Event, value: typeof projects[number]) => {
     if (typeof value === 'object' && value?.projectId) {
-      setProjectName(value?.projectId);
+      handleSelectProduct(value?.projectId);
       fetchPartnershipsData(value?.projectId);
     }
   };
