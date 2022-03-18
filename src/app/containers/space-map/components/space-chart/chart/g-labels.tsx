@@ -12,6 +12,12 @@ const getWidth = ({ data: { key = '' } }: HierarchyCircularNode<PackedCategories
   return multipliedValue * multiplier;
 };
 
+const splitName = (val: string) => {
+  const a = val.replace(/[()\s]/g, '');
+  console.log(a);
+  return a;
+};
+
 export const GLabels = memo<GAreaProps>(({ data }) => (
   <g className="category-labels">
     {data?.map(elem => (
@@ -26,16 +32,16 @@ export const GLabels = memo<GAreaProps>(({ data }) => (
           strokeDasharray="1 1"
           fill="none"
           vectorEffect="non-scaling-stroke"
-          markerEnd={`url(#${LABEL_PATH_DATA}${elem.data.key})`}
+          markerEnd={`url(#${LABEL_PATH_DATA}${splitName(elem.data.key || '')})`}
         />
         <marker
           refY={10}
           refX={getWidth(elem, 4)}
           key={`marker-point${elem.data.name}`}
-          id={`${LABEL_PATH_DATA}${elem.data.key}`}
-          viewBox="0 0 100 10"
+          id={`${LABEL_PATH_DATA}${splitName(elem.data.key || '')}`}
+          viewBox="0 0 200 10"
           markerUnits="strokeWidth"
-          markerWidth="100"
+          markerWidth="200"
           markerHeight="80">
           <path fill="white" transform="scale(0.2)" strokeWidth={1} d={elem.data.namePathData} />
         </marker>
