@@ -32,14 +32,14 @@ export const GLabels = memo<GAreaProps>(({ data }) => (
         />
         <marker
           refY={10}
-          refX={getWidth(elem, 4)}
+          refX={getWidth(elem, 3)}
           key={`marker-point${elem.data.name}`}
           id={`${LABEL_PATH_DATA}${splitName(elem.data.key || '')}`}
           viewBox="0 0 200 10"
           markerUnits="strokeWidth"
           markerWidth="200"
           markerHeight="80">
-          <path fill="white" transform="scale(0.2)" strokeWidth={1} d={elem.data.namePathData} />
+          <path fill="#eae0d7" transform="scale(0.15)" strokeWidth={1} d={elem.data.namePathData} />
         </marker>
       </Fragment>
     ))}

@@ -38,6 +38,7 @@ export type MapCategory = {
   sortingNumber: number;
   symbol: string;
   namePathData: string;
+  parentPathData: string | null;
 };
 
 export type ProjectData = {
@@ -77,5 +78,10 @@ export interface SpaceMapPageState {
   filters: FilterProps;
   projectPartnerships: Partnerships;
 }
+
+export type CategoryPathData = {
+  parentPathData: string;
+  sortingNumber: number;
+};
 
 export type ContainerState = SpaceMapPageState;
