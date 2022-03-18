@@ -12,11 +12,7 @@ const getWidth = ({ data: { key = '' } }: HierarchyCircularNode<PackedCategories
   return multipliedValue * multiplier;
 };
 
-const splitName = (val: string) => {
-  const a = val.replace(/[()\s]/g, '');
-  console.log(a);
-  return a;
-};
+const splitName = (val: string) => val.replace(/[()\s]/g, '');
 
 export const GLabels = memo<GAreaProps>(({ data }) => (
   <g className="category-labels">
