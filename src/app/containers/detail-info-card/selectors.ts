@@ -21,6 +21,8 @@ export const selectedFundsData = (state: RootState) => selectDomain(state).funds
 export const selectedFundsDataLoading = (state: RootState) => selectDomain(state).fundsData.loading;
 export const selectedEventsData = (state: RootState) => selectDomain(state).eventsData.data;
 export const selectedEventsDataLoading = (state: RootState) => selectDomain(state).eventsData.loading;
+export const selectedCommunityData = (state: RootState) => selectDomain(state).communityData.data;
+export const selectedCommunityDataLoading = (state: RootState) => selectDomain(state).communityData.loading;
 export const selectedProjectPartnerships = (state: RootState) => state.spaceMapData.projectPartnerships.data;
 
 export const selectedEnrichedFundsData = createSelector([selectedFundsData], data => {

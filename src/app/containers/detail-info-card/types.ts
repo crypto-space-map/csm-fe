@@ -103,7 +103,7 @@ export interface ProjectDataResponseDTO {
   icon: string;
   rank: number;
   marketPrice: CommonStatistic;
-  priceChangePercentage: {
+  priceChange: {
     '24h': PercentageStatistic;
     '7d': PercentageStatistic;
   };
@@ -114,6 +114,27 @@ export interface ProjectDataResponseDTO {
     circulating: PercentageStatistic;
     total: PercentageStatistic;
   };
+}
+
+export interface SocialNetwork {
+  url: string;
+  count: number;
+  type?: 1 | 2;
+}
+export interface GithubNetwork {
+  repositories: string[];
+  stars: number;
+  contributors: number;
+  followers: number;
+  closeIssues: number;
+}
+
+export interface CommunityDTO {
+  telegram: SocialNetwork[] | null;
+  twitter: SocialNetwork | null;
+  medium: SocialNetwork | null;
+  discord: SocialNetwork | null;
+  gitInfo: GithubNetwork | null;
 }
 
 export interface OverviewExtraDataProps {
@@ -138,6 +159,10 @@ interface EventsData extends FetchDataState {
   data: EventsDTO | null;
 }
 
+interface CommunityData extends FetchDataState {
+  data: CommunityDTO | null;
+}
+
 export interface DetailInfoState {
   exchangesData: ExchangesData;
   overviewExtraData: OverviewExtraDataProps | null;
@@ -148,6 +173,7 @@ export interface DetailInfoState {
   socialData: SocialData;
   fundsData: FundsData;
   eventsData: EventsData;
+  communityData: CommunityData;
 }
 
 export type ContainerState = DetailInfoState;

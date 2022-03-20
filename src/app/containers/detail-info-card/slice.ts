@@ -11,6 +11,7 @@ import type {
   SocialDataDTO,
   FundsDTO,
   EventsDTO,
+  CommunityDTO,
 } from './types';
 import { sliceKey as name } from './utils';
 
@@ -36,11 +37,18 @@ export const initialState: ContainerState = {
     data: null,
     ...fetchDataInitialState,
   },
+  communityData: {
+    data: null,
+    ...fetchDataInitialState,
+  },
 };
 
 const { fetchDataError: fetchExchangesDataError } = fetchDataReducers<
   ContainerState['exchangesData']['data']
 >(initialState.exchangesData);
+
+const { fetchDataSuccess: fetchComminityDataSuccess, fetchDataError: fetchComminityDataError } =
+  fetchDataReducers<ContainerState['communityData']['data']>(initialState.communityData);
 
 const { fetchDataSuccess: fetchEventsDataSuccess, fetchDataError: fetchEventsDataError } = fetchDataReducers<
   ContainerState['eventsData']['data']
@@ -88,6 +96,16 @@ const providersListSlice = createSlice({
       fetchEventsDataError(state.eventsData, action);
     },
 
+    fetchComminityData(state, _action: PayloadAction<string>) {
+      state.communityData.loading = true;
+    },
+    fetchComminityDataSuccess(state, action: PayloadAction<{ data: CommunityDTO }>) {
+      fetchComminityDataSuccess(state.communityData, action);
+    },
+    fetchComminityDataError(state, action: PayloadAction<{ message: string }>) {
+      fetchComminityDataError(state.communityData, action);
+    },
+
     fetchExchangesData(state, _action: PayloadAction<ExchangeRequest>) {
       state.exchangesData.loading = true;
     },
@@ -121,7 +139,7 @@ const providersListSlice = createSlice({
           icon,
           rank,
           marketCap,
-          priceChangePercentage: { '24h': priceChangePercentageDay, '7d': priceChangePercentageWeek },
+          priceChange: { '24h': priceChangePercentageDay, '7d': priceChangePercentageWeek },
           marketPrice,
           website,
           totalVolume,
@@ -159,6 +177,7 @@ const providersListSlice = createSlice({
       state.socialData.data = initialState.socialData.data;
       state.fundsData.data = initialState.fundsData.data;
       state.eventsData.data = initialState.eventsData.data;
+      state.communityData.data = initialState.communityData.data;
     },
   },
 });
