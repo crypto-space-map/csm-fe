@@ -10,6 +10,7 @@ import { getAllProjects, getIncludesProjects } from '../utils/helpers';
 import { useChart } from '../utils/use-chart';
 import { initZoomedElement } from '../utils/zoom';
 import { GCircles } from './g-circles';
+import { GHeaders } from './g-headers';
 import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
 import { GPartnersLegend } from './g-partners-legend';
@@ -93,6 +94,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
           {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
           <GCircles data={simulatedCircles} setCurrentProject={setProject} tooltipRef={tooltipRef} />
           <GLabels data={simulatedCircles} />
+          <GHeaders width={width} height={height} data={simulatedCircles} />
           <GTooltips data={foundProjects} currentProject={currentProject} />
         </g>
         <GPartnersLegend width={width} />

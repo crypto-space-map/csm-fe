@@ -9,6 +9,7 @@ import { packedChild } from './child-packer';
 export function useChart({ width, height, maxMarketCap, minMarketCap, tree }: UseChartProps) {
   const [packedCategories, setPackedCategories] = useState<PackedNodes[]>([]);
   const [simulation, setSimulation] = useState<Simulation<PackedNodes, undefined> | null>(null);
+
   useEffect(() => {
     if (width && height && tree && maxMarketCap && minMarketCap) {
       const createdPacks = createCategoryPacks(tree, width, height);
@@ -23,6 +24,7 @@ export function useChart({ width, height, maxMarketCap, minMarketCap, tree }: Us
   }, [packedCategories, width, height]);
 
   const simulatedCircles = useMemo(() => simulation?.nodes().map(item => packedChild(item)), [simulation]);
+
   return {
     packedCategories,
     simulation,
