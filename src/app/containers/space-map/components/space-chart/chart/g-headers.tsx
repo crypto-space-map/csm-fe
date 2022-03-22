@@ -20,6 +20,36 @@ export const GHeaders = ({ width, height, data }: GHeadersProps) => {
     [data]
   );
 
+  type blah = {
+    x: number;
+    y: number;
+    r: number;
+  };
+
+  const getCords = (sortingNumber: number) => {
+    if (data) {
+      const filteredFields = data?.filter(
+        ({ data: { sortingNumber: dataSortingNumbers } }) => dataSortingNumbers === sortingNumber
+      );
+      const cords = filteredFields?.reduce(
+        (acc, item) => {
+          acc = {
+            x: acc.x + item.data.x,
+            y: acc.y > item.data.y ? acc.y : item.data.y,
+            r: acc.r + item.data.r,
+          };
+          return acc;
+        },
+        { x: 0, y: 0, r: 0 } as blah
+      );
+      return {
+        x: cords?.x / filteredFields?.length - cords.r / 2,
+        y: cords?.y - cords.r,
+      };
+    }
+    return null;
+  };
+
   //   TODO find circle with highest cord and get value
 
   const categoriesHeaders = useSelector(selectCategoriesParentPathData);
@@ -30,8 +60,8 @@ export const GHeaders = ({ width, height, data }: GHeadersProps) => {
           <line
             x1={0}
             y1={0}
-            x2={getCategoriesCords(item.sortingNumber, width, height).x}
-            y2={getCategoriesCords(item.sortingNumber, width, height).y}
+            x2={getCords(item.sortingNumber)?.x || 0}
+            y2={getCords(item.sortingNumber)?.y || 0}
             strokeWidth={1}
             strokeDasharray="1 1"
             fill="none"
@@ -39,8 +69,8 @@ export const GHeaders = ({ width, height, data }: GHeadersProps) => {
             markerEnd={`url(#${MARKER}${item.sortingNumber})`}
           />
           <marker
-            refY={getCirclesLength(item.sortingNumber) * 12}
-            refX={70}
+            refY={0}
+            refX={0}
             key={`marker-category-point${item.sortingNumber}`}
             id={`${MARKER}${item.sortingNumber}`}
             viewBox="0 0 200 10"

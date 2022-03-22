@@ -10,7 +10,7 @@ export const circlesSimulation = ({ packedCategories }: CirclesSimulation) => {
       'x',
       forceX()
         .x(d => d.x as number)
-        .strength(1)
+        .strength(0.8)
     )
     .force(
       'y',
