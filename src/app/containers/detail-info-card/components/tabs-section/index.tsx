@@ -1,7 +1,13 @@
-import { memo, useState, useMemo, useEffect } from 'react';
+import { memo, useState, useMemo, useEffect, useCallback } from 'react';
 
 import { DetailTabSection, TabContent } from 'app/components';
 import { infiniteScrollTarget } from 'app/components/grid/utils';
+import {
+  setSessionStorageItem,
+  getSessionStorageItem,
+  ItemNames,
+  clearSessionStorageItems,
+} from 'utils/session-storage';
 
 import { Community, Events, Exchanges, Funds, Overview, Partners, Social } from '..';
 
@@ -40,21 +46,32 @@ const selectComponentByTabValue = (value: string) => {
 };
 
 export const TabsSection = memo(({ isShow = false }: { isShow: boolean }) => {
-  const [activeTab, setActiveTab] = useState(detailInfoTabs.overview);
+  const selectedTabFromSS = getSessionStorageItem(ItemNames.SELECTED_TAB);
+  const [activeTab, setActiveTab] = useState(selectedTabFromSS || detailInfoTabs.overview);
+
+  const changeActiveTab = useCallback((value: string) => {
+    setActiveTab(value);
+    setSessionStorageItem(ItemNames.SELECTED_TAB, value);
+  }, []);
 
   const options = useMemo(
     () => ({
       activeTab,
       options: tabOptions,
       targetId: infiniteScrollTarget,
-      setActiveTab,
+      setActiveTab: changeActiveTab,
     }),
-    [activeTab]
+    [activeTab, changeActiveTab]
   );
 
   useEffect(() => {
-    if (!isShow) setActiveTab(detailInfoTabs.overview);
-  }, [isShow, setActiveTab]);
+    if (!isShow) {
+      changeActiveTab(detailInfoTabs.overview);
+    }
+    return () => {
+      clearSessionStorageItems([ItemNames.SELECTED_TAB]);
+    };
+  }, [isShow, changeActiveTab]);
 
   return (
     <DetailTabSection detailTabProps={options}>

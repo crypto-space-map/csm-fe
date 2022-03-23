@@ -95,23 +95,26 @@ const columns: ColumnProps<EnrichedExchangeProps>[] = [
   {
     field: 'price',
     headerName: headerNames.price,
-    width: 75,
+    width: 70,
     valueFormatter: decoratePrice,
     type: SortingTypes.NUMBER,
+    textAlign: 'right',
   },
   {
     field: 'volume',
     headerName: headerNames.volume,
-    width: 100,
+    width: 85,
     valueFormatter: decorateVolume,
     type: SortingTypes.NUMBER,
+    textAlign: 'right',
   },
   {
     field: 'persentVolume',
     renderCustomHeaderName: decorateHeaderPersentVolume,
-    width: 100,
+    width: 90,
     valueFormatter: decoratePersentVolume,
     type: SortingTypes.NUMBER,
+    textAlign: 'right',
   },
   {
     field: 'updatedAt',
@@ -119,6 +122,7 @@ const columns: ColumnProps<EnrichedExchangeProps>[] = [
     width: 90,
     valueFormatter: decorateUpdatedAt,
     type: SortingTypes.DATE,
+    textAlign: 'right',
   },
 ];
 
@@ -138,7 +142,7 @@ export const Exchanges = memo(() => {
   );
 
   useEffect(() => {
-    if (enrichedExchangesData.length === 0) loadData(exchangesPage);
+    if (!enrichedExchangesData) loadData(exchangesPage);
   }, [enrichedExchangesData, exchangesPage, loadData]);
 
   return (

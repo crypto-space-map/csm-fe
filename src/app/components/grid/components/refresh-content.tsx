@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { Button } from 'common/components/button';
 
-import { StyledRefreshContent } from '../styles';
+import { StyledRefreshContent, MainAdditionalText, ButtonWrapper } from '../styles';
 import { FetchDataType } from '../types';
 
 interface RefreshContentProps {
@@ -16,8 +16,10 @@ export const RefreshContent = ({ fetchData }: RefreshContentProps) => {
 
   return (
     <StyledRefreshContent>
-      <span>Error Uploading the Data</span>
-      <Button onClick={handleClick}>Refresh Page</Button>
+      <MainAdditionalText>Error Uploading the Data</MainAdditionalText>
+      <ButtonWrapper>
+        <Button onClick={handleClick}>Refresh Page</Button>
+      </ButtonWrapper>
     </StyledRefreshContent>
   );
 };

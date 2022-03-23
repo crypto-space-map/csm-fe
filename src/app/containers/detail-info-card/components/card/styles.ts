@@ -38,12 +38,15 @@ export const CompanyInfo = styled.section`
 `;
 
 export const IconWrapper = styled.div`
+  margin-right: 16px;
+  width: 43px;
+  height: 43px;
   & > img {
     border-radius: 26px;
   }
 `;
 
-export const StyledAccountName = styled.a`
+export const StyledTitleLink = styled.a`
   font-size: 16px;
   line-height: 22px;
   text-decoration: none;
@@ -53,7 +56,13 @@ export const StyledAccountName = styled.a`
   }
 `;
 
-export const StyledAccountLink = styled.a`
+export const StyledTitle = styled.a`
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+`;
+
+export const StyledSubTitleLink = styled.a`
   ${linkStyles}
   width: 350px;
   text-overflow: ellipsis;
@@ -75,40 +84,29 @@ export const PostDate = styled.section`
 export const TitleTextContent = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   font-weight: 600;
 
-  margin-left: 16px;
   & > h5 {
     margin: 0;
   }
 `;
 
 export const Icon = styled.img`
-  width: 49px;
-  height: fit-content;
+  width: 100%;
+  height: 100%;
 `;
 
 export const TextSection = styled.section`
   font-weight: 400;
   font-size: 16px;
   line-height: 22px;
-
-  & > h3 {
-    margin: 0;
-  }
-  & > p {
-    margin-top: 0;
-  }
-  & > p:last-of-type {
-    margin-bottom: 0;
-  }
 `;
 
 export const ButtonsContentWrapper = styled.section`
   margin-top: 12px;
-  & > button:not(:first-of-type) {
-    margin-left: 8px;
-  }
+  display: flex;
+  grid-gap: 8px;
 `;
 
 export const StyledButton = styled(MuiButton)<ButtonProps>`

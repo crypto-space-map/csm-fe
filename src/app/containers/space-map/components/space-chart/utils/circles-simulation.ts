@@ -23,6 +23,8 @@ export const circlesSimulation = ({ packedCategories }: CirclesSimulation) => {
       'collide',
       forceCollide()
         .strength(1)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         .radius(d => d.r + 5)
     )
     .stop();

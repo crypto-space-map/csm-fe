@@ -7,7 +7,7 @@ import { selectedProjectName } from 'store/pageStore/selectors';
 
 import { selectedEnrichedSocialData, selectedSocialDataLoading } from '../../selectors';
 import { useDispatchAction } from '../../slice';
-import { Card } from '../card';
+import { SocialCard } from '../card/social-card';
 import { SocialContentWrapper, LoaderWrapper } from './styles';
 
 export const Social = () => {
@@ -28,7 +28,7 @@ export const Social = () => {
     );
   return (
     <SocialContentWrapper>
-      {socialData && socialData.map(item => <Card key={item.id} {...item} />)}
+      {socialData && socialData.map(item => <SocialCard key={item.id} {...item} />)}
     </SocialContentWrapper>
   );
 };

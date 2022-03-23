@@ -1,4 +1,5 @@
 import { useActions } from 'hooks';
+import { fetchDataInitialState, fetchDataReducers } from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
 import { getPersentageVolume } from 'utils/detail-info';
 
@@ -9,86 +10,106 @@ import type {
   ProjectDataResponseDTO,
   SocialDataDTO,
   FundsDTO,
+  EventsDTO,
 } from './types';
 import { sliceKey as name } from './utils';
 
 export const initialState: ContainerState = {
-  overviewTradingStock: '',
-  overviewTradingStockLoading: false,
-  exchangesData: [],
+  overviewExtraData: null,
   exchangesPage: 1,
-  exchangesDataLoading: false,
   projectLoading: false,
   projectStatistic: null,
   projectHeaderData: null,
-  socialData: null,
-  socialDataLoading: false,
-  fundsData: [],
-  fundsDataLoading: false,
+  exchangesData: {
+    data: null,
+    ...fetchDataInitialState,
+  },
+  eventsData: {
+    data: null,
+    ...fetchDataInitialState,
+  },
+  fundsData: {
+    data: null,
+    ...fetchDataInitialState,
+  },
+  socialData: {
+    data: null,
+    ...fetchDataInitialState,
+  },
 };
+
+const { fetchDataError: fetchExchangesDataError } = fetchDataReducers<
+  ContainerState['exchangesData']['data']
+>(initialState.exchangesData);
+
+const { fetchDataSuccess: fetchEventsDataSuccess, fetchDataError: fetchEventsDataError } = fetchDataReducers<
+  ContainerState['eventsData']['data']
+>(initialState.eventsData);
+
+const { fetchDataSuccess: fetchSocialDataSuccess, fetchDataError: fetchSocialDataError } = fetchDataReducers<
+  ContainerState['socialData']['data']
+>(initialState.socialData);
+
+const { fetchDataSuccess: fetchFundsDataSuccess, fetchDataError: fetchFundsDataError } = fetchDataReducers<
+  ContainerState['fundsData']['data']
+>(initialState.fundsData);
 
 const providersListSlice = createSlice({
   name,
   initialState,
   reducers: {
-    fetchOverviewTradingStock(state) {
-      state.overviewTradingStockLoading = true;
+    fetchSocialData(state, _action: PayloadAction<string>) {
+      state.socialData.loading = true;
     },
-    fetchOverviewTradingStockSuccess(state, action: PayloadAction<string>) {
-      state.overviewTradingStockLoading = false;
-      state.overviewTradingStock = action.payload;
+    fetchSocialDataSuccess(state, action: PayloadAction<{ data: SocialDataDTO[] }>) {
+      fetchSocialDataSuccess(state.socialData, action);
     },
-    fetchOverviewTradingStockFail(state) {
-      state.overviewTradingStockLoading = false;
+    fetchSocialDataError(state, action: PayloadAction<{ message: string }>) {
+      fetchSocialDataError(state.socialData, action);
     },
 
-    fetchSocialData(state, _action: PayloadAction<string>) {
-      state.socialDataLoading = true;
+    fetchFundsData(state, _action: PayloadAction<string>) {
+      state.fundsData.loading = true;
     },
-    fetchSocialDataSuccess(state, action: PayloadAction<SocialDataDTO[]>) {
-      state.socialDataLoading = false;
-      state.socialData = action.payload;
+    fetchFundsDataSuccess(state, action: PayloadAction<{ data: FundsDTO[] }>) {
+      fetchFundsDataSuccess(state.fundsData, action);
     },
-    fetchSocialDataFail(state) {
-      state.socialDataLoading = false;
+    fetchFundsDataError(state, action: PayloadAction<{ message: string }>) {
+      fetchFundsDataError(state.fundsData, action);
+    },
+
+    fetchEventsData(state, _action: PayloadAction<string>) {
+      state.eventsData.loading = true;
+    },
+    fetchEventsDataSuccess(state, action: PayloadAction<{ data: EventsDTO }>) {
+      fetchEventsDataSuccess(state.eventsData, action);
+    },
+    fetchEventsDataError(state, action: PayloadAction<{ message: string }>) {
+      fetchEventsDataError(state.eventsData, action);
     },
 
     fetchExchangesData(state, _action: PayloadAction<ExchangeRequest>) {
-      state.exchangesDataLoading = true;
+      state.exchangesData.loading = true;
     },
-    fetchExchangesDataSuccess(state, action: PayloadAction<ExchangeDTO[]>) {
-      state.exchangesDataLoading = false;
+    fetchExchangesDataSuccess(state, action: PayloadAction<{ data: ExchangeDTO[] }>) {
+      state.exchangesData.loading = false;
       const totalVolume = state.projectStatistic?.totalVolume?.usd || 0;
+      const startedValue = state.exchangesData.data ? state.exchangesData.data : [];
 
       // TODO сделать фильтрацию дублей
-      const newExchangesData = state.exchangesData.concat(action.payload).map(item => {
+      const newExchangesData = startedValue.concat(action.payload.data).map(item => {
         if (!item?.persentVolume) {
           return { ...item, persentVolume: getPersentageVolume(item.volume, totalVolume) };
         }
         return item;
       });
 
-      state.exchangesData = newExchangesData;
+      state.exchangesData.data = newExchangesData;
     },
-    fetchExchangesDataFail(state) {
-      state.exchangesDataLoading = false;
+    fetchExchangesDataError(state, action: PayloadAction<{ message: string }>) {
+      fetchExchangesDataError(state.exchangesData, action);
     },
-    fetchFundsData(state, _action: PayloadAction<string>) {
-      state.fundsDataLoading = true;
-    },
-    fetchFundsDataSuccess(state, action: PayloadAction<FundsDTO[]>) {
-      state.fundsDataLoading = false;
-      state.fundsData = action.payload.length ? action.payload : initialState.fundsData;
-    },
-    fetchFundsDataFail(state) {
-      state.fundsDataLoading = false;
-    },
-    clearExchangesData(state) {
-      state.exchangesData = initialState.exchangesData;
-    },
-    setExchangesPage(state, action: PayloadAction<number>) {
-      state.exchangesPage = action.payload;
-    },
+
     fetchProjectData(state, _action: PayloadAction<string>) {
       state.projectLoading = true;
     },
@@ -105,11 +126,16 @@ const providersListSlice = createSlice({
           website,
           totalVolume,
           supply,
+          category,
+          description,
+          explorers,
         },
       } = action;
 
       state.projectLoading = false;
       state.projectHeaderData = { name: projectName, symbol, icon, rank };
+      state.overviewExtraData = { category, description, explorers };
+
       state.projectStatistic = {
         marketPrice,
         priceChangePercentageDay,
@@ -121,14 +147,18 @@ const providersListSlice = createSlice({
         supplyTotal: supply.total,
       };
     },
-    fetchProjectDataFail(state) {
+    fetchProjectDataError(state) {
       state.projectLoading = false;
     },
+    setExchangesPage(state, action: PayloadAction<number>) {
+      state.exchangesPage = action.payload;
+    },
     clearDataAfterChangeProject(state) {
-      state.exchangesData = initialState.exchangesData;
+      state.exchangesData.data = initialState.exchangesData.data;
       state.exchangesPage = initialState.exchangesPage;
-      state.socialData = initialState.socialData;
-      state.fundsData = initialState.fundsData;
+      state.socialData.data = initialState.socialData.data;
+      state.fundsData.data = initialState.fundsData.data;
+      state.eventsData.data = initialState.eventsData.data;
     },
   },
 });

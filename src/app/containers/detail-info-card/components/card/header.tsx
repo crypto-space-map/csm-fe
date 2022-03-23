@@ -1,42 +1,48 @@
 import moment from 'moment';
 
-import { SocialDataDTO } from '../../types';
+import { CardProps } from '../../types';
 import {
   CompanyInfo,
   PostDate,
   TitleSection,
   Icon,
   TitleTextContent,
-  StyledAccountName,
-  StyledAccountLink,
+  StyledTitleLink,
+  StyledSubTitleLink,
+  StyledTitle,
   IconWrapper,
 } from './styles';
 
 export const Header = ({
-  accountImageUrl,
-  accountName,
-  accountUrl,
+  imageUrl,
+  title,
+  titleUrl,
   createdAt,
-  url,
-}: Omit<SocialDataDTO, 'text' | 'buttons'>) => (
+  subTitleUrl,
+}: Omit<CardProps, 'socialMediaType' | 'text' | 'proof' | 'source'>) => (
   <TitleSection>
     <CompanyInfo>
-      <IconWrapper>
-        <Icon src={accountImageUrl} alt="logo" />
-      </IconWrapper>
+      {imageUrl && (
+        <IconWrapper>
+          <Icon src={imageUrl} alt="logo" />
+        </IconWrapper>
+      )}
       <TitleTextContent>
-        <StyledAccountName href={accountUrl} target="_blank" rel="noreferrer">
-          {accountName}
-        </StyledAccountName>
-        <StyledAccountLink href={url} target="_blank" rel="noreferrer">
-          {url}
-        </StyledAccountLink>
+        {titleUrl ? (
+          <StyledTitleLink href={titleUrl} target="_blank" rel="noreferrer">
+            {title}
+          </StyledTitleLink>
+        ) : (
+          <StyledTitle>{title}</StyledTitle>
+        )}
+
+        {subTitleUrl && (
+          <StyledSubTitleLink href={subTitleUrl} target="_blank" rel="noreferrer">
+            {subTitleUrl}
+          </StyledSubTitleLink>
+        )}
       </TitleTextContent>
     </CompanyInfo>
     {createdAt && <PostDate>{moment(createdAt).format('DD MMMM YYYY')}</PostDate>}
   </TitleSection>
 );
-
-Header.defaultProps = {
-  postDate: '',
-};

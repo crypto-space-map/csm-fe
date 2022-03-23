@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 
 import { GridContent } from './components/grid-content';
 import { GridHeader } from './components/grid-header';
+import { NoFoundContent } from './components/no-found-content';
 import { RefreshContent } from './components/refresh-content';
 import { GridWrapper } from './styles';
 import { GridProps, SortingValues } from './types';
@@ -38,7 +39,7 @@ export const Grid = <R extends { id: string }>({
 
   // TODO Вынести в отдельный хук
   useEffect(() => {
-    const newRowsArr = rows.slice();
+    const newRowsArr = rows?.slice() ?? [];
     const fieldOptions = columns.find(item => item.field === sortedField);
     const compareFunc = getCompareFunc(fieldOptions?.type);
 
@@ -58,8 +59,12 @@ export const Grid = <R extends { id: string }>({
     );
   }, [columns, rows, sortedField, sortDirection]);
 
-  if (!loading && !rows.length) {
+  if (!loading && !rows) {
     return <RefreshContent fetchData={fetchData} />;
+  }
+
+  if (!loading && !rows?.length) {
+    return <NoFoundContent />;
   }
 
   return (

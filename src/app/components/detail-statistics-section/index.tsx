@@ -21,8 +21,11 @@ const selectStatisticItem = (item: GenerateDataProps) => {
   }
 };
 
-export const DetailStatisticsSection = ({ data }: { data: StatisticDetailDataDTO }) => {
-  const preparedData = useMemo(() => generateOptions(data), [data]);
+export const DetailStatisticsSection = ({ data }: { data: StatisticDetailDataDTO | null }) => {
+  const preparedData = useMemo(() => (data ? generateOptions(data) : null), [data]);
+
+  if (!preparedData) return null;
+
   return (
     <StatisticsSectionWrapper>
       {preparedData.map(item => selectStatisticItem(item))}

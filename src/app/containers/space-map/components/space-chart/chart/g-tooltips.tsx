@@ -41,7 +41,7 @@ export const GTooltips = memo<GAreaProps>(({ data, currentProject }) => {
             id={`${TOOLTIP_MARKER}${elem.data.projectId}`}
             viewBox={`0 0 ${getWidth(elem, 12)} 50`}
             markerUnits="strokeWidth"
-            markerWidth={elem.data.name.length * 10}
+            markerWidth={elem.data.name?.length * 10}
             markerHeight="50">
             <rect width={getWidth(elem, 11)} height="24" rx="12" fill="white" />
             <path
