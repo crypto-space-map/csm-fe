@@ -1,60 +1,52 @@
-import { memo } from 'react';
+import { memo, useEffect, useCallback } from 'react';
 
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 import { Grid } from 'app/components';
+import { InvestorsBlock, StyledLoader, AnnLink } from 'app/components/detail-common-components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
-import LinkIcon from 'assets/link.svg';
-import { cutLink } from 'utils/detail-info';
+import { selectedProjectName } from 'store/pageStore/selectors';
+import { getTransformedPrice } from 'utils/detail-info';
 
-import { InvestorsCell } from './components/investors-cell';
-import { headerNames, products } from './constants';
-import { InvestorsWrapper, AnnLink } from './styles';
-import { FundsProps } from './types';
+import { selectedEnrichedFundsData, selectedFundsDataLoading } from '../../selectors';
+import { useDispatchAction } from '../../slice';
+import { FundsDTO } from '../../types';
+import { headerNames } from './constants';
 
-const decorateAmount = (row: FundsProps) => {
+interface EnrichedFundsProps extends FundsDTO {
+  id: string;
+}
+
+const decorateAmount = (row: EnrichedFundsProps) => {
   const value = row.amount;
   if (!value) return null;
-  return `$ ${value.toLocaleString()}`;
+  return getTransformedPrice(value, true);
 };
 
-const decorateDate = (row: FundsProps) => {
+const decorateDate = (row: EnrichedFundsProps) => {
   const value = row.date;
   if (!value) return null;
-  return moment(value).format('DD MMMM YYYY');
+  return moment(value).format('DD MMM YYYY');
 };
 
-const decorateInvestors = (row: FundsProps) => {
+const decorateInvestors = (row: EnrichedFundsProps) => {
   const value = row.investors;
-  if (!value) return null;
+  if (!value?.length) return null;
 
-  return (
-    <InvestorsWrapper>
-      {value.map((item, i, array) => (
-        <InvestorsCell
-          key={`investorLinkWrapper ${item.title}`}
-          isLastElement={array.length - 1 !== i}
-          {...item}
-        />
-      ))}
-    </InvestorsWrapper>
-  );
+  return <InvestorsBlock investors={value} />;
 };
 
-const decorateAnn = (row: FundsProps) => {
-  const value = row.ann;
+const decorateAnn = (row: EnrichedFundsProps) => {
+  const value = row.announcement;
   if (!value) return null;
-  return (
-    <AnnLink target="_blank" href={value}>
-      <LinkIcon /> <span>{cutLink(value)}</span>
-    </AnnLink>
-  );
+  return <AnnLink link={value} width={75} />;
 };
 
-const columns: ColumnProps<FundsProps>[] = [
+const columns: ColumnProps<EnrichedFundsProps>[] = [
   {
-    field: 'fundrasingRound',
-    headerName: headerNames.fundrasingRound,
+    field: 'type',
+    headerName: headerNames.type,
     width: 95,
   },
   {
@@ -70,24 +62,41 @@ const columns: ColumnProps<FundsProps>[] = [
     width: 100,
     type: SortingTypes.NUMBER,
     valueFormatter: decorateAmount,
+    textAlign: 'right',
   },
   {
     field: 'date',
     headerName: headerNames.date,
-    width: 110,
+    width: 100,
     type: SortingTypes.DATE,
     valueFormatter: decorateDate,
+    textAlign: 'right',
   },
   {
-    field: 'ann',
-    headerName: headerNames.ann,
+    field: 'announcement',
+    headerName: headerNames.announcement,
     sortable: false,
     width: 100,
     renderCell: decorateAnn,
+    textAlign: 'right',
   },
 ];
 
 export const Funds = memo(() => {
-  const loadData = () => {};
-  return <Grid columns={columns} rows={products} fetchData={loadData} />;
+  const projectName = useSelector(selectedProjectName);
+  const fundsDataLoading = useSelector(selectedFundsDataLoading);
+  const fundsData = useSelector(selectedEnrichedFundsData);
+  const { fetchFundsData } = useDispatchAction();
+
+  const loadData = useCallback(() => {
+    if (projectName && !fundsData) fetchFundsData(projectName);
+  }, [projectName, fundsData, fetchFundsData]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  if (fundsDataLoading) return <StyledLoader />;
+
+  return <Grid columns={columns} rows={fundsData} fetchData={loadData} />;
 });

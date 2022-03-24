@@ -14,8 +14,8 @@ export const CompanyInfo = styled.div`
 `;
 
 export const Icon = styled.img`
-  width: 43px;
-  height: fit-content;
+  width: 40px;
+  height: 40px;
   flex-shrink: inherit;
 `;
 
@@ -64,4 +64,11 @@ export const CloseIconWrapper = styled.div`
 export const StyledRoundedButton = styled.div`
   margin-right: 24px;
   cursor: pointer;
+`;
+
+export const StyledDefaultLogo = styled.div`
+  & > svg {
+    width: 40px;
+    height: 40px;
+  }
 `;

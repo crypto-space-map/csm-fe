@@ -15,6 +15,7 @@ export const HeaderItem = <T,>({
   onChangeSortField,
   selected,
   sortDirection,
+  textAlign,
 }: HeaderItemProps<T>) => {
   const handleClick = () => {
     onChangeSortField(field);
@@ -25,7 +26,10 @@ export const HeaderItem = <T,>({
     return '';
   }, [headerName, renderCustomHeaderName]);
   return (
-    <StyledHeaderItem sortable={sortable} onClick={sortable ? handleClick : defaultFunc}>
+    <StyledHeaderItem
+      textAlign={textAlign}
+      sortable={sortable}
+      onClick={sortable ? handleClick : defaultFunc}>
       <span>{headerNameValue}</span>
       {sortable && (
         <ArrowIconWrapper selected={selected} sortDirection={sortDirection}>

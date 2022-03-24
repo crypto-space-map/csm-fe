@@ -96,6 +96,8 @@ export type UseChartProps = {
 
 export type PackedNodes = PackCircle & {
   key: string;
+  r: number;
+  sortingNumber: number;
   children: ({
     data: MapCategory;
     r: number;

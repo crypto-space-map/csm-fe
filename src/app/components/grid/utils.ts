@@ -10,7 +10,7 @@ export const infiniteScrollTarget = 'scrollableTarget';
 
 const getMomentValue = (value: string) => moment(value).valueOf();
 
-const getRowsValue = <R>({ a, b, fieldName }: GetCompareValueFuncProps<R>) => {
+export const getRowsValue = <R>({ a, b, fieldName }: GetCompareValueFuncProps<R>) => {
   const firstRowValue = a[fieldName] ?? '';
   const seconsRowValue = b[fieldName] ?? '';
   return [firstRowValue, seconsRowValue];

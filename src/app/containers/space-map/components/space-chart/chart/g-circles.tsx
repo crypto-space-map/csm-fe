@@ -22,7 +22,11 @@ type CircleProps = Omit<GAreaProps, 'data'> &
 
 const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, tooltipRef }) => {
   const ref = useRef<SVGCircleElement>(null);
-  const handleClick = useCallback(() => setCurrentProject(elem), [elem, setCurrentProject]);
+  const handleClick = useCallback(() => {
+    // TODO выпилить когда ДИма заапрувит размер сфер
+    console.log(elem);
+    setCurrentProject(elem);
+  }, [elem, setCurrentProject]);
   const onMouseOver = () => {
     if (tooltipRef.current) {
       tooltipRef.current.style.visibility = 'visible';
@@ -55,8 +59,8 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, toolt
   return (
     <circle
       ref={ref}
-      key={elem.data.key || elem.data.projectId}
-      r={elem.r}
+      key={`project-circle${elem.data.parent || elem.data.projectId}`}
+      r={elem.r || 0.1}
       cx={scaled(elem.x)}
       cy={scaled(elem.y)}
       vectorEffect="non-scaling-stroke"
@@ -72,7 +76,7 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, toolt
 const Circles = memo<GAreaProps & TooltipProps>(({ data, ...rest }) => (
   <>
     {data?.map(elem => (
-      <Fragment key={`${elem.data.projectId}${elem.x}${elem.y}`}>
+      <Fragment key={`circle-group${elem.data.projectId}${elem.x}${elem.y}`}>
         <Circle elem={elem} {...rest} />
         <Circles data={elem.children} {...rest} />
       </Fragment>
@@ -85,14 +89,17 @@ export const GCircles = memo(({ data, ...rest }: GAreaProps & TooltipProps) => {
 
   return (
     <g className="circles-map">
-      {data.map(item => (
-        <g
-          transform={`translate(${item.data.x - item.r}, ${item.data.y - item.r})`}
-          key={`${item.x}${item.y}${item.data.projectId}`}>
-          <Circle elem={item} {...rest} />
-          <Circles data={item.children} {...rest} />
-        </g>
-      ))}
+      {data.map(
+        item =>
+          item.r && (
+            <g
+              transform={`translate(${item.data.x - item.r}, ${item.data.y - item.r})`}
+              key={`circles-map-g${item.data.x}${item.data.y}`}>
+              <Circle elem={item} {...rest} />
+              <Circles data={item.children} {...rest} />
+            </g>
+          )
+      )}
     </g>
   );
 });

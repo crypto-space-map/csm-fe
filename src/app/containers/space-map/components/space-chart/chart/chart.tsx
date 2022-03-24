@@ -13,13 +13,16 @@ import { GCircles } from './g-circles';
 import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
 import { GPartnersLegend } from './g-partners-legend';
+import { GTooltips } from './g-tooltips';
 import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
 
+const NEEDLES_CATEGORIES = ['619b3ca2064df399fced84b1'];
+
 type SpaceChartProps = {
-  handleClick: (val: string) => void;
+  handleSelectProduct: (val: string) => void;
 };
 
-export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
+export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -36,7 +39,6 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
   const {
     fetchSpaceMapData,
     spaceMapData: { tree, maxMarketCap, minMarketCap },
-    setProjectName,
     selectedProject,
     projectPartnerships,
     fetchPartnershipsData,
@@ -45,21 +47,21 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
   const setProject = useCallback(
     val => {
       setMapCurrentProject(val);
-      setProjectName(val.data?.projectId);
-      handleClick(val.data?.projectId);
+      handleSelectProduct(val.data?.projectId);
       fetchPartnershipsData(val.data?.projectId);
     },
-    [setProjectName, handleClick, fetchPartnershipsData]
+    [handleSelectProduct, fetchPartnershipsData]
   );
 
   const { simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap, minMarketCap });
 
   const allProjects = useMemo(() => getAllProjects(simulatedCircles || []), [simulatedCircles]);
 
-  const foundedProjects = getIncludesProjects(allProjects, [...new Set(projectPartnerships)]);
+  const foundProjects = getIncludesProjects(allProjects, [...new Set(projectPartnerships)]);
 
   useEffect(() => {
-    fetchSpaceMapData();
+    fetchSpaceMapData({});
+    // { withoutCategories: NEEDLES_CATEGORIES.join(',') }
   }, [fetchSpaceMapData]);
 
   useEffect(() => {
@@ -67,10 +69,12 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
       setMapCurrentProject(null);
     }
     if (selectedProject !== currentProject?.data.projectId) {
-      const target = allProjects.find(({ data: { projectId } }) => projectId === selectedProject);
-      setMapCurrentProject(target || null);
+      const target = allProjects.find(({ data: { projectId } }) => projectId === selectedProject) || null;
+      if (target) {
+        setProject(target);
+      }
     }
-  }, [allProjects, currentProject?.data.projectId, selectedProject]);
+  }, [allProjects, currentProject?.data.projectId, selectedProject, setProject]);
 
   useEffect(() => {
     simulation?.restart();
@@ -83,9 +87,10 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleClick }) => {
       <ProjectTooltip ref={tooltipRef} />
       <RandomSvg ref={svgRef}>
         <g>
-          {currentProject && <GLinks data={foundedProjects} currentProject={currentProject} />}
+          {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
           <GCircles data={simulatedCircles} setCurrentProject={setProject} tooltipRef={tooltipRef} />
           <GLabels data={simulatedCircles} />
+          <GTooltips data={foundProjects} currentProject={currentProject} />
         </g>
         <GPartnersLegend width={width} />
       </RandomSvg>

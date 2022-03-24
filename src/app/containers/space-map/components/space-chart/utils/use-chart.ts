@@ -11,7 +11,8 @@ export function useChart({ width, height, maxMarketCap, minMarketCap, tree }: Us
   const [simulation, setSimulation] = useState<Simulation<PackedNodes, undefined> | null>(null);
   useEffect(() => {
     if (width && height && tree && maxMarketCap && minMarketCap) {
-      setPackedCategories(createCategoryPacks(tree, maxMarketCap, minMarketCap, width, height));
+      const createdPacks = createCategoryPacks(tree, maxMarketCap, minMarketCap);
+      setPackedCategories(createdPacks);
     }
   }, [width, height, maxMarketCap, minMarketCap, tree]);
 
@@ -22,7 +23,6 @@ export function useChart({ width, height, maxMarketCap, minMarketCap, tree }: Us
   }, [packedCategories, width, height]);
 
   const simulatedCircles = useMemo(() => simulation?.nodes().map(item => packedChild(item)), [simulation]);
-
   return {
     packedCategories,
     simulation,

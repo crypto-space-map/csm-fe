@@ -1,7 +1,15 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
 
 import { SortingValues } from './types';
+
+export const additionalText = css`
+  color: ${COLOR_PALLETTE.MAIN_GRAY};
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 27px;
+`;
 
 export const GridWrapper = styled.div``;
 
@@ -52,13 +60,23 @@ export const StyledEndMessage = styled.p`
   margin: 0;
 `;
 
-export const StyledHeaderItem = styled.div<{ sortable: boolean }>`
-  cursor: ${props => (props.sortable ? 'pointer' : 'default')};
+export const cellItem = css`
   font-size: 14px;
   line-height: 16px;
   display: flex;
-  width: min-content;
   user-select: none;
+  width: 100%;
+`;
+
+export const StyledHeaderItem = styled.div<{ sortable: boolean; textAlign?: string }>`
+  cursor: ${props => (props.sortable ? 'pointer' : 'default')};
+  justify-content: ${props => (props.textAlign === 'right' ? 'flex-end' : 'flex-start')};
+  ${cellItem}
+`;
+
+export const StyledCellItem = styled.div<{ textAlign?: string }>`
+  justify-content: ${props => (props.textAlign === 'right' ? 'flex-end' : 'flex-start')};
+  ${cellItem}
 `;
 
 export const ArrowIconWrapper = styled.div<{ selected: boolean; sortDirection: string }>`
@@ -77,12 +95,30 @@ export const StyledRefreshContent = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 36px;
+`;
 
-  & > span {
-    color: ${COLOR_PALLETTE.MAIN_GRAY};
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 27px;
-    margin-bottom: 24px;
-  }
+export const StyledNoFoundContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60px;
+`;
+
+export const IconWrapper = styled.div`
+  margin-bottom: 24px;
+`;
+
+export const ButtonWrapper = styled.div`
+  margin-top: 24px;
+`;
+
+export const MainAdditionalText = styled.span`
+  ${additionalText}
+`;
+
+export const SecondAdditionalText = styled.span`
+  ${additionalText}
+  font-size: 16px;
+  font-weight: normal;
+  margin-top: 16px;
 `;

@@ -1,68 +1,54 @@
-import { memo } from 'react';
+import { memo, useEffect, useCallback } from 'react';
 
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
-import { Grid, CryptoLogo } from 'app/components';
+import { Grid } from 'app/components';
+import { ProjectCell, InvestorsBlock, StyledLoader, AnnLink } from 'app/components/detail-common-components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
-import LinkIcon from 'assets/link.svg';
-import { cutLink } from 'utils/detail-info';
+import { selectedFundName } from 'store/pageStore/selectors';
+import { getTransformedPrice } from 'utils/detail-info';
 
-import { headerNames, products } from './constants';
-import { AnnLink, ProjectWrapper, StyledLink, InvestorLinkWrapper, InvestorsWrapper } from './styles';
-import { InvestmentsProps } from './types';
+import { selectedEnrichedInvestorsData, selectedInvestorsDataLoading } from '../../selectors';
+import { useDispatchAction } from '../../slice';
+import { TransformedInvestorDTO } from '../../types';
+import { headerNames } from './constants';
 
-const decorateAmount = (row: InvestmentsProps) => {
+interface EnrichedInvestorsProps extends TransformedInvestorDTO {
+  id: string;
+}
+
+const decorateAmount = (row: EnrichedInvestorsProps) => {
   const { amount } = row;
   if (!amount) return null;
-  return `$${amount}`;
+  return getTransformedPrice(amount, true);
 };
 
-const decorateDate = (row: InvestmentsProps) => {
+const decorateDate = (row: EnrichedInvestorsProps) => {
   const value = row.date;
   if (!value) return null;
-  return moment(value).format('DD MMMM YYYY');
+  return moment(value).format('DD MMM YYYY');
 };
 
-const decorateAnn = (row: InvestmentsProps) => {
-  const value = row.ann;
+const decorateAnn = (row: EnrichedInvestorsProps) => {
+  const value = row.announcement;
   if (!value) return null;
-  return (
-    <AnnLink target="_blank" href={value}>
-      <LinkIcon /> <span>{cutLink(value)}</span>
-    </AnnLink>
-  );
+  return <AnnLink link={value} width={70} />;
 };
 
-const decorateProject = (row: InvestmentsProps) => {
-  const { project: projectName, imgSrc } = row;
-  if (!projectName) return null;
-  return (
-    <ProjectWrapper>
-      <CryptoLogo path={imgSrc} />
-      <span>{projectName}</span>
-    </ProjectWrapper>
-  );
+const decorateProject = (row: EnrichedInvestorsProps) => {
+  const { projectId, projectLogo, projectName } = row;
+  if (!projectName || !projectId) return null;
+  return <ProjectCell id={projectId} name={projectName} icon={projectLogo} />;
 };
 
-const decorateInvestors = (row: InvestmentsProps) => {
+const decorateInvestors = (row: EnrichedInvestorsProps) => {
   const value = row.investors;
   if (!value) return null;
-
-  return (
-    <InvestorsWrapper>
-      {value.map((item, i, array) => (
-        <InvestorLinkWrapper key={`investorLinkWrapper ${item.title}`}>
-          <StyledLink target="_blank" href={item.link}>
-            {item.title}
-          </StyledLink>
-          {array.length - 1 !== i ? <span>,</span> : null}
-        </InvestorLinkWrapper>
-      ))}
-    </InvestorsWrapper>
-  );
+  return <InvestorsBlock investors={value} />;
 };
 
-const columns: ColumnProps<InvestmentsProps>[] = [
+const columns: ColumnProps<EnrichedInvestorsProps>[] = [
   {
     field: 'id',
     headerName: headerNames.id,
@@ -70,28 +56,28 @@ const columns: ColumnProps<InvestmentsProps>[] = [
     sortable: false,
   },
   {
-    field: 'fundrasingRound',
-    headerName: headerNames.fundrasingRound,
-    width: 80,
+    field: 'type',
+    headerName: headerNames.type,
+    width: 70,
     sortable: false,
   },
   {
-    field: 'project',
-    headerName: headerNames.project,
-    width: 90,
+    field: 'projectName',
+    headerName: headerNames.projectName,
+    width: 105,
     renderCell: decorateProject,
   },
   {
     field: 'amount',
     headerName: headerNames.amount,
-    width: 80,
+    width: 90,
     valueFormatter: decorateAmount,
-    sortable: false,
+    type: SortingTypes.NUMBER,
   },
   {
     field: 'investors',
     headerName: headerNames.investors,
-    width: 130,
+    width: 140,
     renderCell: decorateInvestors,
     sortable: false,
   },
@@ -103,15 +89,28 @@ const columns: ColumnProps<InvestmentsProps>[] = [
     valueFormatter: decorateDate,
   },
   {
-    field: 'ann',
-    headerName: headerNames.ann,
+    field: 'announcement',
+    headerName: headerNames.announcement,
     sortable: false,
-    width: 100,
+    width: 80,
     renderCell: decorateAnn,
   },
 ];
 
 export const Investments = memo(() => {
-  const loadData = () => {};
-  return <Grid columns={columns} rows={products} fetchData={loadData} />;
+  const fundName = useSelector(selectedFundName);
+  const investorsDataLoading = useSelector(selectedInvestorsDataLoading);
+  const investorsData = useSelector(selectedEnrichedInvestorsData);
+  const { fetchInvestorsData } = useDispatchAction();
+
+  const loadData = useCallback(() => {
+    if (fundName && !investorsData) fetchInvestorsData(fundName);
+  }, [fundName, investorsData, fetchInvestorsData]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  if (investorsDataLoading) return <StyledLoader />;
+  return <Grid columns={columns} rows={investorsData} fetchData={loadData} startedSortedField="amount" />;
 });

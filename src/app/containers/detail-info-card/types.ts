@@ -1,3 +1,5 @@
+import { FetchDataState } from 'utils/@reduxjs/fetchData';
+
 export interface ExchangeRequest {
   page: number;
   projectName: string;
@@ -10,6 +12,32 @@ export interface ExchangeDTO {
   volume: number;
   persentVolume: number | null;
   updatedAt: string;
+}
+
+export interface EventsProps {
+  title: string;
+  description: string;
+  date: string;
+  proof: string;
+  source: string;
+}
+export interface EventsDTO {
+  events: EventsProps[];
+  icon: string;
+}
+
+export interface InvestorsProps {
+  id: string;
+  name: string;
+  website: string;
+}
+
+export interface FundsDTO {
+  type: string;
+  investors: InvestorsProps[];
+  amount: number;
+  date: string;
+  announcement: string;
 }
 
 interface CommonStatistic {
@@ -30,9 +58,20 @@ export interface HeaderData {
 }
 
 export interface ButtonsProps {
-  id: string;
   text: string;
   link: string;
+}
+
+export interface CardProps {
+  socialMediaType?: number;
+  title?: string;
+  titleUrl?: string;
+  imageUrl?: string;
+  createdAt: string;
+  text: string;
+  subTitleUrl?: string;
+  proof?: string;
+  source?: string;
 }
 
 export interface SocialDataDTO {
@@ -43,7 +82,6 @@ export interface SocialDataDTO {
   createdAt: string;
   text: string;
   url: string;
-  buttons?: ButtonsProps[];
 }
 export interface StatisticDetailDataDTO {
   marketPrice: CommonStatistic;
@@ -57,6 +95,9 @@ export interface StatisticDetailDataDTO {
 }
 
 export interface ProjectDataResponseDTO {
+  category: string;
+  description: string;
+  explorers: string[];
   name: string;
   symbol: string;
   icon: string;
@@ -75,17 +116,38 @@ export interface ProjectDataResponseDTO {
   };
 }
 
+export interface OverviewExtraDataProps {
+  category: string;
+  description: string;
+  explorers: string[];
+}
+
+interface SocialData extends FetchDataState {
+  data: SocialDataDTO[] | null;
+}
+
+interface FundsData extends FetchDataState {
+  data: FundsDTO[] | null;
+}
+
+interface ExchangesData extends FetchDataState {
+  data: ExchangeDTO[] | null;
+}
+
+interface EventsData extends FetchDataState {
+  data: EventsDTO | null;
+}
+
 export interface DetailInfoState {
-  exchangesData: ExchangeDTO[];
-  exchangesDataLoading: boolean;
-  overviewTradingStockLoading: boolean;
-  overviewTradingStock: string;
+  exchangesData: ExchangesData;
+  overviewExtraData: OverviewExtraDataProps | null;
   exchangesPage: number;
   projectLoading: boolean;
   projectStatistic: StatisticDetailDataDTO | null;
   projectHeaderData: HeaderData | null;
-  socialData: SocialDataDTO[] | null;
-  socialDataLoading: boolean;
+  socialData: SocialData;
+  fundsData: FundsData;
+  eventsData: EventsData;
 }
 
 export type ContainerState = DetailInfoState;

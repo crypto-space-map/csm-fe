@@ -30,7 +30,7 @@ export const MainValue = styled.span`
 export const StatisticsSectionWrapper = styled.div`
   display: grid;
   grid-gap: 36px 0;
-  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
   margin-bottom: 36px;
 `;
 
@@ -46,8 +46,8 @@ export const ProjectChangeWrapper = styled.div`
 `;
 
 export const StyledLink = styled.a`
-  ${link(COLOR_PALLETTE.MAIN_WHITE)}
-  width: 130px;
+  ${link(COLOR_PALLETTE.MAIN_WHITE, COLOR_PALLETTE.MAIN_WHITE)}
+  width: 155px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

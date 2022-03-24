@@ -1,11 +1,14 @@
-import { CryptoLogo } from 'app/components';
+import { ContractItemWrapper, StyledTextLink, Point } from './styles';
 
-import { ContractItemWrapper } from './styles';
-import { ContractProps } from './types';
+interface ContractItemProps {
+  address: string;
+}
 
-export const ContractItem = ({ imgSrc, name, address }: Omit<ContractProps, 'id'>) => (
+export const ContractItem = ({ address }: ContractItemProps) => (
   <ContractItemWrapper>
-    <CryptoLogo path={imgSrc} />
-    <span>{`${name}: ${address}`}</span>
+    <Point />
+    <StyledTextLink target="_blank" rel="noreferrer" href={address}>
+      {address}
+    </StyledTextLink>
   </ContractItemWrapper>
 );

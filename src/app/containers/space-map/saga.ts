@@ -6,9 +6,9 @@ import { apiFetchMapData, apiFetchPartners, apiFetchProjects } from './api';
 import { actions } from './slice';
 
 /** READ */
-export function* fetchMapData() {
+export function* fetchMapData({ payload }: ReturnType<typeof actions.fetchSpaceMapData>) {
   try {
-    const { data } = yield* call(apiFetchMapData);
+    const { data } = yield* call(apiFetchMapData, payload);
     yield* put(actions.fetchSpaceMapDataSuccess({ data }));
   } catch (error) {
     if (error instanceof Error) {

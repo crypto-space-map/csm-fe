@@ -16,17 +16,19 @@ export const GLinks = memo<GAreaProps>(({ data, currentProject }) => {
   return (
     <g className="links">
       {data?.map(elem => (
-        <ProjectLink
-          stroke={COLOR_PALLETTE.MAIN_WHITE}
-          key={`${elem.x}${elem.y}`}
-          strokeWidth={1}
-          stroke-dasharray="4000 4000"
-          vectorEffect="non-scaling-stroke"
-          x1={getCircleCoord(currentProject, 'x')}
-          y1={getCircleCoord(currentProject, 'y')}
-          x2={getCircleCoord(elem, 'x')}
-          y2={getCircleCoord(elem, 'y')}
-        />
+        <>
+          <ProjectLink
+            stroke={COLOR_PALLETTE.MAIN_WHITE}
+            key={`links-g-area-${elem.data.key || elem.data.projectId}${elem.data.marketCap}`}
+            strokeWidth={1}
+            strokeDasharray="4000 4000"
+            vectorEffect="non-scaling-stroke"
+            x1={getCircleCoord(currentProject, 'x')}
+            y1={getCircleCoord(currentProject, 'y')}
+            x2={getCircleCoord(elem, 'x')}
+            y2={getCircleCoord(elem, 'y')}
+          />
+        </>
       ))}
     </g>
   );

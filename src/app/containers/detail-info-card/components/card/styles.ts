@@ -1,7 +1,16 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button as MuiButton, ButtonProps } from '@mui/material';
 import { COLOR_PALLETTE } from 'global/pallette';
 import { link } from 'global/styles';
+
+export const linkStyles = css`
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  text-decoration: none;
+  ${link()}
+`;
 
 export const CardWrapper = styled.article`
   display: flex;
@@ -29,22 +38,41 @@ export const CompanyInfo = styled.section`
 `;
 
 export const IconWrapper = styled.div`
+  margin-right: 16px;
+  width: 43px;
+  height: 43px;
   & > img {
     border-radius: 26px;
   }
 `;
 
-export const StyledAccountName = styled.span`
+export const StyledTitleLink = styled.a`
   font-size: 16px;
   line-height: 22px;
-  color: ${COLOR_PALLETTE.MAIN_BLACK};
+  text-decoration: none;
+  ${link(COLOR_PALLETTE.MAIN_BLACK)}
+  &:hover {
+    color: ${COLOR_PALLETTE.LINK_COLOR};
+  }
 `;
 
-export const StyledAccountLink = styled.a`
-  font-weight: normal;
+export const StyledTitle = styled.a`
+  font-weight: 600;
   font-size: 16px;
   line-height: 22px;
-  ${link()}
+`;
+
+export const StyledSubTitleLink = styled.a`
+  ${linkStyles}
+  width: 350px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+`;
+
+export const StyledTextLink = styled.a`
+  ${linkStyles}
 `;
 
 export const PostDate = styled.section`
@@ -56,17 +84,17 @@ export const PostDate = styled.section`
 export const TitleTextContent = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   font-weight: 600;
 
-  margin-left: 16px;
   & > h5 {
     margin: 0;
   }
 `;
 
 export const Icon = styled.img`
-  width: 49px;
-  height: fit-content;
+  width: 100%;
+  height: 100%;
 `;
 
 export const TextSection = styled.section`
@@ -77,9 +105,8 @@ export const TextSection = styled.section`
 
 export const ButtonsContentWrapper = styled.section`
   margin-top: 12px;
-  & > button:not(:first-of-type) {
-    margin-left: 8px;
-  }
+  display: flex;
+  grid-gap: 8px;
 `;
 
 export const StyledButton = styled(MuiButton)<ButtonProps>`
@@ -101,5 +128,5 @@ export const StyledButton = styled(MuiButton)<ButtonProps>`
 
 export const StyledButtonWrapper = styled.a`
   text-decoration: none;
-  ${link(COLOR_PALLETTE.MAIN_BLACK)}
+  ${link(COLOR_PALLETTE.MAIN_BLACK, COLOR_PALLETTE.MAIN_BLACK)}
 `;
