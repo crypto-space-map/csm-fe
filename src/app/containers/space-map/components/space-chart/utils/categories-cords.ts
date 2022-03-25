@@ -1,11 +1,11 @@
 export const getCategoriesCords = (sortingNumber: number, width = 0, height = 0) => {
   switch (sortingNumber) {
     case 1: // Business services
-      return { x: width * 0.9, y: height * 0.8 };
+      return { x: width * 0.88, y: height * 0.8 };
     case 2: // Exchanges
       return { x: width * 0.25, y: height * 0.35 };
     case 3: // Currency
-      return { x: width * 0.9, y: height * 0.5 };
+      return { x: width * 0.88, y: height * 0.5 };
     case 4: // Defi
       return { x: width * 0.75, y: height * 0.27 };
     case 5: // Entertainment
@@ -23,7 +23,7 @@ export const getCategoriesCords = (sortingNumber: number, width = 0, height = 0)
     case 11: // Data
       return { x: width * 0.4, y: height * 0.8 };
     case 12: // Social services
-      return { x: width * 0.9, y: height * 0.25 };
+      return { x: width * 0.88, y: height * 0.25 };
     case 13: // NGMI
       return { x: width * 0.8, y: height * 0.85 };
   }
