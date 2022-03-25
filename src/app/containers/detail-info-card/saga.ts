@@ -2,7 +2,15 @@ import { put, takeLatest, call } from 'typed-redux-saga';
 
 import { toast } from 'app/components';
 
-import { getExchangesData, getProjectData, getSocialData, getEventsData } from './api';
+import {
+  getExchangesData,
+  getProjectData,
+  getSocialData,
+  getFundsData,
+  getEventsData,
+  getCommunityData,
+} from './api';
+
 import { actions } from './slice';
 
 export function* exchangesDataWorker(action: ReturnType<typeof actions.fetchExchangesData>) {
@@ -60,9 +68,23 @@ export function* fetchEventsDataWorker(action: ReturnType<typeof actions.fetchEv
   }
 }
 
+export function* fetchComminityDataWorker(action: ReturnType<typeof actions.fetchComminityData>) {
+  try {
+    const { data } = yield* call(getCommunityData, action.payload);
+    yield* put(actions.fetchComminityDataSuccess({ data }));
+  } catch (error) {
+    if (error instanceof Error) {
+      const { message } = error;
+      toast(message, 'error');
+      yield* put(actions.fetchComminityDataError({ message }));
+    }
+  }
+}
+
 export function* detailInfoSaga() {
   yield* takeLatest(actions.fetchExchangesData, exchangesDataWorker);
   yield* takeLatest(actions.fetchProjectData, projectDataWorker);
   yield* takeLatest(actions.fetchSocialData, fetchSocialDataWorker);
   yield* takeLatest(actions.fetchEventsData, fetchEventsDataWorker);
+  yield* takeLatest(actions.fetchComminityData, fetchComminityDataWorker);
 }

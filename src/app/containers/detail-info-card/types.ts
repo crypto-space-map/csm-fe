@@ -104,6 +104,27 @@ export interface ProjectDataResponseDTO {
   maxVolumeExchange: string;
 }
 
+export interface SocialNetwork {
+  url: string;
+  count: number;
+  type?: 1 | 2;
+}
+export interface GithubNetwork {
+  repositories: string[];
+  stars: number;
+  contributors: number;
+  followers: number;
+  closeIssues: number;
+}
+
+export interface CommunityDTO {
+  telegram: SocialNetwork[] | null;
+  twitter: SocialNetwork | null;
+  medium: SocialNetwork | null;
+  discord: SocialNetwork | null;
+  gitInfo: GithubNetwork | null;
+}
+
 export interface OverviewExtraDataProps {
   category: string;
   description: string;
@@ -122,6 +143,10 @@ interface EventsData extends FetchDataState {
   data: EventsDTO | null;
 }
 
+interface CommunityData extends FetchDataState {
+  data: CommunityDTO | null;
+}
+
 export interface DetailInfoState {
   exchangesData: ExchangesData;
   overviewExtraData: OverviewExtraDataProps | null;
@@ -131,6 +156,7 @@ export interface DetailInfoState {
   projectHeaderData: HeaderData | null;
   socialData: SocialData;
   eventsData: EventsData;
+  communityData: CommunityData;
 }
 
 export type ContainerState = DetailInfoState;

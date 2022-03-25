@@ -19,6 +19,8 @@ export const selectedSocialData = (state: RootState) => selectDomain(state).soci
 export const selectedSocialDataLoading = (state: RootState) => selectDomain(state).socialData.loading;
 export const selectedEventsData = (state: RootState) => selectDomain(state).eventsData.data;
 export const selectedEventsDataLoading = (state: RootState) => selectDomain(state).eventsData.loading;
+export const selectedCommunityData = (state: RootState) => selectDomain(state).communityData.data;
+export const selectedCommunityDataLoading = (state: RootState) => selectDomain(state).communityData.loading;
 export const selectedProjectPartnerships = (state: RootState) => state.spaceMapData.projectPartnerships.data;
 
 export const selectedEnrichedEventsData = createSelector([selectedEventsData], data => {

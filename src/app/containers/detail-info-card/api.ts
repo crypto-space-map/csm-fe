@@ -6,6 +6,7 @@ import type {
   ProjectDataResponseDTO,
   SocialDataDTO,
   EventsDTO,
+  CommunityDTO,
 } from './types';
 
 export async function getExchangesData({ projectName, page }: ExchangeRequest) {
@@ -22,4 +23,9 @@ export async function getSocialData(projectId: string) {
 
 export async function getEventsData(projectId: string) {
   return axios.get<EventsDTO>(`project/events/${projectId}`);
+}
+
+export async function getCommunityData(projectId: string) {
+  // Исправить на актуальный
+  return axios.get<CommunityDTO>(`/project/communities/${projectId}`);
 }
