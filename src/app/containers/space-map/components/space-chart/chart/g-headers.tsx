@@ -1,25 +1,20 @@
-import { Fragment, useCallback } from 'react';
+import { Fragment } from 'react';
 
 import { useSelector } from 'react-redux';
 
 import { selectCategoriesParentPathData } from 'app/containers/space-map/selectors';
 
 import { GAreaProps } from '../types';
-import { getCategoriesCords } from '../utils/categories-cords';
-
-type GHeadersProps = GAreaProps & {
-  width: number;
-  height: number;
-};
 
 const MARKER = 'CATEGORIES_HEADERS';
 
-export const GHeaders = ({ width, height, data }: GHeadersProps) => {
-  const getCirclesLength = useCallback(
-    (sortingNumber: number) => data?.filter(item => item.data.sortingNumber === sortingNumber).length || 0,
-    [data]
-  );
+const calculateYAxis = (prev: number, cur: number) => {
+  if (!prev) return cur;
+  if (prev < cur) return prev;
+  return cur;
+}; /** calculate highest YAxis point to place header of category */
 
+export const GHeaders = ({ data }: GAreaProps) => {
   type blah = {
     x: number;
     y: number;
@@ -31,16 +26,12 @@ export const GHeaders = ({ width, height, data }: GHeadersProps) => {
       const filteredFields = data?.filter(
         ({ data: { sortingNumber: dataSortingNumbers } }) => dataSortingNumbers === sortingNumber
       );
+
       const cords = filteredFields?.reduce(
         (acc, item) => {
-          const y = () => {
-            if (!acc.y) return item.data.y;
-            if (acc.y > item.data.y) return item.data.y;
-            return acc.y;
-          };
           acc = {
             x: acc.x + item.data.x,
-            y: y(),
+            y: calculateYAxis(acc.y, item.data.y - item.data.r),
             r: acc.r + item.data.r,
           };
           return acc;
@@ -48,8 +39,8 @@ export const GHeaders = ({ width, height, data }: GHeadersProps) => {
         { x: 0, y: 0, r: 0 } as blah
       );
       return {
-        x: cords?.x / filteredFields?.length - cords.r / filteredFields.length - 30,
-        y: cords?.y - 50,
+        x: cords?.x / filteredFields?.length - cords.r / filteredFields.length,
+        y: cords?.y - 30,
       };
     }
     return null;
@@ -73,7 +64,7 @@ export const GHeaders = ({ width, height, data }: GHeadersProps) => {
           />
           <marker
             refY={0}
-            refX={0}
+            refX={(item.parent?.length || 1) * 5}
             key={`marker-category-point${item.sortingNumber}`}
             id={`${MARKER}${item.sortingNumber}`}
             viewBox="0 0 250 10"

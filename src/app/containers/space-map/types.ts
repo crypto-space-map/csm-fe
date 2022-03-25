@@ -82,6 +82,7 @@ export interface SpaceMapPageState {
 export type CategoryPathData = {
   parentPathData: string;
   sortingNumber: number;
+  parent: string | null;
 };
 
 export type ContainerState = SpaceMapPageState;

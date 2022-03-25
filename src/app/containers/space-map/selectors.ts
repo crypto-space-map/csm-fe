@@ -15,10 +15,10 @@ export const selectPartnerships = (state: RootState) => ({
 export const selectFilters = (state: RootState) => selectDomain(state).filters;
 
 export const selectCategoriesParentPathData = (state: RootState) =>
-  selectDomain(state).mapTree.data.tree?.reduce((acc, { sortingNumber, parentPathData }) => {
+  selectDomain(state).mapTree.data.tree?.reduce((acc, { sortingNumber, parentPathData, parent }) => {
     const isIncludes = acc.some(elem => elem.sortingNumber === sortingNumber);
     if (!isIncludes && parentPathData) {
-      acc = [...acc, { sortingNumber, parentPathData }];
+      acc = [...acc, { sortingNumber, parentPathData, parent: parent || null }];
     }
     return acc;
   }, [] as CategoryPathData[]);
