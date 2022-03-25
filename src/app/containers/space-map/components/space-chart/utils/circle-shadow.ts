@@ -1,11 +1,14 @@
-import { Selection } from 'd3';
+import { RefObject } from 'react';
+
+import { select } from 'd3';
 
 const MATRIX_VALUE = `0     0     0     0     0
                       0     0     0     0     0
                       0     0     0     0     0
                       0     0     0     1     0 `;
 
-export const circleShadow = (svg: Selection<SVGSVGElement | null, unknown, null, undefined>) => {
+export const circleShadow = (ref: RefObject<Element>) => {
+  const svg = select(ref.current);
   const defs = svg.append('defs');
 
   const dropShadowFilter = defs
@@ -36,4 +39,5 @@ export const circleShadow = (svg: Selection<SVGSVGElement | null, unknown, null,
     .attr('in', 'SourceGraphic')
     .attr('in2', 'the-shadow')
     .attr('mode', 'normal');
+  dropShadowFilter.append('svg:feDropShadow').attr('flood-color', '#ffffff');
 };

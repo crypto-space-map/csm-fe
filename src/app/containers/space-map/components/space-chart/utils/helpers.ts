@@ -4,7 +4,10 @@ import { HierarchyCircularNode } from 'd3';
 
 import { PackedCategories } from '../types';
 
-export const getCircleCoord = (data: HierarchyCircularNode<PackedCategories>, key: 'x' | 'y') => {
+export const getCircleCoord = (
+  data: HierarchyCircularNode<PackedCategories> | PackedCategories,
+  key: 'x' | 'y'
+) => {
   const coord = data[key] + (data.parent?.data[key] || 0) - (data.parent?.data.r || 0) || 0;
   let dataParent = data.parent?.parent;
   let value = dataParent ? dataParent.data[key] - dataParent.data.r || 0 : 0;

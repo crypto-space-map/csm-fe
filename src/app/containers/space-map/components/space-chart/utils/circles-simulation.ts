@@ -1,29 +1,31 @@
-import { forceSimulation, forceCollide, forceCenter, forceManyBody } from 'd3';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import forceInABox from 'force-in-a-box';
+import { forceSimulation, forceCollide, forceX, forceY, forceManyBody } from 'd3';
 
 import { CirclesSimulation } from '../types';
 
-const ALPHA_TICK = 0.0001;
+const ALPHA_TICK = 0.001;
 
-export const circlesSimulation = ({ packedCategories, width, height }: CirclesSimulation) => {
-  const groupingForce = forceInABox()
-    .strength(0.1) // Strength to foci
-    .groupBy('sortingNumber') // Node attribute to group
-    .size([width * 0.8, height * 0.9]); // Size of the chart
-  // .forceCharge(1)
-
+export const circlesSimulation = ({ packedCategories }: CirclesSimulation) => {
   const simulation = forceSimulation(packedCategories)
-    .force('group', groupingForce)
-    .force('charge', forceManyBody().strength(-1))
-    .force('center', forceCenter(width / 2, height / 2).strength(0.2))
+    .force(
+      'x',
+      forceX()
+        .x(d => d.x as number)
+        .strength(0.8)
+    )
+    .force(
+      'y',
+      forceY()
+        .y(d => d.y as number)
+        .strength(1)
+    )
+    .force('charge', forceManyBody().strength(-500))
     .force(
       'collide',
       forceCollide()
-        .strength(-2)
-        .radius(d => d.r)
-        .iterations(1)
+        .strength(1)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        .radius(d => d.r + 5)
     )
     .stop();
 

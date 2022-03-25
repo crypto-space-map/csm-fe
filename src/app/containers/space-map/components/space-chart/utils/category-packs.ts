@@ -3,8 +3,7 @@ import { packSiblings, group, scaleSqrt } from 'd3';
 import { MapCategory } from 'app/containers/space-map/types';
 
 import { PackedNodes } from '../types';
-
-const radius = scaleSqrt().domain([0, 1]).range([0, 20]);
+import { getCategoriesCords } from './categories-cords';
 
 export const createCategoryPacks = (categories: MapCategory[], width = 0, height = 0) => {
   const mappedCategories = group(categories, d => d.name);
@@ -14,14 +13,14 @@ export const createCategoryPacks = (categories: MapCategory[], width = 0, height
     return acc;
   }, 0);
 
+  const radius = scaleSqrt()
+    .domain([0, 1])
+    .range([0, height * 0.04]);
+
   const packedCategories = new Map<string, PackedNodes>();
 
-  function getRandomFromRange(min: number, max: number) {
-    return Math.random() * (max - min) + min;
-  }
-
   for (let [key, value] of mappedCategories) {
-    const { children, marketCap } = value[0];
+    const { children, marketCap, sortingNumber, namePathData } = value[0];
 
     const circledChildren = children.map(data => ({ ...data, data, r: 0 }));
 
@@ -31,11 +30,9 @@ export const createCategoryPacks = (categories: MapCategory[], width = 0, height
 
     const r = radius(maxCalculatedRadius);
 
-    const sortingNumber = value[0].sortingNumber || Math.floor(getRandomFromRange(20, 60));
-
-    const state = { properties: { x: width / 2, y: height / 2 } };
-    const { x, y } = state.properties;
-    packedCategories.set(key, { key, children: nodes, r, x, y, sortingNumber });
+    const state = getCategoriesCords(sortingNumber, width, height);
+    const { x, y } = state;
+    packedCategories.set(key, { key, children: nodes, r, x, y, sortingNumber, namePathData });
   }
   const categoriesMapValues = [...new Map(packedCategories).values()] as PackedNodes[];
   return categoriesMapValues;
