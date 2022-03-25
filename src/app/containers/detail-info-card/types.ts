@@ -1,3 +1,4 @@
+import { FundsDTO } from 'types/dto';
 import { FetchDataState } from 'utils/@reduxjs/fetchData';
 
 export interface ExchangeRequest {
@@ -10,7 +11,7 @@ export interface ExchangeDTO {
   pair: string;
   price: number;
   volume: number;
-  persentVolume: number | null;
+  volumePercentage: number;
   updatedAt: string;
 }
 
@@ -24,20 +25,6 @@ export interface EventsProps {
 export interface EventsDTO {
   events: EventsProps[];
   icon: string;
-}
-
-export interface InvestorsProps {
-  id: string;
-  name: string;
-  website: string;
-}
-
-export interface FundsDTO {
-  type: string;
-  investors: InvestorsProps[];
-  amount: number;
-  date: string;
-  announcement: string;
 }
 
 interface CommonStatistic {
@@ -103,7 +90,7 @@ export interface ProjectDataResponseDTO {
   icon: string;
   rank: number;
   marketPrice: CommonStatistic;
-  priceChangePercentage: {
+  priceChange: {
     '24h': PercentageStatistic;
     '7d': PercentageStatistic;
   };
@@ -114,22 +101,19 @@ export interface ProjectDataResponseDTO {
     circulating: PercentageStatistic;
     total: PercentageStatistic;
   };
+  maxVolumeExchange: string;
 }
 
 export interface OverviewExtraDataProps {
   category: string;
   description: string;
   explorers: string[];
+  maxVolumeExchange: string;
 }
 
 interface SocialData extends FetchDataState {
   data: SocialDataDTO[] | null;
 }
-
-interface FundsData extends FetchDataState {
-  data: FundsDTO[] | null;
-}
-
 interface ExchangesData extends FetchDataState {
   data: ExchangeDTO[] | null;
 }
@@ -146,7 +130,6 @@ export interface DetailInfoState {
   projectStatistic: StatisticDetailDataDTO | null;
   projectHeaderData: HeaderData | null;
   socialData: SocialData;
-  fundsData: FundsData;
   eventsData: EventsData;
 }
 

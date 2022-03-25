@@ -9,13 +9,17 @@ import { useMainPage, useMainPageHistory } from './hooks';
 
 export const MainPage = memo(() => {
   useMainPageHistory();
-  const { fundName } = useMainPage();
+  const { setPointsCoords, clearPointsCoords } = useMainPage();
   const { handleSelectProduct, handleSelectFund } = useSetNewProject();
 
   return (
     <>
       <SpaceChart handleSelectProduct={handleSelectProduct} />
-      <FundsList handleSelectFund={handleSelectFund} selectedFund={fundName} />
+      <FundsList
+        handleSelectFund={handleSelectFund}
+        setPointsCoords={setPointsCoords}
+        clearPointsCoords={clearPointsCoords}
+      />
       <DetailCard />
     </>
   );

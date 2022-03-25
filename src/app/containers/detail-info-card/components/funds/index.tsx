@@ -6,12 +6,15 @@ import { useSelector } from 'react-redux';
 import { Grid } from 'app/components';
 import { InvestorsBlock, StyledLoader, AnnLink } from 'app/components/detail-common-components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
-import { selectedProjectName } from 'store/pageStore/selectors';
+import {
+  selectedProjectName,
+  selectedEnrichedFundsData,
+  selectedFundsDataLoading,
+} from 'store/pageStore/selectors';
+import { useDispatchAction } from 'store/pageStore/slice';
+import { FundsDTO } from 'types/dto';
 import { getTransformedPrice } from 'utils/detail-info';
 
-import { selectedEnrichedFundsData, selectedFundsDataLoading } from '../../selectors';
-import { useDispatchAction } from '../../slice';
-import { FundsDTO } from '../../types';
 import { headerNames } from './constants';
 
 interface EnrichedFundsProps extends FundsDTO {

@@ -5,16 +5,11 @@ import type {
   ExchangeRequest,
   ProjectDataResponseDTO,
   SocialDataDTO,
-  FundsDTO,
   EventsDTO,
 } from './types';
 
 export async function getExchangesData({ projectName, page }: ExchangeRequest) {
-  return axios.get<ExchangeDTO[]>(`project/tickers/${projectName}`, { params: { page } });
-}
-
-export async function getFundsData(projectName: string) {
-  return axios.get<FundsDTO[]>(`funds?projectId=${projectName}`);
+  return axios.get<{ data: ExchangeDTO[] }>(`project/tickers/${projectName}`, { params: { page } });
 }
 
 export async function getProjectData(projectId: string) {
