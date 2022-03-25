@@ -10,11 +10,14 @@ import {
   getEventsData,
   getCommunityData,
 } from './api';
+
 import { actions } from './slice';
 
 export function* exchangesDataWorker(action: ReturnType<typeof actions.fetchExchangesData>) {
   try {
-    const { data } = yield* call(getExchangesData, action.payload);
+    const {
+      data: { data },
+    } = yield* call(getExchangesData, action.payload);
     yield* put(actions.setExchangesPage(action.payload.page));
     yield* put(actions.fetchExchangesDataSuccess({ data }));
   } catch (error) {
@@ -22,19 +25,6 @@ export function* exchangesDataWorker(action: ReturnType<typeof actions.fetchExch
       const { message } = error;
       toast(message, 'error');
       yield* put(actions.fetchExchangesDataError({ message }));
-    }
-  }
-}
-
-export function* fundsDataWorker(action: ReturnType<typeof actions.fetchFundsData>) {
-  try {
-    const { data } = yield* call(getFundsData, action.payload);
-    yield* put(actions.fetchFundsDataSuccess({ data }));
-  } catch (error) {
-    if (error instanceof Error) {
-      const { message } = error;
-      toast(message, 'error');
-      yield* put(actions.fetchFundsDataError({ message }));
     }
   }
 }
@@ -95,7 +85,6 @@ export function* detailInfoSaga() {
   yield* takeLatest(actions.fetchExchangesData, exchangesDataWorker);
   yield* takeLatest(actions.fetchProjectData, projectDataWorker);
   yield* takeLatest(actions.fetchSocialData, fetchSocialDataWorker);
-  yield* takeLatest(actions.fetchFundsData, fundsDataWorker);
   yield* takeLatest(actions.fetchEventsData, fetchEventsDataWorker);
   yield* takeLatest(actions.fetchComminityData, fetchComminityDataWorker);
 }

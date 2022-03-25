@@ -12,6 +12,7 @@ export const useSetNewProject = () => {
   const { url } = useRouteMatch();
   const fundName = useSelector(selectedFundName);
   const projectName = useSelector(selectedProjectName);
+
   const { setProjectName, setFundName } = pageStoreDispatchAction();
 
   const handleSelectProduct = useCallback(
@@ -30,7 +31,7 @@ export const useSetNewProject = () => {
   );
 
   const handleSelectFund = useCallback(
-    name => {
+    (name: string) => {
       const newFundName = name === fundName ? null : name;
       const newPath = newFundName ? `/fund/${newFundName}` : url;
 

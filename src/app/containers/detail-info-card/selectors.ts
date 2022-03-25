@@ -17,22 +17,11 @@ export const selectedProjectStatistic = (state: RootState) => selectDomain(state
 export const selectedProjectLoading = (state: RootState) => selectDomain(state).projectLoading;
 export const selectedSocialData = (state: RootState) => selectDomain(state).socialData.data;
 export const selectedSocialDataLoading = (state: RootState) => selectDomain(state).socialData.loading;
-export const selectedFundsData = (state: RootState) => selectDomain(state).fundsData.data;
-export const selectedFundsDataLoading = (state: RootState) => selectDomain(state).fundsData.loading;
 export const selectedEventsData = (state: RootState) => selectDomain(state).eventsData.data;
 export const selectedEventsDataLoading = (state: RootState) => selectDomain(state).eventsData.loading;
 export const selectedCommunityData = (state: RootState) => selectDomain(state).communityData.data;
 export const selectedCommunityDataLoading = (state: RootState) => selectDomain(state).communityData.loading;
 export const selectedProjectPartnerships = (state: RootState) => state.spaceMapData.projectPartnerships.data;
-
-export const selectedEnrichedFundsData = createSelector([selectedFundsData], data => {
-  if (!data) return null;
-
-  return data.map((item, index) => ({
-    id: String(index + 1),
-    ...item,
-  }));
-});
 
 export const selectedEnrichedEventsData = createSelector([selectedEventsData], data => {
   const events = data?.events;
@@ -76,7 +65,7 @@ export const selectedEnrichedExchangesData = createSelector([selectedExchangesDa
     numberSortFunc({
       a: args[0],
       b: args[1],
-      fieldName: 'persentVolume',
+      fieldName: 'volumePercentage',
       sortDirection: SortingValues.DESC,
     })
   );
