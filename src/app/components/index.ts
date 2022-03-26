@@ -3,7 +3,6 @@ export * from './toast';
 export * from './grid';
 export * from './select-with-link';
 export * from './crypto-logo';
-export * from './trading-widget';
 export * from './detail-card-wrapper';
 export * from './detail-tab-section';
 export * from './detail-header-section';

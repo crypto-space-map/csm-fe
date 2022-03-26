@@ -43,6 +43,7 @@ const providersListSlice = createSlice({
     },
     clearDataAfterChangeFund(state) {
       state.investorsData = initialState.investorsData;
+      state.fundData.data = initialState.fundData.data;
     },
   },
 });

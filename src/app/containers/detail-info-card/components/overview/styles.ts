@@ -48,6 +48,11 @@ export const StyledCategoryWrapper = styled.div`
 
 export const TradingWidgetWrapper = styled.div`
   height: 400px;
+  #tradingview_widget_wrapper {
+    & > div:last-child {
+      display: none;
+    }
+  }
 `;
 
 export const StyledCategory = styled(Chip)`
