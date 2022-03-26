@@ -19,6 +19,7 @@
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-show-more-text": "^1.5.2",
+    "react-ts-tradingview-widgets": "^1.0.9",
     "redux": "^4.1.1",
     "redux-saga": "^1.1.3",
     "rehype-raw": "^6.1.1",

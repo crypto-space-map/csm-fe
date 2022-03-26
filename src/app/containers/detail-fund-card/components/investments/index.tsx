@@ -37,9 +37,9 @@ const decorateAnn = (row: EnrichedInvestorsProps) => {
 };
 
 const decorateProject = (row: EnrichedInvestorsProps) => {
-  const { projectId, projectLogo, projectName } = row;
-  if (!projectName || !projectId) return null;
-  return <ProjectCell id={projectId} name={projectName} icon={projectLogo} />;
+  const { projectId, projectLogo, projectName, isOnMap } = row;
+  if (!projectName) return null;
+  return <ProjectCell id={projectId} name={projectName} icon={projectLogo} isOnMap={isOnMap} />;
 };
 
 const decorateInvestors = (row: EnrichedInvestorsProps) => {
