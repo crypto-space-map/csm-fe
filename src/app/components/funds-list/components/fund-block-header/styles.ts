@@ -6,7 +6,7 @@ export const StyledFundHeader = styled.div`
   display: flex;
   grid-gap: 10px;
   align-items: center;
-  opacity: 0.5;
+  opacity: 0.8;
   cursor: pointer;
 `;
 

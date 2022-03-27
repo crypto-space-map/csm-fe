@@ -14,9 +14,11 @@ export const StyledText = styled.span`
 `;
 
 export const StyledLink = styled(Link)`
-  display: flex;
+  display: block;
   text-decoration: none;
-  overflow-wrap: anywhere;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   ${link()}
   ${text}
 `;

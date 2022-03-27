@@ -27,7 +27,7 @@ export const FundsList = ({ handleSelectFund, setPointsCoords, clearPointsCoords
   const selectedFundIds = useSelector(selectedFundBlockItemsIdList);
   const isShowLines = useSelector(selectedIsShowLines);
 
-  const [isShow, setShow] = useState(false);
+  const [isShow, setShow] = useState(true);
 
   const selectedFunds = useMemo(
     () => funds?.filter(item => selectedFundIds.includes(item.id)) ?? [],
