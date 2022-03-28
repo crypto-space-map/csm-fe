@@ -1,9 +1,6 @@
-import { TradingWidgetProps } from './types';
+import { AdvancedRealTimeChartProps } from 'react-ts-tradingview-widgets';
 
-export const scriptSRC = 'https://s3.tradingview.com/tv.js';
-export const containerId = 'tradingview_widget';
-
-export const widgetOptions: TradingWidgetProps = {
+export const widgetOptions: AdvancedRealTimeChartProps = {
   width: '100%',
   height: '100%',
   interval: '60',

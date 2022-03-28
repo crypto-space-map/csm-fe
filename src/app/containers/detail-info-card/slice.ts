@@ -148,6 +148,9 @@ const providersListSlice = createSlice({
       state.socialData.data = initialState.socialData.data;
       state.eventsData.data = initialState.eventsData.data;
       state.communityData.data = initialState.communityData.data;
+      state.overviewExtraData = initialState.overviewExtraData;
+      state.projectHeaderData = initialState.projectHeaderData;
+      state.projectStatistic = initialState.projectStatistic;
     },
   },
 });

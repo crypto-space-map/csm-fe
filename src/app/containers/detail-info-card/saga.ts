@@ -2,15 +2,7 @@ import { put, takeLatest, call } from 'typed-redux-saga';
 
 import { toast } from 'app/components';
 
-import {
-  getExchangesData,
-  getProjectData,
-  getSocialData,
-  getFundsData,
-  getEventsData,
-  getCommunityData,
-} from './api';
-
+import { getExchangesData, getProjectData, getSocialData, getEventsData, getCommunityData } from './api';
 import { actions } from './slice';
 
 export function* exchangesDataWorker(action: ReturnType<typeof actions.fetchExchangesData>) {

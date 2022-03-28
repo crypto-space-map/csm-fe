@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -21,15 +21,13 @@ interface FundsListProps {
   clearPointsCoords: () => void;
 }
 
-// жду апишку по выбранным фондам
-
 export const FundsList = ({ handleSelectFund, setPointsCoords, clearPointsCoords }: FundsListProps) => {
   const projectName = useSelector(selectedProjectName);
   const funds = useSelector(selectedTopFunds);
   const selectedFundIds = useSelector(selectedFundBlockItemsIdList);
   const isShowLines = useSelector(selectedIsShowLines);
 
-  const [isShow, setShow] = useState(false);
+  const [isShow, setShow] = useState(true);
 
   const selectedFunds = useMemo(
     () => funds?.filter(item => selectedFundIds.includes(item.id)) ?? [],
@@ -37,16 +35,9 @@ export const FundsList = ({ handleSelectFund, setPointsCoords, clearPointsCoords
   );
 
   useEffect(() => {
-    // Если мы перешли с проекта на фонд, то занулить данные
-    if (!projectName) {
-      clearPointsCoords();
-    }
-  }, [projectName, clearPointsCoords]);
-
-  useEffect(() => {
-    // Если мы перелючаемся от одного проекта к другому, то изначально зануляем список координат
+    // При переключении проект->проект проетк->фонд зануляем список координат
     clearPointsCoords();
-  }, [selectedFunds, clearPointsCoords]);
+  }, [projectName, clearPointsCoords]);
 
   const selectedFundsCount = selectedFunds?.length ?? 0;
   const toggleIsShow = () => setShow(!isShow);
