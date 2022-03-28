@@ -1,5 +1,4 @@
+import { Tooltip as MuiTooltip } from '@mui/material';
 import { TooltipProps } from '@mui/material/Tooltip';
 
-import { StyledTooltip } from './styles';
-
-export const Tooltip = (props: TooltipProps) => <StyledTooltip {...props} arrow placement="bottom" />;
+export const Tooltip = (props: TooltipProps) => <MuiTooltip {...props} arrow placement="bottom" />;
