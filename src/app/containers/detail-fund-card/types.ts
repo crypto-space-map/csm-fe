@@ -4,6 +4,7 @@ export interface FundDataDTO {
   id: string;
   name: string;
   website: string;
+  logo: string;
 }
 
 export interface ProjectProps {
