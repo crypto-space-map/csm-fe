@@ -55,10 +55,12 @@ export const DetailHeaderSection = ({
         {showExtraInfo && (
           <>
             <CompanyTiker>{symbol?.toUpperCase() ?? ''}</CompanyTiker>
-            <RankWrapper>
-              <StarIcon />
-              <RankText>{`Rank ${rank}`}</RankText>
-            </RankWrapper>
+            {rank && (
+              <RankWrapper>
+                <StarIcon />
+                <RankText>{`Rank ${rank}`}</RankText>
+              </RankWrapper>
+            )}
           </>
         )}
       </CompanyInfo>

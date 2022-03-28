@@ -31,7 +31,7 @@ export const roundNumber = (value: number, countAfterPoint = 2) => {
     const [mainPartOfNumber, degree] = String(positiveValue).replace(NUMBER_WITH_E, '$1,$3').split(',');
     const sign = numberSign === -1 ? '-' : '';
     const zeros = String(10 ** +degree).slice(2); // получаем количество нулей без 2-х первых символов
-    const fixedNumber = getFixedNumber(+mainPartOfNumber, countAfterPoint) * 100; // получаем целое число
+    const fixedNumber = Math.round(getFixedNumber(+mainPartOfNumber, countAfterPoint) * 100); // получаем целое число
 
     return `${sign}0.${zeros}${fixedNumber}`;
   }

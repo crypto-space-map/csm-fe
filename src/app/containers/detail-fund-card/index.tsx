@@ -26,7 +26,7 @@ export const DetailFundCard = memo(() => {
       <TopSection>
         {isShow && fundData && (
           <>
-            <DetailHeaderSection showExtraInfo={false} name={fundName} />
+            <DetailHeaderSection showExtraInfo={false} name={fundName} icon={fundData?.logo} />
             <DetailStatisticsSection data={statisticsData} />
           </>
         )}
