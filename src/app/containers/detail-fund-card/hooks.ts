@@ -23,6 +23,9 @@ export function useClearDataAfterChangeNewFund() {
 
   useEffect(() => {
     clearDataAfterChangeFund();
+    return () => {
+      clearDataAfterChangeFund();
+    };
   }, [fundName, clearDataAfterChangeFund]);
 }
 

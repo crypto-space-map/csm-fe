@@ -12,6 +12,8 @@ export const selectedInvestorsData = (state: RootState) => selectDomain(state).i
 export const selectedInvestorsDataLoading = (state: RootState) => selectDomain(state).investorsDataLoading;
 export const selectedFundData = (state: RootState) => selectDomain(state).fundData.data;
 export const selectedFundDataLoading = (state: RootState) => selectDomain(state).fundData.loading;
+export const selectedProjectIdListFromInvestors = (state: RootState) =>
+  selectDomain(state).projectIdListFromInvestors;
 
 export const selectedEnrichedInvestorsData = createSelector([selectedInvestorsData], data => {
   if (!data) return null;
