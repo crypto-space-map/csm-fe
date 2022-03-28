@@ -29,20 +29,20 @@ export const StaticFundItem = ({
   }, [handleSelectFund, id]);
 
   useEffect(() => {
-    if (node) {
+    if (node && isShowLines) {
       const rect = node.getBoundingClientRect();
       setPointsCoords({ x: rect.x + rect.width, y: rect.y + rect.height / 2 });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [node]);
+  }, [node, isShowLines]);
 
   return (
     <StyledStaticFundItem ref={setRef}>
       <StyledItem onClick={handleClick}>
         <span>{name}</span>
       </StyledItem>
-      {isShowLines && <StyledStaticFundPoint className={staticFundPointClass} />}
+      <StyledStaticFundPoint className={staticFundPointClass} />
     </StyledStaticFundItem>
   );
 };

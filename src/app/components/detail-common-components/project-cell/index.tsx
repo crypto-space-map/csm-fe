@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import { CryptoLogo } from 'app/components';
+import { Tooltip } from 'common/components';
 import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/slice';
 import { addNewPath } from 'utils/router-history';
 
@@ -31,11 +32,13 @@ export const ProjectCell = ({ id, name, icon, isOnMap }: InvestorsCellProps) => 
   return (
     <ProjectWrapper onClick={handleClick}>
       {icon && <CryptoLogo path={icon} size={iconSize} />}
-      {id && isOnMap ? (
-        <StyledLink to={pathName}>{name}</StyledLink>
-      ) : (
-        <ProjectCellWithoutLink name={name} />
-      )}
+      <Tooltip title={name}>
+        {id && isOnMap ? (
+          <StyledLink to={pathName}>{name}</StyledLink>
+        ) : (
+          <ProjectCellWithoutLink name={name} />
+        )}
+      </Tooltip>
     </ProjectWrapper>
   );
 };

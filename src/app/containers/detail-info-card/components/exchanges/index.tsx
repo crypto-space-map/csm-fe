@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { Grid } from 'app/components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
+import { Tooltip } from 'common/components/tooltip';
 import { selectedProjectName } from 'store/pageStore/selectors';
 import { getTransformedPrice } from 'utils/detail-info';
 
@@ -53,12 +54,16 @@ const decoratePair = (row: EnrichedExchangeProps) => {
   const { pair, url } = row;
   if (!pair) return null;
 
-  return url ? (
-    <StyledLink target="_blank" href={url}>
-      {pair}
-    </StyledLink>
-  ) : (
-    <span>{pair}</span>
+  return (
+    <Tooltip title={pair}>
+      {url ? (
+        <StyledLink target="_blank" href={url}>
+          {pair}
+        </StyledLink>
+      ) : (
+        <span>{pair}</span>
+      )}
+    </Tooltip>
   );
 };
 
@@ -68,7 +73,11 @@ const decorateExchange = (row: EnrichedExchangeProps) => {
   const value = row.exchange;
 
   if (!value) return null;
-  return <ExchangeWrapper>{value}</ExchangeWrapper>;
+  return (
+    <Tooltip title={value}>
+      <ExchangeWrapper>{value}</ExchangeWrapper>
+    </Tooltip>
+  );
 };
 
 const columns: ColumnProps<EnrichedExchangeProps>[] = [
