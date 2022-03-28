@@ -58,7 +58,6 @@ const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, toolt
 
   return (
     <circle
-      // style={{ filter: elem.data.children?.length ? 'url(#f4)' : 'none' }}
       ref={ref}
       key={`project-circle${elem.data.parent || elem.data.projectId}`}
       r={elem.r || 0.1}

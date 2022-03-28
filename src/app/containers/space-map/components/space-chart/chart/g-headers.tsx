@@ -21,6 +21,8 @@ export const GHeaders = ({ data }: GAreaProps) => {
     r: number;
   };
 
+  const xAxisOffset = (val: number) => (val > 10 ? val : 1);
+
   const getCords = (sortingNumber: number) => {
     if (data) {
       const filteredFields = data?.filter(
@@ -64,7 +66,7 @@ export const GHeaders = ({ data }: GAreaProps) => {
           />
           <marker
             refY={0}
-            refX={(item.parent?.length || 1) * 5}
+            refX={xAxisOffset(item.parent?.length || 1) * 5}
             key={`marker-category-point${item.sortingNumber}`}
             id={`${MARKER}${item.sortingNumber}`}
             viewBox="0 0 250 10"
