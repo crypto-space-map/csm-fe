@@ -37,6 +37,7 @@ export interface DetailFundState {
   investorsData: InvestorDTO[] | null;
   investorsDataLoading: boolean;
   fundData: FundData;
+  projectIdListFromInvestors: string[];
 }
 
 export type ContainerState = DetailFundState;
