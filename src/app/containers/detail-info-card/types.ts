@@ -81,6 +81,12 @@ export interface StatisticDetailDataDTO {
   supplyTotal: PercentageStatistic;
 }
 
+export interface MaxVolumeExchangeProps {
+  identifier: string;
+  baseTicker: string;
+  targetTicker: string;
+}
+
 export interface ProjectDataResponseDTO {
   category: string;
   description: string;
@@ -101,7 +107,7 @@ export interface ProjectDataResponseDTO {
     circulating: PercentageStatistic;
     total: PercentageStatistic;
   };
-  maxVolumeExchange: string;
+  maxVolumeExchange: MaxVolumeExchangeProps;
 }
 
 export interface SocialNetwork {
@@ -129,7 +135,7 @@ export interface OverviewExtraDataProps {
   category: string;
   description: string;
   explorers: string[];
-  maxVolumeExchange: string;
+  maxVolumeExchange: MaxVolumeExchangeProps;
 }
 
 interface SocialData extends FetchDataState {
