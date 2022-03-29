@@ -9,7 +9,7 @@ export const fieldNames = {
 export const headerNames = {
   type: 'Fundrasing Round',
   investors: 'Investors',
-  amount: 'Investment amount',
+  amount: 'Raised in round',
   date: 'Date',
   announcement: 'Ann.',
 };

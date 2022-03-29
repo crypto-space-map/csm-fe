@@ -5,8 +5,7 @@ import { Tooltip } from 'common/components';
 import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/slice';
 import { addNewPath } from 'utils/router-history';
 
-import { ProjectCellWithoutLink } from './project-cell-without-link';
-import { ProjectWrapper, StyledLink } from './styles';
+import { ProjectWrapper, StyledLink, StyledText } from './styles';
 
 interface InvestorsCellProps {
   id: string;
@@ -16,6 +15,7 @@ interface InvestorsCellProps {
 }
 
 const iconSize = 16;
+const notOnMapMessage = 'project is not on the map';
 
 export const ProjectCell = ({ id, name, icon, isOnMap }: InvestorsCellProps) => {
   const { setFundName, setProjectName } = pageStoreDispatchAction();
@@ -32,13 +32,16 @@ export const ProjectCell = ({ id, name, icon, isOnMap }: InvestorsCellProps) => 
   return (
     <ProjectWrapper onClick={handleClick}>
       {icon && <CryptoLogo path={icon} size={iconSize} />}
-      <Tooltip title={name}>
-        {id && isOnMap ? (
+
+      {id && isOnMap ? (
+        <Tooltip title={name}>
           <StyledLink to={pathName}>{name}</StyledLink>
-        ) : (
-          <ProjectCellWithoutLink name={name} />
-        )}
-      </Tooltip>
+        </Tooltip>
+      ) : (
+        <Tooltip title={notOnMapMessage}>
+          <StyledText>{name}</StyledText>
+        </Tooltip>
+      )}
     </ProjectWrapper>
   );
 };

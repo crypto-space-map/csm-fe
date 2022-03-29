@@ -1,6 +1,6 @@
 import { put, takeLatest, call } from 'typed-redux-saga';
 
-import { toast } from 'app/components';
+import { actions as notifierActions } from 'store/notifier/slice';
 
 import { getExchangesData, getProjectData, getSocialData, getEventsData, getCommunityData } from './api';
 import { actions } from './slice';
@@ -15,7 +15,7 @@ export function* exchangesDataWorker(action: ReturnType<typeof actions.fetchExch
   } catch (error) {
     if (error instanceof Error) {
       const { message } = error;
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
       yield* put(actions.fetchExchangesDataError({ message }));
     }
   }
@@ -28,7 +28,7 @@ export function* projectDataWorker(action: ReturnType<typeof actions.fetchProjec
   } catch (error) {
     if (error instanceof Error) {
       const { message } = error;
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
       yield* put(actions.fetchProjectDataError());
     }
   }
@@ -41,7 +41,7 @@ export function* fetchSocialDataWorker(action: ReturnType<typeof actions.fetchSo
   } catch (error) {
     if (error instanceof Error) {
       const { message } = error;
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
       yield* put(actions.fetchSocialDataError({ message }));
     }
   }
@@ -54,7 +54,7 @@ export function* fetchEventsDataWorker(action: ReturnType<typeof actions.fetchEv
   } catch (error) {
     if (error instanceof Error) {
       const { message } = error;
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
       yield* put(actions.fetchEventsDataError({ message }));
     }
   }
@@ -67,7 +67,7 @@ export function* fetchComminityDataWorker(action: ReturnType<typeof actions.fetc
   } catch (error) {
     if (error instanceof Error) {
       const { message } = error;
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
       yield* put(actions.fetchComminityDataError({ message }));
     }
   }
