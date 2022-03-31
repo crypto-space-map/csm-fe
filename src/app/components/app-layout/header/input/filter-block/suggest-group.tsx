@@ -16,7 +16,6 @@ const ranges: Range[] = [
   { mCapFrom: '100000000', mCapTo: '1000000000', btnText: '$100M — $1B' },
   { mCapFrom: '10000000', mCapTo: '100000000', btnText: '$10M — $100M' },
   { mCapFrom: '1000000', mCapTo: '10000000', btnText: '$1M — $10M' },
-  { mCapFrom: null, mCapTo: '1000000', btnText: '<$1M' },
 ];
 
 const Btn = ({ onChange, mCapTo, mCapFrom, btnText }: BtnProps) => {

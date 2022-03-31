@@ -2,6 +2,8 @@ import { Fragment, memo, MouseEvent, RefObject, useCallback, useRef } from 'reac
 
 import { HierarchyCircularNode, scaleLinear } from 'd3';
 
+import { useSetNewProject } from 'hooks/use-set-new-project';
+
 import { GAreaProps, PackedCategories } from '../types';
 import { getSphereColorParams } from '../utils/colors';
 import { transformStylesToString } from '../utils/helpers';
@@ -20,13 +22,13 @@ type CircleProps = Omit<GAreaProps, 'data'> &
     elem: HierarchyCircularNode<PackedCategories>;
   };
 
-const Circle = memo<CircleProps>(({ elem, setCurrentProject = () => false, tooltipRef }) => {
+const Circle = memo<CircleProps>(({ elem, currentProject, setCurrentProject = () => false, tooltipRef }) => {
   const ref = useRef<SVGCircleElement>(null);
+  const { handleSelectFund } = useSetNewProject();
   const handleClick = useCallback(() => {
-    // TODO выпилить когда ДИма заапрувит размер сфер
-    console.log(elem);
-    setCurrentProject(elem);
-  }, [elem, setCurrentProject]);
+    if (currentProject?.data.projectId === elem.data.projectId) return handleSelectFund('');
+    return setCurrentProject(elem);
+  }, [currentProject?.data.projectId, elem, handleSelectFund, setCurrentProject]);
   const onMouseOver = () => {
     if (tooltipRef.current) {
       tooltipRef.current.style.visibility = 'visible';
