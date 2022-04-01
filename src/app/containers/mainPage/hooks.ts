@@ -39,6 +39,7 @@ export function useMainPageHistory() {
       const lastPath = getTheLastPath();
       const prevPath = pathsHistory[pathsHistory.length - 2];
 
+      // чистим данные, если мы находимяся в корне "/" и у нас в истории есть элементы
       if (pathname === '/' && pathsHistory.length) {
         clearData();
         clearSessionStorageItems([ItemNames.PATHS_HISTORY]);

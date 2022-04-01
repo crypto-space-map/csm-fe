@@ -10,7 +10,7 @@ import { AccountContainer } from './styled';
 
 export const Account = memo(() => {
   const token = getCookie('token');
-  if (token) return <Redirect to="/" />;
+  if (!token) return <Redirect to="/" />;
 
   return (
     <AccountContainer>

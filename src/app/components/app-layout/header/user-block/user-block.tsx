@@ -1,8 +1,9 @@
-import { useHistory } from 'react-router-dom';
+import { useCallback } from 'react';
 
 import { useLogin } from 'app/containers/login/hooks';
 import BellIcon from 'assets/icons/bell.svg';
 import { Button } from 'common/components/button';
+import { useSetNewProject } from 'hooks/use-set-new-project';
 
 import { StyledIconButton, Wrapper } from './styled';
 import { UserBellButtonProps, UserBlockProps } from './types';
@@ -16,9 +17,15 @@ const Notifications = (props: UserBellButtonProps) => (
 
 export const HeaderUserBlock = ({ avatarSrc, haveUnreadMessages }: UserBlockProps = {}) => {
   const { isAuth } = useLogin();
-  const { push: pushHistory } = useHistory();
-  const handleClickLogin = () => pushHistory('/login');
-  const handleClickAccount = () => pushHistory('/account');
+  const { handleSelectAnotherRoute } = useSetNewProject();
+
+  const handleClickLogin = useCallback(() => {
+    handleSelectAnotherRoute('/login');
+  }, [handleSelectAnotherRoute]);
+
+  const handleClickAccount = useCallback(() => {
+    handleSelectAnotherRoute('/account');
+  }, [handleSelectAnotherRoute]);
 
   return (
     <Wrapper>
