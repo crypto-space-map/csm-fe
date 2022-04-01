@@ -18,12 +18,13 @@ export function useLogin() {
   const { fetchUser, registerUser, recoverMsg } = useLoginPageSlice();
   const isAuth = useSelector(selectAuth);
   const loading = useSelector(selectLoading);
-
+  const { setAuth } = useLoginPageSlice();
   return {
     fetchUser,
     registerUser,
     recoverMsg,
     actions: { loading },
     isAuth,
+    setAuth,
   };
 }

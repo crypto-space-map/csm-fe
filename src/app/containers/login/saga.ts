@@ -5,7 +5,7 @@ import { setCookie, deleteCookie } from 'utils/cookie';
 
 import {
   getToken,
-  getUser,
+  loginUser,
   forgotPassword,
   logOut as logOutUser,
   registerUser as apiRegisterUser,
@@ -13,39 +13,13 @@ import {
 import { actions } from './slice';
 import { LoginDTORequestParams } from './types';
 
-export function* fetchUser(action: ReturnType<typeof actions['fetchUser']>) {
+export function* login(action: ReturnType<typeof actions['fetchUser']>) {
   try {
-    const { email, password } = action.payload;
-    // MOCK
-    if (email === 'csm@test.com' && password === 'CSMMvp123!') {
-      yield* put(actions.setAuth({ isAuth: true }));
-      const data = {
-        auth: true,
-        uid: '123',
-        uname: '123',
-        sn: '123',
-        fullname: '123',
-        mail: '123',
-        admin: false,
-        supervisor: false,
-        cost: '123',
-        capManager: false,
-        jwt: {
-          iat: 123,
-          exp: 123,
-        },
-      };
-
-      yield* put(actions.fetchDataSuccess({ data }));
-    } else {
-      yield* put(actions.fetchDataError({ message: 'err' }));
-    }
-    // UNMOCK WITH REAL DATA
-
-    // const { data } = yield* call(getUser, action.payload);
-    // yield* put(actions.setAuth({ isAuth: true }));
-
-    // yield* put(actions.fetchDataSuccess({ data }));
+    const {
+      data: { token },
+    } = yield* call(loginUser, action.payload);
+    yield* put(actions.setAuth({ isAuth: true }));
+    setCookie('token', token);
   } catch (error) {
     yield* put(actions.setAuth({ isAuth: false }));
     if (error instanceof Error) {
@@ -113,7 +87,7 @@ export function* logOut() {
 
 export function* loginPageSaga() {
   yield* takeLatest(actions.registerUser, registerUser);
-  yield* takeLatest(actions.fetchUser, fetchUser);
+  yield* takeLatest(actions.fetchUser, login);
   yield* takeLatest(actions.recoverMsg, forgotPassSaga);
   yield* takeLatest(actions.logOut, logOut);
 }
