@@ -35,7 +35,7 @@ export const FundsList = ({ handleSelectFund, setPointsCoords, clearPointsCoords
   );
 
   useEffect(() => {
-    // При переключении проект->проект проетк->фонд зануляем список координат
+    // При переключении проект->проект проект->фонд зануляем список координат
     clearPointsCoords();
   }, [projectName, clearPointsCoords]);
 

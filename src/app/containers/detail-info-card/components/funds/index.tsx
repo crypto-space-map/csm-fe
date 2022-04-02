@@ -62,7 +62,7 @@ const columns: ColumnProps<EnrichedFundsProps>[] = [
   {
     field: 'amount',
     headerName: headerNames.amount,
-    width: 100,
+    width: 80,
     type: SortingTypes.NUMBER,
     valueFormatter: decorateAmount,
     textAlign: 'right',

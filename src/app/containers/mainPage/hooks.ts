@@ -3,7 +3,12 @@ import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { selectedProjectName, selectedFundName, selectedTopFunds } from 'store/pageStore/selectors';
+import {
+  selectedProjectName,
+  selectedFundName,
+  selectedTopFunds,
+  selectedTopFundsLoading,
+} from 'store/pageStore/selectors';
 import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/slice';
 import { getProductNameFromPath } from 'utils/detail-info';
 import {
@@ -34,6 +39,7 @@ export function useMainPageHistory() {
       const lastPath = getTheLastPath();
       const prevPath = pathsHistory[pathsHistory.length - 2];
 
+      // чистим данные, если мы находимяся в корне "/" и у нас в истории есть элементы
       if (pathname === '/' && pathsHistory.length) {
         clearData();
         clearSessionStorageItems([ItemNames.PATHS_HISTORY]);
@@ -69,6 +75,7 @@ export function useMainPage() {
   const fundName = useSelector(selectedFundName);
   const projectName = useSelector(selectedProjectName);
   const topFunds = useSelector(selectedTopFunds);
+  const fetchingFunds = useSelector(selectedTopFundsLoading);
 
   const {
     setProjectName,
@@ -101,8 +108,8 @@ export function useMainPage() {
   }, []);
 
   useEffect(() => {
-    if (!topFunds) fetchTopFundsData();
-  }, [fetchTopFundsData, topFunds]);
+    if (!topFunds && !fetchingFunds) fetchTopFundsData();
+  }, [fetchTopFundsData, topFunds, fetchingFunds]);
 
   useEffect(() => {
     if (projectName) fetchFundsData(projectName);
