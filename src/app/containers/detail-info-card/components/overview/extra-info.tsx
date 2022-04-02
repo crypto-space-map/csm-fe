@@ -29,7 +29,7 @@ export const ExtraInfo = ({ description = '', category = '', explorers }: Overvi
     </StyledProjectInfoWrapper>
     <ContractsWrapper>
       <ContractsHeader>
-        <span>Smart Contracts:</span>
+        <span>Explorers:</span>
       </ContractsHeader>
       {explorers.map(item => (
         <ContractItem key={`ContractItem${item}`} address={item} />

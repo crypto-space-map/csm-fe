@@ -77,7 +77,7 @@ const columns: ColumnProps<EnrichedInvestorsProps>[] = [
   {
     field: 'investors',
     headerName: headerNames.investors,
-    width: 140,
+    width: 120,
     renderCell: decorateInvestors,
     sortable: false,
   },

@@ -1,6 +1,6 @@
 import { put, takeLatest, call } from 'typed-redux-saga';
 
-import { toast } from 'app/components';
+import { actions as notifierActions } from 'store/notifier/slice';
 import { setCookie, deleteCookie } from 'utils/cookie';
 
 import {
@@ -25,7 +25,7 @@ export function* login(action: ReturnType<typeof actions['fetchUser']>) {
     if (error instanceof Error) {
       const { message } = error;
       yield* put(actions.fetchDataError({ message }));
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
     }
   }
 }
@@ -39,7 +39,7 @@ export function* registerUser(action: ReturnType<typeof actions['registerUser']>
     if (error instanceof Error) {
       const { message } = error;
       yield* put(actions.fetchDataError({ message }));
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
     }
   }
 }
@@ -53,7 +53,8 @@ export function* fetchToken(payload: LoginDTORequestParams) {
     }
   } catch (error) {
     if (error instanceof Error) {
-      toast(error.message, 'error');
+      const { message } = error;
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
     }
   }
 }
@@ -66,7 +67,7 @@ export function* forgotPassSaga(action: ReturnType<typeof actions['recoverMsg']>
     if (error instanceof Error) {
       const { message } = error;
       yield* put(actions.fetchDataError({ message }));
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
     }
   }
 }
@@ -80,7 +81,7 @@ export function* logOut() {
     if (error instanceof Error) {
       const { message } = error;
       yield* put(actions.fetchDataError({ message }));
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
     }
   }
 }

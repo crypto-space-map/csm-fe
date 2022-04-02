@@ -1,6 +1,6 @@
 import { put, takeLatest, call } from 'typed-redux-saga';
 
-import { toast } from 'app/components';
+import { actions as notifierActions } from 'store/notifier/slice';
 
 import { getTopFundsData, getFundsData } from './api';
 import { actions } from './slice';
@@ -12,7 +12,7 @@ export function* topFundsDataWorker() {
   } catch (error) {
     if (error instanceof Error) {
       const { message } = error;
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
       yield* put(actions.fetchTopFundsDataError({ message }));
     }
   }
@@ -26,7 +26,7 @@ export function* fundsDataWorker(action: ReturnType<typeof actions.fetchFundsDat
   } catch (error) {
     if (error instanceof Error) {
       const { message } = error;
-      toast(message, 'error');
+      yield* put(notifierActions.addNotify({ message, type: 'error' }));
       yield* put(actions.fetchFundsDataError({ message }));
     }
   }

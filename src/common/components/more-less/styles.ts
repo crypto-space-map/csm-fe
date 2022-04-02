@@ -8,7 +8,7 @@ export const StyledMoreLess = styled.div<{ isShow: boolean }>`
   flex-direction: column;
   overflow: hidden;
   padding-bottom: 2px;
-  max-height: ${props => (props.isShow ? '100vh' : 'min-content')};
+  max-height: ${props => (props.isShow ? '100%' : 'min-content')};
   transition: max-height 0.3s ease;
 `;
 

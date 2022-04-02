@@ -3,6 +3,7 @@ import { memo, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { FundsList } from 'app/components/funds-list';
+import { useNotifier } from 'hooks/use-notifier';
 import { useSetNewProject } from 'hooks/use-set-new-project';
 import { getCookie } from 'utils/cookie';
 
@@ -13,6 +14,7 @@ import { useMainPage, useMainPageHistory } from './hooks';
 
 export const MainPage = memo(() => {
   useMainPageHistory();
+  useNotifier();
   const { setPointsCoords, clearPointsCoords } = useMainPage();
   const { isAuth, setAuth } = useLogin();
   const { handleSelectProduct, handleSelectFund } = useSetNewProject();
