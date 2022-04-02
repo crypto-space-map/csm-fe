@@ -90,7 +90,12 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
       <RandomSvg ref={svgRef}>
         <g>
           {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
-          <GCircles data={simulatedCircles} setCurrentProject={setProject} tooltipRef={tooltipRef} />
+          <GCircles
+            data={simulatedCircles}
+            setCurrentProject={setProject}
+            tooltipRef={tooltipRef}
+            currentProject={currentProject}
+          />
           <GLabels data={simulatedCircles} />
           <GHeaders data={simulatedCircles} />
           <GTooltips data={foundProjects} currentProject={currentProject} />

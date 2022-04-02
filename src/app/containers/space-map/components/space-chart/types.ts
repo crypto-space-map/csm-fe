@@ -113,5 +113,5 @@ export type PackedNodes = PackCircle & {
 export type GAreaProps = {
   data: HierarchyCircularNode<PackedCategories>[] | undefined;
   currentProject?: HierarchyCircularNode<PackedCategories> | null;
-  setCurrentProject?: (value: HierarchyCircularNode<PackedCategories>) => void;
+  setCurrentProject?: (value: HierarchyCircularNode<PackedCategories> | null) => void;
 };
