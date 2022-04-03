@@ -38,7 +38,7 @@ const makePlugins = (isDev, minify) => {
       chunkFilename: `${PATHS.assets}/${isDev ? '[fullhash].css' : '[contenthash].css'}`,
     }),
     new HtmlWebpackPlugin({
-      favicon: `${PATHS.public}/favicon.ico`,
+      favicon: `${PATHS.public}/favicon.svg`,
       filename: 'index.html',
       template: `${PATHS.public}/index.html`,
       inject: true,

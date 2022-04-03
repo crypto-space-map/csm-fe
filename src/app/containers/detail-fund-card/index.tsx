@@ -11,19 +11,25 @@ const defaultValue = 'default';
 export const DetailFundCard = memo(() => {
   useDetailFundSlice();
   useClearDataAfterChangeNewFund();
-  const { fundData } = useDetailFund();
+  const { fundData, isShow } = useDetailFund();
 
-  const statisticsData = useMemo(() => {
-    if (fundData?.website) return { website: fundData.website };
-    return null;
-  }, [fundData?.website]);
+  const statisticsData = useMemo(
+    () => ({
+      website: fundData?.website ?? '',
+    }),
+    [fundData?.website]
+  );
   const fundName = fundData?.name ?? defaultValue;
 
   return (
     <>
       <TopSection>
-        <DetailHeaderSection showExtraInfo={false} name={fundName} />
-        <DetailStatisticsSection data={statisticsData} />
+        {isShow && fundData && (
+          <>
+            <DetailHeaderSection showExtraInfo={false} name={fundName} icon={fundData?.logo} />
+            <DetailStatisticsSection data={statisticsData} />
+          </>
+        )}
       </TopSection>
 
       <TabsSection />

@@ -10,10 +10,10 @@ import { MainPage } from './containers/mainPage';
 export const App = () => (
   <AppLayout>
     <Switch>
-      <Route exact path="/login" component={Login} />
-      <Route path="/" component={MainPage} />
+      <Route path="/login" component={Login} />
       <Route path="/layout" component={Layout} />
       <Route path="/account" component={Account} />
+      <Route path="/" component={MainPage} />
       <Route
         path="*"
         component={() => (

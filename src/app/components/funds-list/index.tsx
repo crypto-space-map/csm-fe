@@ -1,35 +1,69 @@
-import { funds } from './contanst';
-import { FundListItem } from './fund-list-item';
+import { useState, useMemo, useEffect } from 'react';
+
+import { useSelector } from 'react-redux';
+
 import {
-  StyledFundList,
-  StyledFundListWrapper,
-  StyledFundHeader,
-  StyledFundContentWrapper,
-  StyledGradientBlock,
-} from './styles';
+  selectedProjectName,
+  selectedTopFunds,
+  selectedFundBlockItemsIdList,
+  selectedIsShowLines,
+} from 'store/pageStore/selectors';
+import { PointCoords } from 'store/pageStore/types';
+
+import { FundBlockHeader } from './components/fund-block-header';
+import { ScrollBlockWithFunds } from './components/scroll-block-with-funds';
+import { StaticBlockWithFunds } from './components/static-block-with-funds';
+import { StyledFundBlockWrapper, StyledMainFundBlock, StyledGradientBlock } from './styles';
 
 interface FundsListProps {
-  selectedFund: string | null;
+  setPointsCoords: (arg0: PointCoords) => void;
   handleSelectFund: (arg0: string) => void;
+  clearPointsCoords: () => void;
 }
 
-export const FundsList = ({ handleSelectFund, selectedFund = '' }: FundsListProps) => (
-  <StyledFundListWrapper>
-    <StyledFundList>
-      <StyledFundHeader>
-        <span>Funds</span>
-      </StyledFundHeader>
-      <StyledFundContentWrapper>
-        {funds.map(item => (
-          <FundListItem
-            key={item.id}
-            handleSelectFund={handleSelectFund}
-            selected={item.id === selectedFund}
-            {...item}
-          />
-        ))}
-      </StyledFundContentWrapper>
-      <StyledGradientBlock />
-    </StyledFundList>
-  </StyledFundListWrapper>
-);
+export const FundsList = ({ handleSelectFund, setPointsCoords, clearPointsCoords }: FundsListProps) => {
+  const projectName = useSelector(selectedProjectName);
+  const funds = useSelector(selectedTopFunds);
+  const selectedFundIds = useSelector(selectedFundBlockItemsIdList);
+  const isShowLines = useSelector(selectedIsShowLines);
+
+  const [isShow, setShow] = useState(true);
+
+  const selectedFunds = useMemo(
+    () => funds?.filter(item => selectedFundIds.includes(item.id)) ?? [],
+    [funds, selectedFundIds]
+  );
+
+  useEffect(() => {
+    // При переключении проект->проект проект->фонд зануляем список координат
+    clearPointsCoords();
+  }, [projectName, clearPointsCoords]);
+
+  const selectedFundsCount = selectedFunds?.length ?? 0;
+  const toggleIsShow = () => setShow(!isShow);
+
+  if (!funds) return null;
+
+  return (
+    <StyledMainFundBlock show={isShow} selectedItems={selectedFundsCount}>
+      <StyledFundBlockWrapper show={isShow}>
+        <FundBlockHeader isShow={isShow} toggleIsShow={toggleIsShow} />
+
+        <StaticBlockWithFunds
+          selectedFunds={selectedFunds}
+          isShowLines={isShowLines}
+          handleSelectFund={handleSelectFund}
+          setPointsCoords={setPointsCoords}
+        />
+
+        <ScrollBlockWithFunds
+          isShow={isShow}
+          funds={funds}
+          selectedFundIds={selectedFundIds}
+          handleSelectFund={handleSelectFund}
+        />
+        <StyledGradientBlock />
+      </StyledFundBlockWrapper>
+    </StyledMainFundBlock>
+  );
+};

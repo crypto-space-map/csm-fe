@@ -65,7 +65,7 @@ const columns: ColumnProps<EnrichedPartnership>[] = [
   {
     field: 'date',
     headerName: headerNames.date,
-    width: 130,
+    width: 100,
     type: SortingTypes.DATE,
     valueFormatter: decorateDate,
   },
@@ -73,7 +73,7 @@ const columns: ColumnProps<EnrichedPartnership>[] = [
     field: 'announcement',
     headerName: headerNames.announcement,
     sortable: false,
-    width: 180,
+    width: 210,
     renderCell: decorateAnn,
   },
 ];

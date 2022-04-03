@@ -10,6 +10,7 @@ import { getAllProjects, getIncludesProjects } from '../utils/helpers';
 import { useChart } from '../utils/use-chart';
 import { initZoomedElement } from '../utils/zoom';
 import { GCircles } from './g-circles';
+import { GHeaders } from './g-headers';
 import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
 import { GPartnersLegend } from './g-partners-legend';
@@ -60,8 +61,9 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   const foundProjects = getIncludesProjects(allProjects, [...new Set(projectPartnerships)]);
 
   useEffect(() => {
-    fetchSpaceMapData({});
-    // { withoutCategories: NEEDLES_CATEGORIES.join(',') }
+    fetchSpaceMapData({
+      withoutCategories: NEEDLES_CATEGORIES.join(','),
+    });
   }, [fetchSpaceMapData]);
 
   useEffect(() => {
@@ -77,10 +79,10 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   }, [allProjects, currentProject?.data.projectId, selectedProject, setProject]);
 
   useEffect(() => {
-    simulation?.restart();
+    simulation?.tick();
   }, [simulation, windowSize]);
 
-  initZoomedElement(svgRef);
+  initZoomedElement(svgRef, width, height);
 
   return (
     <ChartWrapper ref={wrapperRef}>
@@ -88,8 +90,14 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
       <RandomSvg ref={svgRef}>
         <g>
           {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
-          <GCircles data={simulatedCircles} setCurrentProject={setProject} tooltipRef={tooltipRef} />
+          <GCircles
+            data={simulatedCircles}
+            setCurrentProject={setProject}
+            tooltipRef={tooltipRef}
+            currentProject={currentProject}
+          />
           <GLabels data={simulatedCircles} />
+          <GHeaders data={simulatedCircles} />
           <GTooltips data={foundProjects} currentProject={currentProject} />
         </g>
         <GPartnersLegend width={width} />

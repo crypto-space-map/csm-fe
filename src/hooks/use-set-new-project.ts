@@ -12,6 +12,7 @@ export const useSetNewProject = () => {
   const { url } = useRouteMatch();
   const fundName = useSelector(selectedFundName);
   const projectName = useSelector(selectedProjectName);
+
   const { setProjectName, setFundName } = pageStoreDispatchAction();
 
   const handleSelectProduct = useCallback(
@@ -30,7 +31,7 @@ export const useSetNewProject = () => {
   );
 
   const handleSelectFund = useCallback(
-    name => {
+    (name: string) => {
       const newFundName = name === fundName ? null : name;
       const newPath = newFundName ? `/fund/${newFundName}` : url;
 
@@ -42,5 +43,21 @@ export const useSetNewProject = () => {
     [fundName, url, history, setFundName, projectName, setProjectName]
   );
 
-  return { handleSelectProduct, handleSelectFund };
+  const handleSelectAnotherRoute = useCallback(
+    (path: string) => {
+      const lastPath = getTheLastPath();
+
+      if (lastPath !== path) {
+        addNewPath(path);
+        history.push(path);
+
+        // Зануляем карточку
+        if (fundName) setFundName(null);
+        if (projectName) setProjectName(null);
+      }
+    },
+    [fundName, history, setFundName, projectName, setProjectName]
+  );
+
+  return { handleSelectProduct, handleSelectFund, handleSelectAnotherRoute };
 };

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import { Grid } from 'app/components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
+import { Tooltip } from 'common/components/tooltip';
 import { selectedProjectName } from 'store/pageStore/selectors';
 import { getTransformedPrice } from 'utils/detail-info';
 
@@ -36,7 +37,7 @@ const decorateVolume = (row: EnrichedExchangeProps) => {
 };
 
 const decoratePersentVolume = (row: EnrichedExchangeProps) => {
-  const value = row.persentVolume;
+  const value = row.volumePercentage;
 
   if (!value) return value === null ? '--' : '<0.1%';
   return `${value}%`;
@@ -53,22 +54,30 @@ const decoratePair = (row: EnrichedExchangeProps) => {
   const { pair, url } = row;
   if (!pair) return null;
 
-  return url ? (
-    <StyledLink target="_blank" href={url}>
-      {pair}
-    </StyledLink>
-  ) : (
-    <span>{pair}</span>
+  return (
+    <Tooltip title={pair}>
+      {url ? (
+        <StyledLink target="_blank" href={url}>
+          {pair}
+        </StyledLink>
+      ) : (
+        <span>{pair}</span>
+      )}
+    </Tooltip>
   );
 };
 
-const decorateHeaderPersentVolume = () => <DecorateHeader>{headerNames.persentVolume}</DecorateHeader>;
+const decorateHeaderPersentVolume = () => <DecorateHeader>{headerNames.volumePercentage}</DecorateHeader>;
 
 const decorateExchange = (row: EnrichedExchangeProps) => {
   const value = row.exchange;
 
   if (!value) return null;
-  return <ExchangeWrapper>{value}</ExchangeWrapper>;
+  return (
+    <Tooltip title={value}>
+      <ExchangeWrapper>{value}</ExchangeWrapper>
+    </Tooltip>
+  );
 };
 
 const columns: ColumnProps<EnrichedExchangeProps>[] = [
@@ -109,7 +118,7 @@ const columns: ColumnProps<EnrichedExchangeProps>[] = [
     textAlign: 'right',
   },
   {
-    field: 'persentVolume',
+    field: 'volumePercentage',
     renderCustomHeaderName: decorateHeaderPersentVolume,
     width: 90,
     valueFormatter: decoratePersentVolume,
@@ -153,7 +162,7 @@ export const Exchanges = memo(() => {
       fetchData={loadData}
       infinite
       page={exchangesPage}
-      startedSortedField="persentVolume"
+      startedSortedField="volumePercentage"
     />
   );
 });

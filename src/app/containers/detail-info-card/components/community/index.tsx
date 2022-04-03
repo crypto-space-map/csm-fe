@@ -1,63 +1,51 @@
+import { useMemo, useEffect } from 'react';
+
+import { useSelector } from 'react-redux';
+
+import { StyledLoader } from 'app/components/detail-common-components';
+import { selectedProjectName } from 'store/pageStore/selectors';
+
+import { selectedCommunityData, selectedCommunityDataLoading } from '../../selectors';
+import { useDispatchAction } from '../../slice';
+import { CommunityDTO, SocialNetwork, GithubNetwork } from '../../types';
 import { Card } from './card';
 import { GithubCard } from './github-card';
 import { TabContentWrapper } from './styles';
-import { CardDataProps } from './types';
 
-const cardsData: CardDataProps[] = [
-  {
-    id: 1,
-    statCount: 3654,
-    socialNetwork: 'telegram',
-    link: 'https://learn.javascript.ru/switch',
-  },
+const order: Array<keyof CommunityDTO> = ['telegram', 'twitter', 'medium', 'discord', 'gitInfo'];
 
-  {
-    id: 2,
-    statCount: 24903,
-    socialNetwork: 'twitter',
-    link: 'https://learn.javascript.ru/switch',
-  },
+export const Community = () => {
+  const { fetchComminityData } = useDispatchAction();
 
-  { id: 3, statCount: 345, socialNetwork: 'youtube', link: 'https://learn.javascript.ru/switch' },
-  {
-    id: 4,
-    statCount: 315,
-    socialNetwork: 'reddit',
-    link: 'https://learn.javascript.ru/switch',
-  },
-  {
-    id: 6,
-    statCount: 167,
-    stats: [
-      { unit: 'Stars', count: 134 },
-      { unit: 'Contributors', count: 1340 },
-      { unit: 'Followers', count: 1340 },
-      { unit: 'Close Issues', count: 1340 },
-    ],
-    socialNetwork: 'github',
-    link: 'https://learn.javascript.ru/switch',
-  },
-  {
-    id: 5,
-    statCount: 567,
-    socialNetwork: 'facebook',
-    link: 'https://learn.javascript.ru/switch',
-  },
-  {
-    id: 7,
-    statCount: 567,
-    socialNetwork: 'bitcoin',
-    link: 'https://learn.javascript.ru/switch',
-  },
-];
+  const communityDataLoading = useSelector(selectedCommunityDataLoading);
+  const communityData = useSelector(selectedCommunityData);
+  const projectName = useSelector(selectedProjectName);
 
-export const Community = () => (
-  <TabContentWrapper>
-    {cardsData.map(item => {
-      if (item.socialNetwork === 'github') {
-        return <GithubCard key={item.id} {...item} />;
-      }
-      return <Card key={item.id} {...item} />;
-    })}
-  </TabContentWrapper>
-);
+  useEffect(() => {
+    if (projectName && !communityData) fetchComminityData(projectName);
+  }, [projectName, communityData, fetchComminityData]);
+
+  const getCardsItem = useMemo(
+    () =>
+      communityData &&
+      order.map(item => {
+        const cardData = communityData[item];
+        if (!cardData) return null;
+
+        if (item === 'gitInfo') {
+          return <GithubCard key={item} {...(cardData as GithubNetwork)} />;
+        }
+        if (item === 'telegram') {
+          return (cardData as SocialNetwork[]).map((telegramItem: SocialNetwork) => (
+            <Card key={item} socialNetwork={item} {...telegramItem} />
+          ));
+        }
+        return <Card key={item} socialNetwork={item} {...(cardData as SocialNetwork)} />;
+      }),
+    [communityData]
+  );
+
+  if (communityDataLoading) return <StyledLoader />;
+
+  return <TabContentWrapper>{getCardsItem}</TabContentWrapper>;
+};

@@ -10,17 +10,16 @@ interface InvestorsCellProps extends InvestorProps {
   isLastElement: boolean;
 }
 
-export const InvestorsCell = ({ id, name, website, isLastElement }: InvestorsCellProps) => {
+export const InvestorsCell = ({ id, name, isLastElement }: InvestorsCellProps) => {
   const transformedName = isLastElement ? `${name},` : name;
-  const { setFundName, setProjectName, setFundOptions } = pageStoreDispatchAction();
+  const { setFundName, setProjectName } = pageStoreDispatchAction();
   const pathName = `/fund/${id}`;
 
   const handleClick = useCallback(() => {
     setFundName(id);
     setProjectName(null);
     addNewPath(pathName);
-    setFundOptions({ id, name, website });
-  }, [setFundName, id, setProjectName, pathName, setFundOptions, name, website]);
+  }, [setFundName, id, setProjectName, pathName]);
 
   return (
     <InvestorWrapper onClick={handleClick}>

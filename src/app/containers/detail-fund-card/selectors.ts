@@ -12,6 +12,8 @@ export const selectedInvestorsData = (state: RootState) => selectDomain(state).i
 export const selectedInvestorsDataLoading = (state: RootState) => selectDomain(state).investorsDataLoading;
 export const selectedFundData = (state: RootState) => selectDomain(state).fundData.data;
 export const selectedFundDataLoading = (state: RootState) => selectDomain(state).fundData.loading;
+export const selectedProjectIdListFromInvestors = (state: RootState) =>
+  selectDomain(state).projectIdListFromInvestors;
 
 export const selectedEnrichedInvestorsData = createSelector([selectedInvestorsData], data => {
   if (!data) return null;
@@ -25,12 +27,13 @@ export const selectedEnrichedInvestorsData = createSelector([selectedInvestorsDa
     })
   );
   const transformedData = sortedData.map(({ project, ...rest }, index) => {
-    const { name, logo, projectId } = project;
+    const { name, logo, projectId, isOnMap } = project;
     return {
       id: String(index + 1),
       projectName: name,
       projectLogo: logo,
       projectId,
+      isOnMap,
       ...rest,
     };
   });

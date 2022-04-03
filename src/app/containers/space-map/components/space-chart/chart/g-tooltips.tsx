@@ -54,7 +54,7 @@ export const GTooltips = memo<GAreaProps>(({ data, currentProject }) => {
               transform={`translate(${getWidth(elem, 5) / elem.data.symbol.length}, 17) scale(0.2)`}
               strokeWidth={1}
               stroke="#464646"
-              d={elem.data.svgPathData}
+              d={elem.data.symbolPathData}
             />
           </marker>
         </>

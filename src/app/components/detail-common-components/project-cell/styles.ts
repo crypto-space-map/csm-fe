@@ -6,7 +6,10 @@ import { Link } from 'react-router-dom';
 export const text = () => css`
   font-weight: normal;
   font-size: 16px;
-  margin-left: 4px;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 export const StyledText = styled.span`
@@ -14,16 +17,17 @@ export const StyledText = styled.span`
 `;
 
 export const StyledLink = styled(Link)`
-  display: flex;
   text-decoration: none;
-  overflow-wrap: anywhere;
   ${link()}
   ${text}
 `;
 
 export const ProjectWrapper = styled.div`
-  margin-right: 5px;
   display: flex;
   align-items: flex-start;
   width: 100%;
+
+  & > img {
+    margin-right: 4px;
+  }
 `;

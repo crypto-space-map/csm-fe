@@ -16,6 +16,7 @@ export const COLOR_PALLETTE = {
     INPUT: { BACKGROUND: '#444444', BACKGROUND_FOCUSED: '#e5e5e5' },
   },
   LIGHT_GRAY: '#e5e5e5',
+  DARK_GRAY: '#383838',
   DARK_GREEN: '#78BD4D',
   ICO_COMMON_COLOR: '#bdbdbd',
   PROJECT_CATEGORY: '#d1f1ff',

@@ -1,79 +1,57 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
-import { hidingScrollBarStyles } from 'global/styles';
 
-export const StyledFundListWrapper = styled.div`
-  position: absolute;
-  top: 110px;
-  height: calc(100% - 250px);
-`;
+import { cellHeight, correctionHeight } from './utils';
 
-export const StyledFundList = styled.div`
-  position: relative;
-  background-color: ${COLOR_PALLETTE.MAIN_BLACK};
-  width: 153px;
-  height: 100%;
-  border-radius: 0px 16px 0px 0px;
-  padding: 16px 4px 16px 16px;
-  overflow: hidden;
-`;
-
-export const StyledFundContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: calc(100% - 26px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 8px;
-  ${hidingScrollBarStyles};
-
-  color: rgba(255, 255, 255, 0);
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: #c4c4c4;
-  }
-`;
-
-export const ContentItem = styled.div<{ selected: boolean }>`
-  display: flex;
-  align-items: center;
-  color: ${COLOR_PALLETTE.MAIN_WHITE};
-  opacity: 0.5;
-  padding: 7px 0;
+export const commonItemStyle = css`
+  padding: 7px 0 7px 16px;
   font-size: 14px;
   line-height: 14px;
   cursor: pointer;
-  background: ${props => (props.selected ? COLOR_PALLETTE.MAIN_GRAY : 'unset')};
+  color: ${COLOR_PALLETTE.MAIN_GRAY};
+  //height: ${`${cellHeight}px`};
 
   & > span {
     white-space: nowrap;
-    margin-left: 4px;
     text-overflow: ellipsis;
     overflow: hidden;
-  }
-
-  &:hover {
-    background: ${COLOR_PALLETTE.MAIN_GRAY};
+    display: inline-block;
+    width: 155px;
   }
 `;
 
-export const StyledFundHeader = styled.div`
-  color: ${COLOR_PALLETTE.MAIN_WHITE};
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 22px;
-  opacity: 0.5;
-  margin-bottom: 4px;
+export const commonPointStyle = css`
+  width: 6px;
+  height: 13px;
+  border: 1px solid ${COLOR_PALLETTE.MAIN_LAYOUT};
+  border-radius: 0 100% 100% 0 / 0 50% 50% 0;
+  background: ${COLOR_PALLETTE.MAIN_BLUE};
+`;
+
+export const StyledMainFundBlock = styled.div<{ show: boolean; selectedItems: number }>`
+  position: absolute;
+  display: flex;
+  top: 110px;
+  left: 0;
+  height: 100%;
+  max-height: ${props =>
+    props.show ? 'calc(100% - 250px)' : `${props.selectedItems * cellHeight + correctionHeight}px`};
+  transition: max-height 0.3s ease;
+`;
+
+export const StyledFundBlockWrapper = styled.div<{ show: boolean }>`
+  position: relative;
+  background-color: ${COLOR_PALLETTE.MAIN_BLACK};
+  width: 180px;
+  height: 100%;
+  border-radius: 0px 16px 0px 0px;
+  //overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const StyledGradientBlock = styled.div`
   height: 20px;
   background: linear-gradient(180deg, rgba(36, 36, 36, 0) 0%, #242424 100%);
-  margin-left: -16px;
-  margin-right: -16px;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
 `;

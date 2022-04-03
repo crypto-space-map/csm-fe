@@ -3,7 +3,12 @@ import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { selectedProjectName, selectedFundName } from 'store/pageStore/selectors';
+import {
+  selectedProjectName,
+  selectedFundName,
+  selectedTopFunds,
+  selectedTopFundsLoading,
+} from 'store/pageStore/selectors';
 import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/slice';
 import { getProductNameFromPath } from 'utils/detail-info';
 import {
@@ -34,6 +39,7 @@ export function useMainPageHistory() {
       const lastPath = getTheLastPath();
       const prevPath = pathsHistory[pathsHistory.length - 2];
 
+      // чистим данные, если мы находимяся в корне "/" и у нас в истории есть элементы
       if (pathname === '/' && pathsHistory.length) {
         clearData();
         clearSessionStorageItems([ItemNames.PATHS_HISTORY]);
@@ -68,7 +74,19 @@ export function useMainPage() {
   const history = useHistory();
   const fundName = useSelector(selectedFundName);
   const projectName = useSelector(selectedProjectName);
-  const { setProjectName, setFundName } = pageStoreDispatchAction();
+  const topFunds = useSelector(selectedTopFunds);
+  const fetchingFunds = useSelector(selectedTopFundsLoading);
+
+  const {
+    setProjectName,
+    setFundName,
+    fetchTopFundsData,
+    fetchFundsData,
+    setFundBlockItemsIdList,
+    setIsShowLines,
+    setPointsCoords,
+    clearPointsCoords,
+  } = pageStoreDispatchAction();
 
   const { pathname } = history.location;
 
@@ -89,7 +107,20 @@ export function useMainPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { fundName };
+  useEffect(() => {
+    if (!topFunds && !fetchingFunds) fetchTopFundsData();
+  }, [fetchTopFundsData, topFunds, fetchingFunds]);
+
+  useEffect(() => {
+    if (projectName) fetchFundsData(projectName);
+  }, [fetchFundsData, projectName]);
+
+  useEffect(() => {
+    if (fundName) setFundBlockItemsIdList([fundName]);
+    if (fundName && setIsShowLines) setIsShowLines(false);
+  }, [setFundBlockItemsIdList, fundName, setIsShowLines]);
+
+  return { setPointsCoords, clearPointsCoords };
 }
 
 export function useDetailCard() {

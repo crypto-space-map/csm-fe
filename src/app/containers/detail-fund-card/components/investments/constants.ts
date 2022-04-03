@@ -12,7 +12,7 @@ export const headerNames = {
   id: '#',
   type: 'Fundrasing Round',
   projectName: 'Project',
-  amount: 'Investment Amout',
+  amount: 'Raised in round',
   investors: 'Investors',
   date: 'Date',
   announcement: 'Ann.',

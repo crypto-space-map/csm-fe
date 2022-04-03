@@ -8,6 +8,7 @@ import { sliceKey as name } from './utils';
 export const initialState: ContainerState = {
   investorsData: null,
   investorsDataLoading: false,
+  projectIdListFromInvestors: [],
   fundData: {
     data: null,
     ...fetchDataInitialState,
@@ -35,6 +36,11 @@ const providersListSlice = createSlice({
       state.investorsDataLoading = true;
     },
     fetchInvestorsDataSuccess(state, action: PayloadAction<InvestorDTO[]>) {
+      const idList = action.payload
+        .map(fund => (fund?.project?.isOnMap ? fund?.project?.projectId : ''))
+        .filter(id => id);
+
+      state.projectIdListFromInvestors = idList;
       state.investorsDataLoading = false;
       state.investorsData = action.payload;
     },
@@ -43,6 +49,8 @@ const providersListSlice = createSlice({
     },
     clearDataAfterChangeFund(state) {
       state.investorsData = initialState.investorsData;
+      state.fundData.data = initialState.fundData.data;
+      state.projectIdListFromInvestors = initialState.projectIdListFromInvestors;
     },
   },
 });

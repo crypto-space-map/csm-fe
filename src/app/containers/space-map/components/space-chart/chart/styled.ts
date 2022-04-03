@@ -80,6 +80,9 @@ export const RandomSvg = styled.svg`
     transition: 0.2s linear;
     cursor: pointer;
   }
+  & > circle {
+    transition: 0.2s linear;
+  }
 `;
 
 export const StyledChartTooltip = styled.div<Omit<ChartTooltipProps, 'text'>>`

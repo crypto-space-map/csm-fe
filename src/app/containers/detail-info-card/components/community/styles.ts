@@ -3,8 +3,8 @@ import { COLOR_PALLETTE } from 'global/pallette';
 import { gradientBorder, link } from 'global/styles';
 
 export const TabContentWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, minmax(143px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   grid-gap: 14px;
   margin-top: 24px;
 `;
@@ -17,6 +17,7 @@ export const CardWrapper = styled.a`
   cursor: pointer;
   position: relative;
   text-decoration: none;
+  width: 143px;
   ${gradientBorder({ borderRadius: 10 })}
   ${link(COLOR_PALLETTE.MAIN_BLACK, COLOR_PALLETTE.MAIN_BLACK)}
 `;
@@ -35,7 +36,7 @@ export const StyledCount = styled.span`
 `;
 
 export const DoubleCardWrapper = styled(CardWrapper)`
-  grid-column: 1/3;
+  width: max-content;
 `;
 
 export const DoubleCardContent = styled.div`

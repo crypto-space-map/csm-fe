@@ -33,10 +33,12 @@ export type MapCategory = {
   marketCap: number;
   projectId?: string;
   projectWeight?: number;
-  svgPathData: string;
+  symbolPathData: string;
   parent: string | null;
   sortingNumber: number;
   symbol: string;
+  namePathData: string;
+  parentPathData: string | null;
 };
 
 export type ProjectData = {
@@ -76,5 +78,11 @@ export interface SpaceMapPageState {
   filters: FilterProps;
   projectPartnerships: Partnerships;
 }
+
+export type CategoryPathData = {
+  parentPathData: string;
+  sortingNumber: number;
+  parent: string | null;
+};
 
 export type ContainerState = SpaceMapPageState;
