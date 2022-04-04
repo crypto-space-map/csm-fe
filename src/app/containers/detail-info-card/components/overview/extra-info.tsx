@@ -14,7 +14,16 @@ import {
 
 const customComponents: Components = { a: 'span' };
 
-export const ExtraInfo = ({ description = '', category = '', explorers }: OverviewExtraDataProps) => (
+interface ExtraInfoProps extends OverviewExtraDataProps {
+  handleCopyClick: (arg0: string) => void;
+}
+
+export const ExtraInfo = ({
+  description = '',
+  category = '',
+  explorers,
+  handleCopyClick,
+}: ExtraInfoProps) => (
   <>
     <StyledProjectInfoWrapper>
       <ShowMoreText width={440}>
@@ -32,7 +41,7 @@ export const ExtraInfo = ({ description = '', category = '', explorers }: Overvi
         <span>Explorers:</span>
       </ContractsHeader>
       {explorers.map(item => (
-        <ContractItem key={`ContractItem${item}`} address={item} />
+        <ContractItem key={`ContractItem${item}`} address={item} handleCopyClick={handleCopyClick} />
       ))}
     </ContractsWrapper>
   </>

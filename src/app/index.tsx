@@ -25,7 +25,7 @@ const ConnectedApp = ({ Component }: Props): JSX.Element => (
         maxSnack={3}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'center',
         }}
         autoHideDuration={2000}>
         <BrowserRouter>

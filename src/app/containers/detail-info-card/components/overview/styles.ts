@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { IconButton } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import { COLOR_PALLETTE } from 'global/pallette';
 import { link } from 'global/styles';
@@ -14,7 +15,7 @@ export const linkStyles = css`
 
 export const StyledTextLink = styled.a`
   ${linkStyles}
-  width: 350px;
+  max-width: 350px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -64,6 +65,7 @@ export const StyledCategory = styled(Chip)`
 export const ContractsWrapper = styled.div`
   margin-top: 24px;
   padding-bottom: 24px;
+  width: 400px;
 `;
 export const ContractsHeader = styled.div`
   font-weight: 600;
@@ -76,6 +78,17 @@ export const ContractItemWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 30px;
+
+  & > button {
+    display: none;
+    margin-left: 4px;
+  }
+
+  &:hover {
+    & > button {
+      display: inline-flex;
+    }
+  }
 `;
 
 export const Point = styled.div`
@@ -83,4 +96,17 @@ export const Point = styled.div`
   border: 3px solid ${COLOR_PALLETTE.MAIN_BLACK};
   border-radius: 20px;
   background-color: ${COLOR_PALLETTE.MAIN_BLACK};
+`;
+
+export const StyledCopyButton = styled(IconButton)`
+  padding: 0;
+  height: fit-content;
+
+  & > svg {
+    fill: ${COLOR_PALLETTE.MAIN_GRAY};
+  }
+
+  & > svg:hover {
+    fill: ${COLOR_PALLETTE.MAIN_LAYOUT};
+  }
 `;

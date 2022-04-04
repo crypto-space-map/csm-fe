@@ -2,7 +2,13 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Button as MuiButton, ButtonProps } from '@mui/material';
 import { COLOR_PALLETTE } from 'global/pallette';
-import { link } from 'global/styles';
+import { link, gradientBackground } from 'global/styles';
+
+const getColor = ({ isBefore, isToday }: { isBefore: boolean; isToday: boolean }) => {
+  if (isBefore) return `background-color: ${COLOR_PALLETTE.MAIN_WHITE};`;
+  if (isToday) return gradientBackground;
+  return `background-color: ${COLOR_PALLETTE.CARD_COLOR};`;
+};
 
 export const linkStyles = css`
   font-weight: normal;
@@ -12,10 +18,14 @@ export const linkStyles = css`
   ${link()}
 `;
 
-export const CardWrapper = styled.article`
+export const CardWrapper = styled.article<{
+  isBefore: boolean;
+  isToday: boolean;
+}>`
   display: flex;
   flex-direction: column;
-  background-color: #f2f2f2;
+  ${props => getColor(props)}
+  border: 2px solid ${COLOR_PALLETTE.CARD_COLOR};
   border-radius: 10px;
   margin-bottom: 10px;
   padding: 19px;
@@ -73,6 +83,13 @@ export const StyledSubTitleLink = styled.a`
 
 export const StyledTextLink = styled.a`
   ${linkStyles}
+`;
+
+export const StyledTodayText = styled.span`
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  color: ${COLOR_PALLETTE.MAIN_BLACK};
 `;
 
 export const PostDate = styled.section`

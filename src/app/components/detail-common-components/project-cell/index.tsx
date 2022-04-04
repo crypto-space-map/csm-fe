@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { CryptoLogo } from 'app/components';
 import { Tooltip } from 'common/components';
@@ -15,11 +15,12 @@ interface InvestorsCellProps {
 }
 
 const iconSize = 16;
-const notOnMapMessage = 'project is not on the map';
+const notOnMapMessage = 'Project is not on the map';
 
 export const ProjectCell = ({ id, name, icon, isOnMap }: InvestorsCellProps) => {
   const { setFundName, setProjectName } = pageStoreDispatchAction();
   const pathName = `/project/${id}`;
+  const tooltipId = useMemo(() => `${id}_${name}`, [id, name]);
 
   const handleClick = useCallback(() => {
     if (id && isOnMap) {
@@ -34,14 +35,15 @@ export const ProjectCell = ({ id, name, icon, isOnMap }: InvestorsCellProps) => 
       {icon && <CryptoLogo path={icon} size={iconSize} />}
 
       {id && isOnMap ? (
-        <Tooltip title={name}>
-          <StyledLink to={pathName}>{name}</StyledLink>
-        </Tooltip>
+        <StyledLink to={pathName} data-tip={name} data-for={tooltipId}>
+          {name}
+        </StyledLink>
       ) : (
-        <Tooltip title={notOnMapMessage}>
-          <StyledText>{name}</StyledText>
-        </Tooltip>
+        <StyledText data-tip={notOnMapMessage} data-for={tooltipId}>
+          {name}
+        </StyledText>
       )}
+      <Tooltip id={tooltipId} />
     </ProjectWrapper>
   );
 };

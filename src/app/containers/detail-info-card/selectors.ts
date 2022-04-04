@@ -28,7 +28,10 @@ export const selectedEnrichedEventsData = createSelector([selectedEventsData], d
   const icon = data?.icon;
   if (!events) return null;
 
-  return events.map((item, index) => {
+  const isTodayArr = events.filter(item => item.isToday);
+  const withoutTodayArr = events.filter(item => !item.isToday);
+
+  return [...isTodayArr, ...withoutTodayArr].map((item, index) => {
     const { description, date, ...restItem } = item;
     return {
       id: String(index + 1),

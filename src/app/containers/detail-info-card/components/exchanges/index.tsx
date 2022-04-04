@@ -51,32 +51,39 @@ const decorateUpdatedAt = (row: EnrichedExchangeProps) => {
 };
 
 const decoratePair = (row: EnrichedExchangeProps) => {
-  const { pair, url } = row;
-  if (!pair) return null;
-
+  if (!row.pair) return null;
+  const { pair, url, id } = row;
+  const tooltipId = `${id}_${pair}`;
   return (
-    <Tooltip title={pair}>
+    <>
       {url ? (
-        <StyledLink target="_blank" href={url}>
+        <StyledLink target="_blank" href={url} data-tip={pair} data-for={tooltipId}>
           {pair}
         </StyledLink>
       ) : (
-        <span>{pair}</span>
+        <span data-tip={pair} data-for={tooltipId}>
+          {pair}
+        </span>
       )}
-    </Tooltip>
+      <Tooltip id={tooltipId} />
+    </>
   );
 };
 
 const decorateHeaderPersentVolume = () => <DecorateHeader>{headerNames.volumePercentage}</DecorateHeader>;
 
 const decorateExchange = (row: EnrichedExchangeProps) => {
-  const value = row.exchange;
+  if (!row.exchange) return null;
+  const { id, exchange } = row;
+  const tooltipId = `${id}_${exchange}`;
 
-  if (!value) return null;
   return (
-    <Tooltip title={value}>
-      <ExchangeWrapper>{value}</ExchangeWrapper>
-    </Tooltip>
+    <>
+      <ExchangeWrapper data-tip={exchange} data-for={tooltipId}>
+        {exchange}
+      </ExchangeWrapper>
+      <Tooltip id={tooltipId} />
+    </>
   );
 };
 
