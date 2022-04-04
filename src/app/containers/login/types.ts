@@ -12,6 +12,7 @@ export interface LoginPageState extends FetchDataState {
   isAuth: boolean;
   recoverMsgSended: boolean;
   userMail: string | null;
+  isAuthError: boolean;
 }
 
 export type ContainerState = LoginPageState;

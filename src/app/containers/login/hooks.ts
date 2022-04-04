@@ -4,7 +4,7 @@ import { useActions } from 'hooks';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { loginPageSaga } from './saga';
-import { selectAuth, selectLoading } from './selectors';
+import { selectAuth, selectAuthError, selectLoading } from './selectors';
 import { actions, reducer } from './slice';
 import { sliceKey } from './utils';
 
@@ -18,6 +18,8 @@ export function useLogin() {
   const { fetchUser, registerUser, recoverMsg } = useLoginPageSlice();
   const isAuth = useSelector(selectAuth);
   const loading = useSelector(selectLoading);
+  const isAuthError = useSelector(selectAuthError);
+
   const { setAuth } = useLoginPageSlice();
   return {
     fetchUser,
@@ -26,5 +28,6 @@ export function useLogin() {
     actions: { loading },
     isAuth,
     setAuth,
+    isAuthError,
   };
 }

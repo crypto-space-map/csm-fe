@@ -29,9 +29,10 @@ const StyledInput = styled(TextField)`
   }
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled.div<InputProps>`
   display: grid;
   grid-gap: 2px 0;
+  width: ${({ fullWidth }) => fullWidth && '100%'};
 `;
 
 const Label = styled.span<LabelProps>`
@@ -47,7 +48,7 @@ const Label = styled.span<LabelProps>`
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { error, label, errorMessage } = props;
   return (
-    <InputContainer>
+    <InputContainer fullWidth={props.fullWidth}>
       <Label error={error}>{label}</Label>
       <StyledInput
         {...props}

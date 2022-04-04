@@ -1,7 +1,9 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { HierarchyCircularNode } from 'd3';
+import { useSelector } from 'react-redux';
 
+import { selectAuth } from 'app/containers/login/selectors';
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import { useWindowSize } from 'hooks/use-screen-size';
 
@@ -27,6 +29,8 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
+
+  const isAuth = useSelector(selectAuth);
 
   const width = wrapperRef.current?.offsetWidth || 0;
   const height = wrapperRef.current?.offsetHeight || 0;
@@ -61,10 +65,12 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   const foundProjects = getIncludesProjects(allProjects, [...new Set(projectPartnerships)]);
 
   useEffect(() => {
-    fetchSpaceMapData({
-      withoutCategories: NEEDLES_CATEGORIES.join(','),
-    });
-  }, [fetchSpaceMapData]);
+    if (isAuth) {
+      fetchSpaceMapData({
+        withoutCategories: NEEDLES_CATEGORIES.join(','),
+      });
+    }
+  }, [fetchSpaceMapData, isAuth]);
 
   useEffect(() => {
     if (!selectedProject) {

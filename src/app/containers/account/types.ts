@@ -2,7 +2,7 @@ export enum MenuItems {
   FAVORITE_PROJECTS = 'Favorite Projects',
   MY_REFFERALS = 'My Refferals',
   PLANS = 'Plans',
-  PROFILE_SETTINGS = 'Profile & Notification Settings',
+  PROFILE_SETTINGS = 'Profile settings',
   CSM_NEWS = 'CSM News & Development',
 }
 

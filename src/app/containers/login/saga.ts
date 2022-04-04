@@ -15,6 +15,7 @@ import { LoginDTORequestParams } from './types';
 
 export function* login(action: ReturnType<typeof actions['fetchUser']>) {
   try {
+    yield* put(actions.setAuthError({ isError: false }));
     const {
       data: { token },
     } = yield* call(loginUser, action.payload);
@@ -22,6 +23,7 @@ export function* login(action: ReturnType<typeof actions['fetchUser']>) {
     setCookie('token', token);
   } catch (error) {
     yield* put(actions.setAuth({ isAuth: false }));
+    yield* put(actions.setAuthError({ isError: true }));
     if (error instanceof Error) {
       const { message } = error;
       yield* put(actions.fetchDataError({ message }));
