@@ -5,6 +5,7 @@ import { AccountCsmNews } from 'app/containers/account-csm-news';
 import { FavoriteProjects } from 'app/containers/account-favorite-projects';
 import { AccountPlans } from 'app/containers/account-plans';
 import { AccountRefferals } from 'app/containers/account-refferals';
+import { AccountSettings } from 'app/containers/account-settings';
 
 import { useAccount } from '../../hooks';
 import { MenuItems } from '../../types';
@@ -21,6 +22,8 @@ const switchedTab = (selectedTab: MenuItems) => {
         return <AccountPlans />;
       case MenuItems.CSM_NEWS:
         return <AccountCsmNews />;
+      case MenuItems.PROFILE_SETTINGS:
+        return <AccountSettings />;
       default:
         return null;
     }

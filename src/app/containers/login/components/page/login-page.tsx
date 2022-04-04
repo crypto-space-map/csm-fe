@@ -5,13 +5,19 @@ import { OutlinedArrow } from 'assets/icons';
 import { CsmLogoColoured } from 'assets/images';
 import { Button } from 'common/components/button';
 import { SVGWrapper } from 'common/components/svg-wrapper/svg-wrapper';
+import { getCookie } from 'utils/cookie';
 
 import { FormContainer } from '../forms/form-container';
 import { ContentContainer, StyledLoginPage } from './styled';
 
 export const LoginPage = () => {
   const { push: historyPush } = useHistory();
-  const handleClick = () => historyPush('/');
+  const token = getCookie('token');
+  const handleClick = () => {
+    if (token) {
+      historyPush('/');
+    }
+  };
   return (
     <Grow in>
       <StyledLoginPage>

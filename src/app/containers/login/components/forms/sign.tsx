@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { IconButton } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
@@ -17,7 +17,7 @@ import { SignFormInput } from './styled-input';
 
 const helperRows = [
   { text: '8 characters minimum', key: 'minLength' },
-  { text: 'Letters. Minimum one uppercase', key: 'uppercase' },
+  { text: 'Minimum one letter uppercase', key: 'uppercase' },
   { text: 'Numbers', key: 'numbers' },
   { text: 'Special Symbols', key: 'specialSymbols' },
 ];
@@ -35,6 +35,7 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
   const {
     registerUser,
     fetchUser,
+    isAuthError,
     actions: { loading },
   } = useLogin();
 
@@ -43,6 +44,7 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
     handleSubmit,
     watch,
     formState: { errors },
+    setError,
   } = useForm<typeof defaultValues>({
     defaultValues,
     mode: 'all',
@@ -66,6 +68,17 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
 
   const forgotPassLink = (field: string) => field === 'password' && signIn;
 
+  useEffect(() => {
+    if (isAuthError) {
+      Object.keys(defaultValues).forEach(elem =>
+        setError(elem as keyof typeof defaultValues, {
+          type: 'pattern',
+          message: 'Invalid credentials',
+        })
+      );
+    }
+  }, [isAuthError, setError]);
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       {Object.keys(defaultValues).map(item => (
@@ -83,6 +96,7 @@ export const SignForm = ({ signIn = false, handleClickForgotPass }: SignFormProp
               type={isVisible ? 'text' : item}
               label={item}
               error={!!errors[item as keyof typeof errors]?.type}
+              errorMessage="Invalid credentials"
               labelHelper={
                 forgotPassLink(item) && (
                   <LoginPageLink fontSize={14} onClick={handleClickForgotPass}>

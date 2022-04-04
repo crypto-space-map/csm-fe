@@ -17,9 +17,9 @@ export const getCategoriesCords = (sortingNumber: number, width = 0, height = 0)
     case 8: // WEB3
       return { x: width * 0.7, y: height * 0.8 };
     case 9: // Smart contract
-      return { x: width * 0.55, y: height * 0.5 };
+      return { x: width * 0.57, y: height * 0.5 };
     case 10: // Blockchain enhancement
-      return { x: width * 0.75, y: height * 0.55 };
+      return { x: width * 0.78, y: height * 0.63 };
     case 11: // Data
       return { x: width * 0.4, y: height * 0.8 };
     case 12: // Social services

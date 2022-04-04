@@ -12,4 +12,4 @@ export const selectLoadError = (state: RootState) => selectDomain(state).loadErr
 
 export const selectAuth = (state: RootState) => selectDomain(state).isAuth;
 
-export const selectJwtExpired = (state: RootState) => selectUserInfo(state)?.jwt?.exp;
+export const selectAuthError = (state: RootState) => selectDomain(state).isAuthError;

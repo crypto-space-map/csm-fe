@@ -11,6 +11,7 @@ export const initialState: ContainerState = {
   isAuth: false,
   recoverMsgSended: false,
   userMail: null,
+  isAuthError: false,
 };
 
 const loginPageSlice = createSlice({
@@ -22,6 +23,9 @@ const loginPageSlice = createSlice({
     /** SET USER AUTHORIZED */
     setAuth(state, action: PayloadAction<{ isAuth: boolean }>) {
       state.isAuth = action.payload.isAuth;
+    },
+    setAuthError(state, action: PayloadAction<{ isError: boolean }>) {
+      state.isAuthError = action.payload.isError;
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     fetchUser(state, _action: PayloadAction<LoginDTORequestParams>) {
