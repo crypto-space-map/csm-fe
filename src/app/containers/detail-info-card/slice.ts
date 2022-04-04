@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import { useActions } from 'hooks';
 import { fetchDataInitialState, fetchDataReducers } from 'utils/@reduxjs/fetchData';
 import { createSlice, PayloadAction } from 'utils/@reduxjs/toolkit';
@@ -44,9 +46,9 @@ const { fetchDataError: fetchExchangesDataError } = fetchDataReducers<
 const { fetchDataSuccess: fetchComminityDataSuccess, fetchDataError: fetchComminityDataError } =
   fetchDataReducers<ContainerState['communityData']['data']>(initialState.communityData);
 
-const { fetchDataSuccess: fetchEventsDataSuccess, fetchDataError: fetchEventsDataError } = fetchDataReducers<
-  ContainerState['eventsData']['data']
->(initialState.eventsData);
+const { fetchDataError: fetchEventsDataError } = fetchDataReducers<ContainerState['eventsData']['data']>(
+  initialState.eventsData
+);
 
 const { fetchDataSuccess: fetchSocialDataSuccess, fetchDataError: fetchSocialDataError } = fetchDataReducers<
   ContainerState['socialData']['data']
@@ -70,7 +72,19 @@ const providersListSlice = createSlice({
       state.eventsData.loading = true;
     },
     fetchEventsDataSuccess(state, action: PayloadAction<{ data: EventsDTO }>) {
-      fetchEventsDataSuccess(state.eventsData, action);
+      const { events, icon } = action.payload.data;
+      const dateNow = moment().startOf('day');
+      const upgradedData = events.map(item => {
+        const { date } = item;
+        const momentDate = moment(date);
+        return {
+          ...item,
+          isToday: momentDate.isSame(dateNow, 'day'),
+          isBefore: momentDate.isBefore(dateNow, 'day'),
+        };
+      });
+      state.eventsData.loading = false;
+      state.eventsData.data = { icon, events: upgradedData };
     },
     fetchEventsDataError(state, action: PayloadAction<{ message: string }>) {
       fetchEventsDataError(state.eventsData, action);

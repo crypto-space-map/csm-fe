@@ -1,4 +1,5 @@
-import { Tooltip as MuiTooltip } from '@mui/material';
-import { TooltipProps } from '@mui/material/Tooltip';
+import ReactTooltip from 'react-tooltip';
 
-export const Tooltip = (props: TooltipProps) => <MuiTooltip {...props} arrow placement="bottom" />;
+export const Tooltip = ({ id }: { id: string }) => (
+  <ReactTooltip id={id} place="bottom" effect="solid" multiline={false} />
+);

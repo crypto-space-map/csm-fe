@@ -21,4 +21,5 @@ export const COLOR_PALLETTE = {
   ICO_COMMON_COLOR: '#bdbdbd',
   PROJECT_CATEGORY: '#d1f1ff',
   POST_DATE_COLOR: '#4f4f4f',
+  CARD_COLOR: '#f2f2f2',
 };

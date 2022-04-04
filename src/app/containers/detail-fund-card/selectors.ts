@@ -26,17 +26,15 @@ export const selectedEnrichedInvestorsData = createSelector([selectedInvestorsDa
       sortDirection: SortingValues.DESC,
     })
   );
-  const transformedData = sortedData.map(({ project, ...rest }, index) =>
-    // const { projectId, isOnMap } = project;
-    ({
-      id: String(index + 1),
-      projectName: project?.name,
-      projectLogo: project?.logo,
-      projectId: project?.projectId,
-      isOnMap: project?.isOnMap,
-      ...rest,
-    })
-  );
+  const filtratedData = sortedData.filter(item => item.project);
+  const transformedData = filtratedData.map(({ project, ...rest }, index) => ({
+    id: String(index + 1),
+    projectName: project?.name,
+    projectLogo: project?.logo,
+    projectId: project?.projectId,
+    isOnMap: project?.isOnMap,
+    ...rest,
+  }));
 
   return transformedData;
 });

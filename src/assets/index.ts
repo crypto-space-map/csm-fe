@@ -19,4 +19,5 @@ export { default as TradingUpIcon } from 'assets/trading-up.svg';
 export { default as PencilIcon } from 'assets/pencil.svg';
 export { default as DoneIcon } from 'assets/done.svg';
 export { default as DisableIcon } from 'assets/disabled.svg';
+export { default as CopyIcon } from 'assets/copy.svg';
 export { default as RoundedButton } from 'assets/rounded-button.svg';

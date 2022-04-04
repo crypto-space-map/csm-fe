@@ -75,3 +75,5 @@ export const getPersentageVolume = (volume: number, totalVolume: number) => {
   if (volume && totalVolume) return Number(((volume / totalVolume) * 100).toFixed(2));
   return null;
 };
+
+export const copyText = (text: string) => navigator.clipboard.writeText(text);
