@@ -21,6 +21,8 @@ export interface EventsProps {
   date: string;
   proof: string;
   source: string;
+  isToday: boolean;
+  isBefore: boolean;
 }
 export interface EventsDTO {
   events: EventsProps[];
@@ -59,6 +61,8 @@ export interface CardProps {
   subTitleUrl?: string;
   proof?: string;
   source?: string;
+  isToday?: boolean;
+  isBefore?: boolean;
 }
 
 export interface SocialDataDTO {

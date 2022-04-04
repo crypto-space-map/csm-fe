@@ -4,12 +4,19 @@ import { Header } from './header';
 import { CardWrapper, ButtonsContentWrapper } from './styles';
 import { TextContent } from './text-content';
 
-export const EventsCard = ({ text, proof, source, ...restCardProps }: CardProps) => {
+export const EventsCard = ({
+  text,
+  proof,
+  source,
+  isBefore = false,
+  isToday = false,
+  ...restCardProps
+}: CardProps) => {
   const isShowButtons = proof || source;
 
   return (
-    <CardWrapper>
-      <Header {...restCardProps} />
+    <CardWrapper isBefore={isBefore} isToday={isToday}>
+      <Header isToday={isToday} {...restCardProps} />
       <TextContent text={text} />
       {isShowButtons && (
         <ButtonsContentWrapper>

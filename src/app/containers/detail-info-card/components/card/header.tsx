@@ -11,6 +11,7 @@ import {
   StyledSubTitleLink,
   StyledTitle,
   IconWrapper,
+  StyledTodayText,
 } from './styles';
 
 export const Header = ({
@@ -19,6 +20,7 @@ export const Header = ({
   titleUrl,
   createdAt,
   subTitleUrl,
+  isToday,
 }: Omit<CardProps, 'socialMediaType' | 'text' | 'proof' | 'source'>) => (
   <TitleSection>
     <CompanyInfo>
@@ -43,6 +45,10 @@ export const Header = ({
         )}
       </TitleTextContent>
     </CompanyInfo>
-    {createdAt && <PostDate>{moment(createdAt).format('DD MMMM YYYY')}</PostDate>}
+    {isToday ? (
+      <StyledTodayText>Today</StyledTodayText>
+    ) : (
+      <PostDate>{moment(createdAt).format('DD MMMM YYYY')}</PostDate>
+    )}
   </TitleSection>
 );
