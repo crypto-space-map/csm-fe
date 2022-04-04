@@ -10,6 +10,7 @@
     "axios": "^0.21.1",
     "cross-env": "^7.0.3",
     "d3": "^7.1.1",
+    "express": "^4.17.3",
     "notistack": "^2.0.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -29,6 +30,7 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "start": "cross-env webpack serve --config ./webpack/webpack.production.config.js --port 3000 --mode production",
+    "start:prod": "node server.js",
     "start:dev": "cross-env webpack serve --config ./webpack/webpack.develop.config.js --mode development",
     "analyze": "cross-env BUNDLE_ANALYZE=true npm run start",
     "analyze:dev": "cross-env BUNDLE_ANALYZE=true npm run start:dev",
