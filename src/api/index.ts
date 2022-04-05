@@ -4,7 +4,7 @@ import qs from 'qs';
 /* AXIOS INSTANCE */
 const setBackendUrl = () =>
   // some backend
-  'https://38.242.226.100/api/v1/';
+  'https://backend.cryptospacemap.com/api/v1/';
 const formatParams = (params: Record<string, unknown>): string =>
   qs.stringify(params, { indices: false, arrayFormat: 'repeat' });
 
