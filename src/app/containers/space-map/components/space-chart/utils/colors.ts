@@ -8,18 +8,18 @@ type GetCircleColorProps = {
   isTransparent: boolean;
 };
 
-const colorArray = [
-  '#78939C',
-  '#9DD2F8',
-  '#A9F89D',
-  '#FCEB92',
-  '#FF8585',
-  '#FDA1FF',
-  '#E0772B',
-  '#E535D4',
-  '#F64848',
-  '#B41F54',
-  '#B02727',
+export const colorArray = [
+  '#EAE0D7',
+  '#817474',
+  '#E7948C',
+  '#AABCC3',
+  '#519581',
+  '#DFDFA6',
+  '#9E6A87',
+  '#4B3C6A',
+  '#36454E',
+  '#6F464F',
+  '#343F63',
 ];
 
 export const color = interpolateRgbBasis(colorArray);
@@ -31,15 +31,15 @@ export const getSphereColorParams = (
   item: HierarchyCircularNode<PackedCategories>,
   isTransparent: boolean
 ) => {
+  const sphereColor =
+    typeof item.data.projectWeight !== 'undefined' &&
+    getCircleColor({
+      projectWeight: Math.round(item.data.projectWeight / 10) * 10,
+      isTransparent,
+    });
+
   const colorParams = {
-    fill: !item.children
-      ? (typeof item.data.projectWeight !== 'undefined' &&
-          getCircleColor({
-            projectWeight: Math.round(item.data.projectWeight / 10) * 10,
-            isTransparent,
-          })) ||
-        '#383838'
-      : 'none',
+    fill: !item.children ? sphereColor || '#383838' : 'none',
     stroke: !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY,
     strokeWidth: !!item.children ? 0.5 : 0.2,
     strokeDasharray: !!item.children ? '4,4' : 'none',

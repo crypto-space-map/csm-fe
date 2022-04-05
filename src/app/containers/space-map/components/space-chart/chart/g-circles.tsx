@@ -59,19 +59,26 @@ const Circle = memo<CircleProps>(({ elem, currentProject, setCurrentProject = ()
   const isTransparent = useCircleOpacity(elem.data);
 
   return (
-    <circle
-      ref={ref}
-      key={`project-circle${elem.data.parent || elem.data.projectId}`}
-      r={elem.r || 0.1}
-      cx={scaled(elem.x)}
-      cy={scaled(elem.y)}
-      vectorEffect="non-scaling-stroke"
-      onClick={handleClick}
-      onMouseMove={onMouseMove}
-      onMouseOver={onMouseOver}
-      onMouseOut={onMouseOut}
-      {...getSphereColorParams(elem, isTransparent)}
-    />
+    <>
+      <circle
+        ref={ref}
+        key={`project-circle${elem.data.parent || elem.data.projectId}`}
+        r={elem.r || 0.1}
+        cx={scaled(elem.x)}
+        cy={scaled(elem.y)}
+        vectorEffect="non-scaling-stroke"
+        onClick={handleClick}
+        onMouseMove={onMouseMove}
+        onMouseOver={onMouseOver}
+        onMouseOut={onMouseOut}
+        {...getSphereColorParams(elem, isTransparent)}
+        fill={`url(#${elem?.data?.projectId || 'none'})`}
+      />
+      <linearGradient id={elem.data.projectId} x1="0" y1="0" x2="100%" y2="0">
+        <stop offset="0%" stopColor="#242424" />
+        <stop offset="70%" stopColor={getSphereColorParams(elem, isTransparent).fill} />
+      </linearGradient>
+    </>
   );
 });
 

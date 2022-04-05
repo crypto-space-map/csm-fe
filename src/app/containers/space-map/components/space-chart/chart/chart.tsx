@@ -17,6 +17,7 @@ import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
 import { GPartnersLegend } from './g-partners-legend';
 import { GTooltips } from './g-tooltips';
+import { Gradients } from './gradients';
 import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
 
 const NEEDLES_CATEGORIES = ['619b3ca2064df399fced84b1'];
@@ -94,6 +95,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
     <ChartWrapper ref={wrapperRef}>
       <ProjectTooltip ref={tooltipRef} />
       <RandomSvg ref={svgRef}>
+        <Gradients />
         <g>
           {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
           <GCircles
