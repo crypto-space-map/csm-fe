@@ -75,8 +75,8 @@ const Circle = memo<CircleProps>(({ elem, currentProject, setCurrentProject = ()
         fill={`url(#${elem?.data?.projectId || 'none'})`}
       />
       <linearGradient id={elem.data.projectId} x1="0" y1="0" x2="100%" y2="0">
-        <stop offset="0%" stopColor="#242424" />
-        <stop offset="70%" stopColor={getSphereColorParams(elem, isTransparent).fill} />
+        <stop offset="3%" stopColor="#242424" />
+        <stop offset="100%" stopColor={getSphereColorParams(elem, isTransparent).fill} />
       </linearGradient>
     </>
   );

@@ -7,19 +7,20 @@ type GetCircleColorProps = {
   projectWeight: number;
   isTransparent: boolean;
 };
+// E8E866 ЖЕЛТЫЙ F5F587 SUPER YELLOW
 
 export const colorArray = [
-  '#EAE0D7',
-  '#817474',
-  '#E7948C',
-  '#AABCC3',
-  '#519581',
-  '#DFDFA6',
-  '#9E6A87',
+  '#C93A44',
+  '#F5F587',
+  '#A35263',
+  '#044733',
+  '#F7C599',
   '#4B3C6A',
+  '#ED766B',
+  '#AABCC3',
   '#36454E',
-  '#6F464F',
   '#343F63',
+  '#817474',
 ];
 
 export const color = interpolateRgbBasis(colorArray);

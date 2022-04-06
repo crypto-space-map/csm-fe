@@ -95,7 +95,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
     <ChartWrapper ref={wrapperRef}>
       <ProjectTooltip ref={tooltipRef} />
       <RandomSvg ref={svgRef}>
-        <Gradients />
+        {/* <Gradients /> */}
         <g>
           {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
           <GCircles
