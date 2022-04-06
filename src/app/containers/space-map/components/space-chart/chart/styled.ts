@@ -24,7 +24,7 @@ export const ProjectTooltip = styled.div`
   visibility: hidden;
   z-index: 2;
   overflow: hidden;
-  animation: tooltipShowAnimation 1s linear;
+  animation: tooltipShowAnimation 0.5s linear;
 
   @keyframes tooltipShowAnimation {
     0%,

@@ -9,17 +9,17 @@ type GetCircleColorProps = {
 };
 
 export const colorArray = [
-  '#EAE0D7',
-  '#817474',
-  '#E7948C',
-  '#AABCC3',
-  '#519581',
-  '#DFDFA6',
-  '#9E6A87',
-  '#4B3C6A',
-  '#36454E',
-  '#6F464F',
-  '#343F63',
+  '#78939C',
+  '#9DD2F8',
+  '#A9F89D',
+  '#FCEB92',
+  '#FF8585',
+  '#FDA1FF',
+  '#E0772B',
+  '#E535D4',
+  '#F64848',
+  '#B41F54',
+  '#B02727',
 ];
 
 export const color = interpolateRgbBasis(colorArray);
