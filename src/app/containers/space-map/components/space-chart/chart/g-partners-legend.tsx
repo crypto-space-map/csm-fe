@@ -27,7 +27,7 @@ const HELPER_TEXT = {
   WIDTH: 120,
   ICON: 142,
   RECT: 200,
-  TEXT: 180,
+  TEXT: 160,
 };
 
 const circleData = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
@@ -51,7 +51,7 @@ const Helper = () => {
       <g ref={ref} visibility="hidden">
         <rect
           width={HELPER_TEXT.RECT}
-          height="60"
+          height="64"
           rx="4"
           fill="white"
           x={-HELPER_TEXT.ICON - HELPER_TEXT.RECT / 2}
@@ -65,7 +65,8 @@ const Helper = () => {
         <text
           fill={COLOR_PALLETTE.MAIN_BLACK}
           x={-HELPER_TEXT.ICON - HELPER_TEXT.TEXT / 2}
-          y={12 * 2}
+          y={15 * 2}
+          fontSize={14}
           width={HELPER_TEXT.TEXT}>
           <tspan x={-HELPER_TEXT.ICON - HELPER_TEXT.TEXT / 2 - 4} dy="1em">
             Total number of project
