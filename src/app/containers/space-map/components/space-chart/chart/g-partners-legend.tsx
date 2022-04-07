@@ -1,10 +1,12 @@
-import { memo, MouseEvent } from 'react';
+import { memo, MouseEvent, useRef } from 'react';
 
 import { COLOR_PALLETTE } from 'global/pallette';
 import { useSelector } from 'react-redux';
 
 import { selectFilters } from 'app/containers/space-map/selectors';
 import { useDispatchAction as chartDispatchActions } from 'app/containers/space-map/slice';
+import { QuestionMark } from 'assets/icons';
+import { SVGWrapper } from 'common/components';
 
 import { Sizing } from '../types';
 import { color } from '../utils/colors';
@@ -21,7 +23,62 @@ const RECT = {
   PADDING: 2,
 };
 
+const HELPER_TEXT = {
+  WIDTH: 120,
+  ICON: 142,
+  RECT: 200,
+  TEXT: 180,
+};
+
 const circleData = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+
+const Helper = () => {
+  const ref = useRef<SVGGElement>(null);
+  const onMouseEnter = () => ref.current?.setAttribute('visibility', 'visible');
+  const onMouseLeave = () => ref.current?.setAttribute('visibility', 'hidden');
+  return (
+    <>
+      <g onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+        <SVGWrapper x={-HELPER_TEXT.ICON} y={-CIRCLE.RADIUS / 2 - RECT.PADDING}>
+          <QuestionMark />
+        </SVGWrapper>
+      </g>
+      <text x={-HELPER_TEXT.WIDTH} y={CIRCLE.RADIUS / 2} fill={COLOR_PALLETTE.MAIN_WHITE}>
+        Connections
+      </text>
+      <g ref={ref} visibility="hidden">
+        <rect
+          width={HELPER_TEXT.RECT}
+          height="60"
+          rx="4"
+          fill="white"
+          x={-HELPER_TEXT.ICON - HELPER_TEXT.RECT / 2}
+          y={CIRCLE.RADIUS + 10}
+        />
+        <path
+          d="M12.5092 0.179343C13.3259 0.179343 13.735 1.16686 13.1574 1.7444L7.40166 7.50018C7.04363 7.85821 6.46315 7.85821 6.10512 7.50018L0.349341 1.7444C-0.228206 1.16686 0.180836 0.179343 0.99761 0.179343H12.5092Z"
+          fill={COLOR_PALLETTE.MAIN_WHITE}
+          transform={`translate(${-128}, 24) rotate(180)`}
+        />
+        <text
+          fill={COLOR_PALLETTE.MAIN_BLACK}
+          x={-HELPER_TEXT.ICON - HELPER_TEXT.TEXT / 2}
+          y={12 * 2}
+          width={HELPER_TEXT.TEXT}>
+          <tspan x={-HELPER_TEXT.ICON - HELPER_TEXT.TEXT / 2 - 4} dy="1em">
+            Total number of project
+          </tspan>
+          <tspan x={-HELPER_TEXT.ICON - HELPER_TEXT.TEXT / 2 - 4} dy="1em">
+            connections with investors
+          </tspan>
+          <tspan x={-HELPER_TEXT.ICON - HELPER_TEXT.TEXT / 2 - 4} dy="1em">
+            and other projects
+          </tspan>
+        </text>
+      </g>
+    </>
+  );
+};
 
 const Circle = ({ value = 0, label = '', index = 0 }) => {
   const { partnersWeight } = useSelector(selectFilters);
@@ -74,7 +131,8 @@ export const GPartnersLegend = memo<Omit<Sizing, 'height'>>(({ width }) => {
   const xLegendPos = width / 2 - legendWidth / 4;
 
   return (
-    <g transform={`translate(${xLegendPos}, 0)`}>
+    <g transform={`translate(${xLegendPos + 60}, 0)`}>
+      <Helper />
       {circleData.map((item, i) => (
         <Circle
           key={`legend${item}`}
