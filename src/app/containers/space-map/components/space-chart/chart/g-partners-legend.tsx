@@ -38,13 +38,15 @@ const Helper = () => {
   const onMouseLeave = () => ref.current?.setAttribute('visibility', 'hidden');
   return (
     <>
-      <g onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-        <SVGWrapper x={-HELPER_TEXT.ICON} y={-CIRCLE.RADIUS / 2 - RECT.PADDING}>
-          <QuestionMark />
-        </SVGWrapper>
-      </g>
+      <SVGWrapper
+        x={-HELPER_TEXT.ICON}
+        y={-CIRCLE.RADIUS / 2 - RECT.PADDING}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}>
+        <QuestionMark />
+      </SVGWrapper>
       <text x={-HELPER_TEXT.WIDTH} y={CIRCLE.RADIUS / 2} fill={COLOR_PALLETTE.MAIN_WHITE}>
-        Connections
+        Connections:
       </text>
       <g ref={ref} visibility="hidden">
         <rect
