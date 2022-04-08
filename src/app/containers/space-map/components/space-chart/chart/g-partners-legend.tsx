@@ -34,8 +34,8 @@ const circleData = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
 const Helper = () => {
   const ref = useRef<SVGGElement>(null);
-  const onMouseEnter = () => ref.current?.setAttribute('visibility', 'visible');
-  const onMouseLeave = () => ref.current?.setAttribute('visibility', 'hidden');
+  const onMouseEnter = () => ref.current?.setAttribute('fill-opacity', '1');
+  const onMouseLeave = () => ref.current?.setAttribute('fill-opacity', '0');
   return (
     <>
       <SVGWrapper
@@ -48,7 +48,7 @@ const Helper = () => {
       <text x={-HELPER_TEXT.WIDTH} y={CIRCLE.RADIUS / 2} fill={COLOR_PALLETTE.MAIN_WHITE}>
         Connections:
       </text>
-      <g ref={ref} visibility="hidden">
+      <CursorGTag ref={ref} fillOpacity="0">
         <rect
           width={HELPER_TEXT.RECT}
           height="64"
@@ -78,7 +78,7 @@ const Helper = () => {
             and other projects
           </tspan>
         </text>
-      </g>
+      </CursorGTag>
     </>
   );
 };

@@ -110,4 +110,5 @@ export const StyledLabel = styled.span`
 
 export const CursorGTag = styled.g`
   cursor: pointer;
+  transition: 0.2s linear;
 `;
