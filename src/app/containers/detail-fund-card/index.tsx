@@ -1,17 +1,23 @@
 import { memo, useMemo } from 'react';
 
 import { DetailHeaderSection, DetailStatisticsSection } from 'app/components';
+import { TopSection } from 'app/components/detail-common-components';
 
 import { TabsSection } from './components/tabs-section';
 import { useDetailFundSlice, useDetailFund, useClearDataAfterChangeNewFund } from './hooks';
-import { TopSection } from './styles';
+
+interface DetailFundCardProps {
+  isHide: boolean;
+  toggleIsHide: () => void;
+}
 
 const defaultValue = 'default';
 
-export const DetailFundCard = memo(() => {
+export const DetailFundCard = memo((props: DetailFundCardProps) => {
   useDetailFundSlice();
   useClearDataAfterChangeNewFund();
   const { fundData, isShow } = useDetailFund();
+  const { isHide } = props;
 
   const statisticsData = useMemo(
     () => ({
@@ -23,11 +29,11 @@ export const DetailFundCard = memo(() => {
 
   return (
     <>
-      <TopSection>
+      <TopSection isHide={isHide}>
         {isShow && fundData && (
           <>
-            <DetailHeaderSection showExtraInfo={false} name={fundName} icon={fundData?.logo} />
-            <DetailStatisticsSection data={statisticsData} />
+            <DetailHeaderSection showExtraInfo={false} name={fundName} icon={fundData?.logo} {...props} />
+            <DetailStatisticsSection data={statisticsData} isHide={isHide} />
           </>
         )}
       </TopSection>

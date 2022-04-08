@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 
 import { CommonStatisticItem } from './common-statistic-item';
 import { PercentageStatisticItem } from './percentage-statistic-item';
 import { StatisticsSectionWrapper } from './styles';
 import { GenerateDataProps, StatisticTypes, StatisticDetailDataDTO } from './types';
-import { generateOptions } from './utils';
+import { generateOptions, switchElementPosition } from './utils';
 import { WebsiteStatisticItem } from './website-statistic-item';
 
 const selectStatisticItem = (item: GenerateDataProps) => {
@@ -21,14 +21,27 @@ const selectStatisticItem = (item: GenerateDataProps) => {
   }
 };
 
-export const DetailStatisticsSection = ({ data }: { data: StatisticDetailDataDTO | null }) => {
-  const preparedData = useMemo(() => (data ? generateOptions(data) : null), [data]);
+interface DetailStatisticsSectionProps {
+  data: StatisticDetailDataDTO | null;
+  isHide: boolean;
+}
 
-  if (!preparedData) return null;
+export const DetailStatisticsSection = ({ data, isHide }: DetailStatisticsSectionProps) => {
+  const preparedData = useMemo(() => (data ? generateOptions(data) : null), [data]);
+  const [currentData, setCurrentData] = useState(preparedData);
+  useEffect(() => {
+    if (isHide && preparedData) {
+      const newArr = switchElementPosition([...preparedData]);
+      setCurrentData(newArr);
+    }
+    if (!isHide) {
+      setCurrentData(preparedData);
+    }
+  }, [isHide, preparedData]);
+
+  if (!currentData) return null;
 
   return (
-    <StatisticsSectionWrapper>
-      {preparedData.map(item => selectStatisticItem(item))}
-    </StatisticsSectionWrapper>
+    <StatisticsSectionWrapper>{currentData.map(item => selectStatisticItem(item))}</StatisticsSectionWrapper>
   );
 };

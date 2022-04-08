@@ -4,7 +4,13 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import { Grid } from 'app/components';
-import { ProjectCell, InvestorsBlock, StyledLoader, AnnLink } from 'app/components/detail-common-components';
+import {
+  ProjectCell,
+  InvestorsBlock,
+  StyledLoader,
+  AnnLink,
+  TextWithCut,
+} from 'app/components/detail-common-components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
 import { selectedFundName } from 'store/pageStore/selectors';
 import { getTransformedPrice } from 'utils/detail-info';
@@ -36,6 +42,12 @@ const decorateAnn = (row: EnrichedInvestorsProps) => {
   return <AnnLink link={value} width={70} />;
 };
 
+const decorateType = (row: EnrichedInvestorsProps) => {
+  const { id, type } = row;
+  if (!type) return null;
+  return <TextWithCut id={id} text={type} />;
+};
+
 const decorateProject = (row: EnrichedInvestorsProps) => {
   const { projectId, projectLogo, projectName, isOnMap } = row;
   if (!projectName) return null;
@@ -60,6 +72,7 @@ const columns: ColumnProps<EnrichedInvestorsProps>[] = [
     headerName: headerNames.type,
     width: 70,
     sortable: false,
+    renderCell: decorateType,
   },
   {
     field: 'projectName',

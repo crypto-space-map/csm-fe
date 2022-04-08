@@ -1,7 +1,7 @@
-import { COLOR_PALLETTE } from 'global/pallette';
+import { useCallback } from 'react';
 
-import { ShareIcon, StarIcon, LikeIcon, CloseIcon, RoundedButton } from 'assets';
-import { IconPlug, SVGWrapper } from 'common/components';
+import { StarIcon, CloseIcon, RoundedButton, HideCardIcon } from 'assets';
+import { IconPlug } from 'common/components';
 
 import { useDetailHeader } from './hooks';
 import {
@@ -13,14 +13,16 @@ import {
   HeaderSectionWrapper,
   RankText,
   Controls,
-  CloseIconWrapper,
   StyledRoundedButton,
   StyledDefaultLogo,
+  IconWrapper,
+  ControlsWrapper,
 } from './styles';
 import { HeaderData } from './types';
 
 interface DetailHeaderSectionProps extends HeaderData {
   showExtraInfo?: boolean;
+  toggleIsHide: () => void;
 }
 
 const getLogo = (name: string, icon?: string) =>
@@ -38,8 +40,13 @@ export const DetailHeaderSection = ({
   icon,
   rank,
   showExtraInfo,
+  toggleIsHide,
 }: DetailHeaderSectionProps) => {
   const { isShowArrowBack, handleArrowBack, handleClose } = useDetailHeader();
+  const handleHideCard = useCallback(() => {
+    toggleIsHide();
+  }, [toggleIsHide]);
+
   return (
     <HeaderSectionWrapper>
       <CompanyInfo>
@@ -64,18 +71,16 @@ export const DetailHeaderSection = ({
           </>
         )}
       </CompanyInfo>
-      <Controls>
-        <SVGWrapper fill="none" stroke={COLOR_PALLETTE.MAIN_GRAY}>
-          <LikeIcon />
-        </SVGWrapper>
-        <SVGWrapper fill={COLOR_PALLETTE.MAIN_GRAY}>
-          <ShareIcon />
-        </SVGWrapper>
-
-        <CloseIconWrapper onClick={handleClose}>
-          <CloseIcon />
-        </CloseIconWrapper>
-      </Controls>
+      <ControlsWrapper>
+        <Controls>
+          <IconWrapper onClick={handleHideCard}>
+            <HideCardIcon />
+          </IconWrapper>
+          <IconWrapper onClick={handleClose}>
+            <CloseIcon />
+          </IconWrapper>
+        </Controls>
+      </ControlsWrapper>
     </HeaderSectionWrapper>
   );
 };

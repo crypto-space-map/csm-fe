@@ -4,7 +4,7 @@ import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import { Grid } from 'app/components';
-import { InvestorsBlock, StyledLoader, AnnLink } from 'app/components/detail-common-components';
+import { InvestorsBlock, StyledLoader, AnnLink, TextWithCut } from 'app/components/detail-common-components';
 import { ColumnProps, SortingTypes } from 'app/components/grid/types';
 import {
   selectedProjectName,
@@ -33,6 +33,12 @@ const decorateDate = (row: EnrichedFundsProps) => {
   return moment(value).format('DD MMM YYYY');
 };
 
+const decorateType = (row: EnrichedFundsProps) => {
+  const { id, type } = row;
+  if (!type) return null;
+  return <TextWithCut id={id} text={type} />;
+};
+
 const decorateInvestors = (row: EnrichedFundsProps) => {
   const value = row.investors;
   if (!value?.length) return null;
@@ -51,6 +57,7 @@ const columns: ColumnProps<EnrichedFundsProps>[] = [
     field: 'type',
     headerName: headerNames.type,
     width: 95,
+    renderCell: decorateType,
   },
   {
     field: 'investors',
