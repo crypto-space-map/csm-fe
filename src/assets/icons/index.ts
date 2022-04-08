@@ -5,3 +5,4 @@ export { default as CloseIcon } from './close-ico.svg';
 export { default as EyeCrossOut } from './eye-cross-out.svg';
 export { default as Eye } from './eye.svg';
 export { default as Search } from './search.svg';
+export { default as QuestionMark } from './question-mark.svg';
