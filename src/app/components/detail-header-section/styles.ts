@@ -45,20 +45,24 @@ export const RankText = styled.span`
   margin-left: 6px;
 `;
 
+export const ControlsWrapper = styled.div`
+  position: absolute;
+  top: 28px;
+  right: 28px;
+`;
+
 export const Controls = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 38px;
-  & > svg:first-of-type {
-    margin-right: 20px;
-  }
+  grid-column-gap: 24px;
 `;
 
-export const CloseIconWrapper = styled.div`
-  position: absolute;
-  top: 23px;
-  right: 23px;
+export const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
   cursor: pointer;
+  width: 16px;
+  height: 16px;
 `;
 
 export const StyledRoundedButton = styled.div`

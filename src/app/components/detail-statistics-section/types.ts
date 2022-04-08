@@ -27,6 +27,7 @@ export interface StatisticDetailDataDTO {
 }
 
 export interface GenerateDataProps {
+  id: string;
   title: string;
   mainValue: string | null;
   secondValue?: string | null;

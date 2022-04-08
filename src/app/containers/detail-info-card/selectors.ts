@@ -64,16 +64,7 @@ export const selectedEnrichedPartnerships = createSelector([selectedProjectPartn
 export const selectedEnrichedExchangesData = createSelector([selectedExchangesData], data => {
   if (!data) return null;
 
-  const sortedData = [...data].sort((...args) =>
-    numberSortFunc({
-      a: args[0],
-      b: args[1],
-      fieldName: 'volumePercentage',
-      sortDirection: SortingValues.DESC,
-    })
-  );
-
-  const transformedData = sortedData.map((item, index) => ({
+  const transformedData = data.map((item, index) => ({
     id: String(index + 1),
     ...item,
   }));

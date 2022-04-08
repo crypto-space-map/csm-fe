@@ -42,7 +42,7 @@ const getTransformedPercentage = (value: number) => `${roundNumber(value)}%`;
 export const generateOptions = (data: StatisticDetailDataDTO): GenerateDataProps[] => {
   const dataOptions = Object.keys(data) as Array<keyof StatisticDetailDataDTO>;
 
-  return dataOptions.map(item => {
+  const res = dataOptions.map(item => {
     if (supplyStatistic.includes(item)) {
       const { value, percentage } = data[item] as PercentageStatistic;
       const secondValue =
@@ -50,6 +50,7 @@ export const generateOptions = (data: StatisticDetailDataDTO): GenerateDataProps
           ? getTransformedPrice(percentage ?? 0)
           : getTransformedPercentage(percentage ?? 0);
       return {
+        id: item,
         title: titles[item],
         mainValue: value ? getTransformedPrice(value, false) : null,
         secondValue: percentage ? secondValue : null,
@@ -59,6 +60,7 @@ export const generateOptions = (data: StatisticDetailDataDTO): GenerateDataProps
     if (percentageStatistic.includes(item)) {
       const { value, percentage } = data[item] as PercentageStatistic;
       return {
+        id: item,
         title: titles[item],
         mainValue: percentage ? String(roundNumber(percentage)) : null,
         secondValue: value ? String(roundNumber(value, 4)) : null,
@@ -68,6 +70,7 @@ export const generateOptions = (data: StatisticDetailDataDTO): GenerateDataProps
     if (item === options.website) {
       const value = data[item] as string;
       return {
+        id: item,
         title: titles[item],
         mainValue: value,
         type: StatisticTypes.WEBSITE,
@@ -79,10 +82,21 @@ export const generateOptions = (data: StatisticDetailDataDTO): GenerateDataProps
 
     const secondValue = roundNumber(btcValue, 4);
     return {
+      id: item,
       title: titles[item],
       mainValue: usd ? getTransformedPrice(usd) : null,
       secondValue: btc ? getTransformedBtc(secondValue) : null,
       type: StatisticTypes.COMMON,
     };
   });
+  return res;
+};
+
+export const switchElementPosition = (arr: GenerateDataProps[]) => {
+  const websiteIndex = arr.findIndex(item => item.id === options.website);
+  const mcapIndex = arr.findIndex(item => item.id === options.marketCap);
+  if (websiteIndex !== -1 && mcapIndex !== -1) {
+    [arr[mcapIndex], arr[websiteIndex]] = [arr[websiteIndex], arr[mcapIndex]];
+  }
+  return arr;
 };

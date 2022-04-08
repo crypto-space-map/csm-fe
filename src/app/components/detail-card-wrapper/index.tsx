@@ -4,11 +4,12 @@ import { DetailWrapper, TransitionWrapper } from './styles';
 
 interface DetailCardWrapperProps {
   children: ReactNode;
-  show: boolean;
+  isShow: boolean;
+  isHide: boolean;
 }
 
-export const DetailCardWrapper = memo(({ children, show }: DetailCardWrapperProps) => (
-  <TransitionWrapper open={show}>
+export const DetailCardWrapper = memo(({ children, isShow, isHide }: DetailCardWrapperProps) => (
+  <TransitionWrapper isOpen={isShow} isHide={isHide}>
     <DetailWrapper>{children}</DetailWrapper>
   </TransitionWrapper>
 ));

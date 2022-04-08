@@ -104,9 +104,11 @@ const providersListSlice = createSlice({
       state.exchangesData.loading = true;
     },
     fetchExchangesDataSuccess(state, action: PayloadAction<{ data: ExchangeDTO[] }>) {
+      const newData = state.exchangesData.data
+        ? [...state.exchangesData.data, ...action.payload.data]
+        : action.payload.data;
       state.exchangesData.loading = false;
-      // TODO сделать фильтрацию дублей
-      state.exchangesData.data = action.payload.data;
+      state.exchangesData.data = newData;
     },
     fetchExchangesDataError(state, action: PayloadAction<{ message: string }>) {
       fetchExchangesDataError(state.exchangesData, action);
