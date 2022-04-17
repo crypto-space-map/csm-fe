@@ -2,7 +2,7 @@ import { RefObject } from 'react';
 
 import { D3ZoomEvent, select, zoom } from 'd3';
 
-const ZOOM_RANGE: [number, number] = [0.5, 40];
+const ZOOM_RANGE: [number, number] = [0.5, 50];
 
 export const initZoomedElement = <T extends Element>(ref: RefObject<T>, width: number, height: number) => {
   if (ref.current) {

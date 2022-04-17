@@ -112,3 +112,16 @@ export const CursorGTag = styled.g`
   cursor: pointer;
   transition: 0.2s linear;
 `;
+
+export const CircleText = styled.text<{ isOpacity?: boolean }>`
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 54px;
+  fill: ${({ isOpacity = false }) => (isOpacity ? COLOR_PALLETTE.MAIN_GRAY : COLOR_PALLETTE.MAIN_WHITE)};
+  stroke: '#000000';
+  stroke-width: 0.02;
+  text-anchor: middle;
+  cursor: pointer;
+  transition: 0.2s linear;
+`;
