@@ -1,12 +1,13 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { HierarchyCircularNode } from 'd3';
-import { Circle, Group, Layer, Stage, Star } from 'react-konva';
-import { useSelector } from 'react-redux';
+import { Layer, Stage } from 'react-konva';
+import { ReactReduxContext, Provider, useSelector } from 'react-redux';
 
 import { selectAuth } from 'app/containers/login/selectors';
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import { useWindowSize } from 'hooks/use-screen-size';
+import { useSetNewProject } from 'hooks/use-set-new-project';
 
 import { PackedCategories } from '../types';
 import { getAllProjects, getIncludesProjects } from '../utils/helpers';
@@ -28,7 +29,6 @@ type SpaceChartProps = {
 
 export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const isAuth = useSelector(selectAuth);
@@ -49,6 +49,8 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
     projectPartnerships,
     fetchPartnershipsData,
   } = useSpaceMap();
+
+  const { handleSelectFund } = useSetNewProject();
 
   const setProject = useCallback(
     val => {
@@ -88,21 +90,28 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   useEffect(() => {
     simulation?.tick();
   }, [simulation, windowSize]);
-  console.log(simulatedCircles);
 
   // initZoomedElement(svgRef, width, height);
-  if (!simulatedCircles?.length) return null;
   return (
-    <Stage width={width} height={height}>
-      <Layer>
-        <GCircles
-          selectedProjects={foundProjects}
-          data={simulatedCircles}
-          setCurrentProject={setProject}
-          tooltipRef={tooltipRef}
-          currentProject={currentProject}
-        />
-      </Layer>
-    </Stage>
+    <ReactReduxContext.Consumer>
+      {({ store }) => (
+        <ChartWrapper ref={wrapperRef}>
+          <Stage width={width} height={height}>
+            <Provider store={store}>
+              <Layer>
+                <GCircles
+                  selectedProjects={foundProjects}
+                  data={simulatedCircles}
+                  setCurrentProject={setProject}
+                  tooltipRef={tooltipRef}
+                  currentProject={currentProject}
+                  handleSelectFund={handleSelectFund}
+                />
+              </Layer>
+            </Provider>
+          </Stage>
+        </ChartWrapper>
+      )}
+    </ReactReduxContext.Consumer>
   );
 });

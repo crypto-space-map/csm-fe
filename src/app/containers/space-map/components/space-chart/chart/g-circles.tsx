@@ -1,6 +1,6 @@
-import { Fragment, memo, MouseEvent, RefObject, useCallback, useRef } from 'react';
+import { Fragment, memo, MouseEvent, RefObject, useCallback } from 'react';
 
-import { HierarchyCircularNode, scaleLinear } from 'd3';
+import { HierarchyCircularNode } from 'd3';
 import { Circle as KonvaCircle } from 'react-konva';
 
 import { useSetNewProject } from 'hooks/use-set-new-project';
@@ -11,9 +11,14 @@ import { transformStylesToString } from '../utils/helpers';
 import { useCircleOpacity } from '../utils/use-circle-opacity';
 import { CircleText } from './styled';
 
-const TOOLTIP_PADDING = 5;
+const getCordsPos = (elem: HierarchyCircularNode<PackedCategories>, cord: 'x' | 'y') => {
+  if (elem.parent) {
+    return elem[cord] + elem.parent?.data[cord] - elem.parent?.data.r;
+  }
+  return elem.data[cord];
+};
 
-const scaled = scaleLinear();
+const TOOLTIP_PADDING = 5;
 
 type TooltipProps = {
   tooltipRef: RefObject<HTMLDivElement>;
@@ -25,9 +30,14 @@ type CircleProps = Omit<GAreaProps, 'data'> &
   };
 
 const Circle = memo<CircleProps>(
-  ({ elem, currentProject, setCurrentProject = () => false, tooltipRef, selectedProjects = [] }) => {
-    const ref = useRef<SVGCircleElement>(null);
-    const { handleSelectFund } = useSetNewProject();
+  ({
+    elem,
+    currentProject,
+    setCurrentProject = () => false,
+    tooltipRef,
+    selectedProjects = [],
+    handleSelectFund = () => false,
+  }) => {
     const handleClick = useCallback(() => {
       if (currentProject?.data.projectId === elem.data.projectId) return handleSelectFund('');
       return setCurrentProject(elem);
@@ -38,46 +48,45 @@ const Circle = memo<CircleProps>(
       }
     };
 
-    const onMouseMove = (event: MouseEvent) => {
-      if (tooltipRef.current) {
-        const { width, height } = tooltipRef.current.getBoundingClientRect();
-        const styles = transformStylesToString({
-          top: `${event.pageY}px`,
-          left: `${event.pageX}px`,
-          visibility: 'visible',
-          transform: `translate(-${width / 2}px, -${height + TOOLTIP_PADDING}px)`,
-        });
-        tooltipRef.current.setAttribute('style', styles);
-        tooltipRef.current.textContent = elem.data.name;
-      }
-    };
+    // const onMouseMove = (event: MouseEvent) => {
+    //   if (tooltipRef.current) {
+    //     const { width, height } = tooltipRef.current.getBoundingClientRect();
+    //     const styles = transformStylesToString({
+    //       top: `${event.pageY}px`,
+    //       left: `${event.pageX}px`,
+    //       visibility: 'visible',
+    //       transform: `translate(-${width / 2}px, -${height + TOOLTIP_PADDING}px)`,
+    //     });
+    //     tooltipRef.current.setAttribute('style', styles);
+    //     tooltipRef.current.textContent = elem.data.name;
+    //   }
+    // };
 
-    const onMouseOut = () => {
-      if (tooltipRef.current) {
-        tooltipRef.current.style.visibility = 'hidden';
-        tooltipRef.current.style.animation = 'none';
-      }
-    };
+    // const onMouseOut = () => {
+    //   if (tooltipRef.current) {
+    //     tooltipRef.current.style.visibility = 'hidden';
+    //     tooltipRef.current.style.animation = 'none';
+    //   }
+    // };
 
     const isTransparent = useCircleOpacity(elem.data);
 
-    const isSelected =
-      selectedProjects.some(project => project.data.projectId === elem.data.projectId) ||
-      (currentProject && elem.data.projectId === currentProject?.data.projectId);
+    // const isSelected =
+    //   selectedProjects.some(project => project.data.projectId === elem.data.projectId) ||
+    //   (currentProject && elem.data.projectId === currentProject?.data.projectId);
 
     const tickerFontSize = (elem.r / elem.data.symbol?.length) * 2.5;
 
     return (
       <>
         <KonvaCircle
-          // ref={ref}
-          key={`project-circle${elem.data.parent || elem.data.projectId}`}
+          key={`project-circle${elem.data.projectId || elem.data.key}`}
           radius={elem.r || 0.1}
-          fill="red"
-          // x={scaled(elem.x)}
-          // y={scaled(elem.y)}
-          // vectorEffect="non-scaling-stroke"
-          // onClick={handleClick}
+          x={getCordsPos(elem, 'x')}
+          y={getCordsPos(elem, 'y')}
+          {...getSphereColorParams(elem, isTransparent)}
+          onClick={handleClick}
+          // opacity={isTransparent ? 0.5 : 1}
           // onMouseMove={onMouseMove}
           // onMouseOver={onMouseOver}
           // onMouseOut={onMouseOut}
@@ -103,22 +112,22 @@ const Circles = memo<GAreaProps & TooltipProps>(({ data, ...rest }) => (
   <>
     {data?.map(elem => (
       <>
-        <Circle elem={elem} {...rest} />
-        <Circles data={elem.children} {...rest} />
+        <Circle elem={elem} {...rest} key={elem.data.key || elem.data.projectId} />
       </>
     ))}
   </>
 ));
 
-export const GCircles = memo(({ data, ...rest }: GAreaProps & TooltipProps) => {
-  console.log(data);
-
-  if (!data) return null;
-  return (
-    <>
-      {data.map(
-        item => item.r && <KonvaCircle radius={item.r} fill="red" x={item.x} y={item.y} width={item.x} />
-      )}
-    </>
-  );
-});
+export const GCircles = memo(({ data, ...rest }: GAreaProps & TooltipProps) => (
+  <>
+    {data?.map(
+      elem =>
+        elem.r && (
+          <Fragment key={`project-circle${elem.data?.parent?.id || elem.data.projectId || ''}`}>
+            <Circle elem={elem} {...rest} />
+            <Circles data={elem.children} {...rest} />
+          </Fragment>
+        )
+    )}
+  </>
+));
