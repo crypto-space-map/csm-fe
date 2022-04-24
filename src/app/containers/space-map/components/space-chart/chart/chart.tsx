@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { HierarchyCircularNode } from 'd3';
+import { Circle, Group, Layer, Stage, Star } from 'react-konva';
 import { useSelector } from 'react-redux';
 
 import { selectAuth } from 'app/containers/login/selectors';
@@ -87,28 +88,21 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   useEffect(() => {
     simulation?.tick();
   }, [simulation, windowSize]);
+  console.log(simulatedCircles);
 
-  initZoomedElement(svgRef, width, height);
-
+  // initZoomedElement(svgRef, width, height);
+  if (!simulatedCircles?.length) return null;
   return (
-    <ChartWrapper ref={wrapperRef}>
-      <ProjectTooltip ref={tooltipRef} />
-      <RandomSvg ref={svgRef}>
-        <g>
-          {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
-          <GCircles
-            selectedProjects={foundProjects}
-            data={simulatedCircles}
-            setCurrentProject={setProject}
-            tooltipRef={tooltipRef}
-            currentProject={currentProject}
-          />
-          <GLabels data={simulatedCircles} />
-          <GHeaders data={simulatedCircles} />
-          {/* <GTooltips data={foundProjects} currentProject={currentProject} /> */}
-        </g>
-        <GPartnersLegend width={width} />
-      </RandomSvg>
-    </ChartWrapper>
+    <Stage width={width} height={height}>
+      <Layer>
+        <GCircles
+          selectedProjects={foundProjects}
+          data={simulatedCircles}
+          setCurrentProject={setProject}
+          tooltipRef={tooltipRef}
+          currentProject={currentProject}
+        />
+      </Layer>
+    </Stage>
   );
 });

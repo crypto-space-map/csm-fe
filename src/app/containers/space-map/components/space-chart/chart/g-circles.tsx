@@ -1,6 +1,7 @@
 import { Fragment, memo, MouseEvent, RefObject, useCallback, useRef } from 'react';
 
 import { HierarchyCircularNode, scaleLinear } from 'd3';
+import { Circle as KonvaCircle } from 'react-konva';
 
 import { useSetNewProject } from 'hooks/use-set-new-project';
 
@@ -68,20 +69,21 @@ const Circle = memo<CircleProps>(
 
     return (
       <>
-        <circle
-          ref={ref}
+        <KonvaCircle
+          // ref={ref}
           key={`project-circle${elem.data.parent || elem.data.projectId}`}
-          r={elem.r || 0.1}
-          cx={scaled(elem.x)}
-          cy={scaled(elem.y)}
-          vectorEffect="non-scaling-stroke"
-          onClick={handleClick}
-          onMouseMove={onMouseMove}
-          onMouseOver={onMouseOver}
-          onMouseOut={onMouseOut}
-          {...getSphereColorParams(elem, isTransparent)}
+          radius={elem.r || 0.1}
+          fill="red"
+          // x={scaled(elem.x)}
+          // y={scaled(elem.y)}
+          // vectorEffect="non-scaling-stroke"
+          // onClick={handleClick}
+          // onMouseMove={onMouseMove}
+          // onMouseOver={onMouseOver}
+          // onMouseOut={onMouseOut}
+          // {...getSphereColorParams(elem, isTransparent)}
         />
-        {currentProject && (
+        {/* {currentProject && (
           <CircleText
             onClick={handleClick}
             x={scaled(elem.x - elem.r) + elem.r}
@@ -91,7 +93,7 @@ const Circle = memo<CircleProps>(
             fontSize={tickerFontSize}>
             {elem.data.symbol && elem.data.symbol.toUpperCase()}
           </CircleText>
-        )}
+        )} */}
       </>
     );
   }
@@ -100,30 +102,23 @@ const Circle = memo<CircleProps>(
 const Circles = memo<GAreaProps & TooltipProps>(({ data, ...rest }) => (
   <>
     {data?.map(elem => (
-      <Fragment key={`circle-group${elem.data.projectId}${elem.x}${elem.y}`}>
+      <>
         <Circle elem={elem} {...rest} />
         <Circles data={elem.children} {...rest} />
-      </Fragment>
+      </>
     ))}
   </>
 ));
 
 export const GCircles = memo(({ data, ...rest }: GAreaProps & TooltipProps) => {
-  if (!data) return null;
+  console.log(data);
 
+  if (!data) return null;
   return (
-    <g className="circles-map">
+    <>
       {data.map(
-        item =>
-          item.r && (
-            <g
-              transform={`translate(${item.data.x - item.r}, ${item.data.y - item.r})`}
-              key={`circles-map-g${item.data.x}${item.data.y}`}>
-              <Circle elem={item} {...rest} />
-              <Circles data={item.children} {...rest} />
-            </g>
-          )
+        item => item.r && <KonvaCircle radius={item.r} fill="red" x={item.x} y={item.y} width={item.x} />
       )}
-    </g>
+    </>
   );
 });
