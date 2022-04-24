@@ -76,7 +76,7 @@ export const DetailHeaderSection = ({
           <IconWrapper onClick={handleHideCard}>
             <HideCardIcon />
           </IconWrapper>
-          <IconWrapper onClick={handleClose}>
+          <IconWrapper onClick={handleClose} id="close-card-block">
             <CloseIcon />
           </IconWrapper>
         </Controls>

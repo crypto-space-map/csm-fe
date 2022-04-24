@@ -21,4 +21,15 @@ export { default as DoneIcon } from 'assets/done.svg';
 export { default as DisableIcon } from 'assets/disabled.svg';
 export { default as CopyIcon } from 'assets/copy.svg';
 export { default as HideCardIcon } from 'assets/hide-card.svg';
+export { default as OverlayCloseIcon } from 'assets/overlay-close.svg';
 export { default as RoundedButton } from 'assets/rounded-button.svg';
+
+export { default as SpaceManIcon } from 'assets/space-man.svg';
+export { default as HelloCosmo } from 'assets/hello-cosmo.svg';
+export { default as GuideFilterLine } from 'assets/guide-filter-line.svg';
+export { default as GuideAccountLine } from 'assets/guide-account-line.svg';
+export { default as GuideRangeLine } from 'assets/guide-range-line.svg';
+export { default as GuideFundLine } from 'assets/guide-fund-line.svg';
+export { default as GuideMapLine } from 'assets/guide-map-line.svg';
+export { default as GuideCardLine } from 'assets/guide-card-line.svg';
+export { default as GuideEndLine } from 'assets/guide-end-line.svg';

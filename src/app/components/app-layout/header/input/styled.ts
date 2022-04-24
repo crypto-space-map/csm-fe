@@ -21,6 +21,9 @@ export const StyledIconButton = styled(IconButton)`
   & > svg {
     fill: ${COLOR_PALLETTE.MAIN_GRAY};
   }
+  &.hovered {
+    background: ${BACKGROUND};
+  }
   &:hover {
     background: ${BACKGROUND};
   }

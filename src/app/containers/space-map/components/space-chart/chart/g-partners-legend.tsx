@@ -134,7 +134,7 @@ export const GPartnersLegend = memo<Omit<Sizing, 'height'>>(({ width }) => {
   const xLegendPos = width / 2 - legendWidth / 4;
 
   return (
-    <g transform={`translate(${xLegendPos + 60}, 0)`}>
+    <g transform={`translate(${xLegendPos + 60}, 0)`} id="range-block">
       <Helper />
       {circleData.map((item, i) => (
         <Circle
