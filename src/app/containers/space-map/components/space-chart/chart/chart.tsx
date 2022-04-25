@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { HierarchyCircularNode } from 'd3';
-import { Layer, Stage } from 'react-konva';
+import { Layer } from 'react-konva';
 import { ReactReduxContext, Provider, useSelector } from 'react-redux';
 
 import { selectAuth } from 'app/containers/login/selectors';
@@ -19,6 +19,7 @@ import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
 import { GPartnersLegend } from './g-partners-legend';
 import { GTooltips } from './g-tooltips';
+import { MapStage } from './map-stage';
 import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
 
 const NEEDLES_CATEGORIES = ['619b3ca2064df399fced84b1'];
@@ -30,6 +31,7 @@ type SpaceChartProps = {
 export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const scaleRef = useRef<HTMLDivElement>(null);
 
   const isAuth = useSelector(selectAuth);
 
@@ -91,12 +93,12 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
     simulation?.tick();
   }, [simulation, windowSize]);
 
-  // initZoomedElement(svgRef, width, height);
+  // initZoomedElement(wrapperRef, width, height);
   return (
     <ReactReduxContext.Consumer>
       {({ store }) => (
         <ChartWrapper ref={wrapperRef}>
-          <Stage width={width} height={height}>
+          <MapStage width={width} height={height}>
             <Provider store={store}>
               <Layer>
                 <GCircles
@@ -109,7 +111,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
                 />
               </Layer>
             </Provider>
-          </Stage>
+          </MapStage>
         </ChartWrapper>
       )}
     </ReactReduxContext.Consumer>

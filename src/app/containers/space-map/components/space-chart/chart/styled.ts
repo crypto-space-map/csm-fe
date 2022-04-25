@@ -1,6 +1,7 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
+import { Circle } from 'react-konva';
 
 import { ChartTooltipProps } from './types';
 

@@ -1,6 +1,7 @@
-import { Fragment, memo, MouseEvent, RefObject, useCallback } from 'react';
+import { Fragment, memo, MouseEvent, RefObject, useCallback, useEffect, useRef } from 'react';
 
 import { HierarchyCircularNode } from 'd3';
+import { Circle as CircleShape } from 'konva/lib/shapes/Circle';
 import { Circle as KonvaCircle } from 'react-konva';
 
 import { useSetNewProject } from 'hooks/use-set-new-project';
@@ -38,15 +39,16 @@ const Circle = memo<CircleProps>(
     selectedProjects = [],
     handleSelectFund = () => false,
   }) => {
+    const circleRef = useRef<CircleShape>(null);
     const handleClick = useCallback(() => {
       if (currentProject?.data.projectId === elem.data.projectId) return handleSelectFund('');
       return setCurrentProject(elem);
     }, [currentProject?.data.projectId, elem, handleSelectFund, setCurrentProject]);
-    const onMouseOver = () => {
-      if (tooltipRef.current) {
-        tooltipRef.current.style.visibility = 'visible';
-      }
-    };
+    // const onMouseOver = () => {
+    //   if (tooltipRef.current) {
+    //     tooltipRef.current.style.visibility = 'visible';
+    //   }
+    // };
 
     // const onMouseMove = (event: MouseEvent) => {
     //   if (tooltipRef.current) {
@@ -77,9 +79,16 @@ const Circle = memo<CircleProps>(
 
     const tickerFontSize = (elem.r / elem.data.symbol?.length) * 2.5;
 
+    useEffect(() => {
+      circleRef.current?.to({
+        easy: 'bounce.out',
+      });
+    }, [circleRef]);
+
     return (
       <>
         <KonvaCircle
+          ref={circleRef}
           key={`project-circle${elem.data.projectId || elem.data.key}`}
           radius={elem.r || 0.1}
           x={getCordsPos(elem, 'x')}

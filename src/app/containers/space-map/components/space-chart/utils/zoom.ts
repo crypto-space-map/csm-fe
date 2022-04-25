@@ -10,7 +10,7 @@ export const initZoomedElement = <T extends Element>(ref: RefObject<T>, width: n
       /** TODO add correct type for event */
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      select(ref.current).select('g').attr('transform', e.transform);
+      select(ref.current).select('canvas').attr('transform', e.transform);
     };
     const initZoom = () =>
       select(ref.current as Element).call(
