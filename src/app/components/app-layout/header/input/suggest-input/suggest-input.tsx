@@ -16,6 +16,7 @@ import { StyledAutocomplete, StyledTextField, SuggestionList } from './styled';
 
 export const SuggestInput = () => {
   const [inputValue, setInputValue] = useState('');
+  const [state, setState] = useState<typeof projects[number] | null>(null);
   const { projects, fetchProjects, fetchPartnershipsData } = useSpaceMap();
   const { handleSelectProduct } = useSetNewProject();
   const projectName = useSelector(selectedProjectName);
@@ -30,16 +31,25 @@ export const SuggestInput = () => {
 
   const onChange = (e: Event, value: typeof projects[number]) => {
     if (typeof value === 'object' && value?.projectId) {
+      setState(value);
       handleSelectProduct(value?.projectId);
       fetchPartnershipsData(value?.projectId);
     }
   };
 
   useEffect(() => {
-    setInputValue(projectName?.toUpperCase() || '');
-  }, [projectName]);
+    if (projects.length && projectName) {
+      const currentProject = projects.find(project => project.projectId === projectName);
+      setState(currentProject || null);
+      setInputValue(projectName.toUpperCase());
+    }
+    if (!projectName) {
+      setState(null);
+      setInputValue('');
+    }
+  }, [projectName, projects]);
 
-  const getOptionLabel = (option: typeof projects[number]) => option.name;
+  const getOptionLabel = (option: typeof projects[number]) => option?.name || '';
 
   const onInputChange = (_event: SyntheticEvent<Element, Event>, newInputValue: string) =>
     setInputValue(newInputValue);
@@ -60,6 +70,7 @@ export const SuggestInput = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       onChange={onChange}
+      value={state}
       openOnFocus={!inputValue}
       autoComplete
       filterOptions={filterOptions}

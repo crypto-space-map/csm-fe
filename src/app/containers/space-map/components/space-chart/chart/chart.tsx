@@ -101,11 +101,12 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
             data={simulatedCircles}
             setCurrentProject={setProject}
             tooltipRef={tooltipRef}
-            currentProject={currentProject}
+            // currentProject={currentProject}  раскомитить когда потребуются тикеры внутри сфер
           />
           <GLabels data={simulatedCircles} />
           <GHeaders data={simulatedCircles} />
-          {/* <GTooltips data={foundProjects} currentProject={currentProject} /> */}
+          <GTooltips data={foundProjects} currentProject={currentProject} />
+          {/** закомитить когда тикеры нужны внутри */}
         </g>
         <GPartnersLegend width={width} />
       </RandomSvg>
