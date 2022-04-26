@@ -110,14 +110,16 @@ const Circle = memo<CircleProps>(
           // onMouseOut={onMouseOut}
           // {...getSphereColorParams(elem, isTransparent)}
         />
-        {currentProject && (
-          <CircleText
-            elem={elem}
-            key={`project-text${elem.data.projectId}`}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          />
-        )}
+
+        <CircleText
+          elem={elem}
+          key={`project-text${elem.data.projectId}`}
+          isSelected={!!currentProject && !isSelected}
+          // TODO доделать props types
+          onClick={handleClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        />
       </>
     );
   }

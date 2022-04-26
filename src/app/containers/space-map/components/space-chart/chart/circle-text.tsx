@@ -1,10 +1,12 @@
 import { HierarchyCircularNode } from 'd3';
+import { COLOR_PALLETTE } from 'global/pallette';
 import { Text } from 'react-konva';
 
 import { PackedCategories } from '../types';
 
 type CircleTextProps = {
   elem: HierarchyCircularNode<PackedCategories>;
+  isSelected?: boolean;
 };
 
 const getCordsPos = (elem: HierarchyCircularNode<PackedCategories>, cord: 'x' | 'y') => {
@@ -14,16 +16,24 @@ const getCordsPos = (elem: HierarchyCircularNode<PackedCategories>, cord: 'x' | 
   return elem.data[cord];
 };
 
-export const CircleText = ({ elem, ...rest }: CircleTextProps) => {
-  const tickerFontSize = elem.r && elem.data.symbol ? (elem.r / elem.data.symbol?.length) * 2.5 : 0;
+export const CircleText = ({ elem, isSelected, ...rest }: CircleTextProps) => {
+  const tickerFontSize = (elem.r / (elem.data.symbol?.length >= 2 ? elem.data.symbol?.length : 2)) * 2;
+  const textFill = isSelected ? COLOR_PALLETTE.POST_DATE_COLOR : COLOR_PALLETTE.MAIN_WHITE;
 
   return (
     <Text
       {...rest}
-      x={getCordsPos(elem, 'x') - elem.r / 1.2}
-      y={getCordsPos(elem, 'y') - elem.r / 2.8}
+      x={getCordsPos(elem, 'x') - elem.r / 1.5}
+      y={getCordsPos(elem, 'y') - tickerFontSize / 2}
+      align="center"
+      fill={textFill}
       fontSize={tickerFontSize}
+      fontFamily="Open Sans , sans-serif"
       text={elem.data.symbol && elem.data.symbol.toUpperCase()}
     />
   );
+};
+
+CircleText.defaultProps = {
+  isSelected: true,
 };
