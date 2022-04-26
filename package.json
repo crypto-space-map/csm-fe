@@ -6,6 +6,7 @@
     "child_process": false
   },
   "dependencies": {
+    "@react-spring/konva": "^9.4.4",
     "@reduxjs/toolkit": "^1.6.1",
     "axios": "^0.21.1",
     "cross-env": "^7.0.3",

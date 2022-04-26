@@ -13,7 +13,7 @@ export const MapStage = ({ children, ...rest }: StageProps) => {
   const handleWheel = (e: KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
 
-    const scaleBy = 1.1;
+    const scaleBy = 1.15;
     const stage = e.target.getStage();
     if (stage) {
       const position = stage.getPointerPosition();
