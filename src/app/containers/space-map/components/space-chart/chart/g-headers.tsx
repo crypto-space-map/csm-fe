@@ -63,7 +63,6 @@ export const GHeaders = ({ data }: GAreaProps) => {
           fill={COLOR_PALLETTE.MAIN_WHITE}
           fontSize={16}
           align="left"
-          strokeScaleEnabled={false}
           fontFamily="Open Sans , sans-serif"
           text={capitalizeFirstLetter(elem.parent || '')}
         />
