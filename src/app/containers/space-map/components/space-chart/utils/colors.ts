@@ -42,7 +42,7 @@ export const getSphereColorParams = (
       : '',
     stroke: !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY,
     strokeWidth: !!item.children ? 0.5 : 0.2,
-    strokeDasharray: !!item.children ? '4,4' : 'none',
+    dash: !!item.children ? [4, 4] : [],
   };
   return colorParams;
 };

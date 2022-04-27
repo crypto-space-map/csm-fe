@@ -1,12 +1,11 @@
-import { Fragment } from 'react';
-
+import { COLOR_PALLETTE } from 'global/pallette';
+import { Text } from 'react-konva';
 import { useSelector } from 'react-redux';
 
 import { selectCategoriesParentPathData } from 'app/containers/space-map/selectors';
+import { CategoryPathData } from 'app/containers/space-map/types';
 
 import { GAreaProps } from '../types';
-
-const MARKER = 'CATEGORIES_HEADERS';
 
 const calculateYAxis = (prev: number, cur: number) => {
   if (!prev) return cur;
@@ -21,12 +20,14 @@ export const GHeaders = ({ data }: GAreaProps) => {
     r: number;
   };
 
+  const capitalizeFirstLetter = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
+
   const xAxisOffset = (val: number) => (val > 10 ? val : 1);
 
-  const getCords = (sortingNumber: number) => {
+  const getCords = (elem: CategoryPathData) => {
     if (data) {
       const filteredFields = data?.filter(
-        ({ data: { sortingNumber: dataSortingNumbers } }) => dataSortingNumbers === sortingNumber
+        ({ data: { sortingNumber: dataSortingNumbers } }) => dataSortingNumbers === elem.sortingNumber
       );
 
       const cords = filteredFields?.reduce(
@@ -41,7 +42,10 @@ export const GHeaders = ({ data }: GAreaProps) => {
         { x: 0, y: 0, r: 0 } as blah
       );
       return {
-        x: cords?.x / filteredFields?.length - cords.r / filteredFields.length,
+        x:
+          cords?.x / filteredFields?.length -
+          cords.r / filteredFields.length -
+          (elem.parent!.length * elem.parent!.length) / 5,
         y: cords?.y - 30,
       };
     }
@@ -50,33 +54,20 @@ export const GHeaders = ({ data }: GAreaProps) => {
 
   const categoriesHeaders = useSelector(selectCategoriesParentPathData);
   return (
-    <g>
-      {categoriesHeaders?.map(item => (
-        <Fragment key={`scaled-categories${item.sortingNumber}`}>
-          <line
-            x1={0}
-            y1={0}
-            x2={getCords(item.sortingNumber)?.x || 0}
-            y2={getCords(item.sortingNumber)?.y || 0}
-            strokeWidth={1}
-            strokeDasharray="1 1"
-            fill="none"
-            vectorEffect="non-scaling-stroke"
-            markerEnd={`url(#${MARKER}${item.sortingNumber})`}
-          />
-          <marker
-            refY={0}
-            refX={xAxisOffset(item.parent?.length || 1) * 5}
-            key={`marker-category-point${item.sortingNumber}`}
-            id={`${MARKER}${item.sortingNumber}`}
-            viewBox="0 0 250 10"
-            markerUnits="strokeWidth"
-            markerWidth="200"
-            markerHeight="100">
-            <path fill="#eae0d7" transform="scale(0.3)" strokeWidth={1} d={item.parentPathData} />
-          </marker>
-        </Fragment>
+    <>
+      {categoriesHeaders?.map(elem => (
+        <Text
+          key={`categories-headers-${elem.parent}`}
+          x={getCords(elem)?.x}
+          y={getCords(elem)?.y}
+          fill={COLOR_PALLETTE.MAIN_WHITE}
+          fontSize={16}
+          align="left"
+          strokeScaleEnabled={false}
+          fontFamily="Open Sans , sans-serif"
+          text={capitalizeFirstLetter(elem.parent || '')}
+        />
       ))}
-    </g>
+    </>
   );
 };

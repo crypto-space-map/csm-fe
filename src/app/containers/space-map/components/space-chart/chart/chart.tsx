@@ -101,6 +101,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
           <MapStage width={width} height={height}>
             <Provider store={store}>
               <Layer>
+                {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
                 <GCircles
                   selectedProjects={foundProjects}
                   data={simulatedCircles}
@@ -109,6 +110,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
                   currentProject={currentProject}
                   handleSelectFund={handleSelectFund}
                 />
+                <GHeaders data={simulatedCircles} />
               </Layer>
             </Provider>
           </MapStage>

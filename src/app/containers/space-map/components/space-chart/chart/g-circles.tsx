@@ -1,16 +1,12 @@
-import { Fragment, memo, MouseEvent, RefObject, useCallback, useEffect, useRef } from 'react';
+import { Fragment, memo, RefObject, useCallback, useRef } from 'react';
 
 import { Spring, animated } from '@react-spring/konva';
 import { HierarchyCircularNode } from 'd3';
-import { KonvaEventObject } from 'konva/lib/Node';
 import { Circle as CircleShape } from 'konva/lib/shapes/Circle';
-import { Circle as KonvaCircle, Text } from 'react-konva';
-
-import { useSetNewProject } from 'hooks/use-set-new-project';
+import { Circle as KonvaCircle } from 'react-konva';
 
 import { GAreaProps, PackedCategories } from '../types';
 import { getSphereColorParams } from '../utils/colors';
-import { transformStylesToString } from '../utils/helpers';
 import { useCircleOpacity } from '../utils/use-circle-opacity';
 import { CircleText } from './circle-text';
 
@@ -20,8 +16,6 @@ const getCordsPos = (elem: HierarchyCircularNode<PackedCategories>, cord: 'x' | 
   }
   return elem.data[cord];
 };
-
-const TOOLTIP_PADDING = 5;
 
 type TooltipProps = {
   tooltipRef: RefObject<HTMLDivElement>;
@@ -79,13 +73,6 @@ const Circle = memo<CircleProps>(
     //   }
     // };
 
-    const onMouseOut = () => {
-      if (tooltipRef.current) {
-        tooltipRef.current.style.visibility = 'hidden';
-        tooltipRef.current.style.animation = 'none';
-      }
-    };
-
     const isTransparent = useCircleOpacity(elem.data);
 
     const isSelected =
@@ -104,6 +91,8 @@ const Circle = memo<CircleProps>(
           onClick={handleClick}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
+          strokeScaleEnabled={false}
+          dash={[10, 10]}
           // opacity={isTransparent ? 0.5 : 1}
           // onMouseMove={onMouseMove}
           // onMouseOver={onMouseOver}

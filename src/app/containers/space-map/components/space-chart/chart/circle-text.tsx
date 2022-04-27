@@ -30,6 +30,7 @@ export const CircleText = ({ elem, isSelected, ...rest }: CircleTextProps) => {
       fontSize={tickerFontSize}
       fontFamily="Open Sans , sans-serif"
       text={elem.data.symbol && elem.data.symbol.toUpperCase()}
+      globalCompositeOperation="lighter"
     />
   );
 };
