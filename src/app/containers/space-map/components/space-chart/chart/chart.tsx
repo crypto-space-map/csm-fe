@@ -111,6 +111,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
                   handleSelectFund={handleSelectFund}
                 />
                 <GHeaders data={simulatedCircles} />
+                <GLabels data={simulatedCircles} />
               </Layer>
             </Provider>
           </MapStage>

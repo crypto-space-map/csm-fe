@@ -6,6 +6,7 @@ import { selectCategoriesParentPathData } from 'app/containers/space-map/selecto
 import { CategoryPathData } from 'app/containers/space-map/types';
 
 import { GAreaProps } from '../types';
+import { capitalizeFirstLetter } from '../utils/helpers';
 
 const calculateYAxis = (prev: number, cur: number) => {
   if (!prev) return cur;
@@ -19,10 +20,6 @@ export const GHeaders = ({ data }: GAreaProps) => {
     y: number;
     r: number;
   };
-
-  const capitalizeFirstLetter = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
-
-  const xAxisOffset = (val: number) => (val > 10 ? val : 1);
 
   const getCords = (elem: CategoryPathData) => {
     if (data) {

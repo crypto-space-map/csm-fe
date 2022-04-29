@@ -58,3 +58,12 @@ export const transformStylesToString = (styles: CSSProperties) =>
     styleString += `${name}:${styles[name as keyof typeof styles]};`;
     return styleString;
   }, '');
+
+export const getCordsPos = (elem: HierarchyCircularNode<PackedCategories>, cord: 'x' | 'y') => {
+  if (elem.parent) {
+    return elem[cord] + elem.parent?.data[cord] - elem.parent?.data.r;
+  }
+  return elem.data[cord];
+};
+
+export const capitalizeFirstLetter = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
