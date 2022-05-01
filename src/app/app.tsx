@@ -1,18 +1,15 @@
-// TO DO uncomment pages in future
 import { Route, Switch } from 'react-router-dom';
 
-import { Account } from './containers/account';
+import { AccountPage } from './containers/account/loadable';
 import { AppLayout } from './containers/app-layout';
-import { Layout } from './containers/layout';
-import { Login } from './containers/login';
-import { MainPage } from './containers/mainPage';
+import { LoginPage } from './containers/login/loadable';
+import { MainPage } from './containers/mainPage/loadable';
 
 export const App = () => (
   <AppLayout>
     <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/layout" component={Layout} />
-      <Route path="/account" component={Account} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/account" component={AccountPage} />
       <Route path="/" component={MainPage} />
       <Route
         path="*"

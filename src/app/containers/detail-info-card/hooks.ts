@@ -30,6 +30,8 @@ export function useClearDataAfterChangeNewProject() {
 }
 
 export function useDetailInfo() {
+  useDetailInfoSlice();
+  useClearDataAfterChangeNewProject();
   const projectName = useSelector(selectedProjectName);
   const projectHeaderData = useSelector(selectedProjectHeaderData);
   const projectStatistic = useSelector(selectedProjectStatistic);

@@ -12,12 +12,10 @@ import { useSetNewProject } from 'hooks/use-set-new-project';
 import { PackedCategories } from '../types';
 import { getAllProjects, getIncludesProjects } from '../utils/helpers';
 import { useChart } from '../utils/use-chart';
-import { initZoomedElement } from '../utils/zoom';
 import { GCircles } from './g-circles';
 import { GHeaders } from './g-headers';
 import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
-import { GPartnersLegend } from './g-partners-legend';
 import { GTooltips } from './g-tooltips';
 import { MapStage } from './map-stage';
 import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
@@ -25,10 +23,10 @@ import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
 const NEEDLES_CATEGORIES = ['619b3ca2064df399fced84b1'];
 
 type SpaceChartProps = {
-  handleSelectProduct: (val: string) => void;
+  handleSelectProduct?: (val: string) => void;
 };
 
-export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
+export const SpaceChart = memo<SpaceChartProps>(() => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const scaleRef = useRef<HTMLDivElement>(null);
@@ -52,7 +50,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
     fetchPartnershipsData,
   } = useSpaceMap();
 
-  const { handleSelectFund } = useSetNewProject();
+  const { handleSelectProduct, handleSelectFund } = useSetNewProject();
 
   const setProject = useCallback(
     val => {
@@ -78,6 +76,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   }, [fetchSpaceMapData, isAuth]);
 
   useEffect(() => {
+    // debugger;
     if (!selectedProject) {
       setMapCurrentProject(null);
     }
@@ -87,7 +86,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
         setProject(target);
       }
     }
-  }, [allProjects, currentProject?.data.projectId, selectedProject, setProject]);
+  }, [allProjects, currentProject?.data.projectId, selectedProject, setProject, setMapCurrentProject]);
 
   useEffect(() => {
     simulation?.tick();
