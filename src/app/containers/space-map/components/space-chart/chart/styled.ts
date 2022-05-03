@@ -1,78 +1,10 @@
-import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import { COLOR_PALLETTE } from 'global/pallette';
-import { Circle } from 'react-konva';
-
-import { ChartTooltipProps } from './types';
-
-const lineAnimation = keyframes`
-   from {
-    stroke-dashoffset: 4000;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-`;
-
-export const ProjectTooltip = styled.div`
-  position: fixed;
-  padding: 4px 10px;
-  border-radius: 18px;
-  background-color: ${COLOR_PALLETTE.MAIN_WHITE};
-  font-size: 12px;
-  line-height: 17px;
-  pointer-events: none;
-  visibility: hidden;
-  z-index: 2;
-  overflow: hidden;
-  animation: tooltipShowAnimation 1s linear;
-
-  @keyframes tooltipShowAnimation {
-    0%,
-    99% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-`;
 
 export const ChartWrapper = styled.div`
+  position: relative;
   display: flex;
   width: 100%;
   height: 100%;
-`;
-
-export const ParentLabelsText = styled.text`
-  width: 100%;
-  height: 100%;
-  font-weight: bold;
-  font-size: 10px;
-  line-height: 22px;
-  fill: ${COLOR_PALLETTE.MAP_LABELS};
-  pointer-events: none;
-  text-anchor: middle;
-  text-shadow: -7px 0px 18px #4a4a4a;
-`;
-
-export const ChildLabelsText = styled(ParentLabelsText)<{ fontSize?: number }>`
-  font-size: ${({ fontSize = 5 }) => `${fontSize}px`};
-  word-wrap: break-word;
-`;
-
-export const ProjectLink = styled.line`
-  animation: ${lineAnimation} 1s linear alternate;
-  stroke-dasharray: 0;
-`;
-
-export const RandomSvg = styled.svg`
-  width: 100%;
-  height: 100%;
-  padding-top: 20px;
-  cursor: grab;
-  overflow: visible;
-  transition: all 0.2s linear;
 
   &:active {
     cursor: grabbing;
@@ -86,43 +18,45 @@ export const RandomSvg = styled.svg`
   }
 `;
 
-export const StyledChartTooltip = styled.div<Omit<ChartTooltipProps, 'text'>>`
+export const StyledWeightFilter = styled.div`
   position: absolute;
   display: flex;
+  gap: 1em;
+  width: 100%;
   align-items: center;
   justify-content: center;
-  padding: 3px 9px;
-  background-color: ${COLOR_PALLETTE.MAIN_WHITE};
-  border-radius: 18px;
-  font-size: 12px;
-  font-weight: normal;
+  padding: 10px 0;
+  z-index: 1;
 `;
 
-export const StyledLabel = styled.span`
+export const FilterWeightItem = styled.div<{ isSelected?: boolean }>`
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: ${({ isSelected = false }) => isSelected && 'rgb(234, 224, 215)'};
+  color: ${({ isSelected = false }) => !isSelected && 'rgb(234, 224, 215)'};
+  border-radius: 4px;
+  padding: 2px 4px;
+  width: fit-content;
+  white-space: nowrap;
+  cursor: pointer;
+  & > * svg {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+export const FilterWeightItemCircle = styled.div<{ background: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 8px;
-  background-color: ${COLOR_PALLETTE.MAIN_WHITE};
-  width: fit-content;
-  padding: 0.1em;
-  border-radius: 1em;
-`;
-
-export const CursorGTag = styled.g`
-  cursor: pointer;
-  transition: 0.2s linear;
-`;
-
-export const CircleText = styled.text<{ isOpacity?: boolean }>`
-  font-family: 'Open Sans', sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 54px;
-  fill: ${({ isOpacity = false }) => (isOpacity ? COLOR_PALLETTE.MAIN_GRAY : COLOR_PALLETTE.MAIN_WHITE)};
-  stroke: '#000000';
-  stroke-width: 0.02;
-  text-anchor: middle;
-  cursor: pointer;
-  transition: 0.2s linear;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: ${({ background }) => background};
 `;

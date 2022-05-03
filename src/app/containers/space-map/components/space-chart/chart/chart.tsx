@@ -12,15 +12,13 @@ import { useSetNewProject } from 'hooks/use-set-new-project';
 import { PackedCategories } from '../types';
 import { getAllProjects, getIncludesProjects } from '../utils/helpers';
 import { useChart } from '../utils/use-chart';
-import { initZoomedElement } from '../utils/zoom';
 import { GCircles } from './g-circles';
 import { GHeaders } from './g-headers';
 import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
-import { GPartnersLegend } from './g-partners-legend';
-import { GTooltips } from './g-tooltips';
+import { ProjectWeightFilter } from './g-partners-legend';
 import { MapStage } from './map-stage';
-import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
+import { ChartWrapper } from './styled';
 
 const NEEDLES_CATEGORIES = ['619b3ca2064df399fced84b1'];
 
@@ -31,7 +29,6 @@ type SpaceChartProps = {
 export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
-  const scaleRef = useRef<HTMLDivElement>(null);
 
   const isAuth = useSelector(selectAuth);
 
@@ -93,11 +90,11 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
     simulation?.tick();
   }, [simulation, windowSize]);
 
-  // initZoomedElement(wrapperRef, width, height);
   return (
     <ReactReduxContext.Consumer>
       {({ store }) => (
         <ChartWrapper ref={wrapperRef}>
+          <ProjectWeightFilter />
           <MapStage width={width} height={height}>
             <Provider store={store}>
               <Layer>

@@ -4,7 +4,8 @@ import { COLOR_PALLETTE } from 'global/pallette';
 
 export const StyledLinksPanel = styled.div`
   display: grid;
-  grid-gap: 8px;
+  grid-auto-flow: column;
+  grid-gap: 2em;
   justify-content: start;
 `;
 

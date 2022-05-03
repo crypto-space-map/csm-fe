@@ -86,9 +86,7 @@ const Circle = ({
 const Circles = ({ data, ...rest }: GAreaProps & TooltipProps) => (
   <>
     {data?.map(elem => (
-      <>
-        <Circle elem={elem} {...rest} key={elem.data.key || elem.data.projectId} />
-      </>
+      <Circle elem={elem} {...rest} key={`circles-group-${elem.data.key || elem.data.projectId}`} />
     ))}
   </>
 );
