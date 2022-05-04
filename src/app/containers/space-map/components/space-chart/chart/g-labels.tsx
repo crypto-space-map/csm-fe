@@ -13,15 +13,16 @@ const getWidth = (value?: string) => {
   return 0;
 };
 
-export const GLabels = memo<GAreaProps>(({ data }) => (
+export const GLabels = memo<GAreaProps>(({ data, scale = 1 }) => (
   <>
     {data?.map(elem => (
       <Text
+        fontSize={12 / scale}
         key={`category-labels-${elem.data.key}`}
         text={capitalizeFirstLetter(elem.data.key || '')}
         fill={COLOR_PALLETTE.MAIN_WHITE}
-        x={getCordsPos(elem, 'x') - getWidth(elem.data.key)}
-        y={getCordsPos(elem, 'y') - elem.data.r - 15}
+        x={getCordsPos(elem, 'x') - getWidth(elem.data.key) / scale}
+        y={getCordsPos(elem, 'y') - elem.data.r - 20 / scale}
         fillEnabled
         strokeHitEnabled={false}
         strokeScaleEnabled={false}

@@ -14,7 +14,7 @@ const calculateYAxis = (prev: number, cur: number) => {
   return cur;
 }; /** calculate highest YAxis point to place header of category */
 
-export const GHeaders = ({ data }: GAreaProps) => {
+export const GHeaders = ({ data, scale = 1 }: GAreaProps) => {
   type blah = {
     x: number;
     y: number;
@@ -42,8 +42,8 @@ export const GHeaders = ({ data }: GAreaProps) => {
         x:
           cords?.x / filteredFields?.length -
           cords.r / filteredFields.length -
-          (elem.parent!.length * elem.parent!.length) / 5,
-        y: cords?.y - 30,
+          (elem.parent!.length * elem.parent!.length) / 5 / scale,
+        y: cords?.y - 40 / scale,
       };
     }
     return null;
@@ -58,7 +58,7 @@ export const GHeaders = ({ data }: GAreaProps) => {
           x={getCords(elem)?.x}
           y={getCords(elem)?.y}
           fill={COLOR_PALLETTE.MAIN_WHITE}
-          fontSize={16}
+          fontSize={16 / scale}
           align="left"
           fontFamily="Open Sans , sans-serif"
           text={capitalizeFirstLetter(elem.parent || '')}

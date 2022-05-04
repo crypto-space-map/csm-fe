@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { KonvaEventObject } from 'konva/lib/Node';
 import { Stage, StageProps } from 'react-konva';
 
-export const MapStage = ({ children, ...rest }: StageProps) => {
+import { useDebounce } from 'hooks/use-debounce';
+
+export const MapStage = ({ children, handleSetScale, ...rest }: StageProps) => {
   const [state, setState] = useState({
     stageScale: 1,
     stageX: 0,
@@ -25,7 +27,6 @@ export const MapStage = ({ children, ...rest }: StageProps) => {
         };
 
         const newScale = e.evt.deltaY > 0 ? oldScale / scaleBy : oldScale * scaleBy;
-
         setState({
           stageScale: newScale,
           stageX: -(mousePointTo.x - position.x / newScale) * newScale,
@@ -34,6 +35,14 @@ export const MapStage = ({ children, ...rest }: StageProps) => {
       }
     }
   };
+
+  const scaled = useDebounce(state.stageScale, 300);
+
+  useEffect(() => {
+    if (scaled === state.stageScale) {
+      handleSetScale(state.stageScale);
+    }
+  }, [handleSetScale, scaled, state.stageScale]);
 
   return (
     <Stage

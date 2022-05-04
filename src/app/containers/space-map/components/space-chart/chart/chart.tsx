@@ -30,6 +30,8 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
+  const [scale, setsScale] = useState(0);
+
   const isAuth = useSelector(selectAuth);
 
   const width = wrapperRef.current?.offsetWidth || 0;
@@ -50,6 +52,8 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   } = useSpaceMap();
 
   const { handleSelectFund } = useSetNewProject();
+
+  const handleSetScale = (val: number) => setsScale(val);
 
   const setProject = useCallback(
     val => {
@@ -95,7 +99,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
       {({ store }) => (
         <ChartWrapper ref={wrapperRef}>
           <ProjectWeightFilter />
-          <MapStage width={width} height={height}>
+          <MapStage width={width} height={height} handleSetScale={handleSetScale}>
             <Provider store={store}>
               <Layer>
                 {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
@@ -107,8 +111,8 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
                   currentProject={currentProject}
                   handleSelectFund={handleSelectFund}
                 />
-                <GHeaders data={simulatedCircles} />
-                <GLabels data={simulatedCircles} />
+                <GHeaders data={simulatedCircles} scale={scale} />
+                <GLabels data={simulatedCircles} scale={scale} />
               </Layer>
             </Provider>
           </MapStage>

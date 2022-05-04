@@ -116,4 +116,5 @@ export type GAreaProps = {
   selectedProjects?: HierarchyCircularNode<PackedCategories>[] | undefined;
   setCurrentProject?: (value: HierarchyCircularNode<PackedCategories> | null) => void;
   handleSelectFund?: (val: string) => void;
+  scale?: number;
 };
