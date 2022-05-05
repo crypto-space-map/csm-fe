@@ -101,7 +101,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
           <ProjectWeightFilter />
           <MapStage width={width} height={height} handleSetScale={handleSetScale}>
             <Provider store={store}>
-              <Layer>
+              <Layer alpha={false}>
                 {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
                 <GCircles
                   selectedProjects={foundProjects}

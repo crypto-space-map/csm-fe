@@ -46,6 +46,7 @@ export const MapStage = ({ children, handleSetScale, ...rest }: StageProps) => {
 
   return (
     <Stage
+      alpha={false}
       draggable
       onWheel={handleWheel}
       scaleX={state.stageScale}

@@ -25,7 +25,7 @@ const Circle = ({
   setCurrentProject = () => false,
   selectedProjects = [],
   handleSelectFund = () => false,
-  scale,
+  scale = 0,
 }: CircleProps) => {
   const circleRef = useRef<CircleShape>(null);
   const isClickableProject = !!elem.data.projectId;
