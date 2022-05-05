@@ -43,7 +43,7 @@ export const FundsList = () => {
   if (!funds) return null;
 
   return (
-    <StyledMainFundBlock show={isShow} selectedItems={selectedFundsCount}>
+    <StyledMainFundBlock show={isShow} selectedItems={selectedFundsCount} id="fund-block">
       <StyledFundBlockWrapper show={isShow}>
         <FundBlockHeader isShow={isShow} toggleIsShow={toggleIsShow} />
 

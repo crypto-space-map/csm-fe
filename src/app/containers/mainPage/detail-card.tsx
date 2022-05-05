@@ -9,7 +9,7 @@ import { useDetailCard } from './hooks';
 export const DetailCard = () => {
   const [isHide, setIsHide] = useState(false);
   const toggleIsHide = useCallback(() => setIsHide(!isHide), [setIsHide, isHide]);
-  const { isShow, isFund, isInfo } = useDetailCard();
+  const { isShow, isFund, isInfo, isShowGuide } = useDetailCard();
 
   useEffect(() => {
     // Чтобы не было разворачивания карточки по высоте в момент закрытия ставим таймер
@@ -17,7 +17,7 @@ export const DetailCard = () => {
   }, [isShow]);
 
   return (
-    <DetailCardWrapper isShow={isShow} isHide={isHide}>
+    <DetailCardWrapper isShow={isShow} isHide={isHide} isShowGuide={isShowGuide}>
       {isInfo && <DetailInfoCard isHide={isHide} toggleIsHide={toggleIsHide} />}
       {isFund && <DetailFundCard isHide={isHide} toggleIsHide={toggleIsHide} />}
     </DetailCardWrapper>

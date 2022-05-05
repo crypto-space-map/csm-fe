@@ -15,6 +15,7 @@ export const selectedTopFundsLoading = (state: RootState) => selectDomain(state)
 export const selectedFundsData = (state: RootState) => selectDomain(state).fundsData.data;
 export const selectedFundsDataLoading = (state: RootState) => selectDomain(state).fundsData.loading;
 export const selectedFundBlockItemsIdList = (state: RootState) => selectDomain(state).fundBlockItemsIdList;
+export const selectedIsShowGuide = (state: RootState) => selectDomain(state).isShowGuide;
 
 export const selectedEnrichedFundsData = createSelector([selectedFundsData], data => {
   if (!data) return null;
