@@ -16,9 +16,9 @@ import { GCircles } from './g-circles';
 import { GHeaders } from './g-headers';
 import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
-import { GTooltips } from './g-tooltips';
+import { ProjectWeightFilter } from './g-partners-legend';
 import { MapStage } from './map-stage';
-import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
+import { ChartWrapper } from './styled';
 
 const NEEDLES_CATEGORIES = ['619b3ca2064df399fced84b1'];
 
@@ -29,7 +29,8 @@ type SpaceChartProps = {
 export const SpaceChart = memo<SpaceChartProps>(() => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
-  const scaleRef = useRef<HTMLDivElement>(null);
+
+  const [scale, setsScale] = useState(0);
 
   const isAuth = useSelector(selectAuth);
 
@@ -51,6 +52,8 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
   } = useSpaceMap();
 
   const { handleSelectProduct, handleSelectFund } = useSetNewProject();
+
+  const handleSetScale = (val: number) => setsScale(val);
 
   const setProject = useCallback(
     val => {
@@ -92,14 +95,14 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
     simulation?.tick();
   }, [simulation, windowSize]);
 
-  // initZoomedElement(wrapperRef, width, height);
   return (
     <ReactReduxContext.Consumer>
       {({ store }) => (
         <ChartWrapper ref={wrapperRef}>
-          <MapStage width={width} height={height}>
+          <ProjectWeightFilter />
+          <MapStage width={width} height={height} handleSetScale={handleSetScale}>
             <Provider store={store}>
-              <Layer>
+              <Layer alpha={false}>
                 {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
                 <GCircles
                   selectedProjects={foundProjects}
@@ -108,9 +111,10 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
                   tooltipRef={tooltipRef}
                   currentProject={currentProject}
                   handleSelectFund={handleSelectFund}
+                  scale={scale}
                 />
-                <GHeaders data={simulatedCircles} />
-                <GLabels data={simulatedCircles} />
+                <GHeaders data={simulatedCircles} scale={scale} />
+                <GLabels data={simulatedCircles} scale={scale} />
               </Layer>
             </Provider>
           </MapStage>

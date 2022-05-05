@@ -1,12 +1,12 @@
 import { Fragment, RefObject, useCallback, useRef } from 'react';
 
+import { Spring, animated } from '@react-spring/konva';
 import { HierarchyCircularNode } from 'd3';
 import { Circle as CircleShape } from 'konva/lib/shapes/Circle';
-import { Circle as KonvaCircle } from 'react-konva';
 
 import { GAreaProps, PackedCategories } from '../types';
 import { getSphereColorParams } from '../utils/colors';
-import { getCordsPos } from '../utils/helpers';
+import { getCordsPos, randomNumber } from '../utils/helpers';
 import { useCircleOpacity } from '../utils/use-circle-opacity';
 import { CircleText } from './circle-text';
 
@@ -25,6 +25,7 @@ const Circle = ({
   setCurrentProject = () => false,
   selectedProjects = [],
   handleSelectFund = () => false,
+  scale = 0,
 }: CircleProps) => {
   const circleRef = useRef<CircleShape>(null);
   const isClickableProject = !!elem.data.projectId;
@@ -57,38 +58,51 @@ const Circle = ({
     (currentProject && elem.data.projectId === currentProject?.data.projectId);
 
   return (
-    <>
-      <KonvaCircle
-        ref={circleRef}
-        key={`project-circle${elem.data.projectId}`}
-        radius={elem.r || 0.1}
-        x={getCordsPos(elem, 'x')}
-        y={getCordsPos(elem, 'y')}
-        {...getSphereColorParams(elem, isTransparent)}
-        onClick={handleClick}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        strokeScaleEnabled={false}
-        dash={[10, 10]}
-      />
-      <CircleText
-        elem={elem}
-        key={`project-text${elem.data.projectId}`}
-        isSelected={!!currentProject && !isSelected}
-        // TODO доделать props types
-        onClick={handleClick}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-      />
-    </>
+    <Spring
+      key={`categories-headers-${elem.parent}`}
+      from={{ x: randomNumber(0, 1500), y: randomNumber(0, 1500) }}
+      to={{
+        x: getCordsPos(elem, 'x'),
+        y: getCordsPos(elem, 'y'),
+      }}>
+      {props => (
+        <>
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <animated.Circle
+            {...props}
+            ref={circleRef}
+            key={`project-circle${elem.data.projectId}`}
+            radius={elem.r || 0.1}
+            // x={getCordsPos(elem, 'x')}
+            // y={getCordsPos(elem, 'y')}
+            {...getSphereColorParams(elem, isTransparent)}
+            onClick={handleClick}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            strokeScaleEnabled={false}
+            dash={[10, 10]}
+          />
+          <CircleText
+            {...props}
+            elem={elem}
+            key={`project-text${elem.data.projectId}`}
+            isSelected={!!currentProject && !isSelected}
+            scale={scale}
+            // TODO доделать props types
+            onClick={handleClick}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+          />
+        </>
+      )}
+    </Spring>
   );
 };
 const Circles = ({ data, ...rest }: GAreaProps & TooltipProps) => (
   <>
     {data?.map(elem => (
-      <>
-        <Circle elem={elem} {...rest} key={elem.data.key || elem.data.projectId} />
-      </>
+      <Circle elem={elem} {...rest} key={`circles-group-${elem.data.key || elem.data.projectId}`} />
     ))}
   </>
 );

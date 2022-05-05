@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
+
+import { Spring, animated } from '@react-spring/konva';
 import { COLOR_PALLETTE } from 'global/pallette';
-import { Text } from 'react-konva';
 import { useSelector } from 'react-redux';
 
 import { selectCategoriesParentPathData } from 'app/containers/space-map/selectors';
@@ -14,12 +16,14 @@ const calculateYAxis = (prev: number, cur: number) => {
   return cur;
 }; /** calculate highest YAxis point to place header of category */
 
-export const GHeaders = ({ data }: GAreaProps) => {
+export const GHeaders = ({ data, scale = 1 }: GAreaProps) => {
   type blah = {
     x: number;
     y: number;
     r: number;
   };
+
+  const [currentFontSize, setCurrentFontSize] = useState(16);
 
   const getCords = (elem: CategoryPathData) => {
     if (data) {
@@ -42,27 +46,42 @@ export const GHeaders = ({ data }: GAreaProps) => {
         x:
           cords?.x / filteredFields?.length -
           cords.r / filteredFields.length -
-          (elem.parent!.length * elem.parent!.length) / 5,
-        y: cords?.y - 30,
+          (elem.parent!.length * elem.parent!.length) / 5 / scale,
+        y: cords?.y - 40 / scale,
       };
     }
     return null;
   };
 
   const categoriesHeaders = useSelector(selectCategoriesParentPathData);
+
+  useEffect(() => {
+    setCurrentFontSize(currentFontSize / scale);
+  }, [scale, currentFontSize]);
+
   return (
     <>
       {categoriesHeaders?.map(elem => (
-        <Text
+        <Spring
           key={`categories-headers-${elem.parent}`}
-          x={getCords(elem)?.x}
-          y={getCords(elem)?.y}
-          fill={COLOR_PALLETTE.MAIN_WHITE}
-          fontSize={16}
-          align="left"
-          fontFamily="Open Sans , sans-serif"
-          text={capitalizeFirstLetter(elem.parent || '')}
-        />
+          from={{ fontSize: currentFontSize, x: 0, y: 0 }}
+          to={{
+            fontSize: 16 / scale,
+            x: getCords(elem)?.x,
+            y: getCords(elem)?.y,
+          }}>
+          {props => (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            <animated.Text
+              {...props}
+              fill={COLOR_PALLETTE.MAIN_WHITE}
+              align="left"
+              fontFamily="Open Sans , sans-serif"
+              text={capitalizeFirstLetter(elem.parent || '')}
+            />
+          )}
+        </Spring>
       ))}
     </>
   );
