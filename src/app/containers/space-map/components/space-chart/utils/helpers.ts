@@ -67,3 +67,5 @@ export const getCordsPos = (elem: HierarchyCircularNode<PackedCategories>, cord:
 };
 
 export const capitalizeFirstLetter = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
+
+export const randomNumber = (min = 0, max = 0) => Math.random() * (max - min) + min;

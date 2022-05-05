@@ -110,6 +110,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
                   tooltipRef={tooltipRef}
                   currentProject={currentProject}
                   handleSelectFund={handleSelectFund}
+                  scale={scale}
                 />
                 <GHeaders data={simulatedCircles} scale={scale} />
                 <GLabels data={simulatedCircles} scale={scale} />
