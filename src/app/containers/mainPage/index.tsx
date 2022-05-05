@@ -2,6 +2,7 @@ import { memo, useEffect } from 'react';
 
 import { Redirect } from 'react-router-dom';
 
+import { EnterGuide } from 'app/components/enter-guide';
 import { FundsList } from 'app/components/funds-list';
 import { useNotifier } from 'hooks/use-notifier';
 import { useSetNewProject } from 'hooks/use-set-new-project';
@@ -28,6 +29,7 @@ export const MainPage = memo(() => {
 
   return (
     <>
+      <EnterGuide />
       <SpaceChart handleSelectProduct={handleSelectProduct} />
       <FundsList
         handleSelectFund={handleSelectFund}

@@ -41,6 +41,7 @@ export interface PageTypesState {
   isShowLines: boolean;
   pointsCoords: PointCoords[];
   fundsData: FundsData;
+  isShowGuide: boolean;
 }
 
 export type ContainerState = PageTypesState;

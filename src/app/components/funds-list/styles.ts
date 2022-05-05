@@ -10,7 +10,6 @@ export const commonItemStyle = css`
   line-height: 14px;
   cursor: pointer;
   color: ${COLOR_PALLETTE.MAIN_GRAY};
-  //height: ${`${cellHeight}px`};
 
   & > span {
     white-space: nowrap;
@@ -46,7 +45,6 @@ export const StyledFundBlockWrapper = styled.div<{ show: boolean }>`
   width: 180px;
   height: 100%;
   border-radius: 0px 16px 0px 0px;
-  //overflow: hidden;
   display: flex;
   flex-direction: column;
 `;

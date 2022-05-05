@@ -22,6 +22,7 @@ export const initialState: ContainerState = {
     ...fetchDataInitialState,
   },
   isShowLines: false, // флаг показывать ли связи фондов с проектами
+  isShowGuide: false,
 };
 
 const { fetchDataSuccess: fetchTopFundsDataSuccess, fetchDataError: fetchTopFundsDataError } =
@@ -85,6 +86,9 @@ const pageStoreTypesSlice = createSlice({
     },
     cleadFundBlockItemsIdList(state) {
       state.fundBlockItemsIdList = initialState.fundBlockItemsIdList;
+    },
+    setIsShowGuide(state, action: PayloadAction<boolean>) {
+      state.isShowGuide = action.payload;
     },
     clearData(state) {
       state.fundName = initialState.fundName;

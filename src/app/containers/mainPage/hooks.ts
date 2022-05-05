@@ -8,6 +8,7 @@ import {
   selectedFundName,
   selectedTopFunds,
   selectedTopFundsLoading,
+  selectedIsShowGuide,
 } from 'store/pageStore/selectors';
 import { useDispatchAction as pageStoreDispatchAction } from 'store/pageStore/slice';
 import { getProductNameFromPath } from 'utils/detail-info';
@@ -126,10 +127,12 @@ export function useMainPage() {
 export function useDetailCard() {
   const fundName = useSelector(selectedFundName);
   const projectName = useSelector(selectedProjectName);
+  const isShowGuide = useSelector(selectedIsShowGuide);
 
   return {
     isShow: !!fundName || !!projectName,
     isInfo: !!projectName,
     isFund: !!fundName,
+    isShowGuide,
   };
 }

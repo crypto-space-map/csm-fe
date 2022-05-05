@@ -9,7 +9,7 @@ const StyledAvatar = styled(Avatar)`
 `;
 
 export const UserButtonAvatar = (props: UserAvatarProps) => (
-  <IconButton {...props}>
+  <IconButton {...props} id="account-block">
     <StyledAvatar {...props} />
   </IconButton>
 );
