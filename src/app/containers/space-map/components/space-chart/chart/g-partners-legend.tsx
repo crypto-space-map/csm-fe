@@ -13,6 +13,7 @@ import {
   LightTooltip,
   StyledWeightFilter,
   StyledWeightWrapper,
+  StyledWeightFilterWrapper,
 } from './styled';
 
 const CROSS_PATH =
@@ -68,10 +69,12 @@ const FilterElement = ({ value = 0, index = 0 }) => {
 };
 
 export const ProjectWeightFilter = () => (
-  <StyledWeightFilter>
-    <WeightTooltip />
-    {circleData.map((elem, index) => (
-      <FilterElement value={elem} index={index} key={`weight-filter-${elem}`} />
-    ))}
-  </StyledWeightFilter>
+  <StyledWeightFilterWrapper>
+    <StyledWeightFilter id="range-block">
+      <WeightTooltip />
+      {circleData.map((elem, index) => (
+        <FilterElement value={elem} index={index} key={`weight-filter-${elem}`} />
+      ))}
+    </StyledWeightFilter>
+  </StyledWeightFilterWrapper>
 );

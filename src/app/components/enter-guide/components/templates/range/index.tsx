@@ -31,9 +31,8 @@ export const Range = ({ setSizeOptions, ...rest }: TemplateProps) => {
 
   useEffect(() => {
     const accountBlock = document.getElementById('range-block');
-    const { top = 0, right = 0 } = accountBlock?.getBoundingClientRect() ?? {};
+    const { top = 0, right = 0, left = 0 } = accountBlock?.getBoundingClientRect() ?? {};
     const bottom = top + bottomExtra;
-    const left = right - leftExtra;
 
     setSizeOptions({ top, bottom, left, right });
     setAbsoluteOptions({ top, left });

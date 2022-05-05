@@ -21,15 +21,19 @@ export const ChartWrapper = styled.div`
   }
 `;
 
-export const StyledWeightFilter = styled.div`
+export const StyledWeightFilterWrapper = styled.div`
   position: absolute;
   display: flex;
-  gap: 1em;
   width: 100%;
   align-items: center;
   justify-content: center;
   padding: 10px 0;
   z-index: 1;
+`;
+
+export const StyledWeightFilter = styled.div`
+  display: flex;
+  gap: 1em;
 `;
 
 export const FilterWeightItem = styled.div<{ isSelected?: boolean }>`
