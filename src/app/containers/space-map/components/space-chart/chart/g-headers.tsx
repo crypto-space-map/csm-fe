@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import { Spring, animated } from '@react-spring/konva';
 import { COLOR_PALLETTE } from 'global/pallette';
 import { useSelector } from 'react-redux';
@@ -23,7 +21,7 @@ export const GHeaders = ({ data, scale = 1 }: GAreaProps) => {
     r: number;
   };
 
-  const [currentFontSize, setCurrentFontSize] = useState(16);
+  // const [currentFontSize, setCurrentFontSize] = useState(16);
 
   const getCords = (elem: CategoryPathData) => {
     if (data) {
@@ -55,16 +53,12 @@ export const GHeaders = ({ data, scale = 1 }: GAreaProps) => {
 
   const categoriesHeaders = useSelector(selectCategoriesParentPathData);
 
-  useEffect(() => {
-    setCurrentFontSize(currentFontSize / (scale || 1) || 1);
-  }, [scale, currentFontSize]);
-
   return (
     <>
       {categoriesHeaders?.map(elem => (
         <Spring
           key={`categories-headers-${elem.parent}`}
-          from={{ fontSize: currentFontSize, x: 0, y: 0 }}
+          from={{ fontSize: 16, x: 0, y: 0 }}
           to={{
             fontSize: 16 / scale,
             x: getCords(elem)?.x || 0,
