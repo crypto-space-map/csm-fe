@@ -6,8 +6,10 @@ import { ReactReduxContext, Provider, useSelector } from 'react-redux';
 
 import { selectAuth } from 'app/containers/login/selectors';
 import { useSpaceMap } from 'app/containers/space-map/hooks';
+import { selectMapTree, selectPartnerships } from 'app/containers/space-map/selectors';
 import { useWindowSize } from 'hooks/use-screen-size';
 import { useSetNewProject } from 'hooks/use-set-new-project';
+import { selectedProjectName } from 'store/pageStore/selectors';
 
 import { PackedCategories } from '../types';
 import { getAllProjects, getIncludesProjects } from '../utils/helpers';
@@ -43,13 +45,16 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
 
   const windowSize = useWindowSize();
 
-  const {
-    fetchSpaceMapData,
-    spaceMapData: { tree, maxMarketCap, minMarketCap },
-    selectedProject,
-    projectPartnerships,
-    fetchPartnershipsData,
-  } = useSpaceMap();
+  const { fetchSpaceMapData, fetchPartnershipsData } = useSpaceMap();
+  const { maxMarketCap, minMarketCap, tree } = useSelector(selectMapTree);
+
+  const { projectPartnerships: reducerPartnerShips = [] } = useSelector(selectPartnerships);
+  const selectedProject = useSelector(selectedProjectName);
+
+  const projectPartnerships = useMemo(
+    () => (selectedProject ? [...reducerPartnerShips, selectedProject] : []),
+    [reducerPartnerShips, selectedProject]
+  );
 
   const { handleSelectFund } = useSetNewProject();
 

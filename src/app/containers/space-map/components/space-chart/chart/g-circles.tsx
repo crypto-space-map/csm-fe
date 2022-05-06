@@ -74,8 +74,6 @@ const Circle = ({
             ref={circleRef}
             key={`project-circle${elem.data.projectId}`}
             radius={elem.r || 0.1}
-            // x={getCordsPos(elem, 'x')}
-            // y={getCordsPos(elem, 'y')}
             {...getSphereColorParams(elem, isTransparent)}
             onClick={handleClick}
             onMouseEnter={onMouseEnter}
@@ -90,6 +88,8 @@ const Circle = ({
             isSelected={!!currentProject && !isSelected}
             scale={scale}
             // TODO доделать props types
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             onClick={handleClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}

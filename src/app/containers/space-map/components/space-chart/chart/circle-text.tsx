@@ -40,7 +40,7 @@ export const CircleText = ({ elem, isSelected, scale, ...rest }: CircleTextProps
   return (
     <Spring
       key={`circles-tickers-${elem.data.symbol}`}
-      from={{ x: randomNumber(0, 1500), y: randomNumber(0, 1500), opacity: 0 }}
+      from={{ x: randomNumber(10, 1500), y: randomNumber(10, 1500), opacity: 0 }}
       to={{
         opacity: isOpacity,
         x: cords.x || 0,

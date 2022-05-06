@@ -56,7 +56,7 @@ export const GHeaders = ({ data, scale = 1 }: GAreaProps) => {
   const categoriesHeaders = useSelector(selectCategoriesParentPathData);
 
   useEffect(() => {
-    setCurrentFontSize(currentFontSize / scale);
+    setCurrentFontSize(currentFontSize / scale || 1);
   }, [scale, currentFontSize]);
 
   return (
@@ -67,8 +67,8 @@ export const GHeaders = ({ data, scale = 1 }: GAreaProps) => {
           from={{ fontSize: currentFontSize, x: 0, y: 0 }}
           to={{
             fontSize: 16 / scale,
-            x: getCords(elem)?.x,
-            y: getCords(elem)?.y,
+            x: getCords(elem)?.x || 0,
+            y: getCords(elem)?.y || 0,
           }}>
           {props => (
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

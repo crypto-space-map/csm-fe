@@ -1,14 +1,15 @@
 import { memo } from 'react';
 
 import { Line } from 'react-konva';
+import { useSelector } from 'react-redux';
 
-import { useSpaceMap } from 'app/containers/space-map/hooks';
+import { selectPartnerships } from 'app/containers/space-map/selectors';
 
 import { GAreaProps } from '../types';
 import { getCircleCoord } from '../utils/helpers';
 
 export const GLinks = memo<GAreaProps>(({ data, currentProject }) => {
-  const { projectPartnershipsLoading } = useSpaceMap();
+  const { projectPartnershipsLoading } = useSelector(selectPartnerships);
 
   if (!currentProject || projectPartnershipsLoading) return null;
 
