@@ -69,7 +69,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
     [handleSelectProduct, fetchPartnershipsData]
   );
 
-  const { simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap, minMarketCap });
+  const { simulatedCircles } = useChart({ width, height, tree, maxMarketCap, minMarketCap });
 
   const allProjects = useMemo(() => getAllProjects(simulatedCircles || []), [simulatedCircles]);
 
@@ -94,10 +94,6 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
       }
     }
   }, [allProjects, currentProject?.data.projectId, selectedProject, setProject]);
-
-  useEffect(() => {
-    simulation?.tick();
-  }, [simulation, windowSize]);
 
   return (
     <ReactReduxContext.Consumer>
