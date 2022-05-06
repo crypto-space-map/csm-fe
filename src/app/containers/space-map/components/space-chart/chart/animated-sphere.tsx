@@ -64,7 +64,8 @@ const Sphere = memo<SphereProps>(
       />
     );
   },
-  () => true
+  ({ isTransparent: prevIsTransparent }, { isTransparent: curIsTransparent }) =>
+    prevIsTransparent === curIsTransparent
 );
 
 export const AnimatedSphere = memo<Omit<SphereProps, 'isTransparent'>>(({ elem, scale = 1, ...rest }) => {
