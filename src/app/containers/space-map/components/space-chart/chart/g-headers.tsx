@@ -46,8 +46,8 @@ export const GHeaders = ({ data, scale = 1 }: GAreaProps) => {
         x:
           cords?.x / filteredFields?.length -
           cords.r / filteredFields.length -
-          (elem.parent!.length * elem.parent!.length) / 5 / scale,
-        y: cords?.y - 40 / scale,
+          (elem.parent!.length * elem.parent!.length) / 5 / (scale || 1),
+        y: cords?.y - 40 / (scale || 1),
       };
     }
     return null;
@@ -56,7 +56,7 @@ export const GHeaders = ({ data, scale = 1 }: GAreaProps) => {
   const categoriesHeaders = useSelector(selectCategoriesParentPathData);
 
   useEffect(() => {
-    setCurrentFontSize(currentFontSize / scale || 1);
+    setCurrentFontSize(currentFontSize / (scale || 1) || 1);
   }, [scale, currentFontSize]);
 
   return (
