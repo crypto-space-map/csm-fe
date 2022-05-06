@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { animated, Spring } from '@react-spring/konva';
 import { HierarchyCircularNode } from 'd3';
@@ -9,7 +9,7 @@ import { randomNumber } from '../utils/helpers';
 
 type CircleTextProps = {
   elem: HierarchyCircularNode<PackedCategories>;
-  isSelected?: boolean;
+  isSelected: boolean;
   scale: number;
 };
 
@@ -20,7 +20,7 @@ const getCordsPos = (elem: HierarchyCircularNode<PackedCategories>, cord: 'x' | 
   return elem.data[cord];
 };
 
-export const CircleText = ({ elem, isSelected, scale, ...rest }: CircleTextProps) => {
+export const CircleText = memo(({ elem, isSelected, scale, ...rest }: CircleTextProps) => {
   const tickerFontSize = (elem.r / (elem.data.symbol?.length >= 2 ? elem.data.symbol?.length : 2)) * 2;
   const textFill = isSelected ? COLOR_PALLETTE.POST_DATE_COLOR : COLOR_PALLETTE.MAIN_WHITE;
 
@@ -62,8 +62,4 @@ export const CircleText = ({ elem, isSelected, scale, ...rest }: CircleTextProps
       )}
     </Spring>
   );
-};
-
-CircleText.defaultProps = {
-  isSelected: true,
-};
+});
