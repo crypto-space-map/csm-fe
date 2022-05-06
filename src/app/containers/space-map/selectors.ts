@@ -22,3 +22,10 @@ export const selectCategoriesParentPathData = (state: RootState) =>
     }
     return acc;
   }, [] as CategoryPathData[]);
+
+export const selectMapTree = (state: RootState) => selectDomain(state).mapTree.data;
+
+export const selectMapTreeCaps = (state: RootState) => ({
+  maxMarketCap: selectDomain(state).mapTree.data.maxMarketCap,
+  minMarketCap: selectDomain(state).mapTree.data.minMarketCap,
+});
