@@ -1,10 +1,14 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+
+import { useWindowSize } from 'hooks/use-screen-size';
 
 import { circlesSimulation, createCategoryPacks } from '.';
 import { UseChartProps } from '../types';
 import { packedChild } from './child-packer';
 
 export function useChart({ width, height, maxMarketCap, minMarketCap, tree }: UseChartProps) {
+  const windowSize = useWindowSize();
+
   const packedCategories = useMemo(() => {
     if (width && height && tree && maxMarketCap && minMarketCap) {
       return createCategoryPacks(tree, width, height);
@@ -20,6 +24,10 @@ export function useChart({ width, height, maxMarketCap, minMarketCap, tree }: Us
   }, [packedCategories, width, height]);
 
   const simulatedCircles = useMemo(() => simulation?.nodes().map(item => packedChild(item)), [simulation]);
+
+  useEffect(() => {
+    simulation?.tick();
+  }, [simulation, windowSize]);
 
   return {
     simulatedCircles,

@@ -7,7 +7,6 @@ import { ReactReduxContext, Provider, useSelector } from 'react-redux';
 import { selectAuth } from 'app/containers/login/selectors';
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import { selectMapTree, selectPartnerships } from 'app/containers/space-map/selectors';
-import { useWindowSize } from 'hooks/use-screen-size';
 import { useSetNewProject } from 'hooks/use-set-new-project';
 import { selectedProjectName } from 'store/pageStore/selectors';
 
@@ -30,7 +29,6 @@ type SpaceChartProps = {
 
 export const SpaceChart = memo<SpaceChartProps>(() => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
 
   const [scale, setsScale] = useState(0);
 
@@ -42,8 +40,6 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
   const [currentProject, setMapCurrentProject] = useState<HierarchyCircularNode<PackedCategories> | null>(
     null
   );
-
-  const windowSize = useWindowSize();
 
   const { fetchSpaceMapData, fetchPartnershipsData } = useSpaceMap();
   const { maxMarketCap, minMarketCap, tree } = useSelector(selectMapTree);
@@ -109,7 +105,6 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
                   selectedProjects={foundProjects}
                   data={simulatedCircles}
                   setCurrentProject={setProject}
-                  tooltipRef={tooltipRef}
                   currentProject={currentProject}
                   handleSelectFund={handleSelectFund}
                   scale={scale}
