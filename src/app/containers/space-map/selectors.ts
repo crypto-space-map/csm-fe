@@ -29,3 +29,5 @@ export const selectMapTreeCaps = (state: RootState) => ({
   maxMarketCap: selectDomain(state).mapTree.data.maxMarketCap,
   minMarketCap: selectDomain(state).mapTree.data.minMarketCap,
 });
+
+export const selectMapCurrentProject = (state: RootState) => selectDomain(state).currentProject;

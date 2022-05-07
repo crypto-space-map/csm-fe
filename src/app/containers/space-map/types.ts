@@ -1,4 +1,8 @@
+import { HierarchyCircularNode } from 'd3';
+
 import { FetchDataState } from 'utils/@reduxjs/fetchData';
+
+import { PackedCategories } from './components/space-chart/types';
 
 export enum Exchanges {
   binance = 'Binance',
@@ -77,6 +81,7 @@ export interface SpaceMapPageState {
   projects: Projects;
   filters: FilterProps;
   projectPartnerships: Partnerships;
+  currentProject: HierarchyCircularNode<PackedCategories> | null;
 }
 
 export type CategoryPathData = {

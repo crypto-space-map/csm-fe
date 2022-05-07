@@ -37,6 +37,7 @@ export const initialState: ContainerState = {
     data: [],
     ...fetchDataInitialState,
   },
+  currentProject: null,
 };
 
 const { fetchDataSuccess: fetchSpaceMapDataSuccess, fetchDataError: fetchSpaceMapDataError } =
@@ -95,6 +96,9 @@ const spaceMapPageSlice = createSlice({
     },
     clearFilters(state) {
       state.filters = initialState.filters;
+    },
+    setCurrentProject(state, action: PayloadAction<ContainerState['currentProject']>) {
+      state.currentProject = action.payload;
     },
   },
 });
