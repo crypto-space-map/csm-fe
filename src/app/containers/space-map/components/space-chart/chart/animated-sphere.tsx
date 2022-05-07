@@ -1,4 +1,4 @@
-import { memo, useCallback, useRef } from 'react';
+import { memo, useCallback, useMemo, useRef } from 'react';
 
 import { Spring, animated } from '@react-spring/konva';
 import { HierarchyCircularNode } from 'd3';
@@ -12,13 +12,15 @@ import { CircleText } from './circle-text';
 
 type SphereProps = Omit<GAreaProps, 'data'> & {
   elem: HierarchyCircularNode<PackedCategories>;
-  isTransparent: boolean;
   handleClick?: () => void;
 };
 
-const Sphere = memo<SphereProps>(({ elem, isTransparent, handleClick, ...props }) => {
+const Sphere = memo<SphereProps>(({ elem, handleClick, ...props }) => {
+  const { projectWeight, marketCap, projectId, exchanges } = elem.data;
+  const { children, r } = elem;
+
   const circleRef = useRef<CircleShape>(null);
-  const isClickableProject = !!elem.data.projectId;
+  const isClickableProject = !!projectId;
 
   const onMouseEnter = () => {
     const stage = circleRef.current?.getStage();
@@ -33,15 +35,23 @@ const Sphere = memo<SphereProps>(({ elem, isTransparent, handleClick, ...props }
       stage.container().style.cursor = 'default';
     }
   };
+
+  const isTransparent = useCircleOpacity({ projectId, projectWeight, marketCap, exchanges });
+
+  const sphereColorParams = useMemo(
+    () => getSphereColorParams({ children, projectWeight, isTransparent }),
+    [children, projectWeight, isTransparent]
+  );
+
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     <animated.Circle
       {...props}
-      {...getSphereColorParams(elem, isTransparent)}
+      {...sphereColorParams}
       ref={circleRef}
-      key={`project-circle${elem.data.projectId}`}
-      radius={elem.r || 0.1}
+      key={`project-circle${projectId}`}
+      radius={r || 0.1}
       onClick={handleClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -51,7 +61,7 @@ const Sphere = memo<SphereProps>(({ elem, isTransparent, handleClick, ...props }
   );
 });
 
-export const AnimatedSphere = memo<Omit<SphereProps, 'isTransparent'>>(
+export const AnimatedSphere = memo<SphereProps>(
   ({
     elem,
     scale = 1,
@@ -60,7 +70,6 @@ export const AnimatedSphere = memo<Omit<SphereProps, 'isTransparent'>>(
     currentProject,
     ...rest
   }) => {
-    const isTransparent = useCircleOpacity(elem.data);
     const isClickableProject = !!elem.data.projectId;
 
     const handleClick = useCallback(() => {
@@ -70,6 +79,7 @@ export const AnimatedSphere = memo<Omit<SphereProps, 'isTransparent'>>(
       }
       return null;
     }, [currentProject?.data.projectId, elem, handleSelectFund, isClickableProject, setCurrentProject]);
+
     return (
       <Spring
         key={`categories-headers-${elem.parent}`}
@@ -80,13 +90,7 @@ export const AnimatedSphere = memo<Omit<SphereProps, 'isTransparent'>>(
         }}>
         {props => (
           <>
-            <Sphere
-              {...rest}
-              {...props}
-              elem={elem}
-              isTransparent={isTransparent}
-              handleClick={handleClick}
-            />
+            <Sphere {...rest} {...props} elem={elem} handleClick={handleClick} />
             <CircleText
               {...rest}
               {...props}
