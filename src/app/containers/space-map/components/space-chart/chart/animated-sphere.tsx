@@ -3,6 +3,10 @@ import { memo, useCallback, useMemo, useRef } from 'react';
 import { Spring, animated } from '@react-spring/konva';
 import { HierarchyCircularNode } from 'd3';
 import { Circle as CircleShape } from 'konva/lib/shapes/Circle';
+import { useSelector } from 'react-redux';
+
+import { selectMapCurrentProject } from 'app/containers/space-map/selectors';
+import { useSetNewProject } from 'hooks/use-set-new-project';
 
 import { GAreaProps, PackedCategories } from '../types';
 import { getSphereColorParams } from '../utils/colors';
@@ -62,23 +66,20 @@ const Sphere = memo<SphereProps>(({ elem, handleClick, ...props }) => {
 });
 
 export const AnimatedSphere = memo<SphereProps>(
-  ({
-    elem,
-    scale = 1,
-    setCurrentProject = () => false,
-    handleSelectFund = () => false,
-    currentProject,
-    ...rest
-  }) => {
+  ({ elem, scale = 1, setCurrentProject = () => false, ...rest }) => {
     const isClickableProject = !!elem.data.projectId;
+
+    const currentProject = useSelector(selectMapCurrentProject);
+
+    // const { handleSelectFund } = useSetNewProject();
 
     const handleClick = useCallback(() => {
       if (isClickableProject) {
-        if (currentProject?.data.projectId === elem.data.projectId) return handleSelectFund('');
+        if (currentProject?.data.projectId === elem.data.projectId) return setCurrentProject(null);
         return setCurrentProject(elem);
       }
       return null;
-    }, [currentProject?.data.projectId, elem, handleSelectFund, isClickableProject, setCurrentProject]);
+    }, [currentProject?.data.projectId, elem, isClickableProject, setCurrentProject]);
 
     return (
       <Spring

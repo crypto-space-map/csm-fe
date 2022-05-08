@@ -1,16 +1,13 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
-import { HierarchyCircularNode } from 'd3';
 import { Layer } from 'react-konva';
 import { ReactReduxContext, Provider, useSelector } from 'react-redux';
 
 import { selectAuth } from 'app/containers/login/selectors';
 import { useSpaceMap } from 'app/containers/space-map/hooks';
 import { selectMapTree, selectPartnerships } from 'app/containers/space-map/selectors';
-import { useSetNewProject } from 'hooks/use-set-new-project';
 import { selectedProjectName } from 'store/pageStore/selectors';
 
-import { PackedCategories } from '../types';
 import { getAllProjects, getIncludesProjects } from '../utils/helpers';
 import { useChart } from '../utils/use-chart';
 import { GCircles } from './g-circles';
@@ -37,11 +34,7 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
   const width = wrapperRef.current?.offsetWidth || 0;
   const height = wrapperRef.current?.offsetHeight || 0;
 
-  const [currentProject, setMapCurrentProject] = useState<HierarchyCircularNode<PackedCategories> | null>(
-    null
-  );
-
-  const { fetchSpaceMapData, fetchPartnershipsData } = useSpaceMap();
+  const { fetchSpaceMapData } = useSpaceMap();
   const { maxMarketCap, minMarketCap, tree } = useSelector(selectMapTree);
 
   const { projectPartnerships: reducerPartnerShips = [] } = useSelector(selectPartnerships);
@@ -52,18 +45,7 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
     [reducerPartnerShips, selectedProject]
   );
 
-  const { handleSelectProduct, handleSelectFund } = useSetNewProject();
-
   const handleSetScale = (val: number) => setsScale(val);
-
-  const setProject = useCallback(
-    val => {
-      setMapCurrentProject(val);
-      handleSelectProduct(val.data?.projectId);
-      fetchPartnershipsData(val.data?.projectId);
-    },
-    [handleSelectProduct, fetchPartnershipsData]
-  );
 
   const { simulatedCircles } = useChart({ width, height, tree, maxMarketCap, minMarketCap });
 
@@ -79,19 +61,6 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
     }
   }, [fetchSpaceMapData, isAuth]);
 
-  useEffect(() => {
-    // debugger;
-    if (!selectedProject) {
-      setMapCurrentProject(null);
-    }
-    if (selectedProject !== currentProject?.data.projectId) {
-      const target = allProjects.find(({ data: { projectId } }) => projectId === selectedProject) || null;
-      if (target) {
-        setProject(target);
-      }
-    }
-  }, [allProjects, currentProject?.data.projectId, selectedProject, setProject, setMapCurrentProject]);
-
   return (
     <ReactReduxContext.Consumer>
       {({ store }) => (
@@ -100,15 +69,8 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
           <MapStage width={width} height={height} handleSetScale={handleSetScale}>
             <Provider store={store}>
               <Layer alpha={false}>
-                {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
-                <GCircles
-                  selectedProjects={foundProjects}
-                  data={simulatedCircles}
-                  setCurrentProject={setProject}
-                  currentProject={currentProject}
-                  handleSelectFund={handleSelectFund}
-                  scale={scale}
-                />
+                <GLinks data={foundProjects} />
+                <GCircles selectedProjects={foundProjects} data={simulatedCircles} scale={scale} />
                 <GHeaders data={simulatedCircles} scale={scale} />
                 <GLabels data={simulatedCircles} scale={scale} />
               </Layer>
