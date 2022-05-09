@@ -79,7 +79,7 @@ export const AnimatedSphere = memo<SphereProps>(
       }
       return null;
     }, [currentProject?.data.projectId, elem, handleSelectFund, isClickableProject, setCurrentProject]);
-
+    console.log('circle rernder');
     return (
       <Spring
         key={`categories-headers-${elem.parent}`}

@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 import { COLOR_PALLETTE } from 'global/pallette';
+import { gradientText } from 'global/styles';
+import { Link } from 'react-router-dom';
 
 export const StyledEndContentWrapper = styled.div`
   display: flex;
@@ -34,9 +36,14 @@ export const StyledSocial = styled.span`
   line-height: 33px;
   margin-top: 16px;
   margin-bottom: 26px;
+  ${gradientText}
 `;
 export const StyledInfo = styled.span`
   font-weight: 400;
   font-size: 16px;
   line-height: 22px;
+`;
+
+export const StyledLink = styled.a`
+  ${gradientText}
 `;

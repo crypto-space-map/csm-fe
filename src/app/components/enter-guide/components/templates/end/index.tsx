@@ -4,7 +4,14 @@ import { Button } from 'common/components';
 
 import { TemplateProps, LinesType } from '../../../types';
 import { SpacemanWithLine } from '../../spaceman-with-line';
-import { StyledEndContentWrapper, StyledContent, StyledTitle, StyledSocial, StyledInfo } from './styles';
+import {
+  StyledEndContentWrapper,
+  StyledContent,
+  StyledTitle,
+  StyledSocial,
+  StyledInfo,
+  StyledLink,
+} from './styles';
 
 const lineTop = -170;
 const lineLeft = 150;
@@ -36,7 +43,15 @@ export const End = ({ onClose, setSizeOptions }: Pick<TemplateProps, 'onClose' |
           <StyledInfo>
             Join our socials to ask, share or simply stay in touch. Thanks and good luck!
           </StyledInfo>
-          <StyledSocial>Telegram, Twitter</StyledSocial>
+          <StyledSocial>
+            <StyledLink href="https://t.me/cryptospacemap" target="_blank" rel="noopener noreferrer">
+              Telegram
+            </StyledLink>
+            ,{' '}
+            <StyledLink href="https://twitter.com/CsmCrypto" target="_blank" rel="noopener noreferrer">
+              Twitter
+            </StyledLink>
+          </StyledSocial>
         </StyledContent>
         <Button onClick={onClose}>Close</Button>
       </StyledEndContentWrapper>
