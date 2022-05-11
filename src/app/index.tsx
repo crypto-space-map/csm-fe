@@ -4,6 +4,7 @@ import { SnackbarProvider } from 'notistack';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { YMInitializer } from 'react-yandex-metrika';
 
 import { SvgGradient } from 'common/components/svg-gradient';
 
@@ -17,6 +18,8 @@ const store = configureAppStore();
 interface Props {
   Component: typeof App;
 }
+
+const YA_METRIC_COUNTER = [88753201];
 
 const ConnectedApp = ({ Component }: Props): JSX.Element => (
   <ErrorBoundary>
@@ -34,6 +37,15 @@ const ConnectedApp = ({ Component }: Props): JSX.Element => (
           <Component />
         </BrowserRouter>
       </SnackbarProvider>
+      <YMInitializer
+        accounts={YA_METRIC_COUNTER}
+        options={{
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true,
+          webvisor: true,
+        }}
+      />
     </Provider>
   </ErrorBoundary>
 );
