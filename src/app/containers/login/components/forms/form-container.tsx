@@ -13,7 +13,7 @@ import { SignForm } from './sign';
 import { FormsBlock, StyledFormContainer, StyledFormHeader } from './styled';
 
 export const FormContainer = () => {
-  const [selectedForm, setSelectedForm] = useState(UserForms.REGISTER);
+  const [selectedForm, setSelectedForm] = useState(UserForms.LOGIN);
 
   const isRegisterForm = UserForms.REGISTER === selectedForm;
   const isForgotPassForm = UserForms.FORGOT_PASS === selectedForm;
