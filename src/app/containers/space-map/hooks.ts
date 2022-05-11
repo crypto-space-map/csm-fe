@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -7,7 +7,7 @@ import { selectedProjectName } from 'store/pageStore/selectors';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
 import { spaceMapSaga } from './saga';
-import { selectMapData, selectPartnerships } from './selectors';
+import { selectMapData } from './selectors';
 import { actions, reducer } from './slice';
 import { FilterProps } from './types';
 import { sliceKey } from './utils';
@@ -46,18 +46,12 @@ export function useSpaceMap() {
     },
     [setReducerFilters]
   );
-  const { projectPartnerships: reducerPartnerShips = [], projectPartnershipsLoading } =
-    useSelector(selectPartnerships);
 
   const fetchPartnershipsData = useCallback((val: string) => fetchPartnerships(val), [fetchPartnerships]);
 
   const clearReducerObjectData = useCallback(
     (payload: ReturnType<typeof clearData>['payload']) => clearData(payload),
     [clearData]
-  );
-  const projectPartnerships = useMemo(
-    () => (selectedProject ? [...reducerPartnerShips, selectedProject] : []),
-    [reducerPartnerShips, selectedProject]
   );
 
   return {
@@ -68,8 +62,6 @@ export function useSpaceMap() {
     fetchingMapData,
     filters,
     loadMapDataError,
-    projectPartnerships,
-    projectPartnershipsLoading,
     fetchPartnershipsData,
     clearReducerObjectData,
     onClearFilters,

@@ -1,34 +1,36 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { HierarchyCircularNode } from 'd3';
-import { useSelector } from 'react-redux';
+import { Layer } from 'react-konva';
+import { ReactReduxContext, Provider, useSelector } from 'react-redux';
 
 import { selectAuth } from 'app/containers/login/selectors';
 import { useSpaceMap } from 'app/containers/space-map/hooks';
-import { useWindowSize } from 'hooks/use-screen-size';
+import { selectMapTree, selectPartnerships } from 'app/containers/space-map/selectors';
+import { useSetNewProject } from 'hooks/use-set-new-project';
+import { selectedProjectName } from 'store/pageStore/selectors';
 
 import { PackedCategories } from '../types';
 import { getAllProjects, getIncludesProjects } from '../utils/helpers';
 import { useChart } from '../utils/use-chart';
-import { initZoomedElement } from '../utils/zoom';
 import { GCircles } from './g-circles';
 import { GHeaders } from './g-headers';
 import { GLabels } from './g-labels';
 import { GLinks } from './g-links';
-import { GPartnersLegend } from './g-partners-legend';
-import { GTooltips } from './g-tooltips';
-import { ChartWrapper, ProjectTooltip, RandomSvg } from './styled';
+import { ProjectWeightFilter } from './g-partners-legend';
+import { MapStage } from './map-stage';
+import { ChartWrapper } from './styled';
 
 const NEEDLES_CATEGORIES = ['619b3ca2064df399fced84b1'];
 
 type SpaceChartProps = {
-  handleSelectProduct: (val: string) => void;
+  handleSelectProduct?: (val: string) => void;
 };
 
-export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
+export const SpaceChart = memo<SpaceChartProps>(() => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
+
+  const [scale, setsScale] = useState(0);
 
   const isAuth = useSelector(selectAuth);
 
@@ -39,15 +41,20 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
     null
   );
 
-  const windowSize = useWindowSize();
+  const { fetchSpaceMapData, fetchPartnershipsData } = useSpaceMap();
+  const { maxMarketCap, minMarketCap, tree } = useSelector(selectMapTree);
 
-  const {
-    fetchSpaceMapData,
-    spaceMapData: { tree, maxMarketCap, minMarketCap },
-    selectedProject,
-    projectPartnerships,
-    fetchPartnershipsData,
-  } = useSpaceMap();
+  const { projectPartnerships: reducerPartnerShips = [] } = useSelector(selectPartnerships);
+  const selectedProject = useSelector(selectedProjectName);
+
+  const projectPartnerships = useMemo(
+    () => (selectedProject ? [...reducerPartnerShips, selectedProject] : []),
+    [reducerPartnerShips, selectedProject]
+  );
+
+  const { handleSelectProduct, handleSelectFund } = useSetNewProject();
+
+  const handleSetScale = (val: number) => setsScale(val);
 
   const setProject = useCallback(
     val => {
@@ -58,7 +65,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
     [handleSelectProduct, fetchPartnershipsData]
   );
 
-  const { simulation, simulatedCircles } = useChart({ width, height, tree, maxMarketCap, minMarketCap });
+  const { simulatedCircles } = useChart({ width, height, tree, maxMarketCap, minMarketCap });
 
   const allProjects = useMemo(() => getAllProjects(simulatedCircles || []), [simulatedCircles]);
 
@@ -73,6 +80,7 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
   }, [fetchSpaceMapData, isAuth]);
 
   useEffect(() => {
+    // debugger;
     if (!selectedProject) {
       setMapCurrentProject(null);
     }
@@ -82,34 +90,32 @@ export const SpaceChart = memo<SpaceChartProps>(({ handleSelectProduct }) => {
         setProject(target);
       }
     }
-  }, [allProjects, currentProject?.data.projectId, selectedProject, setProject]);
-
-  useEffect(() => {
-    simulation?.tick();
-  }, [simulation, windowSize]);
-
-  initZoomedElement(svgRef, width, height);
+  }, [allProjects, currentProject?.data.projectId, selectedProject, setProject, setMapCurrentProject]);
 
   return (
-    <ChartWrapper ref={wrapperRef}>
-      <ProjectTooltip ref={tooltipRef} />
-      <RandomSvg ref={svgRef}>
-        <g>
-          {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
-          <GCircles
-            selectedProjects={foundProjects}
-            data={simulatedCircles}
-            setCurrentProject={setProject}
-            tooltipRef={tooltipRef}
-            // currentProject={currentProject}  раскомитить когда потребуются тикеры внутри сфер
-          />
-          <GLabels data={simulatedCircles} />
-          <GHeaders data={simulatedCircles} />
-          <GTooltips data={foundProjects} currentProject={currentProject} />
-          {/** закомитить когда тикеры нужны внутри */}
-        </g>
-        <GPartnersLegend width={width} />
-      </RandomSvg>
-    </ChartWrapper>
+    <ReactReduxContext.Consumer>
+      {({ store }) => (
+        <ChartWrapper ref={wrapperRef}>
+          <ProjectWeightFilter />
+          <MapStage width={width} height={height} handleSetScale={handleSetScale}>
+            <Provider store={store}>
+              <Layer alpha={false}>
+                {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
+                <GCircles
+                  selectedProjects={foundProjects}
+                  data={simulatedCircles}
+                  setCurrentProject={setProject}
+                  currentProject={currentProject}
+                  handleSelectFund={handleSelectFund}
+                  scale={scale}
+                />
+                <GHeaders data={simulatedCircles} scale={scale} />
+                <GLabels data={simulatedCircles} scale={scale} />
+              </Layer>
+            </Provider>
+          </MapStage>
+        </ChartWrapper>
+      )}
+    </ReactReduxContext.Consumer>
   );
 });

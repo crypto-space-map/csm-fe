@@ -2,22 +2,20 @@ import { memo, useEffect } from 'react';
 
 import { Redirect } from 'react-router-dom';
 
+import { EnterGuide } from 'app/components/enter-guide';
 import { FundsList } from 'app/components/funds-list';
 import { useNotifier } from 'hooks/use-notifier';
-import { useSetNewProject } from 'hooks/use-set-new-project';
 import { getCookie } from 'utils/cookie';
 
 import { useLogin } from '../login/hooks';
 import { SpaceChart } from '../space-map/components/space-chart';
 import { DetailCard } from './detail-card';
-import { useMainPage, useMainPageHistory } from './hooks';
+import { useMainPageHistory } from './hooks';
 
 export const MainPage = memo(() => {
   useMainPageHistory();
   useNotifier();
-  const { setPointsCoords, clearPointsCoords } = useMainPage();
   const { isAuth, setAuth } = useLogin();
-  const { handleSelectProduct, handleSelectFund } = useSetNewProject();
   const token = getCookie('token');
 
   useEffect(() => {
@@ -28,12 +26,9 @@ export const MainPage = memo(() => {
 
   return (
     <>
-      <SpaceChart handleSelectProduct={handleSelectProduct} />
-      <FundsList
-        handleSelectFund={handleSelectFund}
-        setPointsCoords={setPointsCoords}
-        clearPointsCoords={clearPointsCoords}
-      />
+      <EnterGuide />
+      <SpaceChart />
+      <FundsList />
       <DetailCard />
     </>
   );

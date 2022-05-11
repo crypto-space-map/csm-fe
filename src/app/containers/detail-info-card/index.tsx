@@ -4,7 +4,7 @@ import { DetailHeaderSection, DetailStatisticsSection } from 'app/components';
 import { TopSection } from 'app/components/detail-common-components';
 
 import { TabsSection } from './components/tabs-section';
-import { useDetailInfoSlice, useDetailInfo, useClearDataAfterChangeNewProject } from './hooks';
+import { useDetailInfo } from './hooks';
 
 interface DetailInfoCardProps {
   isHide: boolean;
@@ -12,8 +12,6 @@ interface DetailInfoCardProps {
 }
 
 export const DetailInfoCard = memo((props: DetailInfoCardProps) => {
-  useDetailInfoSlice();
-  useClearDataAfterChangeNewProject();
   const { isShow, projectHeaderData, projectStatistic } = useDetailInfo();
   const { isHide } = props;
 

@@ -1,12 +1,12 @@
-import { Fragment } from 'react';
-
+import { Spring, animated } from '@react-spring/konva';
+import { COLOR_PALLETTE } from 'global/pallette';
 import { useSelector } from 'react-redux';
 
 import { selectCategoriesParentPathData } from 'app/containers/space-map/selectors';
+import { CategoryPathData } from 'app/containers/space-map/types';
 
 import { GAreaProps } from '../types';
-
-const MARKER = 'CATEGORIES_HEADERS';
+import { capitalizeFirstLetter } from '../utils/helpers';
 
 const calculateYAxis = (prev: number, cur: number) => {
   if (!prev) return cur;
@@ -14,19 +14,19 @@ const calculateYAxis = (prev: number, cur: number) => {
   return cur;
 }; /** calculate highest YAxis point to place header of category */
 
-export const GHeaders = ({ data }: GAreaProps) => {
+export const GHeaders = ({ data, scale = 1 }: GAreaProps) => {
   type blah = {
     x: number;
     y: number;
     r: number;
   };
 
-  const xAxisOffset = (val: number) => (val > 10 ? val : 1);
+  // const [currentFontSize, setCurrentFontSize] = useState(16);
 
-  const getCords = (sortingNumber: number) => {
+  const getCords = (elem: CategoryPathData) => {
     if (data) {
       const filteredFields = data?.filter(
-        ({ data: { sortingNumber: dataSortingNumbers } }) => dataSortingNumbers === sortingNumber
+        ({ data: { sortingNumber: dataSortingNumbers } }) => dataSortingNumbers === elem.sortingNumber
       );
 
       const cords = filteredFields?.reduce(
@@ -41,42 +41,42 @@ export const GHeaders = ({ data }: GAreaProps) => {
         { x: 0, y: 0, r: 0 } as blah
       );
       return {
-        x: cords?.x / filteredFields?.length - cords.r / filteredFields.length,
-        y: cords?.y - 30,
+        x:
+          cords?.x / filteredFields?.length -
+          cords.r / filteredFields.length -
+          (elem.parent!.length * elem.parent!.length) / 5 / (scale || 1),
+        y: cords?.y - 40 / (scale || 1),
       };
     }
     return null;
   };
 
   const categoriesHeaders = useSelector(selectCategoriesParentPathData);
+
   return (
-    <g>
-      {categoriesHeaders?.map(item => (
-        <Fragment key={`scaled-categories${item.sortingNumber}`}>
-          <line
-            x1={0}
-            y1={0}
-            x2={getCords(item.sortingNumber)?.x || 0}
-            y2={getCords(item.sortingNumber)?.y || 0}
-            strokeWidth={1}
-            strokeDasharray="1 1"
-            fill="none"
-            vectorEffect="non-scaling-stroke"
-            markerEnd={`url(#${MARKER}${item.sortingNumber})`}
-          />
-          <marker
-            refY={0}
-            refX={xAxisOffset(item.parent?.length || 1) * 5}
-            key={`marker-category-point${item.sortingNumber}`}
-            id={`${MARKER}${item.sortingNumber}`}
-            viewBox="0 0 250 10"
-            markerUnits="strokeWidth"
-            markerWidth="200"
-            markerHeight="100">
-            <path fill="#eae0d7" transform="scale(0.3)" strokeWidth={1} d={item.parentPathData} />
-          </marker>
-        </Fragment>
+    <>
+      {categoriesHeaders?.map(elem => (
+        <Spring
+          key={`categories-headers-${elem.parent}`}
+          from={{ fontSize: 16, x: 0, y: 0 }}
+          to={{
+            fontSize: 16 / scale,
+            x: getCords(elem)?.x || 0,
+            y: getCords(elem)?.y || 0,
+          }}>
+          {props => (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            <animated.Text
+              {...props}
+              fill={COLOR_PALLETTE.MAIN_WHITE}
+              align="left"
+              fontFamily="Open Sans , sans-serif"
+              text={capitalizeFirstLetter(elem.parent || '')}
+            />
+          )}
+        </Spring>
       ))}
-    </g>
+    </>
   );
 };

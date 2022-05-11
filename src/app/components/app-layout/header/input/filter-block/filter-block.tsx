@@ -67,7 +67,7 @@ export const FilterBlock = forwardRef<HTMLDivElement, FilterBlockProps>((props, 
   return (
     <Fade in={visible}>
       <StyledFilterBlock {...props} ref={ref}>
-        <StyledFilter onSubmit={handleSubmit(handleSubmitFilters)}>
+        <StyledFilter onSubmit={handleSubmit(handleSubmitFilters)} id="filter-block">
           <FilterInputs<StateProps> control={control} />
           <RangesGroup onChange={handleChangeRange} />
           <ExchangesGroup control={control} />

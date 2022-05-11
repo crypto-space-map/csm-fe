@@ -1,33 +1,35 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { Simulation } from 'd3';
+import { useWindowSize } from 'hooks/use-screen-size';
 
 import { circlesSimulation, createCategoryPacks } from '.';
-import { PackedNodes, UseChartProps } from '../types';
+import { UseChartProps } from '../types';
 import { packedChild } from './child-packer';
 
 export function useChart({ width, height, maxMarketCap, minMarketCap, tree }: UseChartProps) {
-  const [packedCategories, setPackedCategories] = useState<PackedNodes[]>([]);
-  const [simulation, setSimulation] = useState<Simulation<PackedNodes, undefined> | null>(null);
+  const windowSize = useWindowSize();
 
-  useEffect(() => {
+  const packedCategories = useMemo(() => {
     if (width && height && tree && maxMarketCap && minMarketCap) {
-      const createdPacks = createCategoryPacks(tree, width, height);
-      setPackedCategories(createdPacks);
+      return createCategoryPacks(tree, width, height);
     }
-  }, [width, height, maxMarketCap, minMarketCap, tree]);
+    return [];
+  }, [height, maxMarketCap, minMarketCap, tree, width]);
 
-  useEffect(() => {
+  const simulation = useMemo(() => {
     if (packedCategories && width && height) {
-      setSimulation(circlesSimulation({ packedCategories, width, height }) || []);
+      return circlesSimulation({ packedCategories, width, height });
     }
+    return null;
   }, [packedCategories, width, height]);
 
   const simulatedCircles = useMemo(() => simulation?.nodes().map(item => packedChild(item)), [simulation]);
 
+  useEffect(() => {
+    simulation?.tick();
+  }, [simulation, windowSize]);
+
   return {
-    packedCategories,
-    simulation,
     simulatedCircles,
   };
 }

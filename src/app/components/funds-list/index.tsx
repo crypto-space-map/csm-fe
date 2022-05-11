@@ -2,6 +2,8 @@ import { useState, useMemo, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 
+import { useMainPage } from 'app/containers/mainPage/hooks';
+import { useSetNewProject } from 'hooks/use-set-new-project';
 import {
   selectedProjectName,
   selectedTopFunds,
@@ -15,17 +17,13 @@ import { ScrollBlockWithFunds } from './components/scroll-block-with-funds';
 import { StaticBlockWithFunds } from './components/static-block-with-funds';
 import { StyledFundBlockWrapper, StyledMainFundBlock, StyledGradientBlock } from './styles';
 
-interface FundsListProps {
-  setPointsCoords: (arg0: PointCoords) => void;
-  handleSelectFund: (arg0: string) => void;
-  clearPointsCoords: () => void;
-}
-
-export const FundsList = ({ handleSelectFund, setPointsCoords, clearPointsCoords }: FundsListProps) => {
+export const FundsList = () => {
   const projectName = useSelector(selectedProjectName);
   const funds = useSelector(selectedTopFunds);
   const selectedFundIds = useSelector(selectedFundBlockItemsIdList);
   const isShowLines = useSelector(selectedIsShowLines);
+  const { handleSelectFund } = useSetNewProject();
+  const { setPointsCoords, clearPointsCoords } = useMainPage();
 
   const [isShow, setShow] = useState(true);
 
@@ -45,7 +43,7 @@ export const FundsList = ({ handleSelectFund, setPointsCoords, clearPointsCoords
   if (!funds) return null;
 
   return (
-    <StyledMainFundBlock show={isShow} selectedItems={selectedFundsCount}>
+    <StyledMainFundBlock show={isShow} selectedItems={selectedFundsCount} id="fund-block">
       <StyledFundBlockWrapper show={isShow}>
         <FundBlockHeader isShow={isShow} toggleIsShow={toggleIsShow} />
 

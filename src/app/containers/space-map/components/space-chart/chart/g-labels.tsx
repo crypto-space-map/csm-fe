@@ -1,47 +1,45 @@
-import { Fragment, memo } from 'react';
+import { memo } from 'react';
 
-import { HierarchyCircularNode } from 'd3';
+import { Spring, animated } from '@react-spring/konva';
+import { COLOR_PALLETTE } from 'global/pallette';
 
-import { GAreaProps, PackedCategories } from '../types';
-import { getCircleCoord } from '../utils/helpers';
+import { GAreaProps } from '../types';
+import { capitalizeFirstLetter, getCordsPos } from '../utils/helpers';
 
-const LABEL_PATH_DATA = 'LABEL_PATH_DATA';
-
-const getWidth = ({ data: { key = '' } }: HierarchyCircularNode<PackedCategories>, multiplier = 1) => {
-  const multipliedValue = key.length <= 3 ? key.length + 1 : key.length;
-  return multipliedValue * multiplier;
+const getWidth = (value?: string) => {
+  if (value) {
+    return value.length * 4;
+  }
+  return 0;
 };
 
-const splitName = (val: string) => val.replace(/[()\s]/g, '');
-
-export const GLabels = memo<GAreaProps>(({ data }) => (
-  <g className="category-labels">
+export const GLabels = memo<GAreaProps>(({ data, scale = 1 }) => (
+  <>
     {data?.map(elem => (
-      <Fragment key={`scaled-tooltips${elem.data.key}${elem.x}`}>
-        <line
-          key={`tooltips-line${elem.data.key}${elem.x}`}
-          x1={0}
-          y1={0}
-          x2={getCircleCoord(elem.data, 'x')}
-          y2={getCircleCoord(elem.data, 'y') - elem.r}
-          strokeWidth={1}
-          strokeDasharray="1 1"
-          fill="none"
-          vectorEffect="non-scaling-stroke"
-          markerEnd={`url(#${LABEL_PATH_DATA}${splitName(elem.data.key || '')})`}
-        />
-        <marker
-          refY={10}
-          refX={getWidth(elem, 3)}
-          key={`marker-point${elem.data.name}`}
-          id={`${LABEL_PATH_DATA}${splitName(elem.data.key || '')}`}
-          viewBox="0 0 200 10"
-          markerUnits="strokeWidth"
-          markerWidth="200"
-          markerHeight="80">
-          <path fill="#eae0d7" transform="scale(0.18)" strokeWidth={1} d={elem.data.namePathData} />
-        </marker>
-      </Fragment>
+      <Spring
+        key={`categories-headers-${elem.data.key}`}
+        from={{ fontSize: 12, x: 0, y: 0 }}
+        to={{
+          fontSize: 12 / (scale || 1),
+          x: getCordsPos(elem, 'x') - getWidth(elem.data.key) / (scale || 1),
+          y: getCordsPos(elem, 'y') - (elem.data.r || 0) - 20 / (scale || 1),
+        }}>
+        {props => (
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          <animated.Text
+            {...props}
+            key={`category-labels-${elem.data.key}`}
+            text={capitalizeFirstLetter(elem.data.key || '')}
+            fill={COLOR_PALLETTE.MAIN_WHITE}
+            // x={getCordsPos(elem, 'x') - getWidth(elem.data.key) / scale}
+            // y={getCordsPos(elem, 'y') - elem.data.r - 20 / scale}
+            fillEnabled
+            hitStrokeWidth="auto"
+            strokeScaleEnabled={false}
+          />
+        )}
+      </Spring>
     ))}
-  </g>
+  </>
 ));

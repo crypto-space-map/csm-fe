@@ -1,7 +1,7 @@
 import { Global } from '@emotion/react';
 import { pallette } from 'global/styles';
 import { SnackbarProvider } from 'notistack';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -38,8 +38,10 @@ const ConnectedApp = ({ Component }: Props): JSX.Element => (
   </ErrorBoundary>
 );
 
+const root = createRoot(MOUNTED_NODE);
+
 const render = (Component: typeof App): void => {
-  ReactDOM.render(<ConnectedApp Component={Component} />, MOUNTED_NODE);
+  root.render(<ConnectedApp Component={Component} />);
 };
 
 render(App);
@@ -49,7 +51,7 @@ if (module.hot) {
   // modules.hot.accept does not accept dynamic dependencies,
   // have to be constants at compile-time
   module.hot.accept(['./app'], () => {
-    ReactDOM.unmountComponentAtNode(MOUNTED_NODE);
+    root.unmount();
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     render(require('./app').App);
   });

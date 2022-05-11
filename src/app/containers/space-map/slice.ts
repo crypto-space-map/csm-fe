@@ -37,6 +37,7 @@ export const initialState: ContainerState = {
     data: [],
     ...fetchDataInitialState,
   },
+  currentProject: null,
 };
 
 const { fetchDataSuccess: fetchSpaceMapDataSuccess, fetchDataError: fetchSpaceMapDataError } =
@@ -54,7 +55,7 @@ const spaceMapPageSlice = createSlice({
   initialState,
   reducers: {
     /** Fetch main map data */
-    fetchSpaceMapData(state, action: PayloadAction<{ withoutCategories?: string }>) {
+    fetchSpaceMapData(state, _action: PayloadAction<{ withoutCategories?: string }>) {
       state.mapTree.loading = true;
     },
     fetchSpaceMapDataSuccess(state, action: PayloadAction<{ data: MapDataResponse }>) {
@@ -95,6 +96,9 @@ const spaceMapPageSlice = createSlice({
     },
     clearFilters(state) {
       state.filters = initialState.filters;
+    },
+    setCurrentProject(state, action: PayloadAction<ContainerState['currentProject']>) {
+      state.currentProject = action.payload;
     },
   },
 });

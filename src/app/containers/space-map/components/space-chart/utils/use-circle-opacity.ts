@@ -3,7 +3,8 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectedProjectIdListFromInvestors } from 'app/containers/detail-fund-card/selectors';
-import { useSpaceMap } from 'app/containers/space-map/hooks';
+import { selectFilters, selectMapTreeCaps, selectPartnerships } from 'app/containers/space-map/selectors';
+import { selectedProjectName } from 'store/pageStore/selectors';
 
 import { PackedCategories } from '../types';
 
@@ -13,11 +14,16 @@ export const useCircleOpacity = ({
   projectWeight = 0,
   exchanges: itemExchangesArr,
 }: PackedCategories) => {
-  const {
-    spaceMapData: { maxMarketCap, minMarketCap },
-    filters: { mCapFrom, mCapTo, exchanges, partnersWeight },
-    projectPartnerships,
-  } = useSpaceMap();
+  const { maxMarketCap, minMarketCap } = useSelector(selectMapTreeCaps);
+  const { mCapFrom, mCapTo, exchanges, partnersWeight } = useSelector(selectFilters);
+  const { projectPartnerships: reducerPartnerShips = [] } = useSelector(selectPartnerships);
+  const selectedProject = useSelector(selectedProjectName);
+
+  const projectPartnerships = useMemo(
+    () => (selectedProject ? [...reducerPartnerShips, selectedProject] : []),
+    [reducerPartnerShips, selectedProject]
+  );
+
   const projectAtFunds = useSelector(selectedProjectIdListFromInvestors);
   const isHidden = useMemo(() => {
     let opacity = false;
@@ -39,7 +45,6 @@ export const useCircleOpacity = ({
     if (isIncludes && projectPartnerships.length && !isLinked) opacity = true;
     if (partnersWeight.length && !isPartnerWeightFiltered) opacity = true;
     if (projectAtFunds.length && !isIncludesFunds) opacity = true;
-
     return opacity;
   }, [
     exchanges,

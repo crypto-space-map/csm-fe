@@ -22,27 +22,30 @@ const colorArray = [
   '#B02727',
 ];
 
+interface SphereColorParams {
+  children: HierarchyCircularNode<PackedCategories>['children'];
+  projectWeight: HierarchyCircularNode<PackedCategories>['data']['projectWeight'];
+  isTransparent: boolean;
+}
+
 export const color = interpolateRgbBasis(colorArray);
 
 const getCircleColor = ({ projectWeight, isTransparent }: GetCircleColorProps) =>
   isTransparent ? '#383838' : color(projectWeight > 100 ? 1 : projectWeight / 100);
 
-export const getSphereColorParams = (
-  item: HierarchyCircularNode<PackedCategories>,
-  isTransparent: boolean
-) => {
+export const getSphereColorParams = ({ children, projectWeight, isTransparent }: SphereColorParams) => {
   const colorParams = {
-    fill: !item.children
-      ? (typeof item.data.projectWeight !== 'undefined' &&
+    fill: !children
+      ? (typeof projectWeight !== 'undefined' &&
           getCircleColor({
-            projectWeight: Math.round(item.data.projectWeight / 10) * 10,
+            projectWeight: Math.round(projectWeight / 10) * 10,
             isTransparent,
           })) ||
         '#383838'
-      : 'none',
-    stroke: !!item.children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY,
-    strokeWidth: !!item.children ? 0.5 : 0.2,
-    strokeDasharray: !!item.children ? '4,4' : 'none',
+      : '',
+    stroke: !!children ? COLOR_PALLETTE.MAP_DOTTED_CIRCLES : COLOR_PALLETTE.MAP_CHILD_DASH_ARRAY,
+    strokeWidth: !!children ? 0.5 : 0.2,
+    dash: !!children ? [4, 4] : [],
   };
   return colorParams;
 };
