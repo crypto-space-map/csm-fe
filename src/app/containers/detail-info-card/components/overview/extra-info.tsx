@@ -21,7 +21,7 @@ interface ExtraInfoProps extends OverviewExtraDataProps {
 export const ExtraInfo = ({
   description = '',
   category = '',
-  explorers,
+  explorers = [],
   handleCopyClick,
 }: ExtraInfoProps) => (
   <>
@@ -40,7 +40,7 @@ export const ExtraInfo = ({
       <ContractsHeader>
         <span>Explorers:</span>
       </ContractsHeader>
-      {explorers.map(item => (
+      {explorers?.map(item => (
         <ContractItem key={`ContractItem${item}`} address={item} handleCopyClick={handleCopyClick} />
       ))}
     </ContractsWrapper>
