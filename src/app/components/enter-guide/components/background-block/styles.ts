@@ -24,7 +24,7 @@ export const fullWindowBackground = css`
 
 export const coloredBackground = css`
   ${fullWindowBackground}
-  opacity: 0.9;
+  opacity: 0.97;
   background-color: ${COLOR_PALLETTE.MAIN_BLACK};
 `;
 

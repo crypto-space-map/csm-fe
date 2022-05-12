@@ -61,7 +61,7 @@ export const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
-  width: 16px;
+  width: max-content;
   height: 16px;
 `;
 
