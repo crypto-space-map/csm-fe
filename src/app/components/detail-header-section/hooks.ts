@@ -17,8 +17,11 @@ export const useDetailHeader = () => {
   }, [history]);
 
   const handleClose = useCallback(() => {
-    const steps = pathsHistory.length * -1;
-    history.go(steps);
+    if (pathsHistory.length > 1) {
+      const steps = pathsHistory.length * -1;
+      history.go(steps);
+    }
+    history.replace({ pathname: '/' });
   }, [history, pathsHistory.length]);
 
   useEffect(() => {

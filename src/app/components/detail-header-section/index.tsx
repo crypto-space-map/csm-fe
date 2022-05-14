@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { StarIcon, CloseIcon, RoundedButton, HideCardIcon } from 'assets';
+import { StarIcon, CloseIcon, RoundedButton, HideCardIcon, ShowCardIcon } from 'assets';
 import { IconPlug } from 'common/components';
 
 import { useDetailHeader } from './hooks';
@@ -22,6 +22,7 @@ import { HeaderData } from './types';
 
 interface DetailHeaderSectionProps extends HeaderData {
   showExtraInfo?: boolean;
+  isHide: boolean;
   toggleIsHide: () => void;
 }
 
@@ -40,6 +41,7 @@ export const DetailHeaderSection = ({
   icon,
   rank,
   showExtraInfo,
+  isHide,
   toggleIsHide,
 }: DetailHeaderSectionProps) => {
   const { isShowArrowBack, handleArrowBack, handleClose } = useDetailHeader();
@@ -73,9 +75,7 @@ export const DetailHeaderSection = ({
       </CompanyInfo>
       <ControlsWrapper>
         <Controls>
-          <IconWrapper onClick={handleHideCard}>
-            <HideCardIcon />
-          </IconWrapper>
+          <IconWrapper onClick={handleHideCard}>{isHide ? <ShowCardIcon /> : <HideCardIcon />}</IconWrapper>
           <IconWrapper onClick={handleClose} id="close-card-block">
             <CloseIcon />
           </IconWrapper>

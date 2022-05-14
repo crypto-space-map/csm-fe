@@ -21,6 +21,7 @@ export { default as DoneIcon } from 'assets/done.svg';
 export { default as DisableIcon } from 'assets/disabled.svg';
 export { default as CopyIcon } from 'assets/copy.svg';
 export { default as HideCardIcon } from 'assets/hide-card.svg';
+export { default as ShowCardIcon } from 'assets/show-card.svg';
 export { default as OverlayCloseIcon } from 'assets/overlay-close.svg';
 export { default as RoundedButton } from 'assets/rounded-button.svg';
 
