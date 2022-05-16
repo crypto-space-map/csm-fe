@@ -22,7 +22,7 @@ export const MainPage = memo(() => {
     if (token) setAuth({ isAuth: true });
   }, [setAuth, token]);
 
-  if (!isAuth && !token) return <Redirect to="/login" />;
+  // if (!isAuth && !token) return <Redirect to="/login" />;
 
   return (
     <>

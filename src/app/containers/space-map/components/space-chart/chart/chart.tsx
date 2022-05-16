@@ -32,7 +32,7 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
 
   const [scale, setsScale] = useState(0);
 
-  const isAuth = useSelector(selectAuth);
+  // const isAuth = useSelector(selectAuth);
 
   const width = wrapperRef.current?.offsetWidth || 0;
   const height = wrapperRef.current?.offsetHeight || 0;
@@ -72,12 +72,10 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
   const foundProjects = getIncludesProjects(allProjects, [...new Set(projectPartnerships)]);
 
   useEffect(() => {
-    if (isAuth) {
-      fetchSpaceMapData({
-        withoutCategories: NEEDLES_CATEGORIES.join(','),
-      });
-    }
-  }, [fetchSpaceMapData, isAuth]);
+    fetchSpaceMapData({
+      withoutCategories: NEEDLES_CATEGORIES.join(','),
+    });
+  }, [fetchSpaceMapData]);
 
   useEffect(() => {
     // debugger;
