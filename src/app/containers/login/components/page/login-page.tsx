@@ -12,11 +12,9 @@ import { ContentContainer, StyledLoginPage } from './styled';
 
 export const LoginPage = () => {
   const { push: historyPush } = useHistory();
-  const token = getCookie('token');
+  // const token = getCookie('token');
   const handleClick = () => {
-    if (token) {
-      historyPush('/');
-    }
+    historyPush('/');
   };
   return (
     <Grow in>
