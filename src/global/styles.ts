@@ -23,7 +23,7 @@ export const pallette = css`
   }
 `;
 
-export const mainGradient = 'linear-gradient(236.2deg, var(--mainGreen) 0%, var(--mainBlue) 100%)';
+export const mainGradient = `-webkit-linear-gradient(236.2deg,${MAIN_GREEN} , ${MAIN_BLUE})`;
 
 export const link = (color: string = LINK_COLOR, hoverColor = HOVER_LINK_COLOR) => css`
   &:link {
@@ -42,8 +42,14 @@ export const link = (color: string = LINK_COLOR, hoverColor = HOVER_LINK_COLOR) 
 
 export const gradientText = css`
   background-image: ${mainGradient};
-  background-clip: text;
+  /* background-clip: text;
+  -webkit-text-fill-color: transparent; */
+
+  background: ${mainGradient};
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-shadow: 0px 0px #00000000;
+  display: inline-block;
 `;
 /**
  * border using like padding. F.Ex = '1 1' or '2' or '0 0 2 0'
