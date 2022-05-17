@@ -19,8 +19,8 @@ export const MainPage = memo(() => {
   const token = getCookie('token');
 
   useEffect(() => {
-    if (token) setAuth({ isAuth: true });
-  }, [setAuth, token]);
+    setAuth({ isAuth: true });
+  }, [setAuth]);
 
   // if (!isAuth && !token) return <Redirect to="/login" />;
 
