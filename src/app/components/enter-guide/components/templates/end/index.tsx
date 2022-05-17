@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 
-import { Button } from 'common/components';
+import { CustomButton } from 'common/components';
 
 import { TemplateProps, LinesType } from '../../../types';
 import { SpacemanWithLine } from '../../spaceman-with-line';
@@ -53,7 +53,7 @@ export const End = ({ onClose, setSizeOptions }: Pick<TemplateProps, 'onClose' |
             </StyledLink>
           </StyledSocial>
         </StyledContent>
-        <Button onClick={onClose}>Close</Button>
+        <CustomButton onClick={onClose} variant="outlined" text="Close" />
       </StyledEndContentWrapper>
 
       <SpacemanWithLine

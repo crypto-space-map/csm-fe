@@ -1,5 +1,7 @@
 import { ReactNode, useMemo } from 'react';
 
+import { CustomButton } from 'common/components';
+
 import { TemplateProps } from '../../types';
 import { ButtonsGroup } from '../buttons-group';
 import { StyledWrapper, StyledHeader, StyledTextContent, StyledText, StyledButton } from './styles';
@@ -31,9 +33,7 @@ export const BlockDescription = ({
         leftHandler={onBackClick}
         rightHandler={onNextClick}
       />
-      <StyledButton variant="outlined" onClick={onClose}>
-        Close
-      </StyledButton>
+      <CustomButton variant="outlined" onClick={onClose} text="Close" />
     </StyledWrapper>
   );
 };

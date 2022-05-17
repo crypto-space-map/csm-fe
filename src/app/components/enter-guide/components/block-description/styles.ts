@@ -7,6 +7,7 @@ export const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
+  gap: 1em;
   align-items: flex-start;
 `;
 
