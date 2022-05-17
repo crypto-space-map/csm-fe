@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 import { OutlinedArrow } from 'assets/icons';
 import { CsmLogoColoured } from 'assets/images';
-import { Button } from 'common/components/button';
+import { CustomButton } from 'common/components/button';
 import { SVGWrapper } from 'common/components/svg-wrapper/svg-wrapper';
 import { getCookie } from 'utils/cookie';
 
@@ -20,12 +20,16 @@ export const LoginPage = () => {
     <Grow in>
       <StyledLoginPage>
         <ContentContainer>
-          <Button variant="outlined" onClick={handleClick}>
-            <SVGWrapper fill="url(#csm_icon_gradient)">
-              <OutlinedArrow />
-            </SVGWrapper>
-            Back to Site
-          </Button>
+          <CustomButton
+            variant="outlined"
+            onClick={handleClick}
+            text=" Back to Site"
+            icon={
+              <SVGWrapper fill="url(#csm_icon_gradient)">
+                <OutlinedArrow />
+              </SVGWrapper>
+            }
+          />
           <CsmLogoColoured />
           <FormContainer />
         </ContentContainer>

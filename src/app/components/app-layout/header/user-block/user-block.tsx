@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { useLogin } from 'app/containers/login/hooks';
 import BellIcon from 'assets/icons/bell.svg';
-import { Button } from 'common/components/button';
+import { CustomButton } from 'common/components/button';
 import { useSetNewProject } from 'hooks/use-set-new-project';
 
 import { StyledIconButton, Wrapper } from './styled';
@@ -30,7 +30,7 @@ export const HeaderUserBlock = ({ avatarSrc, haveUnreadMessages }: UserBlockProp
   return (
     <Wrapper>
       {!isAuth ? (
-        <Button onClick={handleClickLogin}>Sign in or Sign up</Button>
+        <CustomButton onClick={handleClickLogin} text="Sign in or Sign up" />
       ) : (
         <>
           <Notifications haveUnreadMessages={haveUnreadMessages} />
