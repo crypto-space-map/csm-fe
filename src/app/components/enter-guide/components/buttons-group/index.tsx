@@ -1,4 +1,4 @@
-import { Button } from 'common/components';
+import { CustomButton } from 'common/components';
 
 import { StyledButtonsGroup } from './styles';
 
@@ -11,9 +11,7 @@ type Props = {
 
 export const ButtonsGroup = ({ leftButtonText, rightButtonText, leftHandler, rightHandler }: Props) => (
   <StyledButtonsGroup>
-    <Button variant="outlined" onClick={leftHandler}>
-      {leftButtonText}
-    </Button>
-    <Button onClick={rightHandler}>{rightButtonText}</Button>
+    <CustomButton variant="outlined" onClick={leftHandler} text={leftButtonText} />
+    <CustomButton onClick={rightHandler} text={rightButtonText} />
   </StyledButtonsGroup>
 );
