@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Input /> should match snapshot 1`] = `
+<div>
+  <div
+    class="css-13v5l7y"
+  >
+    <span
+      class="css-q66kqr"
+    />
+    <div
+      class="MuiFormControl-root MuiTextField-root css-hjkj6l-MuiFormControl-root-MuiTextField-root"
+      errormessage="This is ERROR"
+    >
+      
+      <div
+        class="MuiInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1aa5qj0-MuiInputBase-root-MuiInput-root"
+      >
+        <input
+          aria-invalid="false"
+          class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+          type="text"
+          value="snapshot"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

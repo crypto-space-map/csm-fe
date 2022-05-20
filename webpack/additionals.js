@@ -31,14 +31,14 @@ const makePlugins = (isDev, minify) => {
     new StylelintPlugin({ files: '**/*.css', cache: true }),
     new Dotenv({ systemvars: true, systemvars: true }),
     new webpack.ProvidePlugin({
-      process: 'process/browser',
+      process: 'process/browser.js',
     }),
     new MiniCssExtractPlugin({
       filename: `${PATHS.assets}/${isDev ? '[fullhash].css' : '[contenthash].css'}`,
       chunkFilename: `${PATHS.assets}/${isDev ? '[fullhash].css' : '[contenthash].css'}`,
     }),
     new HtmlWebpackPlugin({
-      favicon: `${PATHS.public}/favicon.ico`,
+      favicon: `${PATHS.public}/favicon.svg`,
       filename: 'index.html',
       template: `${PATHS.public}/index.html`,
       inject: true,
@@ -77,8 +77,8 @@ const makeOptimization = (isDev, minimizer) => ({
         chunks: 'all',
         enforce: true,
         name(module) {
-          const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-          return `${packageName.replace('@', '')}`;
+          const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/);
+          return packageName?.length > 1 ? `${packageName[1].replace('@', '')}` : '';
         },
       },
       default: {

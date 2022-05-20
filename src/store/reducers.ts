@@ -5,14 +5,13 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import type { Reducer } from '@reduxjs/toolkit';
 
-// import { reducer as someReducer, sliceKey as someKey } from 'store/something/slice';
+import { reducer as notifierReducer, sliceKey as notifierKey } from 'store/notifier/slice';
+import { reducer as pageReducer, sliceKey as pageKey } from 'store/pageStore/slice';
 import type { InjectedReducersType } from 'utils/types/injector-typings';
 
-// [IMPORT NEW SLICEREDUCER ABOVE] < Needed for generating slices seamlessly
-
 const storeReducers = {
-  // [someKey]: someReducer,
-  // [INSERT NEW STORE REDUCER ABOVE] < Needed for generating slices seamlessly
+  [pageKey]: pageReducer,
+  [notifierKey]: notifierReducer,
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-return

@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SvgGradient /> should match snapshot 1`] = `
+<div>
+  <svg
+    class="css-57cqf"
+    viewBox="0 0 0 0"
+  >
+    <defs>
+      <lineargradient
+        gradientUnits="userSpaceOnUse"
+        id="csm_icon_gradient"
+        x1="18"
+        x2="-2.75068"
+        y1="8.01351e-07"
+        y2="13.891"
+      >
+        <stop
+          stop-color="#a8f8a0"
+        />
+        <stop
+          offset="1"
+          stop-color="#83d9f5"
+        />
+      </lineargradient>
+    </defs>
+  </svg>
+</div>
+`;
