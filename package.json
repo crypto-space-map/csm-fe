@@ -5,6 +5,10 @@
   "browser": {
     "child_process": false
   },
+  "engineStrict": true,
+  "engines": {
+    "node": ">=16.13.0"
+  },
   "dependencies": {
     "@react-spring/konva": "^9.4.4",
     "@reduxjs/toolkit": "^1.6.1",
@@ -50,14 +54,27 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage -u",
     "test:update": "jest -u",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "nodecheckv": "node check-node-version.js",
+    "postinstall": "npm run nodecheckv",
+    "release:patch": "standard-version -- --release-as patch",
+    "release:minor": "standard-version -- --release-as minor",
+    "release:major": "standard-version -- --release-as major",
+    "commit": "git-cz"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "node validate-branch-name.js && npm run release:patch"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./commitizen.config.cjs"
     }
   },
   "lint-staged": {
@@ -77,6 +94,9 @@
     "@babel/preset-env": "^7.14.8",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.14.5",
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
+    "@digitalroute/cz-conventional-changelog-for-jira": "^7.3.0",
     "@emotion/babel-plugin": "^11.3.0",
     "@emotion/jest": "^11.5.0",
     "@emotion/react": "^11.4.1",
@@ -162,6 +182,7 @@
     "redux-injectors": "^1.3.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.1.0",
+    "standard-version": "^9.5.0",
     "style-loader": "^3.2.1",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",

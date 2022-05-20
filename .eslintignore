@@ -15,3 +15,7 @@ postcss.config.js
 fronton-config.js
 .eslintrc.js
 server.js
+check-node-version.js
+commitizen.config.cjs
+commitlint.config.cjs
+validate-branch-name.js
