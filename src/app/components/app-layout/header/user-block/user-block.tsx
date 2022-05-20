@@ -29,19 +29,14 @@ export const HeaderUserBlock = ({ avatarSrc, haveUnreadMessages }: UserBlockProp
 
   return (
     <Wrapper>
-      {!isAuth ? (
+      {/* {!isAuth ? (
         <Button onClick={handleClickLogin}>Sign in or Sign up</Button>
       ) : (
-        <>
-          <Notifications haveUnreadMessages={haveUnreadMessages} />
-          <UserButtonAvatar
-            src={avatarSrc}
-            alt="user-avatar-image"
-            size="small"
-            onClick={handleClickAccount}
-          />
-        </>
-      )}
+        <> */}
+      <Notifications haveUnreadMessages={haveUnreadMessages} />
+      <UserButtonAvatar src={avatarSrc} alt="user-avatar-image" size="small" onClick={handleClickAccount} />
+      {/* </>
+      )} */}
     </Wrapper>
   );
 };
