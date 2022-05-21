@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "config:base",
+    "group:all",
+    // Regular updates
+    "schedule:monthly"
+  ],
+  // Random assignee of PR
+  "assigneesFromCodeOwners": true,
+  "assigneesSampleSize": 1,
+  "separateMinorPatch": true,
+  "packageRules": [
+    {
+      // Only major and minor updates
+      "updateTypes": ["patch"],
+      "enabled": false
+    }
+  ]
+}
