@@ -1,8 +1,5 @@
 import styled from '@emotion/styled';
-import { IconButton } from '@mui/material';
 import { COLOR_PALLETTE } from 'global/pallette';
-
-import { ContainerOverflow } from 'app/containers/account/components/action-block/styled';
 
 export const StyledProjectCardContainer = styled.div`
   display: grid;
@@ -43,9 +40,4 @@ export const TagsBlock = styled.div`
   width: inherit;
   text-align: end;
   gap: 4px 2px;
-`;
-
-export const StyledLikeButton = styled(IconButton)`
-  padding: 0;
-  height: fit-content;
 `;

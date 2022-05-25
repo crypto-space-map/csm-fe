@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 
 import { AccountDataContainer } from 'app/components/account/styled';
+import { LikeButton } from 'common/components/like-button';
 import { ProjectChange } from 'common/components/project-change';
 import { Status } from 'common/components/status';
 
 import { FavoriteProject } from '../../types';
-import { LikeButton } from './like-button';
 import { InfoBlock, ProjectCardHeader, ProjectCardSection, TagsBlock } from './styled';
 
 type ProjectCardProps = FavoriteProject & { onLikeClick: (val: string) => void };

@@ -1,20 +1,14 @@
 import { useCallback } from 'react';
 
-import { StarIcon, CloseIcon, RoundedButton, HideCardIcon, ShowCardIcon } from 'assets';
-import { IconPlug } from 'common/components';
+import { CloseIcon, HideCardIcon, ShowCardIcon } from 'assets';
 
+import { Logo, BackButton, ExtraInfo } from './components';
 import { useDetailHeader } from './hooks';
 import {
-  Icon,
   CompanyName,
   CompanyInfo,
-  CompanyTiker,
-  RankWrapper,
   HeaderSectionWrapper,
-  RankText,
   Controls,
-  StyledRoundedButton,
-  StyledDefaultLogo,
   IconWrapper,
   ControlsWrapper,
 } from './styles';
@@ -25,15 +19,6 @@ interface DetailHeaderSectionProps extends HeaderData {
   isHide: boolean;
   toggleIsHide: () => void;
 }
-
-const getLogo = (name: string, icon?: string) =>
-  icon ? (
-    <Icon src={icon} alt="logo" />
-  ) : (
-    <StyledDefaultLogo>
-      <IconPlug text={name} />
-    </StyledDefaultLogo>
-  );
 
 export const DetailHeaderSection = ({
   name,
@@ -52,26 +37,10 @@ export const DetailHeaderSection = ({
   return (
     <HeaderSectionWrapper>
       <CompanyInfo>
-        {isShowArrowBack && (
-          <StyledRoundedButton onClick={handleArrowBack}>
-            <RoundedButton />
-          </StyledRoundedButton>
-        )}
-
-        {getLogo(name, icon)}
-
+        {isShowArrowBack && <BackButton handleArrowBack={handleArrowBack} />}
+        <Logo name={name} icon={icon} />
         <CompanyName>{name}</CompanyName>
-        {showExtraInfo && (
-          <>
-            <CompanyTiker>{symbol?.toUpperCase() ?? ''}</CompanyTiker>
-            {rank && (
-              <RankWrapper>
-                <StarIcon />
-                <RankText>{`Rank ${rank}`}</RankText>
-              </RankWrapper>
-            )}
-          </>
-        )}
+        {showExtraInfo && <ExtraInfo symbol={symbol} rank={rank} />}
       </CompanyInfo>
       <ControlsWrapper>
         <Controls>
