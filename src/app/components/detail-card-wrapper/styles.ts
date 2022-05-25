@@ -36,7 +36,8 @@ export const TransitionWrapper = styled.div<{ isOpen: boolean; isHide: boolean }
   right: 0;
   top: 0;
   ${props => getHeight(props)}
-  width: ${props => (props.isOpen ? '662px' : '0px')};
+  //width: ${props => (props.isOpen ? '662px' : '0px')};
+  width: 662px;
   height: 100%;
   z-index: 10;
   transition: width 0.6s, max-height 0.5s;
