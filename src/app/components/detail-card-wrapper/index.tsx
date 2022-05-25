@@ -9,11 +9,11 @@ interface DetailCardWrapperProps {
   isShowGuide: boolean;
 }
 
-export const DetailCardWrapper = memo(
-  ({ children, isShow, isHide, isShowGuide }: DetailCardWrapperProps) => (
+export const DetailCardWrapper = memo(({ children, isShow, isHide, isShowGuide }: DetailCardWrapperProps) =>
+  isShow ? (
     <TransitionWrapper isOpen={isShow} isHide={isHide}>
       {isShowGuide && <StyledVeil />}
       <DetailWrapper id="card-block">{children}</DetailWrapper>
     </TransitionWrapper>
-  )
+  ) : null
 );
