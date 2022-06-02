@@ -1,8 +1,6 @@
-import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
-
 import { StarIcon } from 'assets';
-import { LikeButton } from 'common/components/like-button';
 
+import { FavoriteTooltip } from '../favorite-tooltip';
 import { CompanyTiker, RankWrapper, RankText, ButtonsControl } from './styles';
 
 interface ExtraInfoProps {
@@ -20,16 +18,7 @@ export const ExtraInfo = ({ symbol, rank }: ExtraInfoProps) => (
       </RankWrapper>
     )}
     <ButtonsControl>
-      <Tooltip
-        title={
-          <>
-            <span color="inherit">Tooltip with HTML</span>
-            <span color="inherit">TooAnd heres</span>
-            <input value="dsds" />
-          </>
-        }>
-        <LikeButton liked={false} />
-      </Tooltip>
+      <FavoriteTooltip />
     </ButtonsControl>
   </>
 );

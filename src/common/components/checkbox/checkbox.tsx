@@ -7,6 +7,8 @@ import CheckBoxIcon from './icons/checkbox.svg';
 
 const StyledFCL = styled(FormControlLabel)`
   ${gradientText}
+  display: flex;
+  margin-left: -9px;
 `;
 
 export type CheckboxProps = MuiCheckboxProps & { label: string };

@@ -8,6 +8,7 @@ const { ERROR_COLOR, MAIN_WHITE } = COLOR_PALLETTE;
 
 export type InputProps = TextFieldProps & {
   errorMessage?: string;
+  withLabel?: boolean;
 };
 
 type LabelProps = {
@@ -46,10 +47,10 @@ const Label = styled.span<LabelProps>`
 `;
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { error, label, errorMessage } = props;
+  const { error, label, errorMessage, withLabel = true } = props;
   return (
     <InputContainer fullWidth={props.fullWidth}>
-      <Label error={error}>{label}</Label>
+      {withLabel && <Label error={error}>{label}</Label>}
       <StyledInput
         {...props}
         ref={ref}

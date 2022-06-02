@@ -20,6 +20,7 @@ export { default as PencilIcon } from 'assets/pencil.svg';
 export { default as DoneIcon } from 'assets/done.svg';
 export { default as DisableIcon } from 'assets/disabled.svg';
 export { default as CopyIcon } from 'assets/copy.svg';
+export { default as PlusIcon } from 'assets/plus.svg';
 export { default as HideCardIcon } from 'assets/hide-card.svg';
 export { default as ShowCardIcon } from 'assets/show-card.svg';
 export { default as OverlayCloseIcon } from 'assets/overlay-close.svg';

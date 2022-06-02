@@ -15,3 +15,4 @@ export * from './mark-down';
 export * from './icon-plug';
 export * from './more-less';
 export * from './tooltip';
+export * from './like-button';
