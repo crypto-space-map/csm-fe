@@ -23,7 +23,7 @@ export const MobilePlug = () => (
     <Text>Stay tunned</Text>
     <StyledSocial>
       {socialPanelLinks.map(({ icon: Icon, href, title }) => (
-        <StyledLink to={href} target="_blank" rel="noopener noreferrer" key={title}>
+        <StyledLink href={href} target="_blank" rel="noopener noreferrer" key={title}>
           <Icon />
         </StyledLink>
       ))}

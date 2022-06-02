@@ -11,7 +11,6 @@ import { MobilePlug } from './containers/mobile-plug';
 export const App = () => {
   const { width } = useWindowSize();
   const isMobile = width <= 768;
-  console.log(width);
   if (isMobile) return <MobilePlug />;
   return (
     <AppLayout>

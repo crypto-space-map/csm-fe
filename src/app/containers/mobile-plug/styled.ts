@@ -39,7 +39,7 @@ export const StyledSocial = styled.div`
   padding: 24px;
 `;
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled.a`
   & > svg {
     transform: scale(1.5);
     padding: 0 1em;
