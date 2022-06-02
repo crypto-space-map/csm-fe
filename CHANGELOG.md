@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/crypto-space-map/csm-fe/compare/v0.2.2...v0.2.3) (2022-06-02)
+
+
+### Features
+
+* [CSM-152] link fix ([8509ce2](https://github.com/crypto-space-map/csm-fe/commit/8509ce27bf77db9bf080e04e3cb87f7e44576493))
+
 ### 0.2.2 (2022-05-26)
 
 
