@@ -1,6 +1,6 @@
 {
   "name": "csm-fe",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
   "browser": {
     "child_process": false
