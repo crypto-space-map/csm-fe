@@ -20,7 +20,7 @@ export const MobilePlug = () => (
       <GrayText>For now CSM works better on bigger screens, so please use them.</GrayText>
       <GrayText>We working on our mobile version.</GrayText>
     </CenterContainer>
-    <Text>Stay tunned</Text>
+    <Text>Stay tuned</Text>
     <StyledSocial>
       {socialPanelLinks.map(({ icon: Icon, href, title }) => (
         <StyledLink href={href} target="_blank" rel="noopener noreferrer" key={title}>
