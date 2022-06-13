@@ -1,7 +1,7 @@
 
 # FROM node:16-stretch as build
 
-FROM node:16-stretch as build
+FROM node:17-stretch as build
 
 COPY . /app/
 
