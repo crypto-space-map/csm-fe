@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo, useRef } from 'react';
 
 import { Spring, animated } from '@react-spring/konva';
+import { useSprings } from '@react-spring/web';
 import { HierarchyCircularNode } from 'd3';
 import { Circle as CircleShape } from 'konva/lib/shapes/Circle';
 
@@ -12,11 +13,12 @@ import { CircleText } from './circle-text';
 
 type SphereProps = Omit<GAreaProps, 'data'> & {
   elem: HierarchyCircularNode<PackedCategories>;
+  isTransparent?: boolean;
   handleClick?: () => void;
 };
 
-const Sphere = memo<SphereProps>(({ elem, handleClick, ...props }) => {
-  const { projectWeight, marketCap, projectId, exchanges } = elem.data;
+const Sphere = memo<SphereProps>(({ elem, isTransparent = false, handleClick, ...props }) => {
+  const { projectWeight, projectId } = elem.data;
   const { children, r } = elem;
 
   const circleRef = useRef<CircleShape>(null);
@@ -35,8 +37,8 @@ const Sphere = memo<SphereProps>(({ elem, handleClick, ...props }) => {
       stage.container().style.cursor = 'default';
     }
   };
-
-  const isTransparent = useCircleOpacity({ projectId, projectWeight, marketCap, exchanges });
+  console.log('Sphere render');
+  // const { isHidden: isTransparent } = useCircleOpacity({ projectId, projectWeight, marketCap, exchanges });
 
   const sphereColorParams = useMemo(
     () => getSphereColorParams({ children, projectWeight, isTransparent }),
@@ -62,31 +64,26 @@ const Sphere = memo<SphereProps>(({ elem, handleClick, ...props }) => {
 });
 
 export const AnimatedSphere = memo<SphereProps>(
-  ({
-    elem,
-    scale = 1,
-    setCurrentProject = () => false,
-    handleSelectFund = () => false,
-    currentProject,
-    ...rest
-  }) => {
+  ({ elem, scale = 1, onProjectClick = () => false, ...rest }) => {
     const isClickableProject = !!elem.data.projectId;
 
     const handleClick = useCallback(() => {
       if (isClickableProject) {
-        if (currentProject?.data.projectId === elem.data.projectId) return handleSelectFund('');
-        return setCurrentProject(elem);
+        onProjectClick(elem);
       }
       return null;
-    }, [currentProject?.data.projectId, elem, handleSelectFund, isClickableProject, setCurrentProject]);
+    }, [elem, isClickableProject, onProjectClick]);
+
+    const from = useMemo(() => ({ x: randomNumber(0, 1500), y: randomNumber(0, 1500) }), []);
+    const to = useMemo(
+      () => ({
+        x: getCordsPos(elem, 'x'),
+        y: getCordsPos(elem, 'y'),
+      }),
+      [elem]
+    );
     return (
-      <Spring
-        key={`categories-headers-${elem.parent}`}
-        from={{ x: randomNumber(0, 1500), y: randomNumber(0, 1500) }}
-        to={{
-          x: getCordsPos(elem, 'x'),
-          y: getCordsPos(elem, 'y'),
-        }}>
+      <Spring key={`categories-headers-${elem.parent || elem.data.key}`} from={from} to={to}>
         {props => (
           <>
             <Sphere {...rest} {...props} elem={elem} handleClick={handleClick} />

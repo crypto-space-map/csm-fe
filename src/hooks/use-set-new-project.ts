@@ -40,7 +40,7 @@ export const useSetNewProject = () => {
       setFundName(newFundName);
       if (projectName) setProjectName(null); // нужно для того, чтобы убрать уже открытую карточку проекта
     },
-    [fundName, url, history, setFundName, projectName, setProjectName]
+    [history, fundName, url, setFundName, projectName, setProjectName]
   );
 
   const handleSelectAnotherRoute = useCallback(

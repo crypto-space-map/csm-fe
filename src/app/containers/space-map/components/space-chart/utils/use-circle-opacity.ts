@@ -7,7 +7,7 @@ import { selectFilters, selectMapTreeCaps, selectPartnerships } from 'app/contai
 import { selectedProjectName } from 'store/pageStore/selectors';
 
 import { PackedCategories } from '../types';
-
+// deprecated
 export const useCircleOpacity = ({
   marketCap,
   projectId = '',
@@ -18,13 +18,14 @@ export const useCircleOpacity = ({
   const { mCapFrom, mCapTo, exchanges, partnersWeight } = useSelector(selectFilters);
   const { projectPartnerships: reducerPartnerShips = [] } = useSelector(selectPartnerships);
   const selectedProject = useSelector(selectedProjectName);
+  const projectAtFunds = useSelector(selectedProjectIdListFromInvestors);
 
   const projectPartnerships = useMemo(
     () => (selectedProject ? [...reducerPartnerShips, selectedProject] : []),
     [reducerPartnerShips, selectedProject]
   );
+  /* console.log('useCircleOpacity call'); */
 
-  const projectAtFunds = useSelector(selectedProjectIdListFromInvestors);
   const isHidden = useMemo(() => {
     let opacity = false;
     const lessCapFrom = mCapFrom || minMarketCap || 0;
@@ -60,5 +61,5 @@ export const useCircleOpacity = ({
     projectPartnerships,
     projectWeight,
   ]);
-  return isHidden;
+  return { isHidden };
 };

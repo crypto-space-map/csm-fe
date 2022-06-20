@@ -4,7 +4,7 @@ import { createFilterOptions } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 // import { selectAuth } from 'app/containers/login/selectors';
-import { useSpaceMap } from 'app/containers/space-map/hooks';
+import { useSpaceMap } from 'app/containers/space-map/hooks/use-space-map';
 import CloseIcon from 'assets/icons/close-ico.svg';
 import SearchIcon from 'assets/icons/search.svg';
 import { useSetNewProject } from 'hooks/use-set-new-project';

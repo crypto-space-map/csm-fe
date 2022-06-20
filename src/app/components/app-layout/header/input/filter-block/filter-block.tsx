@@ -3,7 +3,7 @@ import { forwardRef, ComponentProps, useCallback } from 'react';
 import { Fade } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { useSpaceMap } from 'app/containers/space-map/hooks';
+import { useSpaceMap } from 'app/containers/space-map/hooks/use-space-map';
 import { Exchanges, ExchangesType, FilterProps } from 'app/containers/space-map/types';
 
 import { ButtonsGroup } from './buttons-group';

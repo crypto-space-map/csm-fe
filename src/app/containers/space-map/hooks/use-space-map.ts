@@ -2,21 +2,11 @@ import { useCallback } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { useActions } from 'hooks';
 import { selectedProjectName } from 'store/pageStore/selectors';
-import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 
-import { spaceMapSaga } from './saga';
-import { selectMapData } from './selectors';
-import { actions, reducer } from './slice';
-import { FilterProps } from './types';
-import { sliceKey } from './utils';
-
-export function useSpaceMapPageSlice() {
-  useInjectReducer({ key: sliceKey, reducer });
-  useInjectSaga({ key: sliceKey, saga: spaceMapSaga });
-  return useActions(actions);
-}
+import { selectMapData } from '../selectors';
+import { FilterProps } from '../types';
+import { useSpaceMapPageSlice } from './use-space-map-page-slice';
 
 export function useSpaceMap() {
   const {

@@ -5,11 +5,11 @@ import { Layer } from 'react-konva';
 import { ReactReduxContext, Provider, useSelector } from 'react-redux';
 
 import { selectAuth } from 'app/containers/login/selectors';
-import { useSpaceMap } from 'app/containers/space-map/hooks';
 import { selectMapTree, selectPartnerships } from 'app/containers/space-map/selectors';
 import { useSetNewProject } from 'hooks/use-set-new-project';
 import { selectedProjectName } from 'store/pageStore/selectors';
 
+import { useSpaceMap, useCircleOpacity } from '../../../hooks';
 import { PackedCategories } from '../types';
 import { getAllProjects, getIncludesProjects } from '../utils/helpers';
 import { useChart } from '../utils/use-chart';
@@ -29,30 +29,28 @@ type SpaceChartProps = {
 
 export const SpaceChart = memo<SpaceChartProps>(() => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-
-  const [scale, setsScale] = useState(0);
-
-  // const isAuth = useSelector(selectAuth);
-
   const width = wrapperRef.current?.offsetWidth || 0;
   const height = wrapperRef.current?.offsetHeight || 0;
 
+  const [scale, setsScale] = useState(0);
   const [currentProject, setMapCurrentProject] = useState<HierarchyCircularNode<PackedCategories> | null>(
     null
   );
 
-  const { fetchSpaceMapData, fetchPartnershipsData } = useSpaceMap();
   const { maxMarketCap, minMarketCap, tree } = useSelector(selectMapTree);
-
   const { projectPartnerships: reducerPartnerShips = [] } = useSelector(selectPartnerships);
   const selectedProject = useSelector(selectedProjectName);
+
+  const { simulatedCircles } = useChart({ width, height, tree, maxMarketCap, minMarketCap });
+  const { fetchSpaceMapData, fetchPartnershipsData } = useSpaceMap();
+  const { handleSelectProduct, handleSelectFund } = useSetNewProject();
+  const { opacityList } = useCircleOpacity(simulatedCircles);
+  // const isAuth = useSelector(selectAuth);
 
   const projectPartnerships = useMemo(
     () => (selectedProject ? [...reducerPartnerShips, selectedProject] : []),
     [reducerPartnerShips, selectedProject]
   );
-
-  const { handleSelectProduct, handleSelectFund } = useSetNewProject();
 
   const handleSetScale = (val: number) => setsScale(val);
 
@@ -65,7 +63,13 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
     [handleSelectProduct, fetchPartnershipsData]
   );
 
-  const { simulatedCircles } = useChart({ width, height, tree, maxMarketCap, minMarketCap });
+  const handleProjectClick = useCallback(
+    (elem: HierarchyCircularNode<PackedCategories>) => {
+      if (currentProject?.data.projectId === elem.data.projectId) return handleSelectFund('');
+      return setProject(elem);
+    },
+    [currentProject?.data.projectId, handleSelectFund, setProject]
+  );
 
   const allProjects = useMemo(() => getAllProjects(simulatedCircles || []), [simulatedCircles]);
 
@@ -100,11 +104,10 @@ export const SpaceChart = memo<SpaceChartProps>(() => {
               <Layer alpha={false}>
                 {currentProject && <GLinks data={foundProjects} currentProject={currentProject} />}
                 <GCircles
-                  selectedProjects={foundProjects}
+                  // selectedProjects={foundProjects}
                   data={simulatedCircles}
-                  setCurrentProject={setProject}
-                  currentProject={currentProject}
-                  handleSelectFund={handleSelectFund}
+                  opacityList={opacityList}
+                  onProjectClick={handleProjectClick}
                   scale={scale}
                 />
                 <GHeaders data={simulatedCircles} scale={scale} />

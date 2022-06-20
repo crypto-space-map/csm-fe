@@ -1,17 +1,25 @@
-import { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 
 import { GAreaProps } from '../types';
 import { AnimatedSphere } from './animated-sphere';
 
-const Circles = ({ data, ...rest }: GAreaProps) => (
+const Circles = memo(({ data, opacityList, ...rest }: Omit<GAreaProps, 'selectedProjects'>) => (
   <>
-    {data?.map(elem => (
-      <AnimatedSphere elem={elem} {...rest} key={`circles-group-${elem.data.key || elem.data.projectId}`} />
-    ))}
+    {data?.map(elem => {
+      const isTransparent = (opacityList && opacityList[elem.data.id]) ?? false;
+      return (
+        <AnimatedSphere
+          elem={elem}
+          isTransparent={isTransparent}
+          {...rest}
+          key={`circles-group-${elem.data.key || elem.data.projectId}`}
+        />
+      );
+    })}
   </>
-);
+));
 
-export const GCircles = ({ data, ...rest }: GAreaProps) => (
+export const GCircles = memo(({ data, ...rest }: GAreaProps) => (
   <>
     {data?.map(
       elem =>
@@ -23,4 +31,4 @@ export const GCircles = ({ data, ...rest }: GAreaProps) => (
         )
     )}
   </>
-);
+));
